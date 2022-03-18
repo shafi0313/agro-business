@@ -1,0 +1,203 @@
+<?php
+
+namespace App\Http\Controllers\Backend;
+
+use App\Models\User;
+use App\Models\Account;
+use App\Models\BankList;
+use App\Models\UserBankAc;
+use App\Models\SalesReport;
+use Illuminate\Http\Request;
+use App\Models\SalesLedgerBook;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
+
+class AccountReceivedController extends Controller
+{
+    public function index()
+    {
+        $users = User::select(['id','name','phone','address','business_name','role'])->where('role', 1)->where('name', '!=', 'Developer')->orWhere('role', 2)->orWhere('role', 5)->orderby('business_name')->get();
+        return view('admin.account.received.index', compact('users'));
+    }
+
+
+    public function createId($id)
+    {
+        if ($error = $this->sendPermissionError('create')) {
+            return $error;
+        }
+        $bankLists = BankList::all();
+        $tmmSoIds = User::select(['id','tmm_so_id','name'])->where('role', 5)->get();
+        $user = User::select(['id','name','business_name','phone','address'])->find($id);
+        $invNos = SalesLedgerBook::where('customer_id', $id)->whereIn('type', [1,3,7,16,18,25])->where('c_status', 0)->where('inv_cancel', 0)->orderby('invoice_no', 'DESC')->get(['id','invoice_no']);
+        return view('admin.account.received.create', compact('user', 'tmmSoIds', 'bankLists', 'invNos'));
+    }
+
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'sales_amt' => 'nullable|numeric',
+            'credit' => 'numeric',
+            'discount' => 'nullable|numeric',
+            'discount_amt' => 'nullable|numeric',
+        ]);
+
+        $customer_id = $request->get('customer_id');
+        $tmm_so_id = $request->get('tmm_so_id');
+        $user_bank_ac_id = $request->get('user_bank_ac_id');
+        $transaction_id = transaction_id('REC');
+
+        DB::beginTransaction();
+
+        $account = [
+            'tran_id' => $transaction_id,
+            'user_id' => $customer_id,
+            'tmm_so_id' => $tmm_so_id,
+            'ac_type' => 2,
+            'trn_type' => 2, // Rec
+            // 'pay_type' => $request->pay_type, // Rec
+            'pay_type' => empty($request->pay_type) ? 3 : $request->pay_type,
+            'payment_by' => $request->get('payment_by'),
+            'user_bank_ac_id' => $user_bank_ac_id,
+            'm_r_date' => $request->get('m_r_date'),
+            'm_r_no' => $request->get('m_r_no'),
+            'note' => $request->get('note'),
+            'credit' => round($request->get('credit')),
+            'date' => $request->get('date'),
+            'cheque_no' => $request->get('cheque_no'),
+        ];
+
+        if (!$user_bank_ac_id) {
+            $account['type'] = 1; // Cash
+        } else {
+            $account['type'] = 2; // Bank
+        }
+
+        $account = Account::create($account);
+
+        $ledgerBook = [
+            'tran_id' => $transaction_id,
+            'user_id' => $tmm_so_id,
+            'customer_id' => $customer_id,
+            'invoice_no' => $request->invoice_no,
+            'prepared_id' => auth()->user()->id,
+            'account_id' => $account->id,
+            'type' => 25, // Received
+            'pay_type' => empty($request->pay_type) ? 3 : $request->pay_type,
+            'invoice_date' => $request->get('date'),
+            'payment' => round($request->get('credit')),
+            'payment_date' => $request->get('date'),
+            'c_status' => 2,
+            'discount' => $request->discount,
+            'discount_amt' => round($request->discount_amt),
+        ];
+        SalesLedgerBook::create($ledgerBook);
+
+        // Complete Status
+        if (($request->net_amt == null) && ($request->credit >= $request->due_amt)) {
+            $c_status = 1;
+        } elseif (!empty($request->net_amt) && ($request->credit >= $request->net_amt)) {
+            $c_status = 1;
+        } else {
+            $c_status = 0;
+        }
+
+        $ledger = SalesLedgerBook::where('invoice_no', $request->invoice_no)->get();
+        $ledgerBookUpdate['c_status'] = $c_status;
+        if ($request->net_amt!=null) {
+            $ledgerBookUpdate['net_amt'] = $ledger->sum('sales_amt') - ($request->discount_amt + $ledger->sum('discount_amt'));
+        }
+        SalesLedgerBook::where('type', '!=', 25)->where('invoice_no', $request->invoice_no)->update($ledgerBookUpdate);
+
+
+        $salesReport = SalesReport::where('user_id', $tmm_so_id)->first();
+        if (!empty($salesReport->user_id)) {
+            $report = [
+                'tran_id' => $transaction_id,
+                'user_id' => $salesReport->user_id,
+                'type' => 2,
+                // 'inv_type' => $request->type,
+                'pay_type' => empty($request->pay_type) ? 3 : $request->pay_type,
+                'inv_type' => empty($request->type) ? 3 : $request->type,
+                'zsm_id' => $salesReport->zsm_id,
+                'sso_id' => $salesReport->sso_id,
+                'so_id' => $salesReport->so_id,
+                'customer_id' => $customer_id,
+                'invoice_date' => $request->date,
+                'discount' => $request->discount,
+                'amt' => round($request->credit),
+            ];
+            SalesReport::create($report);
+        }
+
+        try {
+            DB::commit();
+            toast('Received Successfully Inserted', 'success');
+            return redirect()->route('account-received.index');
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            toast('Received Inserted Failed', 'error');
+            return back();
+        }
+    }
+
+    public function show($userId)
+    {
+        $accounts = Account::whereUser_id($userId)->whereTrn_type(2)->get();
+        return view('admin.account.received.show', compact('accounts'));
+    }
+
+    public function destroy($tranId)
+    {
+        if ($error = $this->sendPermissionError('delete')) {
+            return $error;
+        }
+        if($tranId == 0){
+            Alert::info('This is old data you can not delete this data.');
+            return back();
+        }
+        try{
+            Account::whereTran_id($tranId)->delete();
+            SalesLedgerBook::whereTran_id($tranId)->delete();
+            SalesReport::whereTran_id($tranId)->delete();
+            toast('Success!','success');
+            return back();
+        }catch(\Exception $e){
+            return $e->getMessage();
+            toast('Failed!','error');
+            return back();
+        }
+    }
+
+    public function bankInfo(Request $request)
+    {
+        $bank_id = $request->bank_id;
+        $bankInfos = UserBankAc::where('bank_list_id', $bank_id)->get();
+        $bank = '';
+        $bank .= '<option selected value disable>Select</option>';
+        foreach ($bankInfos as $bankInfo) {
+            $bank .= '<option value="'.$bankInfo->id.'">'.$bankInfo->ac_no.'</option>';
+        }
+        return json_encode(['bank'=>$bank]);
+    }
+
+    public function salesInvInfo(Request $request)
+    {
+        $invoice_no = $request->invoice_no;
+        $salesLedgers = SalesLedgerBook::where('invoice_no', $invoice_no)->get();
+        $sales_amt = round($salesLedgers->where('type', '!=', 25)->first()->sales_amt);
+        $net_amt = round($salesLedgers->where('type', '!=', 25)->first()->net_amt);
+        $payment =  round($salesLedgers->where('type', 25)->sum('payment'));
+        $type =  $salesLedgers->where('type', '!=', 25)->first()->type;
+
+        return json_encode(['sales_amt'=>$sales_amt, 'net_amt'=>$net_amt, 'payment'=>$payment, 'type'=>$type]);
+    }
+
+    public function trash()
+    {
+        $accounts = Account::with('users')->onlyTrashed()->orderBy('updated_at', 'DESC')->whereTrn_type(2)->get();
+        return view('admin.account.received.trash', compact('accounts'));
+    }
+}

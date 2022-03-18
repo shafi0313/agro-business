@@ -1,0 +1,256 @@
+
+/* body {
+    background: rgb(204,204,204);
+  }
+  div[size="A4"] {
+    background: white;
+    width: 21cm;
+    height: 29.7cm;
+    display: block;
+
+    margin: 0 auto;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+  }
+  @media print {
+    body, div[size="A4"] {
+      margin: 0;
+      box-shadow: 0;
+    }
+  } */
+ /* @page {
+    size: auto A4 landscape;
+    margin: 0mm;
+  }
+  @media print {
+    @page {
+        size: auto A4 portrait;
+        margin: 0mm;
+    }
+  }
+
+@media print,screen {
+    @page :footer {
+        display: none
+    }
+    @page :header {
+        display: none
+    }
+}
+
+body {
+    margin: 0px  0 0 70px !important;
+    margin: auto;
+ } */
+
+.p_0 {
+    border: 0px !important;
+    padding:0px !important;
+    margin: 0px !important;
+}
+
+.print_page {
+    padding-top: 50px;
+    margin: auto;
+    padding-left: 60px;
+    width: 25cm;
+    height: 39.7cm;
+    position: relative;
+}
+
+.print_page .table tr th{
+    text-align: center;
+}
+
+.bg_img img{
+    width: 80%;
+    position: absolute;
+    left: 144px;
+    top: 200px;
+    z-index: -1;
+    opacity: .1;
+}
+
+.header{
+    /* text-align: center; */
+    vertical-align: middle;
+}
+
+.print_date {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    /* display: inline-block; */
+}
+
+.header ul {
+    list-style: none;
+}
+
+.heater_text ul .title {
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.heater_text{
+    width: 300px;
+    display: inline-block;
+}
+
+.img img {
+    margin-top: -106px;
+    width: 83px;
+    position: absolute;
+    right: 61px;
+    top: 134px;
+}
+
+.inv_info {
+    position: relative;
+    height: 185px;
+}
+
+.inv_info {
+    margin-bottom: 25px;
+}
+
+.customer_info {
+    position: absolute;
+    left: 0;
+    top: 22px;
+    text-align: left !important;
+}
+
+.invoice_info {
+    position: absolute;
+    right: 0;
+    text-align: right;
+}
+
+.invoice{
+    list-style: none;
+    margin: 0 ;
+    padding: 0;
+}
+
+.invoice_text {
+    padding-top: 0;
+    margin: 0;
+    padding-right: 18px !important;
+    font-weight: bold;
+    font-size: 25px;
+    text-decoration: underline;
+    letter-spacing: 8px;
+}
+
+.return_invoice_text {
+    padding-top: 0;
+    margin: 0;
+    padding-right: 18px !important;
+    font-weight: bold;
+    font-size: 24px;
+    text-decoration: underline;
+}
+
+.inv_s {
+    text-align: center;
+    border-top: 1px solid black;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.invoice_table thead tr th, .invoice_table thead tr td{
+    text-align: center;
+    vertical-align: middle;
+}
+.table tr td, .table tr th{
+    background: transparent !important;
+}
+
+.net_border{
+    border-bottom:1px dashed #000;
+    position: relative;
+
+}
+.net_border2{
+    border-bottom:1px dashed #000;
+    position: relative;
+
+}
+.net_border2:before{
+    content: "";
+    width: 100%;
+    height: 17px;
+    border-bottom:1px dashed #000;
+    position: absolute;
+    left: 0;
+    top: 8px;
+}
+
+.total_amt{
+    line-height: 17px;
+}
+
+.net_amt td{
+    padding: 10px 5px;
+    font-weight: bold;
+}
+
+.delivery_date {
+    padding: 5px;
+    margin: 0;
+    width: 220px;
+    border: 2px solid #0190D6;
+    font-weight: bold;
+}
+
+.note {
+    padding: 5px;
+    margin: 0;
+    /* width: 880px; */
+    border: 2px solid #0190D6;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.table_bordered tr td, .table_bordered tr th{
+    border-top: 1px solid gray !important;
+    border-bottom: 1px solid gray !important;
+    padding: 0 5px;
+}
+
+
+.conpany_info {
+    border-top: 1px solid black;
+    text-align: justify;
+    word-spacing: 4px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 93%;
+
+}
+
+.footer_info tr td{
+    border: none;
+    line-height: 13px;
+    padding: 0;
+    margin: 0;
+}
+
+.words_net:first-letter {
+    text-transform: uppercase;
+    display: inline-block !important;
+    width: 50px;
+}
+
+.due_table tr td {
+    border: 1px solid black !important;
+    padding: 0 5px;
+}
+
+.due_table .thc td {
+    text-align: center;
+}

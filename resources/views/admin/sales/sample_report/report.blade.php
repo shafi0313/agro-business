@@ -1,0 +1,79 @@
+@extends('admin.layout.master')
+@section('title', 'Sample Report')
+@section('content')
+@php $p='sales'; $sm='sample' @endphp
+<div class="main-panel">
+    <div class="content">
+        <div class="page-inner">
+            <div class="page-header">
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    {{-- <li class="nav-item active">Sample Report</li> --}}
+                </ul>
+            </div>
+            <div class="divider1"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                {{-- <h4 class="card-title">Customer</h4> --}}
+                                <a class="btn btn-success btn-sm  ml-auto" href="{{ route('salesInvoiceCash.selectDate') }}">
+                                    All Challan By Date
+                                </a>
+                                <a class="btn btn-primary btn-sm ml-3" href="{{ route('salesInvoiceCash.allInvoice') }}">
+                                    All Challan
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="multi-filter-select" class="display table table-striped table-hover" >
+                                    <thead class="bg-secondary thw">
+                                        <tr>
+                                            <th style="width:40px">SL</th>
+                                            <th>Challa No</th>
+                                            <th>Date</th>
+                                            <th>Product</th>
+                                            <th>Size</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @php $x=1; @endphp
+                                        @foreach($samples as $sample)
+                                        <tr>
+                                            <td class="text-center">{{ $x++ }}</td>
+                                            <td>{{ $sample->challan_no }}</td>
+                                            <td>{{ Carbon\Carbon::parse($sample->invoice_date)->format('d/m/Y') }}</td>
+                                            <td>{{ $sample->product->name }}</td>
+                                            <td>{{ $sample->packSize->size }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('custom_scripts')
+@include('admin.include.data_table_js')
+@include('admin.include.printJS')
+@endpush
+@endsection
+

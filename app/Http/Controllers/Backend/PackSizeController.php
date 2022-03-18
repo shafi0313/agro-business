@@ -1,0 +1,77 @@
+<?php
+
+namespace App\Http\Controllers\Backend;
+
+use App\Http\Controllers\Controller;
+use App\Models\PackSize;
+use Illuminate\Http\Request;
+use DataTables;
+use Illuminate\Auth\Events\Validated;
+use RealRashid\SweetAlert\ToSweetAlert;
+
+class PackSizeController extends Controller
+{
+    public function index(Request $request)
+    {
+        $PackSizes = PackSize::all();
+        return view('admin.pack_size.index', compact('PackSizes'));
+    }
+
+    public function store(Request $request)
+    {
+        if ($error = $this->sendPermissionError('create')) {
+            return $error;
+        }
+        $data = $this->validate($request, [
+            'type' => 'required',
+            'size' => 'required',
+        ]);
+
+        try {
+            PackSize::create($data);
+            toast('Size Successfully Inserted', 'success');
+            return redirect()->route('pack-size.index');
+        } catch (\Exception $ex) {
+            toast($ex->getMessage().'Size Inserted Failed', 'error');
+            return redirect()->back();
+        }
+    }
+
+
+    public function edit($id)
+    {
+        if ($error = $this->sendPermissionError('edit')) {
+            return $error;
+        }
+        $packSize = PackSize::find($id);
+        return view('admin.pack_size.edit', compact('packSize'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = [
+            'type' => $request->get('type'),
+            'size' => $request->get('size'),
+        ];
+
+        try {
+            PackSize::find($id)->update($data);
+            toast('Size Successfully Update', 'success');
+            return redirect()->route('pack-size.index');
+        } catch (\Exception $ex) {
+            toast($ex->getMessage().'Size Update Failed', 'error');
+            return redirect()->back();
+        }
+    }
+
+
+    public function destroy($id)
+    {
+        if ($error = $this->sendPermissionError('delete')) {
+            return $error;
+        }
+        PackSize::find($id)->delete();
+        toast('Size Successfully Deleted', 'success');
+        return redirect()->back();
+    }
+}
