@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Account;
 use App\Models\BankList;
 use App\Models\UserBankAc;
+use App\Models\CompanyInfo;
 use App\Models\SalesReport;
 use Illuminate\Http\Request;
 use App\Models\SalesLedgerBook;
@@ -132,7 +133,19 @@ class AccountReceivedController extends Controller
             SalesReport::create($report);
         }
 
+
         try {
+
+            if((CompanyInfo::whereId(1)->first('sms_service')->sms_service == 1) && (env('SMS_API') != "")){
+                $salesLedger = SalesLedgerBook::whereCustomer_id($customer_id);
+                $collection = Account::whereUser_id($customer_id)->sum('credit');
+                $du = $salesLedger->whereIn('type',[1,3,16,18])->sum('net_amt') - ($salesLedger->whereIn('type',[2,4,17,19])->sum('net_amt') + $collection);
+                $customerPhone = User::find($customer_id)->phone;
+                $iNo = !empty($request->invoice_no) ? $request->invoice_no:'';
+                $cr = round($request->credit);
+                $msg = "Dear customer your account has been credited by ".$cr." BDT for invoice no: ".$iNo." Current due: ".$du." BDT.";
+                sms($customerPhone, $msg);
+            }
             DB::commit();
             toast('Received Successfully Inserted', 'success');
             return redirect()->route('account-received.index');

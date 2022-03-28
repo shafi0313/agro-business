@@ -1,0 +1,50 @@
+1 = Cash
+2 = Cash Return
+3 = Credit
+4 = Credit return
+5 = sample
+7 = Purchase Bulk
+9 = Send to Repack
+11 = Send to production
+13 = Label
+
+16 = bulk sales cash
+17 = bulk return cash
+18 = bulk sales credit
+19 = bulk return credit
+
+ 
+
+
+15 = Label Send to Repack Unit
+25 = payment
+__________________________________
+1 = Product Stock
+2 = Bulk Stock
+3 = Bulk Send Stock
+4 = Lebel Stock
+
+__________________________________
+1 = Authir
+2 = Customer
+3 = Supplier
+4 = Factory
+5 = Employee
+6 = Store
+____________________________
+Stock
+1 = Product
+4 
+2,3 = Bulk
+
+5 = store
+
+Tran_type Account
+1=Payment
+2=Receve
+3=previous
+
+
+
+
+

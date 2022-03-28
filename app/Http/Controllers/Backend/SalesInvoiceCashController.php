@@ -149,7 +149,7 @@ class SalesInvoiceCashController extends Controller
                 'discount_amt' => $request->get('discount_amt'),
                 'net_amt' => round($request->get('net_amt')),
                 'payment' => round($request->get('payment')),
-                'payment_date' =>  $request->get('payment_date'),
+                'payment_date' =>  $request->payment_date,
                 // 'user_type' =>  $request->get('user_type'),
                 'invoice_date' => $request->invoice_date,
                 'delivery_date' => $request->get('delivery_date'),
@@ -203,17 +203,20 @@ class SalesInvoiceCashController extends Controller
                 };
             }
 
+
             try {
-                if((CompanyInfo::whereId(1)->first('sms_service')->sms_service == 1) && (env('APP_ENV') == "production")){
-                    $customer = User::find($customer_id)->phone;
-                    $msg = "sd";
-                    sms($customer->phone, $msg);
+                if((CompanyInfo::whereId(1)->first('sms_service')->sms_service == 1) && (env('SMS_API') != "")){
+                    $customerPhone = User::find($customer_id)->phone;
+                    $am = round($request->net_amt);
+                    $pD = bdDate($request->payment_date);
+                    $msg = "Dear customer an Invoice has been created under your Account. Invoice no: ".$invoice_no.", Amount: ".$am."BDT. Last payment date: ".$pD.".";
+                    sms($customerPhone, $msg);
                 }
                 DB::commit();
                 toast('Sales Invoice Successfully Inserted', 'success');
                 return redirect()->route('sales-invoice-cash.show', $customer_id);
             } catch (\Exception $ex) {
-                // return $ex->getMessage();
+                return $ex->getMessage();
                 DB::rollBack();
                 toast('Sales Invoice Inserted Failed', 'error');
                 return back();

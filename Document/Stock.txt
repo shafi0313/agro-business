@@ -1,0 +1,21 @@
+00= bulk opening
+0= store opening
+1=Cash
+2=Cash return
+3=Credit
+4=Credit return
+5 = sample
+6 = Sample Return
+7 = bulk purchase
+9 = Send to Repack
+11 = Send to production stor
+12 = Send to production bulk
+
+16=bulk sales
+
+20 = Expired
+21 = Unsold
+22 = Damaged
+
+In stock = 00,7
+Out Stock = 16,9,12
