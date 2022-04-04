@@ -78,6 +78,7 @@ class SalesInvoiceCashController extends Controller
         $invoice_no = $request->get('invoice_no');
         $challan_no = $request->get('challan_no');
         $user_id = $request->get('user_id');
+        $transaction_id = transaction_id('SER');
 
         DB::beginTransaction();
 
@@ -89,7 +90,7 @@ class SalesInvoiceCashController extends Controller
             $invoiceArr = [];
             foreach ($request->product_id as $key => $v) {
                 $data=[
-                    'tran_id' => transaction_id('SEL'),
+                    'tran_id' => $transaction_id,
                     'user_id' => $user_id,
                     'customer_id' => $customer_id,
                     'product_id' => $request->product_id[$key],
@@ -118,7 +119,7 @@ class SalesInvoiceCashController extends Controller
             // New Stock
             foreach ($request->quantity as $key => $v) {
                 $data=[
-                    'tran_id' => transaction_id('SEL'),
+                    'tran_id' => $transaction_id,
                     'inv_id' => $invoiceArr[$key],
                     'product_id' => $request->product_id[$key],
                     'product_pack_size_id' => $request->size[$key],
@@ -137,7 +138,7 @@ class SalesInvoiceCashController extends Controller
             // Store Stock End
 
             $ledgerBook = [
-                'tran_id' => transaction_id('SEL'),
+                'tran_id' => $transaction_id,
                 'user_id' => $user_id,
                 'customer_id' => $customer_id,
                 'prepared_id' => auth()->user()->id,
@@ -159,7 +160,7 @@ class SalesInvoiceCashController extends Controller
             $salesReport = SalesReport::where('user_id', $request->user_id)->first();
             $productDiscount = array_sum($request->pro_dis) / count($invoiceArr);
             $report = [
-                'tran_id' => transaction_id('SEL'),
+                'tran_id' => $transaction_id,
                 'user_id' => $salesReport->user_id,
                 'type' => 1,
                 'inv_type' => $request->inv_type,
@@ -178,7 +179,7 @@ class SalesInvoiceCashController extends Controller
                 $sampleNote = [
                     'sales_ledger_book_id' => $ledgerBook->id,
                     'note' => $request->note,
-                    'tran_id' => transaction_id('SEL'),
+                    'tran_id' => $transaction_id,
                 ];
                 SampleNote::create($sampleNote);
             }
@@ -192,7 +193,7 @@ class SalesInvoiceCashController extends Controller
                 ]);
                 foreach ($request->inv_date as $key => $v) {
                     $invoiceDue=[
-                        'tran_id' => transaction_id('SEL'),
+                        'tran_id' => $transaction_id,
                         'invoice_no' => $invoice_no,
                         'inv_date' => $request->inv_date[$key],
                         'inv_amt' => $request->inv_amt[$key],
