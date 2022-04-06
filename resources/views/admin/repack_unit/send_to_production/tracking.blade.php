@@ -54,7 +54,7 @@
                                             <td class="text-center">{{ $showInvoice->use_weight }}</td>
                                             <td class="text-center">{{ ($showInvoice->tracking =='1')?'On Going':(($showInvoice->tracking =='2')?'Complete':'') }}</td>
                                             <td class="text-center">{{ $showInvoice->challan_no }}</td>
-                                            <td class="text-center">{{ \Carbon\Carbon::parse($showInvoice->invoice_date)->format('d/m/Y') }}</td>
+                                            <td class="text-center">{{ bdDate($showInvoice->invoice_date) }}</td>
                                             <td class="text-center d-flex">
                                                 <form action="{{ route('bulkTrackingUpdateOnGoing.update', $showInvoice->id) }}" method="post">
                                                     @csrf

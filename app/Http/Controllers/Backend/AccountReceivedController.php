@@ -133,9 +133,7 @@ class AccountReceivedController extends Controller
             SalesReport::create($report);
         }
 
-
         try {
-
             if((CompanyInfo::whereId(1)->first('sms_service')->sms_service == 1) && (env('SMS_API') != "")){
                 $salesLedger = SalesLedgerBook::whereCustomer_id($customer_id);
                 $collection = Account::whereUser_id($customer_id)->sum('credit');
@@ -143,7 +141,8 @@ class AccountReceivedController extends Controller
                 $customerPhone = User::find($customer_id)->phone;
                 $iNo = !empty($request->invoice_no) ? $request->invoice_no:'';
                 $cr = round($request->credit);
-                $msg = "Dear customer your account has been credited by ".$cr." BDT for invoice no: ".$iNo." Current due: ".$du." BDT.";
+                $cNa = CompanyInfo::whereId(1)->first('name')->name;
+                $msg = "Collection: Dear customer your account has been credited by ".$cr." BDT for invoice no: ".$iNo." Current due: ".$du. $cNa." BDT.";
                 sms($customerPhone, $msg);
             }
             DB::commit();

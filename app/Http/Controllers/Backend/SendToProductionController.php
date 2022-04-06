@@ -18,7 +18,7 @@ class SendToProductionController extends Controller
 {
     public function showInvoiceTracking()
     {
-        $showInvoices = PurchaseInvoice::with(['product','packSize'])->orderBy('id','DESC')->where('type', 9)->where('status', 1)->whereInv_cancel(0)->get();
+        $showInvoices = PurchaseInvoice::with(['product','packSize'])->orderBy('id','DESC')->where('type', 9)->where('status', 1)->whereInv_cancel(0)->latest()->get();
         if(count($showInvoices)<1){
             alert()->info('Alert','There are no Data.');
             return redirect()->back();
@@ -198,12 +198,12 @@ class SendToProductionController extends Controller
 
     public function productionDelete($production_id)
     {
-        PurchaseInvoice::where('id',$production_id)->update(['inv_cancel' => 1]);
-        PurchaseLedgerBook::where('production_id',$production_id)->update(['inv_cancel' => 1]);
-        Stock::where('inv_id',$production_id)->update(['inv_cancel' => 1]);
-        ProductionCal::where('production_id',$production_id)->update(['inv_cancel' => 1]);
-        toast('success','Success');
-        return back();
+        // PurchaseInvoice::where('id',$production_id)->update(['inv_cancel' => 1]);
+        // PurchaseLedgerBook::where('production_id',$production_id)->update(['inv_cancel' => 1]);
+        // Stock::where('inv_id',$production_id)->update(['inv_cancel' => 1]);
+        // ProductionCal::where('production_id',$production_id)->update(['inv_cancel' => 1]);
+        // toast('success','Success');
+        // return back();
     }
 
     // Customer Invoice Show

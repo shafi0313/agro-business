@@ -25,7 +25,7 @@ class SendToRepackingController extends Controller
             return $error;
         }
         $supplier  = User::find($id);
-        $userId = User::select(['id','tmm_so_id','name'])->where('role', 1)->orwhere('role', 5)->get();
+        $userId = User::select(['id','tmm_so_id','name'])->whereIn('role', [1,5])->whereNot('name', "Developer")->get();
         $getChallan_no = PurchaseInvoice::select(['challan_no','type'])->withTrashed()->where('type', 9)->orwhere('type', 3)->get();
         $challan_no = $getChallan_no->groupBy('challan_no')->count() + 145;
         $ledger = PurchaseLedgerBook::where('supplier_id', $id)->orderBy('id','DESC')->get();

@@ -31,10 +31,63 @@
                     padding: 10px !important;
                     margin: 0;
                 }
+                .dash_menu ul {
+                    width: 250px;
+                }
+                .dash_menu ul li{
+                    list-style: none;
+                    margin-bottom: 5px;
+                }
+                .dash_menu ul li a{
+                    position: relative;
+                    text-decoration: none;
+                    padding: 6px 10px !important;
+                    color: black;
+                    z-index: 99999999;
+                    display: block;
+                    border: 1px solid #6610f2;
+                    border-radius: 2px;
+                    font-weight: 600;
+
+
+                }
+                .dash_menu ul li a::before {
+                    position: absolute;
+                    content: "";
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    width: 0;
+                    background: #716aca;
+                    transition: .5s;
+                    z-index: -1;
+
+                }
+                .dash_menu ul li a:hover:before, a{
+                    width: 100%;
+                }
+
+
             </style>
 
              @role('admin')
-             <div class="row col-md-12">
+             <div class="row">
+                 <div class="col-md-6">
+                    <div class="dash_menu">
+                        <ul>
+                            <li><a href="{{ route('product.index') }}">Product</a></li>
+                            <li><a href="{{ route('stock.bulk.index') }}">Bulk Stock</a></li>
+                            <li><a href="{{ route('stock.store.index') }}">Stock</a></li>
+                            <li><a href="{{ route('sales-invoice-cash.index') }}">Sales</a></li>
+                            <li><a href="{{ route('salesLedgerBook.index') }}">Sales Ledger Book</a></li>
+                            <li><a href="{{ route('report.salesAndStock.selectDate') }}">Sales Report</a></li>
+                            <li><a href="{{ route('empReport.user') }}">Employee Report</a></li>
+                        </ul>
+                    </div>
+                 </div>
+             </div>
+
+             {{-- <div class="row col-md-12">
                  <table class="table table-bordered">
                      <thead>
                          <tr>
@@ -66,7 +119,7 @@
                          </tr>
                      </tbody>
                  </table>
-             </div>
+             </div> --}}
              @endrole
 
             <div class="row">

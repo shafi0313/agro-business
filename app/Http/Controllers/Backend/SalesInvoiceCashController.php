@@ -204,13 +204,13 @@ class SalesInvoiceCashController extends Controller
                 };
             }
 
-
             try {
                 if((CompanyInfo::whereId(1)->first('sms_service')->sms_service == 1) && (env('SMS_API') != "")){
                     $customerPhone = User::find($customer_id)->phone;
                     $am = round($request->net_amt);
                     $pD = bdDate($request->payment_date);
-                    $msg = "Dear customer an Invoice has been created under your Account. Invoice no: ".$invoice_no.", Amount: ".$am."BDT. Last payment date: ".$pD.".";
+                    $cNa = CompanyInfo::whereId(1)->first('name')->name;
+                    $msg = "New invoice: Dear customer an Invoice has been created under your Account. Invoice no: ".$invoice_no.", Amount: ".$am."BDT. Last payment date: ".$pD. $cNa.".";
                     sms($customerPhone, $msg);
                 }
                 DB::commit();
@@ -439,21 +439,28 @@ class SalesInvoiceCashController extends Controller
         if ($error = $this->sendPermissionError('delete')) {
             return $error;
         }
-        $invoice_id = SalesInvoice::where('challan_no', $challan_no)->whereIn('type', [1,3])->get()->pluck('id');
-        $cancelInvoice = SalesInvoice::where('challan_no', $challan_no)->whereIn('type', [1,3]);
-        if ($cancelInvoice->first()->inv_cancel != 0) {
-            Alert::info('The Invoice has already been canceled');
+        DB::transaction(function () use($challan_no){
+            $invoice_id = SalesInvoice::where('challan_no', $challan_no)->whereIn('type', [1,3])->get()->pluck('id');
+            $cancelInvoice = SalesInvoice::where('challan_no', $challan_no)->whereIn('type', [1,3]);
+            if ($cancelInvoice->first()->inv_cancel != 0) {
+                Alert::info('The Invoice has already been canceled');
+                return redirect()->back();
+            }
+            SalesInvoice::whereIn('id', $invoice_id)->update(['inv_cancel' => 1]);
+            $cancelLedger = SalesLedgerBook::where('challan_no', $challan_no)->whereIn('type', [1,3]);
+            $cancel_led_id = $cancelLedger->first()->id;
+            $cancelLedger->update(['inv_cancel' => 1, 'sales_amt'=>0, 'discount'=>0, 'discount_amt'=>0, 'net_amt'=>0]);
+            SalesReport::where('sales_ledger_book_id', $cancel_led_id)->delete() || false;
+            Stock::whereIn('inv_id', $invoice_id)->whereIn('type', [1,3])->update(['inv_cancel' => 1]) || false;
+        });
+
+        try{
+            toast('success', 'success');
+            return redirect()->back();
+        }catch (\Exception $ex){
+            toast('success', 'error');
             return redirect()->back();
         }
-        SalesInvoice::whereIn('id', $invoice_id)->update(['inv_cancel' => 1]);
-        $cancelLedger = SalesLedgerBook::where('challan_no', $challan_no)->whereIn('type', [1,3]);
-        $cancel_led_id = $cancelLedger->first()->id;
-        $cancelLedger->update(['inv_cancel' => 1, 'sales_amt'=>0, 'discount'=>0, 'discount_amt'=>0, 'net_amt'=>0]);
-        SalesReport::where('sales_ledger_book_id', $cancel_led_id)->delete() || false;
-        Stock::whereIn('inv_id', $invoice_id)->whereIn('type', [1,3])->update(['inv_cancel' => 1]) || false;
-
-        toast('success', 'success');
-        return redirect()->back();
     }
 
     public function delete($invoice_id, $challan_no)
@@ -461,22 +468,29 @@ class SalesInvoiceCashController extends Controller
         if ($error = $this->sendPermissionError('delete')) {
             return $error;
         }
-        $invoiceCheck = SalesInvoice::where('challan_no', $challan_no)->where('inv_cancel', 0)->whereIn('type', [1,3])->get();
-        if ($invoiceCheck->count() < 2) {
-            Alert::info('Alert', 'Must have at least one data');
+        DB::transaction(function () use($invoice_id, $challan_no){
+            $invoiceCheck = SalesInvoice::where('challan_no', $challan_no)->where('inv_cancel', 0)->whereIn('type', [1,3])->get();
+            if ($invoiceCheck->count() < 2) {
+                Alert::info('Alert', 'Must have at least one data');
+                return redirect()->back();
+            }
+            $invoice = SalesInvoice::where('id', $invoice_id)->whereIn('type', [1,3])->first();
+            $invData['inv_cancel'] = 1;
+
+            $stock = Stock::where('inv_id', $invoice_id)->whereIn('type', [1,3])->first();
+            if ($stock) {
+                $stock->update(['inv_cancel' => 1]);
+            }
+            $invoice->update($invData);
+        });
+
+        try{
+            toast('success', 'success');
+            return redirect()->back();
+        }catch (\Exception $ex){
+            toast('success', 'error');
             return redirect()->back();
         }
-        $invoice = SalesInvoice::where('id', $invoice_id)->whereIn('type', [1,3])->first();
-        $invData['inv_cancel'] = 1;
-
-        $stock = Stock::where('inv_id', $invoice_id)->whereIn('type', [1,3])->first();
-        if ($stock) {
-            $stock->update(['inv_cancel' => 1]);
-        }
-        $invoice->update($invData);
-
-        toast('success', 'success');
-        return redirect()->back();
     }
 
     // ind show

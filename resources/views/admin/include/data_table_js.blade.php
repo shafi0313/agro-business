@@ -4,7 +4,9 @@
         });
 
         $('#multi-filter-select').DataTable( {
-            "pageLength": 50,
+            // "pageLength": 50,
+            "lengthMenu": [[50, 100, -1], [50, 100, "All"]],
+            "order": [],
             initComplete: function () {
                 this.api().columns().every( function () {
                     var column = this;

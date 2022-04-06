@@ -117,14 +117,12 @@ class BulkPurchaseController extends Controller
 
         try {
             $ledgerBook = PurchaseLedgerBook::create($ledgerBook);
-            $invoice == true;
-            // $stockUpdate== true;
             DB::commit();
             toast('Purchase Bulk Successfully Inserted', 'success');
             return redirect()->route('purchase-bulk.index');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Purchase Bulk Inserted Faild', 'error');
+            toast('Purchase Bulk Inserted Failed', 'error');
             return back();
         }
     }
