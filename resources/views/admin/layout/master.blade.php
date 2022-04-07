@@ -10,7 +10,6 @@
     <meta content='{{csrf_token()}}' name='csrf-token' />
 	<link rel="icon" href="{{ asset('files/images/icon/'.$companyInfo->favicon) }}" type="image/x-icon"/>
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
 	<!-- Fonts and icons -->
 	<script src="{{ asset('backend/assets/js/plugin/webfont/webfont.min.js') }}"></script>
 	<script>
@@ -116,13 +115,13 @@
 <script src="{{ asset('backend/assets/js/plugin/moment/moment.min.js') }}"></script>
 
 <!-- Chart JS -->
-<script src="{{ asset('backend/assets/js/plugin/chart.js/chart.min.js') }}"></script>
+{{-- <script src="{{ asset('backend/assets/js/plugin/chart.js/chart.min.js') }}"></script> --}}
 
 <!-- jQuery Sparkline -->
 <script src="{{ asset('backend/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
 
 <!-- Datatables -->
-<script src="{{ asset('backend/assets/js/plugin/datatables/datatables.min.js') }}"></script>
+{{-- <script src="{{ asset('backend/assets/js/plugin/datatables/datatables.min.js') }}"></script> --}}
 
 <!-- Azzara JS -->
 <script src="{{ asset('backend/assets/js/ready.min.js') }}"></script>

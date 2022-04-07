@@ -2,6 +2,7 @@
 @section('title', 'Product')
 @section('content')
 @php $p='factory'; $sm="product"; $ssm='storeShow'; @endphp
+<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">

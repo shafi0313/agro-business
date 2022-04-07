@@ -14,8 +14,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
+
         $customers = User::select(['role'])->where('role', 2)->count();
         $supplier = User::select(['role'])->where('role', 3)->count();
+        $employee = User::select(['role'])->where('role', 5)->count();
         $products = Product::count();
 
         $purchase = PurchaseInvoice::select(['type','amt'])->where('type', 0)->sum('amt');
@@ -29,6 +31,6 @@ class DashboardController extends Controller
         $materialStocks = ProductStock::where('type', 2)->get();
 
 
-        return view('admin.dashboard', compact('customers', 'supplier', 'products', 'totalPurchase',  'debit', 'credit', 'productStocks', 'materialStocks'));
+        return view('admin.dashboard', compact('customers','employee','supplier', 'products', 'totalPurchase',  'debit', 'credit', 'productStocks', 'materialStocks'));
     }
 }

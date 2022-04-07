@@ -2,6 +2,7 @@
 @section('title', 'About')
 @php $p='frontend'; $sm="about" @endphp
 @section('content')
+<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
