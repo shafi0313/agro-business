@@ -1,4 +1,5 @@
-<script >
+<script src="{{ asset('backend/assets/js/plugin/datatables/datatables.min.js') }}"></script>
+<script>
     $(document).ready(function() {
         $('#basic-datatables').DataTable({
         });

@@ -33,7 +33,8 @@
                 }
 
                 .dash_menu ul {
-                    width: 250px;
+                    width: 150px;
+                    padding: 0 !important;
                 }
 
                 .dash_menu ul li {
@@ -67,9 +68,12 @@
 
                 }
 
-                .dash_menu ul li a:hover:before,
-                a {
+                .dash_menu ul li a:hover:before {
                     width: 100%;
+                }
+                .dash_menu ul li a:hover{
+                    color: white;
+                    font-weight: bold;
                 }
             </style>
             <div class="row">

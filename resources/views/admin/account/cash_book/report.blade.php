@@ -21,7 +21,7 @@
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title">Cash Book</h4>
-                                <button type="button" class="btn btn-success btn-sm ml-auto " id="p" onclick="printDiv('printArea')"><i class="fas fa-print"></i> Print</button>
+                                <button type="button" class="btn btn-success btn-sm ml-auto" id="p" onClick="printDiv('printArea')"><i class="fas fa-print"></i> Print</button>
                                 <button type="button" class="btn btn-primary btn-sm ml-3" data-toggle="modal" data-target="#exampleModal">
                                     Add Cash Previous
                                   </button>
