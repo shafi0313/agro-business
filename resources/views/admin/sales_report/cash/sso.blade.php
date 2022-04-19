@@ -40,7 +40,7 @@
                                             <th rowspan="2">Name</th>
                                             <th rowspan="2">Job Location</th>
                                             <th colspan="4">Sales</th>
-                                            <th colspan="4">Collection</th>
+                                            <th colspan="3">Collection</th>
                                             <th rowspan="2">Balance</th>
                                         </tr>
                                         <tr class="text-center">
@@ -50,7 +50,7 @@
                                             <th>Total Amt</th>
                                             <th>Cash</th>
                                             <th>Credit</th>
-                                            <th>Dis %</th>
+                                            {{-- <th>Dis %</th> --}}
                                             <th>Total</th>
                                         </tr>
                                     </thead>
@@ -117,8 +117,9 @@
                                             <td class="text-right">{{ number_format($report->where('type',2)->where('pay_type',1)->sum('amt'),2) }}</td>
                                             <td class="text-right">{{ number_format($report->where('type',2)->where('pay_type',3)->sum('amt'),2) }}</td>
                                             {{-- <td class="text-right">{{ number_format($calPayCashDiscount + $calPayCreditDiscount,2) }}</td> --}}
-                                            <td class="text-right">{{ number_format($totalPayDiscountAmt/$report->where('type',2)->sum('amt')*100,2) }}</td>
-                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('amt') - $totalPayDiscountAmt,2) }}</td>
+                                            {{-- <td class="text-right">{{ number_format($totalPayDiscountAmt/$report->where('type',2)->sum('amt')*100,2) }}</td> --}}
+                                            {{-- <td class="text-right">{{ number_format($report->where('type',2)->sum('amt') - $totalPayDiscountAmt,2) }}</td> --}}
+                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('amt'),2) }}</td>
                                             @php
                                                 $balance = 0;
                                                 $b = ($report->where('type',1)->whereIn('inv_type',[1,2])->sum('amt') + $report->where('type',1)->whereIn('inv_type',[3,4])->sum('amt')) - ($report->where('type',2)->sum('amt') - $totalPayDiscountAmt);
@@ -193,8 +194,9 @@
                                             <td class="text-right">{{ number_format($report->where('type',2)->where('pay_type',1)->sum('amt'),2) }}</td>
                                             <td class="text-right">{{ number_format($report->where('type',2)->where('pay_type',3)->sum('amt'),2) }}</td>
                                             {{-- <td class="text-right">{{ number_format($calPayCashDiscount + $calPayCreditDiscount,2) }}</td> --}}
-                                            <td class="text-right">{{ number_format($totalPayDiscountAmt/$report->where('type',2)->sum('amt')*100,2) }}</td>
-                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('amt') - $totalPayDiscountAmt,2) }}</td>
+                                            {{-- <td class="text-right">{{ number_format($totalPayDiscountAmt/$report->where('type',2)->sum('amt')*100,2) }}</td> --}}
+                                            {{-- <td class="text-right">{{ number_format($report->where('type',2)->sum('amt') - $totalPayDiscountAmt,2) }}</td> --}}
+                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('amt'),2) }}</td>
                                             @php
                                                 $balance = 0;
                                                 $b = ($report->where('type',1)->whereIn('inv_type',[1,2])->sum('amt') + $report->where('type',1)->whereIn('inv_type',[3,4])->sum('amt')) - ($report->where('type',2)->sum('amt') - $totalPayDiscountAmt);
@@ -264,13 +266,14 @@
                                             <td class="text-right">{{ number_format($report->where('type',2)->where('pay_type',1)->sum('amt'),2) }}</td>
                                             <td class="text-right">{{ number_format($report->where('type',2)->where('pay_type',3)->sum('amt'),2) }}</td>
                                             {{-- <td class="text-right">{{ number_format($calPayCashDiscount + $calPayCreditDiscount,2) }}</td> --}}
-                                            <td class="text-right">
+                                            {{-- <td class="text-right">
                                                 @if ($report->where('type',2)->sum('amt'))
                                                 {{ number_format($totalPayDiscountAmt/$report->where('type',2)->sum('amt')*100 ,2) }}
                                                 @endif
 
-                                            </td>
-                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('amt') - $totalPayDiscountAmt,2) }}</td>
+                                            </td> --}}
+                                            {{-- <td class="text-right">{{ number_format($report->where('type',2)->sum('amt') - $totalPayDiscountAmt,2) }}</td> --}}
+                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('amt'),2) }}</td>
 
 
 
