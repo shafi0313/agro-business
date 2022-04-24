@@ -10,9 +10,7 @@
     <div class="footer_signature" style="display:flex; justify-content: space-between;">
         <div>Prepared by</div>
         {{-- <div>Checked by</div> --}}
-        <div style="padding:0 40px">CEO</div>
+        {{-- <div style="padding:0 40px">CEO</div> --}}
         <div>Authorized by</div>
     </div>
 </div>
-
-

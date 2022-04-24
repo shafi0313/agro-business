@@ -5,7 +5,7 @@
         <h2><strong>Proprietor: </strong>{{$customer_Info->name}}</h2>
         <p>
             <span><strong>Customer Phone: </strong>{{$customer_Info->phone}}</span><br>
-            <span><strong>Customer Address: </strong>{{$customer_Info->address}}</span><br>
+            <span><strong>Address: </strong>{{$customer_Info->address}}</span><br>
             @isset($customer_Info->customerInfo->credit_limit)
             <span><strong>Credit Limit: </strong>{{$customer_Info->customerInfo->credit_limit}}</span><br>
             @endisset

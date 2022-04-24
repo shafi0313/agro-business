@@ -4,7 +4,7 @@
         <h1 class="text-center">Mondol Traders</h1>
         <h4 class="text-center">{{ $pageTitle }}</h4>
         @if(!empty($form_date) && !empty($to_date))
-        <div style="font-size:18px; text-align:center">Form: {{Carbon\carbon::parse($form_date)->format('d/m/Y')}} To: {{Carbon\carbon::parse($to_date)->format('d/m/Y')}}</div>
+        <div style="font-size:18px; text-align:center">Form: {{ Carbon\carbon::parse($form_date)->format('d/m/Y') }} To: {{Carbon\carbon::parse($to_date)->format('d/m/Y') }}</div>
         @endif
     </div>
 </div>

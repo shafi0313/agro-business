@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive" id="printJS-form">
-                                <table  class="table table-bordered table-hover" >
+                                <table id="multi-filter-select" class="display table table-striped table-hover" >
                                     <thead class="bg-secondary thw">
                                         <tr class="text-center">
                                             <th style="width:35px">SL</th>
@@ -187,22 +187,18 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
-                                    <style>
-                                        tfoot tr td{text-align: right;font-weight: bold; font-size: 14px !important}
-                                    </style>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="4">Total Amount: </td>
-                                            <td>{{ number_format($invoices->sum('sales_amt'),2) }}</td>
-                                            <td></td>
-                                            <td>{{ number_format($invoices->sum('discount_amt'),2) }}</td>
-                                            @php $net_amtTotal = $invoices->sum('net_amt') - $invoices->where('invoice_no', 0)->sum('net_amt'); @endphp
-                                            <td>{{ number_format($net_amtTotal,2) }}</td>
-                                            <td colspan="5"></td>
-                                            <td>{{ number_format($invoices->sum('payment'),2) }}</td>
-                                            <td>{{ number_format($invoices->sum('net_amt') - $payment,2) }}</td>
-                                        </tr>
-                                    </tfoot>
+
+                                    <tr class="text-right font-weight-bold">
+                                        <td colspan="4">Total Amount: </td>
+                                        <td>{{ number_format($invoices->sum('sales_amt'),2) }}</td>
+                                        <td></td>
+                                        <td>{{ number_format($invoices->sum('discount_amt'),2) }}</td>
+                                        @php $net_amtTotal = $invoices->sum('net_amt') - $invoices->where('invoice_no', 0)->sum('net_amt'); @endphp
+                                        <td>{{ number_format($net_amtTotal,2) }}</td>
+                                        <td colspan="5"></td>
+                                        <td>{{ number_format($invoices->sum('payment'),2) }}</td>
+                                        <td>{{ number_format($invoices->sum('net_amt') - $payment,2) }}</td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>
@@ -213,6 +209,7 @@
     </div>
 </div>
 @push('custom_scripts')
+@include('admin.include.data_table_js')
 @include('admin.include.printJS')
 
 @endpush

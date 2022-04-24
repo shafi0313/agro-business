@@ -8,7 +8,7 @@
             <div class="page-header">
                 <ul class="breadcrumbs">
                     <li class="nav-home">
-                        <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                        <a href="{{ route('admin.dashboard') }}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Cash Book</li>
                 </ul>
@@ -32,7 +32,7 @@
                             @include('admin.include.print_page_heading')
                             <div class="page-number"></div>
                             <div class="table-responsive">
-                                <table id="multi-filter-select" class="display table table-hover" >
+                                <table id="multi-filter-select" class="display table table-hover">
                                     <thead class="bg-secondary thw text-center">
                                         <tr>
                                             <th style="width:35px" rowspan="2">SL</th>
@@ -112,7 +112,7 @@
                                             @endisset
 
                                             @if ($exp->type == 1)
-                                                @if($OfficeExpense->sum('debit') != null || $OfficeExpense != 0))
+                                                @if($OfficeExpense->sum('debit') != null || $OfficeExpense != 0)
                                                     @php $officeExpDebit = $OfficeExpense->sum('debit') @endphp
                                                 @else
                                                     @php $officeExpDebit = 0; @endphp
