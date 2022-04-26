@@ -128,6 +128,7 @@ class AccountReceivedController extends Controller
                 'customer_id' => $customer_id,
                 'invoice_date' => $request->date,
                 'discount' => $request->discount,
+                'discount_amt' =>  $request->discount_amt,
                 'amt' => round($request->credit),
             ];
             SalesReport::create($report);

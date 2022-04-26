@@ -171,6 +171,7 @@ class SalesInvoiceCashController extends Controller
                 'customer_id' => $customer_id,
                 'invoice_date' => $request->invoice_date,
                 'discount' => $request->discount + $productDiscount,
+                'discount_amt' =>  $request->discount_amt,
                 'amt' => round($request->net_amt),
             ];
             SalesReport::create($report);
@@ -390,6 +391,7 @@ class SalesInvoiceCashController extends Controller
                 'so_id' => $salesReport->so_id,
                 'customer_id' => $customer_id,
                 'invoice_date' => $request->invoice_date,
+                'discount_amt' =>  $request->discount_amt,
                 'amt' => round(array_sum($request->get('amt')) - $discount),
             ];
             SalesReport::create($report);
