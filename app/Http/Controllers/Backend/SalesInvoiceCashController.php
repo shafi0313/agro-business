@@ -265,6 +265,7 @@ class SalesInvoiceCashController extends Controller
         return view('admin.sales.sales_invoice_cash.edit', compact('invoices', 'customer', 'userId', 'ledgerPayment', 'ledger', 'ledgerUpdate', 'invoice_no', 'challan_no'));
     }
 
+    // Reinvoice ___________________________
     public function update(Request $request)
     {
         // return $request->all;
@@ -284,6 +285,8 @@ class SalesInvoiceCashController extends Controller
         $invoice_id = $request->invoice_id;
         $cancel_led_id = $request->cancel_led_id;
         $cancel_challan_no = $request->cancel_challan_no;
+        $transaction_id = transaction_id('RIN');
+        DB::beginTransaction();
 
         $cancelInvoice = SalesInvoice::where('challan_no', $cancel_challan_no)->whereIn('type', [1,3])->update(['inv_cancel' => 2]);
         $cancelLedger = SalesLedgerBook::where('challan_no', $cancel_challan_no)->whereIn('type', [1,3])->update(['inv_cancel' => 2, 'sales_amt'=>0, 'discount'=>0, 'discount_amt'=>0, 'net_amt'=>0]);
@@ -309,10 +312,11 @@ class SalesInvoiceCashController extends Controller
             alert()->error('ErrorAlert', 'Something went wrong! Please try again');
             return redirect()->back();
         } else {
-            DB::beginTransaction();
+            // DB::beginTransaction();
             $invoiceArr = [];
             foreach ($request->product_id as $key => $v) {
                 $data=[
+                    'tran_id' => $transaction_id,
                     'user_id' => $user_id,
                     'customer_id' => $customer_id,
                     'product_id' => $request->product_id[$key],
@@ -333,15 +337,16 @@ class SalesInvoiceCashController extends Controller
             };
 
             // Store Stock Start
-            foreach ($request->quantity as $i => $qty) {
-                $stok = ProductStock::where('product_id', $request->product_id[$i])->where('product_pack_size_id', $request->size[$i])->whereIn('type', [1,3])->first();
-                $quantity   = $stok->quantity;
-                $stockUpdate['quantity']    = $quantity - $qty - $request->bonus[$i];
-                $stok->update($stockUpdate);
-            }
+            // foreach ($request->quantity as $i => $qty) {
+            //     $stok = ProductStock::where('product_id', $request->product_id[$i])->where('product_pack_size_id', $request->size[$i])->whereIn('type', [1,3])->first();
+            //     $quantity   = $stok->quantity;
+            //     $stockUpdate['quantity']    = $quantity - $qty - $request->bonus[$i];
+            //     $stok->update($stockUpdate);
+            // }
             // New Stock
             foreach ($request->quantity as $key => $v) {
                 $data=[
+                    'tran_id' => $transaction_id,
                     'inv_id' => $invoiceArr[$key],
                     'product_id' => $request->product_id[$key],
                     'product_pack_size_id' => $request->size[$key],
@@ -363,6 +368,7 @@ class SalesInvoiceCashController extends Controller
             $discount = array_sum($request->get('amt')) * $request->get('discount')/100;
 
             $ledgerBook = [
+                'tran_id' => $transaction_id,
                 'user_id' => $user_id,
                 'customer_id' => $customer_id,
                 'prepared_id' => auth()->user()->id,
@@ -382,6 +388,7 @@ class SalesInvoiceCashController extends Controller
 
             $salesReport = SalesReport::where('user_id', $request->user_id)->first();
             $report = [
+                'tran_id' => $transaction_id,
                 'user_id' => $salesReport->user_id,
                 'type' => 1,
                 'inv_type' => $request->inv_type,
@@ -398,6 +405,7 @@ class SalesInvoiceCashController extends Controller
 
             if ($request->note) {
                 $sampleNote = [
+                    'tran_id' => $transaction_id,
                     'sales_ledger_book_id' => $ledgerBook->id,
                     'note' => $request->note
                 ];
@@ -414,6 +422,7 @@ class SalesInvoiceCashController extends Controller
                 ]);
                 foreach ($request->inv_date as $key => $v) {
                     $invoiceDue=[
+                        'tran_id' => $transaction_id,
                         'invoice_no' => $invoice_no,
                         'inv_date' => $request->inv_date[$key],
                         'inv_amt' => $request->inv_amt[$key],
@@ -430,7 +439,7 @@ class SalesInvoiceCashController extends Controller
                 return redirect()->route('sales-invoice-cash.show', $customer_id);
             } catch (\Exception $ex) {
                 DB::rollBack();
-                toast($ex->getMessage().'Sales Invoice Inserted Faild', 'error');
+                toast($ex->getMessage().'Sales Invoice Inserted Failed', 'error');
                 return back();
             }
         }
@@ -545,7 +554,7 @@ class SalesInvoiceCashController extends Controller
     public function printInvoice($customer_id, $invoice_no)
     {
         $getShowInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [1,3])->get();
-        $showInvoices = $getShowInvoices->groupby('product_id');
+        $showInvoices = $getShowInvoices->groupBy('product_id');
 
         $invoiceDue = InvoiceDue::where('invoice_no', $invoice_no)->get();
         $invoiceDueFirst = InvoiceDue::where('invoice_no', $invoice_no)->first();
@@ -556,7 +565,7 @@ class SalesInvoiceCashController extends Controller
     public function printChallan($customer_id, $invoice_no)
     {
         $getShowInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [1,3])->get();
-        $showInvoices = $getShowInvoices->groupby('product_id');
+        $showInvoices = $getShowInvoices->groupBy('product_id');
 
         $invoiceDue = InvoiceDue::where('invoice_no', $invoice_no)->get();
         $invoiceDueFirst = InvoiceDue::where('invoice_no', $invoice_no)->first();

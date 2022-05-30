@@ -99,7 +99,7 @@ class AccountReceivedController extends Controller
         // Complete Status
         if (($request->net_amt == null) && ($request->credit >= $request->due_amt)) {
             $c_status = 1;
-        } elseif (!empty($request->net_amt) && ($request->credit >= $request->net_amt)) {
+        } elseif (!empty($request->net_amt) && ($request->credit >= $request->net_amt) || ($request->credit == 0 && $request->net_amt == 0)) {
             $c_status = 1;
         } else {
             $c_status = 0;
