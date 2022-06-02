@@ -88,6 +88,7 @@
     </div>
 </div>
 
+@push('custom_scripts')
 @include('admin.include.data_table_js')
 @include('admin.include.printJS')
 @endpush
