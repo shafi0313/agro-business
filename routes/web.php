@@ -453,24 +453,24 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
     // Route::get('/purchase-bulk/get/price', [LabelPurchaseController::class, 'productPrice'])->name('LabelPurchase.invoicePrice');
 
     Route::resource('/label-purchase', LabelPurchaseController::class);
-    Route::prefix('label-purchase')->controller(LabelPurchaseController::class)->group(function () {
-        Route::get('/create/{id}', 'createId')->name('labelPurchase.create');
-        Route::get('/show/{supplier_id}/{challan_no}', 'showInvoice')->name('labelPurchase.show');
-        Route::get('/destroy/{challan_no}', 'destroyInvoice')->name('labelPurchase.destroy');
+    Route::prefix('label-purchase')->controller(LabelPurchaseController::class)->name('labelPurchase.')->group(function () {
+        Route::get('/create/{id}', 'createId')->name('create');
+        Route::get('/show/{supplier_id}/{challan_no}', 'showInvoice')->name('show');
+        Route::get('/destroy/{challan_no}', 'destroyInvoice')->name('destroy');
         // All
-        Route::get('/all/show', 'allInvoice')->name('labelPurchase.allInvoice');
-        Route::get('/all/show/{challan_no}', 'allInvoiceShow')->name('labelPurchase.allInvoiceShow');
+        Route::get('/all/show', 'allInvoice')->name('allInvoice');
+        Route::get('/all/show/{challan_no}', 'allInvoiceShow')->name('allInvoiceShow');
         // By Date
-        Route::get('/select-date', 'selectDate')->name('labelPurchase.selectDate');
-        Route::post('/show/all/challan/by-date', 'allInvoiceByDate')->name('labelPurchase.allInvoiceByDate');
-        Route::get('/show/all/challan/by-date/{challan_no}', 'allInvoiceShowByDate')->name('labelPurchase.allInvoiceShowByDate');
+        Route::get('/select-date', 'selectDate')->name('selectDate');
+        Route::post('/show/all/challan/by-date', 'allInvoiceByDate')->name('allInvoiceByDate');
+        Route::get('/show/all/challan/by-date/{challan_no}', 'allInvoiceShowByDate')->name('allInvoiceShowByDate');
 
-        Route::get('/product_Pack_Sizes', 'productPackSizes')->name('labelPurchase.productPackSizes');
-        Route::get('/get/productSize', 'productSize')->name('labelPurchase.productSize');
-        Route::get('/get/price', 'productPrice')->name('labelPurchase.invoicePrice');
+        Route::get('/product_Pack_Sizes', 'productPackSizes')->name('productPackSizes');
+        Route::get('/get/productSize', 'productSize')->name('productSize');
+        Route::get('/get/price', 'productPrice')->name('invoicePrice');
 
-        Route::get('/print/challan/{supplier_id}/{challan_no}', 'printChallan')->name('labelPurchase.printChallan');
-        Route::get('/print/invoice/{supplier_id}/{challan_no}', 'printInvoice')->name('labelPurchase.printInvoice');
+        Route::get('/print/challan/{supplier_id}/{challan_no}', 'printChallan')->name('printChallan');
+        Route::get('/print/invoice/{supplier_id}/{challan_no}', 'printInvoice')->name('printInvoice');
     });
 
 
@@ -577,15 +577,16 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
 
 
     // Sales Ledger Book
-    Route::get('/sales-ledger-book', [SalesLedgerBookController::class, 'index'])->name('salesLedgerBook.index');
-    Route::post('/sales-ledger-book/show-invoice/{id}', [SalesLedgerBookController::class, 'ledgerUpdate'])->name('salesLedgerBook.ledgerUpdate');
-    Route::get('/sales-ledger-book/select-date/{customer_id}', [SalesLedgerBookController::class, 'ledgerBookSelectDate'])->name('salesLedgerBook.SelectDate');
-    Route::get('/sales-ledger-book/show-invoice', [SalesLedgerBookController::class, 'showInvoice'])->name('salesLedgerBook.showInvoice');
-    Route::get('/sales-ledger-book/show-invoice-all/{customer_id}', [SalesLedgerBookController::class, 'indAllLedgerBook'])->name('salesLedgerBook.indAllLedgerBook');
+    Route::controller(SalesLedgerBookController::class)->prefix('sales-ledger-book')->name('salesLedgerBook.')->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::get('/select-date/{customer_id}', 'ledgerBookSelectDate')->name('SelectDate');
+        Route::get('/show-invoice', 'indDateLedgerBook')->name('indDateLedgerBook');
+        Route::get('/show-invoice-all/{customer_id}', 'indAllLedgerBook')->name('indAllLedgerBook');
+        Route::get('/all', 'allShowInvoice')->name('allShowInvoice');
+        Route::get('/edit/{id}', 'ledgerReportEdit')->name('ledgerReportEdit');
+        Route::post('/update/{id}', 'ledgerReportUpdate')->name('ledgerReportUpdate');
+    });
 
-    Route::get('/sales-ledger-book/all', [SalesLedgerBookController::class, 'allShowInvoice'])->name('salesLedgerBook.allShowInvoice');
-    Route::get('/sales-ledger-book/edit/{id}', [SalesLedgerBookController::class, 'ledgerReportEdit'])->name('salesLedgerBook.ledgerReportEdit');
-    Route::post('/sales-ledger-book/update/{id}', [SalesLedgerBookController::class, 'ledgerReportUpdate'])->name('salesLedgerBook.ledgerReportUpdate');
 
 
     // Purchase Ledger Book Download

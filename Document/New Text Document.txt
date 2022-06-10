@@ -1,0 +1,40 @@
+@switch($invoice->type)
+                                            @case(0)
+                                                @php $invoiceText = 'Previous' @endphp
+                                                @break
+                                            @case(1)
+                                                @php $invoiceText = 'Cash Sales' @endphp
+                                                @break
+                                            @case(2)
+                                                @php $invoiceText = 'Return Cash Sales' @endphp
+                                                @break
+                                            @case(3)
+                                                @php $invoiceText = 'Credit Sales' @endphp
+                                                @break
+                                            @case(4)
+                                                @php $invoiceText = 'Return Credit Sales' @endphp
+                                                @break
+                                            @case(5)
+                                                @php $invoiceText = 'Sample' @endphp
+                                                @break
+                                            @case(7)
+                                                @php $invoiceText = 'Bulk Sales' @endphp
+                                                @break
+                                            @case(16)
+                                                @php $invoiceText = 'Bulk Ca. Sales' @endphp
+                                                @break
+                                            @case(17)
+                                                @php $invoiceText = 'Bulk Ca. Return' @endphp
+                                                @break
+                                            @case(18)
+                                                @php $invoiceText = 'Bulk Cr. Sales' @endphp
+                                                @break
+                                            @case(19)
+                                                @php $invoiceText = 'Bulk Cr. Return' @endphp
+                                                @break
+                                            @case(25)
+                                                @php $invoiceText = 'Collection' @endphp
+                                                @break
+                                            @default
+                                                @php $invoiceText = 'Error' @endphp
+                                            @endswitch

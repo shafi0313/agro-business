@@ -35,7 +35,9 @@ class CashBookController extends Controller
 
         $accounts = Account::with('userBank')
                         ->whereNull('office_expense_cat_id')
-                        ->whereBetween('date', [$form_date, $to_date])->get(['id','user_bank_ac_id','date','note','trn_type','type','m_r_no','debit','credit']);
+                        ->whereBetween('date', [$form_date, $to_date])
+                        ->get(['id','user_bank_ac_id','date','note','trn_type','type','m_r_no','debit','credit']);
+                        
         $accountsTotal = Account::whereBetween('date', [$form_date, $to_date]);
         $accountsTotalCredit = $accountsTotal->sum('credit');
         $accountsTotalDebit = $accountsTotal->sum('debit');

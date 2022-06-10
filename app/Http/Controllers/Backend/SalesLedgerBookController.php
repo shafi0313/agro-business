@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 
-use PDF;
-use Dompdf\Dompdf;
 use App\Models\User;
 use App\Models\SalesReport;
 use App\Models\SalesInvoice;
 use Illuminate\Http\Request;
 use App\Models\SalesLedgerBook;
-use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 
 class SalesLedgerBookController extends Controller
@@ -34,50 +31,33 @@ class SalesLedgerBookController extends Controller
     }
 
     // Ledger Book By Date
-    public function showInvoice(Request $request)
+    public function indDateLedgerBook(Request $request)
     {
         $customer_id = $request->get('customer_id');
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
         $customer_Info = User::where('id', $customer_id)->first();
-        $invoices = SalesLedgerBook::where('customer_id', $customer_id)
-                    ->whereBetween('invoice_date', [$form_date,$to_date])
-                    ->orderBy('challan_no', 'DESC')
-                    ->where('type', 1)
-                    ->orWhere('type', 2)
-                    ->orWhere('type', 3)
-                    ->orWhere('type', 4)
-                    ->orWhere('type', 5)
-                    ->orWhere('type', 7)
-                    ->orWhere('type', 8)
-                    ->orWhere('type', 16)
-                    ->orWhere('type', 17)
-                    ->orWhere('type', 18)
-                    ->orWhere('type', 19)
-                    ->orWhere('type', 25)
-                    ->get();
-        $salesInvoices = SalesLedgerBook::where('customer_id', $customer_id)
-                    ->whereBetween('invoice_date', [$form_date,$to_date])
-                    ->where('type', 1)
-                    ->orWhere('type', 2)
-                    ->orWhere('type', 3)
-                    ->orWhere('type', 4)
-                    ->orWhere('type', 5)
-                    ->orWhere('type', 7)
-                    ->orWhere('type', 8)
-                    ->orWhere('type', 16)
-                    ->orWhere('type', 17)
-                    ->orWhere('type', 18)
-                    ->orWhere('type', 19)
-                    ->orWhere('type', 25)
-                    ->get();
-        $payment = SalesLedgerBook::where('customer_id', $customer_id)->whereBetween('invoice_date', [$form_date,$to_date])->where('type', 25)->get();
-        // if($customer_Info == ''){
-        //     alert()->info('Alert','There are no data available.');
-        //     return redirect()->back();
-        // }
-        return view('admin.sales.ledger_book.ind_date_ledger_book', compact('customer_Info', 'invoices', 'salesInvoices', 'form_date', 'to_date', 'payment'));
+        $opening = SalesLedgerBook::where('customer_id', $customer_id)
+                ->where('invoice_date', '<', $form_date)
+                ->get(['net_amt','payment']);
+        $openingBl = $opening->sum('net_amt') - $opening->sum('payment');
+
+        $invoices = SalesLedgerBook::with(['invoice' => function($q){
+                    return $q->select('id','pro_dis','invoice_no');
+                }])
+                ->with(['account' => function($q){
+                    return $q->select('id','m_r_date','m_r_no','payment_by','note');
+                }])
+                ->whereBetween('invoice_date', [$form_date,$to_date])
+                ->where('customer_id', $customer_id)
+                ->whereIn('type', [0,1,2,3,4,5,7,8,16,17,18,19,25])
+                ->get(['id','account_id','payment_date','c_status','inv_cancel','invoice_date','invoice_no','type','sales_amt','discount','discount_amt','net_amt','payment_date','payment']);
+
+
+        $payment = SalesLedgerBook::where('customer_id', $customer_id)->whereBetween('invoice_date', [$form_date,$to_date])->where('type', 25)->sum('payment');
+
+        return view('admin.sales.ledger_book.ind_date_ledger_book', compact('customer_Info','invoices','form_date','to_date','openingBl','payment'));
     }
 
     // Ledger Book All
@@ -87,67 +67,36 @@ class SalesLedgerBookController extends Controller
             return $q->select('user_id','credit_limit');
         }])->select('id','business_name','name','phone','address')->where('id', $customer_id)->first();
 
-        // return$customer_Info = User::where('id', $customer_id)->first();
         $openingBl = SalesLedgerBook::where('customer_id', $customer_id)->where('type', 0)->first();
+        $invoices = SalesLedgerBook::with(['invoice' => function($q){
+                        return $q->select('id','pro_dis','invoice_no');
+                    }])
+                    ->with(['account' => function($q){
+                        return $q->select('id','m_r_date','m_r_no','payment_by','note');
+                    }])
+                    ->where('customer_id', $customer_id)
+                    ->whereIn('type', [0,1,2,3,4,5,7,8,16,17,18,19,25])
+                    ->get(['id','account_id','payment_date','c_status','inv_cancel','invoice_date','invoice_no','type','sales_amt','discount','discount_amt','net_amt','payment_date','payment']);
+
+        $payment = SalesLedgerBook::where('customer_id', $customer_id)->where('type', 25)->sum('payment');
+        
+        return view('admin.sales.ledger_book.ind_all_ledger_book', compact('customer_Info', 'invoices', 'payment', 'openingBl'));
+    }
+
+    public function allShowInvoice()
+    {
         $invoices = SalesLedgerBook::with(['invoice' => function($q){
                     return $q->select('id','pro_dis','invoice_no');
                 }])
                 ->with(['account' => function($q){
                     return $q->select('id','m_r_date','m_r_no','payment_by','note');
                 }])
-                ->where('customer_id', $customer_id)
-                ->where(function ($q) {
-                    return $q->where('type', 0)
-                        ->orWhere('type', 1)
-                        ->orWhere('type', 2)
-                        ->orWhere('type', 3)
-                        ->orWhere('type', 4)
-                        ->orWhere('type', 5)
-                        ->orWhere('type', 7)
-                        ->orWhere('type', 8)
-                        ->orWhere('type', 16)
-                        ->orWhere('type', 17)
-                        ->orWhere('type', 18)
-                        ->orWhere('type', 19)
-                        ->orWhere('type', 25);
-                })
+                ->whereIn('type', [0,1,2,3,4,5,7,8,16,17,18,19,25])
                 ->get(['id','account_id','payment_date','c_status','inv_cancel','invoice_date','invoice_no','type','sales_amt','discount','discount_amt','net_amt','payment_date','payment']);
-        $payment = SalesLedgerBook::where('customer_id', $customer_id)->where('type', 25)->sum('payment');
-        return view('admin.sales.ledger_book.ind_all_ledger_book', compact('customer_Info', 'invoices', 'payment', 'openingBl'));
-    }
 
-    public function allShowInvoice()
-    {
-        $invoices = SalesLedgerBook::orderBy('challan_no', 'DESC')
-                    ->where('type', 1)
-                    ->orWhere('type', 2)
-                    ->orWhere('type', 3)
-                    ->orWhere('type', 4)
-                    ->orWhere('type', 5)
-                    ->orWhere('type', 7)
-                    ->orWhere('type', 8)
-                    ->orWhere('type', 16)
-                    ->orWhere('type', 17)
-                    ->orWhere('type', 18)
-                    ->orWhere('type', 19)
-                    ->orWhere('type', 25)
-                    ->get();
-        $salesAmt = SalesLedgerBook::orderBy('challan_no', 'DESC')
-                    ->where('type', 1)
-                    ->orWhere('type', 2)
-                    ->orWhere('type', 3)
-                    ->orWhere('type', 4)
-                    ->orWhere('type', 5)
-                    ->orWhere('type', 7)
-                    ->orWhere('type', 8)
-                    ->orWhere('type', 16)
-                    ->orWhere('type', 17)
-                    ->orWhere('type', 18)
-                    ->orWhere('type', 19)
-                    ->orWhere('type', 25)
-                    ->get();
-        $payment = SalesLedgerBook::where('type', 25)->get();
-        return view('admin.sales.ledger_book.all_ledger_book', compact('invoices', 'salesAmt', 'payment'));
+        $payment = SalesLedgerBook::where('type', 25)->sum('payment');
+
+        return view('admin.sales.ledger_book.all_ledger_book', compact('invoices', 'payment'));
     }
 
     public function ledgerReportEdit($id)
@@ -158,6 +107,7 @@ class SalesLedgerBookController extends Controller
         $ledgerBook = SalesLedgerBook::find($id);
         return view('admin.sales.ledger_book.ledger_edit', compact('ledgerBook'));
     }
+
     public function ledgerReportUpdate(Request $request, $id)
     {
         $data = [

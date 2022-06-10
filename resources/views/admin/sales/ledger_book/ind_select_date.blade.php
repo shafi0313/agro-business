@@ -27,7 +27,7 @@
                         <div class="card-body" >
                             <h1 class="text-center mr-5 mb-3">Select the date and show the report</h1>
                             <hr>
-                            <form action="{{ route('salesLedgerBook.showInvoice') }}" method="get">
+                            <form action="{{ route('salesLedgerBook.indDateLedgerBook') }}" method="get">
                                 @csrf
                                 <input type="hidden" name="customer_id" value="{{ $customer_id->id }}">
                                 <div class="row justify-content-center">
