@@ -48,21 +48,59 @@ if (!function_exists('readableSize')) {
 if (!function_exists('invType')) {
     function invType($invoice)
     {
-        return match ($invoice) {
-            '0' => 'Previous',
-            '1' => 'Cash Sales',
-            '2' => 'Return Cash Sales',
-            '3' => 'Credit Sales',
-            '4' => 'Return Credit Sales',
-            '5' => 'Sample',
-            '7' => 'Bulk Sales',
-            '16' => 'Bulk Ca. Sales',
-            '17' => 'Bulk Ca. Return',
-            '18' => 'Bulk Cr. Sales',
-            '19' => 'Bulk Cr. Return',
-            '25' => 'Collection',
-            default => 'Error'
-        };
+        // return match ($invoice) {
+        //     '0' => 'Previous',
+        //     '1' => 'Cash Sales',
+        //     '2' => 'Return Cash Sales',
+        //     '3' => 'Credit Sales',
+        //     '4' => 'Return Credit Sales',
+        //     '5' => 'Sample',
+        //     '7' => 'Bulk Sales',
+        //     '16' => 'Bulk Ca. Sales',
+        //     '17' => 'Bulk Ca. Return',
+        //     '18' => 'Bulk Cr. Sales',
+        //     '19' => 'Bulk Cr. Return',
+        //     '25' => 'Collection',
+        //     default => 'Error'
+        // };
+        switch($invoice){
+            case 0;
+                $invType = 'Previous';
+                break;
+            case 1;
+                $invType = 'Cash Sales';
+                break;
+            case 2;
+                $invType = 'Return Cash Sales';
+                break;
+            case 3;
+                $invType = 'Credit Sales';
+                break;
+            case 4;
+                $invType = 'Return Credit Sales';
+                break;
+            case 5;
+                $invType = 'Sample';
+                break;
+            case 7;
+                $invType = 'Bulk Sales';
+                break;
+            case 16;
+                $invType = 'Bulk Ca. Sales';
+                break;
+            case 18;
+                $invType = 'Bulk Cr. Sales';
+                break;
+            case 19;
+                $invType = 'Bulk Cr. Return';
+                break;
+            case 25;
+                $invType = 'Collection';
+                break;
+            default:
+                $invType = 'Error';
+        }
+        return $invType;
     }
 }
 
@@ -86,6 +124,45 @@ if (!function_exists('sms')) {
         // echo $smsresult;
         //Error Display
         // echo curl_error($ch);
+    }
+}
+
+if (!function_exists('activeSubNav')) {
+    function activeSubNav($route)
+    {
+        if (is_array($route)) {
+            $rt = '';
+            foreach ($route as $rut) {
+                $rt .= request()->routeIs($rut) || '';
+            }
+            return $rt ? ' activeSub ' : '';
+        }
+        return request()->routeIs($route) ? ' activeSub ' : '';
+    }
+}
+
+if (!function_exists('activeNav')) {
+    function activeNav($route)
+    {
+        if (is_array($route)) {
+            $rt = '';
+            foreach ($route as $rut) {
+                $rt .= request()->routeIs($rut) || '';
+            }
+            return $rt ? ' active ' : '';
+        }
+        return request()->routeIs($route) ? ' active ' : '';
+    }
+}
+
+if (!function_exists('openNav')) {
+    function openNav(array $routes)
+    {
+        $rt = '';
+        foreach ($routes as $route) {
+            $rt .= request()->routeIs($route) || '';
+        }
+        return $rt ? ' show ' : '';
     }
 }
 
