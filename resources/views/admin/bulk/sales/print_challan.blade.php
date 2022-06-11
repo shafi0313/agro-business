@@ -125,7 +125,7 @@
                         <th>Name of Group</th>
                         <th>Size</th>
                         <th>Pice/Bag</th>
-                        {{-- <th>Bonus</th> --}}
+                        <th>Net Weight</th>
                     </tr>
                 </thead>
                 @php $x=1; @endphp
@@ -152,15 +152,15 @@
                                 @endforeach
                         </table>
                     </td>
-                    {{-- <td class="p_0">
+                    <td class="p_0">
                         <table class="table p_0">
                             @foreach ($showInvoice as $item)
                                 <tr>
-                                    <td class="text-center">{{ $item->bonus }}</td>
+                                    <td class="text-center">{{ preg_replace( '/[^0-9]/', '',  $item->packSize->size ) * $item->quantity }}</td>
                                 </tr>
                                 @endforeach
                         </table>
-                    </td> --}}
+                    </td>
 
                 </tr>
                 @endforeach

@@ -124,7 +124,7 @@
                         <th>Name of Product</th>
                         <th>Size</th>
                         <th>Pice/Bag</th>
-                        {{-- <th>Bonus</th> --}}
+                        <th>Net Weight</th>
                         <th>Unit Price</th>
                         <th>Total Tk</th>
                     </tr>
@@ -153,15 +153,15 @@
                                 @endforeach
                         </table>
                     </td>
-                    {{-- <td class="p_0">
+                    <td class="p_0">
                         <table class="table p_0">
                             @foreach ($showInvoice as $item)
                                 <tr>
-                                    <td class="text-center">{{ $item->bonus }}</td>
+                                    <td class="text-center">{{ preg_replace( '/[^0-9]/', '',  $item->packSize->size ) * $item->quantity }}</td>
                                 </tr>
                                 @endforeach
                         </table>
-                    </td> --}}
+                    </td>
                     <td class="p_0">
                         <table class="table p_0">
                             @foreach ($showInvoice as $item)
@@ -186,16 +186,16 @@
 
                 <tr class="total_amt">
                     <input type="hidden" id="total_amt" value="{{$getShowInvoices->sum('amt')}}">
-                    <td class="text-right" colspan="5" style="border: none !important">Total Amount: </td>
+                    <td class="text-right" colspan="6" style="border: none !important">Total Amount: </td>
                     <td class="text-right" style="border: none !important">{{ number_format($getShowInvoices->sum('amt'),2) }}</td>
                 </tr>
                 <tr class="total_amt">
-                    <td colspan="5" class="text-right" style="border: none !important">Discount(-):</td>
+                    <td colspan="6" class="text-right" style="border: none !important">Discount(-):</td>
                     <td class="text-right" style="border: none !important"><span class="net_border">{{ number_format(round($ledger->sales_amt * $ledger->discount/100),2) }}</span> </td>
                 </tr>
                 <tr class="net_amt " style="border-top: 1px ">
                     <input id="net_amt" value="{{$ledger->net_amt}}" type="hidden">
-                    <td style="border: none !important" class="words_net" colspan="3">[ In word: <span id="words_net"></span>]</td>
+                    <td style="border: none !important" class="words_net" colspan="4">[ In word: <span id="words_net"></span>]</td>
                     <td style="border: none !important" colspan="2" class="text-right">Net Payable: </td>
                     <td style="border: none !important" class="text-right net_border"><span class="net_border2">{{ number_format(round($ledger->net_amt),2) }}</span> </td>
                 </tr>
