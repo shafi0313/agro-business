@@ -19,10 +19,9 @@ class AccountReceivedController extends Controller
 {
     public function index()
     {
-        $users = User::select(['id','name','phone','address','business_name','role'])->where('role', 1)->where('name', '!=', 'Developer')->orWhere('role', 2)->orWhere('role', 5)->orderby('business_name')->get();
+        $users = User::whereIn('role', [1,2,5])->where('name', '!=', 'Developer')->orderby('business_name')->get(['id','name','phone','address','business_name','role']);
         return view('admin.account.received.index', compact('users'));
     }
-
 
     public function createId($id)
     {
