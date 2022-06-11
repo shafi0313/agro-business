@@ -48,7 +48,7 @@ if (!function_exists('readableSize')) {
 if (!function_exists('invType')) {
     function invType($invoice)
     {
-        return match ($invoice) {
+        return match (intval($invoice)) {
             '0' => 'Previous',
             '1' => 'Cash Sales',
             2 => 'Return Cash Sales',
