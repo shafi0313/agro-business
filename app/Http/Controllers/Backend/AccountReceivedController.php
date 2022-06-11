@@ -8,6 +8,7 @@ use App\Models\BankList;
 use App\Models\UserBankAc;
 use App\Models\CompanyInfo;
 use App\Models\SalesReport;
+use App\Models\EmployeeInfo;
 use Illuminate\Http\Request;
 use App\Models\SalesLedgerBook;
 use Illuminate\Support\Facades\DB;
@@ -28,8 +29,8 @@ class AccountReceivedController extends Controller
         if ($error = $this->sendPermissionError('create')) {
             return $error;
         }
+        $tmmSoIds = EmployeeInfo::with(['user' => fn ($q) => $q->select(['id','tmm_so_id','name'])])->whereIn('employee_main_cat_id',[12,13])->get(['user_id']);
         $bankLists = BankList::all();
-        $tmmSoIds = User::select(['id','tmm_so_id','name'])->where('role', 5)->get();
         $user = User::select(['id','name','business_name','phone','address'])->find($id);
         $invNos = SalesLedgerBook::where('customer_id', $id)->whereIn('type', [1,3,7,16,18,25])->where('c_status', 0)->where('inv_cancel', 0)->orderby('invoice_no', 'DESC')->get(['id','invoice_no']);
         return view('admin.account.received.create', compact('user', 'tmmSoIds', 'bankLists', 'invNos'));
@@ -147,11 +148,11 @@ class AccountReceivedController extends Controller
                 sms($customerPhone, $msg);
             }
             DB::commit();
-            toast('Received Successfully Inserted', 'success');
+            toast('Collection Successfully Inserted', 'success');
             return redirect()->route('account-received.index');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast('Received Inserted Failed', 'error');
+            toast('Collection Inserted Failed', 'error');
             return back();
         }
     }

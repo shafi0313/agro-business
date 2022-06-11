@@ -45,7 +45,7 @@
                                 <div class="row">
                                     <div class="form-group col-sm-3">
                                         <label for="date">Date <span class="t_r">*</span></label>
-                                        <input type="date" name="date" class="form-control @error('date') is-invalid @enderror" value="{{old('date')}}" placeholder="" required>
+                                        <input type="date" name="date" class="form-control @error('date') is-invalid @enderror" value="{{old('date')}}" required>
                                         @error('date')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -56,8 +56,7 @@
                                         <select name="tmm_so_id" id="" class="form-control" required>
                                             <option selected value disabled>Select</option>
                                             @foreach ($tmmSoIds as $tmmSoId)
-                                                <option value="{{ $tmmSoId->id }}">{{ $tmmSoId->tmm_so_id }} => {{$tmmSoId->name}}</option>
-                                                {{-- <option value="{{$id->first()->user_id}}">{{ $id->first()->userForSR->tmm_so_id }}=>{{ $id->first()->userForSR->name }}</option> --}}
+                                                <option value="{{ $tmmSoId->user_id }}">{{ $tmmSoId->user->tmm_so_id }} => {{$tmmSoId->user->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -72,15 +71,6 @@
                                     </div>
 
                                     <div class="form-group col-sm-2">
-                                        <label for="account_entry_id">Inv/Trn. Type</label>
-                                        <input type="text" id="invType" class="form-control" readonly>
-                                        {{-- <select name="pay_type" class="form-control" required>
-                                            <option>Select</option>
-                                            <option value="1">Cash</option>
-                                            <option value="3">Credit</option>
-                                        </select> --}}
-                                    </div>
-                                    <div class="form-group col-sm-2">
                                         <label for="invoice_no">Invoice No <span class="t_r">*</span></label>
                                         <select name="invoice_no" id="invoice_no" class="form-control" >
                                             <option selected value disabled>Select</option>
@@ -89,6 +79,12 @@
                                             @endforeach
                                         </select>
                                     </div>
+
+                                    <div class="form-group col-sm-2">
+                                        <label for="account_entry_id">Inv/Trn. Type</label>
+                                        <input type="text" id="invType" class="form-control" readonly>
+                                    </div>
+
                                     <div class="form-group col-sm-2">
                                         <label for="">Sales Amount <span class="t_r">*</span></label>
                                         <input name="" id="sales_amt" class="form-control" readonly>

@@ -19,11 +19,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        {{-- <div class="card-header">
+                        <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Supplier Table</h4>
+                                <h4 class="card-title">Collection</h4>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="multi-filter-select" class="display table table-striped table-hover" >
@@ -31,7 +31,6 @@
                                         <tr>
                                             <th style="width:35px">SL</th>
                                             <th>Payment By</th>
-                                            {{-- <th>Payment Type</th> --}}
                                             <th>Note</th>
                                             <th>MR NO</th>
                                             <th>MR Date</th>
@@ -46,6 +45,7 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -54,16 +54,12 @@
                                         <tr>
                                             <td class="text-center">{{ $x++ }}</td>
                                             <td>{{ $account->type==1?'Cash':'Bank' }}</td>
-                                            {{-- <td>{{ $account->pay_type==1?'Cash':'Credit' }}</td> --}}
                                             <td>{{ $account->note }}</td>
                                             <td>{{ $account->m_r_no }}</td>
                                             <td>{{ bdDate($account->m_r_date) }}</td>
                                             <td>{{ $account->credit }}</td>
                                             <td class="text-center">
                                                 <div class="form-button-action">
-                                                    {{-- <a href="{{ route('received.receivedDestroy', is_null($account->tran_id) ? 0 : $account->tran_id) }}" class="btn btn-link btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
-                                                        <i class="fa fa-times"></i>
-                                                    </a> --}}
                                                     <form action="{{ route('account-received.destroy', is_null($account->tran_id)?0:$account->tran_id) }}" style="display: initial;" method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -87,57 +83,7 @@
 </div>
 
 @push('custom_scripts')
-<script >
-    $(document).ready(function() {
-        $('#basic-datatables').DataTable({
-
-        });
-
-        $('#multi-filter-select').DataTable( {
-            "lengthMenu": [[50, 100, 200, -1], [50, 100, 200, "All"]],
-            // "pageLength": 10,
-            initComplete: function () {
-                this.api().columns().every( function () {
-                    var column = this;
-                    var select = $('<select class="form-control form-control-sm"><option value=""></option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                            );
-
-                        column
-                        .search( val ? '^'+val+'$' : '', true, false )
-                        .draw();
-                    } );
-
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    } );
-                } );
-            }
-        });
-
-        // Add Row
-        $('#add-row').DataTable({
-            "pageLength": 5,
-        });
-
-        var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        // $('#addRowButton').click(function() {
-        //     $('#add-row').dataTable().fnAddData([
-        //         $("#addName").val(),
-        //         $("#addPosition").val(),
-        //         $("#addOffice").val(),
-        //         action
-        //         ]);
-        //     $('#addRowModal').modal('hide');
-
-        // });
-    });
-</script>
-
+@include('admin.include.data_table_js')
 @endpush
 @endsection
 
