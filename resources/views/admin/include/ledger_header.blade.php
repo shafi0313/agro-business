@@ -7,7 +7,7 @@
             <span><strong>Customer Phone: </strong>{{$customer_Info->phone}}</span><br>
             <span><strong>Address: </strong>{{$customer_Info->address}}</span><br>
             @isset($customer_Info->customerInfo->credit_limit)
-            <span><strong>Credit Limit: </strong>{{$customer_Info->customerInfo->credit_limit}}</span><br>
+            <span><strong>Credit Limit: </strong>{{number_format($customer_Info->customerInfo->credit_limit,2)}}</span><br>
             @endisset
         </p>
     </div>

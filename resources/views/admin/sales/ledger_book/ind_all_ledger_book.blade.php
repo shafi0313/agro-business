@@ -69,7 +69,6 @@
                                                 $pAlart = 'Dft.';
                                             }
                                         @endphp
-                                        {{-- {{($invoice->inv_cancel!=0)?'text-danger':''}} --}}
                                         <tr class="{{($invoice->c_status==1)?'text-primary':''}} {{($pAlart!='')? 'text-danger':''}}">
                                             <td class="text-center">{{ $x++ }}</td>
                                             <td>{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y') }}</td>

@@ -49,8 +49,8 @@ if (!function_exists('invType')) {
     function invType($invoice)
     {
         return match ($invoice) {
-            0 => 'Previous',
-            1 => 'Cash Sales',
+            '0' => 'Previous',
+            '1' => 'Cash Sales',
             2 => 'Return Cash Sales',
             3 => 'Credit Sales',
             4 => 'Return Credit Sales',
