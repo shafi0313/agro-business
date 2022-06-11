@@ -48,19 +48,19 @@ if (!function_exists('readableSize')) {
 if (!function_exists('invType')) {
     function invType($invoice)
     {
-        return match (intval($invoice)) {
+        return match ($invoice) {
             '0' => 'Previous',
             '1' => 'Cash Sales',
-            2 => 'Return Cash Sales',
-            3 => 'Credit Sales',
-            4 => 'Return Credit Sales',
-            5 => 'Sample',
-            7 => 'Bulk Sales',
-            16 => 'Bulk Ca. Sales',
-            17 => 'Bulk Ca. Return',
-            18 => 'Bulk Cr. Sales',
-            19 => 'Bulk Cr. Return',
-            25 => 'Collection',
+            '2' => 'Return Cash Sales',
+            '3' => 'Credit Sales',
+            '4' => 'Return Credit Sales',
+            '5' => 'Sample',
+            '7' => 'Bulk Sales',
+            '16' => 'Bulk Ca. Sales',
+            '17' => 'Bulk Ca. Return',
+            '18' => 'Bulk Cr. Sales',
+            '19' => 'Bulk Cr. Return',
+            '25' => 'Collection',
             default => 'Error'
         };
     }
