@@ -17,7 +17,7 @@
   </head>
 
   <body>
-    <div  class="page">
+    <div class="page">
         <div class="print_page" id="print_page">
             <div class="bg_img"><img src="{{asset('images/icons/company_bg.png')}}" alt=""></div>
             <div class="header" >
@@ -234,8 +234,6 @@
             </table>
             @endif
             {{-- /Invoice Due Table --}}
-
-
 
             <footer>
                 <div class="">

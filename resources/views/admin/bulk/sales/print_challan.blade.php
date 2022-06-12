@@ -51,17 +51,12 @@
                             <td>&nbsp;:</td>
                             <td>{{$ledger->customer->name}}</td>
                         </tr>
-                        {{-- @php $dis = $ledger->customer->address; @endphp --}}
                         <tr>
                             <td>Address</td>
                             <td>&nbsp;:</td>
                             {{-- <td>{{ substr($dis, 0, strrpos($dis, " ")) }}</td> --}}
                             <td>{{ $ledger->customer->address }}</td>
                         </tr>
-                        {{-- <tr>
-                            <td class="text-right" colspan="2">:</td>
-                            <td>{{ substr($dis, strrpos($dis, ' ')) }}</td>
-                        </tr> --}}
                         <tr>
                             <td>Contact</td>
                             <td>&nbsp;:</td>

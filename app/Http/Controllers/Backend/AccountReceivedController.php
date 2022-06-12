@@ -172,6 +172,11 @@ class AccountReceivedController extends Controller
             Alert::info('This is old data you can not delete this data.');
             return back();
         }
+        // Ledger invoice net amount update
+        $findLedgerData = SalesLedgerBook::whereTran_id($tranId)->first(['invoice_no','discount_amt']);
+        $ledgerData = SalesLedgerBook::whereInvoice_no($findLedgerData->invoice_no)->whereType(1)->first(['id','net_amt']);
+        SalesLedgerBook::find($ledgerData->id)->update(['net_amt' => $findLedgerData->discount_amt + $ledgerData->net_amt]);
+
         try{
             Account::whereTran_id($tranId)->delete();
             SalesLedgerBook::whereTran_id($tranId)->delete();
