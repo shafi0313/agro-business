@@ -37,7 +37,7 @@ class SalesInvoiceCashReturnController extends Controller
 
         $invoice_no = SalesLedgerBook::select(['invoice_no','type'])->whereIn('type', [2,4])->count() + 33;
         $challan_no = SalesLedgerBook::select(['challan_no','type'])->whereIn('type', [2,4])->count() + 33;
-        $invoices = SalesLedgerBook::whereInv_cancel(0)->whereR_type(0)->whereIn('type', [1,3])->whereCustomer_id($id)->get();
+        $invoices = SalesLedgerBook::whereCustomer_id($id)->where('c_status','!=',1)->whereInv_cancel(0)->whereR_type(0)->whereIn('type', [1,3])->get();
 
         $ledger = SalesLedgerBook::where('customer_id',$id)->orderBy('id','DESC')->get(['net_amt']);
         $ledgerPayment = SalesLedgerBook::where('customer_id', $id)->first();
