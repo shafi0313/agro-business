@@ -48,9 +48,7 @@ class SalesInvoiceCashController extends Controller
 
     public function dueInvoice(Request $request)
     {
-        $inv_no = $request->inv_no;
-        $products = DB::table('sales_ledger_books');
-        $products->where('invoice_no', 'LIKE', '%'. $inv_no .'%');
+        $products = SalesLedgerBook::whereCustomer_id($request->customer_id)->where('c_status','!=',1)->whereInv_cancel(0)->where('invoice_no', 'LIKE', '%'. $request->inv_no .'%');
 
         $products = $products->get();
         $subs = '';

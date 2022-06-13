@@ -59,9 +59,9 @@
                                 </div>
                             </div>
 
-                        <form action="{{ route('sales-invoice-cash.store') }}" method="post" onsubmit="return validate()">
+                        <form action="{{ route('sales-invoice-cash.store') }}" method="post">
                          @csrf
-                            <input type="hidden" name="customer_id" value="{{$customer->id}}">
+                            <input type="hidden" name="customer_id" id="customer_id" value="{{$customer->id}}">
     {{--__________________________________Invoice Info Start__________________________________--}}
                         <style>
                             .col {
@@ -99,8 +99,6 @@
                                         <input type="date" name="payment_date" class="form-control form-control-sm" required>
                                     </div>
                                 </div>
-                            {{-- </div>
-                            <div class="row justify-content-end"> --}}
                                 @isset($customer->customerInfo->type)
                                     @if ($customer->customerInfo->type==1)
                                     @php $type = 'Dealer' @endphp
@@ -123,7 +121,6 @@
                                         <select class="form-control form-control-sm" name="user_id" required>
                                             <option selected value disabled>Select</option>
                                             @foreach ($userId as $id)
-                                                {{-- <option value="{{ $id->id }}">{{ $id->tmm_so_id }}-{{$id->name}}</option> --}}
                                                 <option value="{{$id->user_id}}">{{$id->user_id}}{{ $id->userForSR->tmm_so_id }}=>{{ $id->userForSR->name }}</option>
                                             @endforeach
                                         </select>
@@ -204,7 +201,6 @@
                                     @else
                                     <input type="hidden" id="credit_limit" value="-1">
                                     @endisset
-
                                 </thead>
                                 <tbody>
                                 </tbody>
@@ -238,7 +234,6 @@
                             </div>
                             <div class="col-md-12" id="note_text" style="display: none">
                                 <div class="form-group ">
-                                    {{-- <label for="" class="form-label form-label-sm">Note</label> --}}
                                     <textarea name="note" class="form-control"   style="width: 100%;"></textarea>
                                 </div>
                             </div>
@@ -266,7 +261,6 @@
                                     </tr>
 
                                     <tr>
-                                        {{-- <td><select name="inv_no[]" id="inv_no_1" onchange="return inv_no(1)" class="form-control form-control-sm" style="width:100px" ><option>Select</option>@foreach ($ledger as $item) <option value="{{$item->id}}">{{$item->invoice_no}} </option>@endforeach</select></td> --}}
                                         <td><input type="text" name="inv_no[]" id="inv_no"  class="form-control form-control-sm" autocomplete="off"/>
                                             <div class="invv" id="invv"></div>
                                         </td>
@@ -305,9 +299,6 @@
                                 </table>
     {{--__________________________________Due Invoice Show End__________________________________--}}
 
-
-
-
                             </div>
                             <div class="text-center">
                                 <input type="submit" value="Submit" class="btn btn-success" id="btn_submit" onclick='return btnClick();'>
@@ -327,44 +318,36 @@
 @push('custom_scripts')
 
 <script>
-    function validate() {
-        $("#btn_submit").attr('disabled', 'disabled');
-    }
-
     $(document).ready(function(){
         $('.add_porduct').on('click', function() {
-            var product_name    = $('#product_name').val();
-            var product_id      = $('#product_id').val();
-            var group_name      = $('#group_name').val();
-            var size_text       = $('#size_text').val();
-            var size_id         = $('#sizee').val();
-            var quantity        = $('#qty').val();
-            var rate_per_qty    = $('#price').val();
-            var bonus           = $('#bonus').val();
-            var pro_dis           = $('#pro_dis').val();
-            var checkStock = $('#msg').text()
+            let product_name    = $('#product_name').val();
+            let product_id      = $('#product_id').val();
+            let group_name      = $('#group_name').val();
+            let size_text       = $('#size_text').val();
+            let size_id         = $('#sizee').val();
+            let quantity        = $('#qty').val();
+            let rate_per_qty    = $('#price').val();
+            let bonus           = $('#bonus').val();
+            let pro_dis           = $('#pro_dis').val();
+            let checkStock = $('#msg').text()
             // Validation
             if (product_name == '') {
                 toast('warning', 'Please select brand name');
                 $('#product_name').focus();
                 return false;
             }
-
             if (quantity == '') {
                 toast('warning', 'Please enter quantity');
                 $('#qty').focus();
                 return false;
             }
-
             if (checkStock != '') {
                 toast('error', 'Out Of stock');
                 return false;
             }
-
-            var proDiscount = Number((quantity*rate_per_qty)*pro_dis/100);
-
-            var totalamount =  quantity*rate_per_qty - proDiscount;
-            var html = '<tr>';
+            let proDiscount = Number((quantity*rate_per_qty)*pro_dis/100);
+            let totalamount =  quantity*rate_per_qty - proDiscount;
+            let html = '<tr>';
             html += '<tr class="trData"><td class="serial text-center"></td><td>' + product_name + '</td><td>' + group_name + '</td><td class="text-center">'+ size_text +'</td><td class="text-center">' + quantity + '</td><td class="text-right">' + parseFloat(rate_per_qty).toFixed(2) + '</td><td class="text-center">'+bonus+'</td><td class="text-center">'+pro_dis+'</td><td class="text-right">' + parseFloat(totalamount).toFixed(2) + '</td><td align="center">';
             html += '<input type="hidden" name="product_id[]" value="' + product_id + '" />';
             html += '<input type="hidden" name="size[]" value="' + size_id + '" />';
@@ -394,7 +377,7 @@
 
         // Delete
         $('.product_table').on('click', '.product_delete', function(e) {
-            var element = $(this).parents('tr');
+            let element = $(this).parents('tr');
             element.remove();
             toast('warning','Product Removed!');
             e.preventDefault();
@@ -403,11 +386,11 @@
 
         // Subtotal
         function serialMaintain() {
-            var i = 1;
-            var subtotal = 0;
+            let i = 1;
+            let subtotal = 0;
             $('.serial').each(function(key, element) {
                 $(element).html(i);
-                var total = $(element).parents('tr').find('input[name="amt[]"]').val();
+                let total = $(element).parents('tr').find('input[name="amt[]"]').val();
                 subtotal += + parseFloat(total);
                 i++;
             });
@@ -419,7 +402,7 @@
 
 
         $('#sizee').on('change',function(e) {
-            var size_text = $('#sizee').val();
+            let size_text = $('#sizee').val();
             $.ajax({
                 url:'{{ route("productSizeId") }}',
                 type:"get",
@@ -428,7 +411,6 @@
                     },
                 success:function (res) {
                     res = $.parseJSON(res);
-                    // console.log(res.size_text)
                     $('#size_text').val(res.size_text);
 
                 }
@@ -437,7 +419,7 @@
 
         // Product Size
         $('#product_name').on('change',function(e) {
-            var cat_id = $('#product_id').val();
+            let cat_id = $('#product_id').val();
             $.ajax({
                 url:'{{ route("productSize") }}',
                 type:"get",
@@ -453,7 +435,7 @@
 
         // Product Price
         $('#sizee').on('change',function(e) {
-            var size_id = $('#sizee').val();
+            let size_id = $('#sizee').val();
             $.ajax({
                 url:'{{ route("productPriceCash") }}',
                 type:"get",
@@ -468,13 +450,13 @@
         });
 
         $('.qty').on('keyup',function(e) {
-            var product_id = $('#product_id').val();
-            var size_id = Number($('#sizee').val());
-            var qty = Number($('#qty').val());
-            var price = $('#price').val();
-            var discount = $('#discount').val();
-            var total = $('#totalamounval').val();
-            var result = 0;
+            let product_id = $('#product_id').val();
+            let size_id = Number($('#sizee').val());
+            let qty = Number($('#qty').val());
+            let price = $('#price').val();
+            let discount = $('#discount').val();
+            let total = $('#totalamounval').val();
+            let result = 0;
 
             $('.qty').each(function() {
                 result = Number(qty)*Number(price);
@@ -504,28 +486,27 @@
 
         // Total Price
         function total_price(){
-            var total = 0;
+            let total = 0;
             $('input.subtotal').each(function() {
                 total +=Number($(this).val());
             });
             $('#totalamounval').val(total);
         }
 
-
         $('#pro_dis').keyup(function() {
-            var pro_dis = Number($("#pro_dis").val())
-            var subTotalTemp = Number($("#sub-total-temp").val())
-            var result = (pro_dis * subTotalTemp)/100;
+            let pro_dis = Number($("#pro_dis").val())
+            let subTotalTemp = Number($("#sub-total-temp").val())
+            let result = (pro_dis * subTotalTemp)/100;
             $('#subtotal').val(subTotalTemp - result);
         })
 
         // Discount
         $('#discountAmt').keyup(function() {
-            var sum = 0;
-            var sumTk = 0;
-            var amt = $("#total_amount").val()
-            var discount = $("#discountAmt").val()
-            var percent = Number(amt)*Number(discount)/100;
+            let sum = 0;
+            let sumTk = 0;
+            let amt = $("#total_amount").val()
+            let discount = $("#discountAmt").val()
+            let percent = Number(amt)*Number(discount)/100;
 
             $('#net_amt').each(function() {
                 sum = Number(amt) - Number(percent);
@@ -535,11 +516,11 @@
             });
 
             // credit_limit
-            var inv_type = Number($('#inv_type').val())
-            var credit_limit = Number($('#credit_limit').val())
-            var due_amt = $('#due_amt').val()
-            var net_amt = $('#net_amt').val()
-            var total = Number(sum) + Number(due_amt);
+            let inv_type = Number($('#inv_type').val())
+            let credit_limit = Number($('#credit_limit').val())
+            let due_amt = $('#due_amt').val()
+            let net_amt = $('#net_amt').val()
+            let total = Number(sum) + Number(due_amt);
 
             if((credit_limit > 0) && (total > credit_limit) && (inv_type==3)){
                 $('#credit_limit_m').html(credit_limit - total + ' Credit limit over');
@@ -552,11 +533,11 @@
         });
 
         $('#discountTk').keyup(function() {
-            var sum = 0;
-            var sumTk = 0;
-            var amt = $("#total_amount").val()
-            var discountTk = $("#discountTk").val()
-            var percent = Number(discountTk)*100/ Number(amt);
+            let sum = 0;
+            let sumTk = 0;
+            let amt = $("#total_amount").val()
+            let discountTk = $("#discountTk").val()
+            let percent = Number(discountTk)*100/ Number(amt);
 
             $('#net_amt').each(function() {
                 sum = Number(amt) - Number(discountTk);
@@ -566,11 +547,11 @@
             });
 
             // credit_limit
-            var inv_type = Number($('#inv_type').val())
-            var credit_limit = Number($('#credit_limit').val())
-            var due_amt = $('#due_amt').val()
-            var net_amt = $('#net_amt').val()
-            var total = Number(sum) + Number(due_amt);
+            let inv_type = Number($('#inv_type').val())
+            let credit_limit = Number($('#credit_limit').val())
+            let due_amt = $('#due_amt').val()
+            let net_amt = $('#net_amt').val()
+            let total = Number(sum) + Number(due_amt);
             if((credit_limit > 0) && (total > credit_limit) && (inv_type==3)){
                 $('#credit_limit_m').html(credit_limit - total + ' Credit limit over');
                 alert('fuck')
@@ -598,7 +579,7 @@
                             type: type,
                         },
                         success: function (data) {
-                            var array = $.map(data, function (item) {
+                            let array = $.map(data, function (item) {
                                 return {
                                     label: item[autoType],
                                     value: item[autoType],
@@ -610,7 +591,7 @@
                     });
                 },
                 select: function (event, ui) {
-                    var data = ui.item.data;
+                    let data = ui.item.data;
                     id_arr = $(this).attr('id');
                     id = id_arr.split("_");
                     elementId = id[id.length - 1];
@@ -635,12 +616,13 @@
 
 
         $('#inv_no').keyup(function(e) {
-            var inv_no = $('#inv_no').val();
+            let inv_no = $('#inv_no').val();
+            let customer_id = $('#customer_id').val();
             if(inv_no != ''){
                 $.ajax({
                     url:'{{ route("salesInvoice.due") }}',
                     method: 'get',
-                    data: {inv_no: inv_no},
+                    data: {inv_no: inv_no, customer_id:customer_id},
                     success: function(data){
                         $("#invv").fadeIn("fast").html(data)
                     }
@@ -655,7 +637,7 @@
             $('#invv').fadeOut();
             $('#search_btn').on('click', function(e){
                 e.preventDefault();
-                var inv = $('#inv_no').val();
+                let inv = $('#inv_no').val();
                 $.ajax({
                     url:'{{ route("dueAmtInvoice") }}',
                     method: 'get',
@@ -670,11 +652,11 @@
         });
 
         $('.add_due').on('click', function() {
-            var inv_no  = $('#inv_no').val();
-            var inv_date  = $('#inv_date').val();
-            var inv_amt  = $('#inv_amt').val();
-            var inv_payment = $('#inv_payment').val();
-            var inv_total = $('#inv_total').val();
+            let inv_no  = $('#inv_no').val();
+            let inv_date  = $('#inv_date').val();
+            let inv_amt  = $('#inv_amt').val();
+            let inv_payment = $('#inv_payment').val();
+            let inv_total = $('#inv_total').val();
 
             if (inv_payment == '') {
                 toast('warning', 'Please enter payment');
@@ -682,8 +664,8 @@
                 return false;
             }
 
-            // var totalamount =  quantity*rate_per_qty;
-            var html = '<tr>';
+            // let totalamount =  quantity*rate_per_qty;
+            let html = '<tr>';
             html += '<tr><td class="text-center due_serial"></td><td>' + inv_no + '</td><td>' + inv_date + '</td><td class="text-center">'+ inv_amt +'</td><td class="text-center">' + inv_payment + '</td><td class="text-right">' + parseFloat(inv_total).toFixed(2) + '</td><td align="center">';
             html += '<input type="hidden" name="inv_no[]" value="' + inv_no + '" />';
             html += '<input type="hidden" name="inv_date[]" value="' + inv_date + '" />';
@@ -704,9 +686,9 @@
         });
 
         $('#inv_payment').on('keyup', function(){
-            var summ = 0;
-            var inv_amtt = $('#inv_amt').val();
-            var inv_paymentt = $('#inv_payment').val();
+            let summ = 0;
+            let inv_amtt = $('#inv_amt').val();
+            let inv_paymentt = $('#inv_payment').val();
             $('#inv_total').each(function() {
                 summ = Number(inv_amtt) - Number(inv_paymentt);
             });
@@ -716,7 +698,7 @@
 
         // Delete
         $('.due_table').on('click', '.due_delete', function(e) {
-            var element = $(this).parents('tr');
+            let element = $(this).parents('tr');
             element.remove();
             toast('warning','item removed!');
             e.preventDefault();
@@ -725,11 +707,11 @@
 
         // Subtotal
         function dueSerial() {
-            var j = 1;
-            var dueSubTotal = 0;
+            let j = 1;
+            let dueSubTotal = 0;
             $('.due_serial').each(function(key, element) {
                 $(element).html(j);
-                var dueTotal = $(element).parents('tr').find('input[name="inv_total[]"]').val();
+                let dueTotal = $(element).parents('tr').find('input[name="inv_total[]"]').val();
                 dueSubTotal += + parseFloat(dueTotal);
                 j++;
             });
@@ -742,9 +724,9 @@
 
 <script>
     function btnClick() {
-        var checkLimit = $('#credit_limit_m').text()
-        var discountAmt = Number($("#discountAmt").val())
-        var net_amt = Number($("#net_amt").val())
+        let checkLimit = $('#credit_limit_m').text()
+        let discountAmt = Number($("#discountAmt").val())
+        let net_amt = Number($("#net_amt").val())
         if(checkLimit !=''){
             alert('Credit Limit Is Over, Please Increase Your Credit Limit Or Pay Due Amount')
             return false;
@@ -756,28 +738,6 @@
         }
     }
 </script>
-
-<script>
-    function toast(status,header,msg) {
-        Command: toastr[status](header, msg)
-        toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": true,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "2000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-    }
-</script>
+@include('admin.include.toast')
 @endpush
 @endsection

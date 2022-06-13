@@ -542,7 +542,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
 
         Route::get('/print/challan/{customer_id}/{invoice_no}', [SalesInvoiceCashReturnController::class, 'printChallan'])->name('salesInvoiceCashReturn.printChallan');
         Route::get('/print/invoice/{customer_id}/{invoice_no}', [SalesInvoiceCashReturnController::class, 'printInvoice'])->name('salesInvoiceCashReturn.printInvoice');
-        Route::get('/sales-invoice-return/due', [SalesInvoiceCashReturnController::class, 'dueInvoice'])->name('salesInvoice.due');
+        // Route::get('/sales-invoice-return/due', [SalesInvoiceCashReturnController::class, 'dueInvoice'])->name('salesInvoice.due');
 
         // All
         Route::get('/all/show', [SalesInvoiceCashReturnController::class, 'allInvoice'])->name('salesInvoiceCashReturn.allInvoice');
