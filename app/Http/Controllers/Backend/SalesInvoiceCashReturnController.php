@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 
-use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Stock;
 use App\Models\IsReturn;
 use App\Models\InvoiceDue;
 use App\Models\SalesReport;
-use App\Models\ProductStock;
 use App\Models\SalesInvoice;
 use Illuminate\Http\Request;
 use App\Models\SalesLedgerBook;
@@ -39,10 +37,11 @@ class SalesInvoiceCashReturnController extends Controller
 
         $invoice_no = SalesLedgerBook::select(['invoice_no','type'])->whereIn('type', [2,4])->count() + 33;
         $challan_no = SalesLedgerBook::select(['challan_no','type'])->whereIn('type', [2,4])->count() + 33;
+        $invoices = SalesLedgerBook::whereInv_cancel(0)->whereR_type(0)->whereIn('type', [1,3])->whereCustomer_id($id)->get();
 
         $ledger = SalesLedgerBook::where('customer_id',$id)->orderBy('id','DESC')->get(['net_amt']);
         $ledgerPayment = SalesLedgerBook::where('customer_id', $id)->first();
-        return view('admin.sales.sales_invoice_cash_return.create', compact('customer','invoice_no','userId','ledger','ledgerPayment','challan_no'));
+        return view('admin.sales.sales_invoice_cash_return.create', compact('customer','invoice_no','userId','ledger','ledgerPayment','challan_no','invoices'));
     }
 
 
@@ -59,6 +58,10 @@ class SalesInvoiceCashReturnController extends Controller
             'r_type' => 'required',
         ]);
 
+        if ($request->filled('inv_complete')) {
+            SalesLedgerBook::whereIn('id', $request->inv_complete)->update(['c_status' => '1']);
+        }
+
         DB::beginTransaction();
 
         $customer_id = $request->get('customer_id');
@@ -67,8 +70,6 @@ class SalesInvoiceCashReturnController extends Controller
         $user_id = $request->get('user_id');
         $r_type = $request->get('r_type');
         $transaction_id = transaction_id('SER');
-
-
 
         $invoiceArr = [];
         foreach($request->product_id as $key => $v){
@@ -140,11 +141,7 @@ class SalesInvoiceCashReturnController extends Controller
             'discount' => $request->get('discount'),
             'discount_amt' => $request->get('discount_amt'),
             'net_amt' => round('-'.$request->get('net_amt')),
-            // 'payment' => round($request->get('payment')),
-            // 'payment_date' =>  $request->get('payment_date'),
-            // 'user_type' =>  $request->get('user_type'),
             'invoice_date' => $request->invoice_date,
-            // 'delivery_date' => $request->get('delivery_date'),
         ];
 
         $salesReport = SalesReport::where('user_id', $request->user_id)->first();
@@ -163,13 +160,16 @@ class SalesInvoiceCashReturnController extends Controller
         SalesReport::create($report);
 
         try {
-            $ledgerBook = SalesLedgerBook::create($ledgerBook);
+            SalesLedgerBook::create($ledgerBook);
+            if ($request->filled('inv_complete')) {
+                SalesLedgerBook::whereIn('id', $request->inv_complete)->update(['c_status' => '1']);
+            }
             DB::commit();
             toast('Sales Return Invoice Successfully Inserted','success');
             return redirect()->route('sales-invoice-cash-return.index');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Sales Return Invoice Inserted Faild','error');
+            toast($ex->getMessage().'Sales Return Invoice Inserted Failed','error');
             return back();
         }
     }
@@ -272,142 +272,4 @@ class SalesInvoiceCashReturnController extends Controller
             return redirect()->back();
         }
     }
-    // public function index()
-    // {
-    //     $customers = User::where('role', 2)->get();
-    //     return view('admin.sales.sales_invoice_cash_return_return.index', compact('customers'));
-    // }
-
-    // public function createId($id)
-    // {
-    //     $customer = User::find($id);
-    //     $getInvoice_no = SalesInvoice::select(['invoice_no','type'])->withTrashed()->where('type', 2)->orwhere('type', 4)->get();
-    //     $invoice_no = $getInvoice_no->groupBy('invoice_no')->count() + 101;
-    //     return view('admin.sales.sales_invoice_cash_return_return.create', compact('customer','invoice_no'));
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     $this->validate($request,[
-    //         'invoice_no' => 'required',
-    //         'size' => 'required',
-    //         'quantity' => 'required',
-    //         'rate_per_qty' => 'required',
-    //         'amt' => 'required',
-    //         'invoice_date' => 'required',
-    //     ]);
-
-    //     $customer_id = $request->get('customer_id');
-    //     $invoice_no = $request->get('invoice_no');
-    //     $invoice_date = $request->get('invoice_date');
-    //     // $payment_date = $request->get('payment_date');
-
-    //     DB::beginTransaction();
-
-    //     // Invoice
-    //     foreach($request->product_id as $key => $v){
-    //         $data=[
-    //             'customer_id' => $customer_id,
-    //             'product_id' => $request->product_id[$key],
-    //             'type' => 2,
-    //             'invoice_no' => $invoice_no,
-    //             'size' => $request->size[$key],
-    //             'quantity' => $request->quantity[$key],
-    //             'rate_per_qty' => $request->rate_per_qty[$key],
-    //             'discount' => $request->discount[$key],
-    //             'amt' => $request->amt[$key],
-    //             'invoice_date' => $invoice_date,
-    //             // 'payment_date' => $payment_date,
-    //         ];
-    //         $invoice = SalesInvoice::create($data);
-    //     }
-
-    //     // Stock
-    //     $stocks = ProductStock::whereIn('product_id', $request->product_id)->whereIn('product_pack_size_id', $request->size)->get();
-    //     foreach($stocks as $i=>$stok){
-    //         $quantity = $stok->quantity;
-    //         $stockUpdate['quantity'] = $quantity + $request->quantity[$i];
-
-    //         ProductStock::where('product_id', $request->product_id[$i])->where('product_pack_size_id', $request->size[$i])->first()->update($stockUpdate);
-    //     }
-
-    //     // ledger Book
-    //     $ledgerBook = [
-    //         'customer_id' => $customer_id,
-    //         'type' => 2,
-    //         'invoice_no' => $invoice_no,
-    //         'invoice_date' => $invoice_date,
-    //         'sales_amt' => '-'.$request->get('total_amt'),
-    //     ];
-
-    //     try {
-    //         $ledgerBook = SalesLedgerBook::create($ledgerBook);
-    //         $invoice == true;
-    //         DB::commit();
-    //         toast('invoice Successfully Inserted','success');
-    //         return redirect()->route('sales-invoice-cash-return.index');
-
-    //     } catch (\Exception $ex) {
-    //         DB::rollBack();
-    //         toast($ex->getMessage().'invoice Inserted Faild','error');
-    //         return back();
-    //     }
-    // }
-
-    // public function show($id)
-    // {
-    //     $customerInfo = SalesInvoice::where('customer_id', $id)->first();
-    //     $getInvoice = SalesInvoice::where('customer_id', $id)->where('type', 2)->latest()->get();
-    //     $customerInvoices = $getInvoice->groupBy('invoice_no');
-    //     if($getInvoice->count() < 1){
-    //         alert()->info('Alert','There are no invoice. First create invoice');
-    //         return redirect()->back();
-    //     }
-    //    return view('admin.sales.sales_invoice_cash_return_return.customer_invoice', compact('customerInvoices','customerInfo'));
-    // }
-
-    // public function showInvoice($customer_id, $invoice_no)
-    // {
-    //     $showInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [2,4])->get();
-    //     $customerInfo = SalesInvoice::where('customer_id', $customer_id)->first();
-    //     return view('admin.sales.sales_invoice_cash_return_return.show_invoice', compact('showInvoices','customerInfo'));
-    // }
-
-    // public function destroyInvoice($invoice_no)
-    // {
-    //     SalesInvoice::where('invoice_no', $invoice_no)->delete();
-    //     SalesLedgerBook::where('invoice_no',$invoice_no)->delete();
-    //     if(SalesInvoice::where('type', 2)->count() < 1){
-    //         toast('Invoice Successfully Deleted','success');
-    //         return redirect()->route('return-sales-invoice.index');
-    //     }else{
-    //         toast('Invoice Successfully Deleted','success');
-    //         return redirect()->back();
-    //     }
-    // }
-
-    // public function destroy(Request $request, $id)
-    // {
-    //     SalesInvoice::find($id)->delete();
-    //     $amt = 0;
-    //     $invoice_no = $request->get('invoice_no');
-    //     $customer_id = $request->get('customer_id');
-    //     $invoices = SalesInvoice::select('amt')->where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get()->sum('amt');
-
-    //     $ledgerBooks = SalesLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get();
-
-    //     foreach($ledgerBooks as $ledgerBook)
-    //     {
-    //         $courier_pay = $ledgerBook->courier_pay;
-    //         $payment = $ledgerBook->payment;
-    //     }
-
-    //     $ledgerUpdate = [
-    //         'total_amt' =>$invoices,
-    //         'dues_amt' =>$invoices - $courier_pay - $payment,
-
-    //     ];
-    //     SalesLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->update($ledgerUpdate);
-    //     return redirect()->back();
-    // }
 }

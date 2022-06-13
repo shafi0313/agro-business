@@ -12,8 +12,6 @@
         padding: 5px;
         cursor: pointer;
     }
-    /* .table thead tr th{font-weight: bold; text-align: center} */
-
 </style>
 <div class="main-panel">
     <div class="content">
@@ -59,7 +57,7 @@
                                 </div>
                             </div>
 
-                        <form action="{{ route('sales-invoice-cash-return.store') }}" method="post" onsubmit="return validate()">
+                        <form action="{{ route('sales-invoice-cash-return.store') }}" method="post">
                          @csrf
                             <input type="hidden" id="customer_id" name="customer_id" value="{{$customer->id}}">
     {{--__________________________________Invoice Info Start__________________________________--}}
@@ -91,17 +89,8 @@
                                             <option value="21">Unsold</option>
                                             <option value="22">Damage</option>
                                         </select>
-                                        {{-- <input type="date" name="delivery_date" class="form-control form-control-sm" required> --}}
                                     </div>
                                 </div>
-                                {{-- <div class="col">
-                                    <div class="form-group">
-                                        <label for="" class="form-label form-label-sm text-danger">Payment Date <span class="t_r">*</span></label>
-                                        <input type="date" name="payment_date" class="form-control form-control-sm" required>
-                                    </div>
-                                </div> --}}
-                            {{-- </div>
-                            <div class="row justify-content-end"> --}}
                                 @isset($customer->customerInfo->type)
                                     @if ($customer->customerInfo->type==1)
                                     @php $type = 'Dealer' @endphp
@@ -138,6 +127,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="" class="form-label form-label-sm">Inv Complete</label>:</label>
+                                        <select name="inv_complete[]" multiple="multiple" class="select2multi form-control form-control-sm">
+                                            @foreach ($invoices as $invoice)
+                                            <option value="{{$invoice->id}}">{{$invoice->invoice_no}}</option>
+                                            @endforeach
+                                          </select>
+                                    </div>
+                                </div>
                             </div>
     {{--__________________________________Invoice Info End__________________________________--}}
                             <hr class="bg-warning">
@@ -148,7 +147,6 @@
                                         <tr>
                                             <th>Invoice No <span class="t_r">*</span></th>
                                             <th>Brand Name <span class="t_r">*</span></th>
-                                            {{-- <th>Group Name <span class="t_r">*</span></th> --}}
                                             <th>Size <span class="t_r">*</span></th>
                                             <th>Quantity <span class="t_r">*</span></th>
                                             <th>Rate Per Qty <span class="t_r">*</span></th>
@@ -165,11 +163,9 @@
                                         <input type="hidden" id="size_text">
                                         <input type="hidden" id="size_id">
                                         <input type="hidden" id="inv_id">
-                                        {{-- <input type="hidden" id="invoice_no"> --}}
                                         <input type="hidden"    id="product_id"  class="autocomplete_txt" />
                                         <td><input type="text"  id="invoice_no" data-type="invoice_no" class="form-control form-control-sm autocomplete_txt" style="width:200px" placeholder="" /></td>
                                         <td><input type="text"  id="product_name" class="form-control form-control-sm" style="width:200px" placeholder="" readonly/></td>
-                                        {{-- <td><input type="text"  id="group_name"  class="form-control form-control-sm" style="min-width:200px" /></td> --}}
                                         <td><input id="sizee"  class="form-control form-control-sm" style="width:100px" readonly></td>
                                         <td><input type="number" id="qty" class="form-control form-control-sm qty" placeholder="Quantity" /></td>
                                         <td><input type="number" id="rate_per_qty"  data-type="price" class="form-control form-control-sm qty" placeholder="Rate" /></td>
@@ -190,7 +186,6 @@
                                         <th width="4%">SN</th>
                                         <th width="%">Invoice No</th>
                                         <th width="%">Brand Name:</th>
-                                        {{-- <th width="%">Group Name:</th> --}}
                                         <th width="8%">Size: </th>
                                         <th width="7%">Quantity:</th>
                                         <th width="11%">Rate Per Qty:</th>
@@ -240,15 +235,12 @@
                             </div>
                             <div class="col-md-12" id="note_text" style="display: none">
                                 <div class="form-group ">
-                                    {{-- <label for="" class="form-label form-label-sm">Note</label> --}}
                                     <textarea name="note" class="form-control"   style="width: 100%;"></textarea>
                                 </div>
                             </div>
 
-
-
                             <div class="text-center">
-                                <input type="submit" value="Submit" class="btn btn-success" id="btn_submit" onclick='return btnClick();'>
+                                <input type="submit" value="Submit" class="btn btn-success">
                             </div>
                         </form>
                         </div>
@@ -262,7 +254,7 @@
 </div>
 
 @push('custom_scripts')
-
+@include('admin.include.select2')
 <script>
     $("#due").click(function(){
         $("#due_text").slideToggle();
@@ -272,17 +264,12 @@
         $("#note_text").slideToggle();
     });
 
-    function validate() {
-        $("#btn_submit").attr('disabled', 'disabled');
-    }
-
     $(document).ready(function(){
         $('.add_porduct').on('click', function() {
             var inv_id          = $('#inv_id').val();
             var invoice_no      = $('#invoice_no').val();
             var product_name    = $('#product_name').val();
             var product_id      = $('#product_id').val();
-            // var group_name      = $('#group_name').val();
             var size_text       = $('#sizee').val();
             var size_id         = $('#size_id').val();
             var quantity        = $('#qty').val();
@@ -290,10 +277,7 @@
             var bonus           = $('#bonus').val();
             var pro_dis           = $('#pro_dis').val();
             var checkStock = $('#msg').text();
-
             var inv = invoice_no.substr(0,invoice_no.indexOf(' '));
-
-            console.log(size_id)
 
             // Validation
             if (product_name == '') {
@@ -301,26 +285,17 @@
                 $('#product_name').focus();
                 return false;
             }
-
-            // if (size_id == '') {
-            //     toast('warning', 'Please select size');
-            //     $('#sizee').focus();
-            //     return false;
-            // }
-
             if (quantity == '') {
                 toast('warning', 'Please enter quantity');
                 $('#qty').focus();
                 return false;
             }
-
             if (checkStock != '') {
                 toast('error', 'Out Of stock');
                 return false;
             }
 
             var proDiscount = Number((quantity*rate_per_qty)*pro_dis/100);
-
             var totalamount =  quantity*rate_per_qty - proDiscount;
             var html = '<tr>';
             html += '<tr class="trData"><td class="serial text-center"></td><td>' + inv  + '</td><td>' + product_name + '</td><td class="text-center">'+ size_text +'</td><td class="text-center">' + quantity + '</td><td class="text-right">' + parseFloat(rate_per_qty).toFixed(2) + '</td><td class="text-center">'+bonus+'</td><td class="text-center">'+pro_dis+'</td><td class="text-right">' + parseFloat(totalamount).toFixed(2) + '</td><td align="center">';
@@ -339,7 +314,6 @@
             // Value reset
             $('.product_table tbody').append(html);
             $('#product_name').val('');
-            // $('#group_name').val('');
             $('#sizee').val('');
             $('#size_text').val('');
             $('#qty').val('');
@@ -351,7 +325,6 @@
             $('#invoice_no').val('');
             $('#rate_per_qty').val(0);
             $('#inv_id').val('');
-
             serialMaintain();
         });
 
@@ -374,29 +347,10 @@
                 subtotal += + parseFloat(total);
                 i++;
             });
-
             $('.sub-total').html(subtotal.toFixed(2));
             $('#total_amount').val(subtotal);
             $('#net_amt').val(subtotal);
         };
-
-
-        // $('#sizee').on('change',function(e) {
-        //     var size_text = $('#sizee').val();
-        //     $.ajax({
-        //         url:'{{ route("productSizeId") }}',
-        //         type:"get",
-        //         data: {
-        //             size_text: size_text
-        //             },
-        //         success:function (res) {
-        //             res = $.parseJSON(res);
-        //             console.log(res.size_text)
-        //             $('#size_text').val(res.size_text);
-
-        //         }
-        //     })
-        // });
 
         // Product Size
         $('#invoice_no').on('change',function(e) {
@@ -413,22 +367,6 @@
                 }
             })
         });
-
-        // Product Price
-        // $('#sizee').on('change',function(e) {
-        //     var size_id = $('#sizee').val();
-        //     $.ajax({
-        //         url:'{{ route("productPriceCash") }}',
-        //         type:"get",
-        //         data: {
-        //             size_id: size_id
-        //             },
-        //         success:function (res) {
-        //             res = $.parseJSON(res);
-        //             $('#price').val(res.cash_price);
-        //         }
-        //     })
-        // });
 
         $('.qty').on('keyup',function(e) {
             var product_id = $('#product_id').val();
@@ -474,7 +412,6 @@
             $('#totalamounval').val(total);
         }
 
-
         $('#pro_dis').keyup(function() {
             var pro_dis = Number($("#pro_dis").val())
             var subTotalTemp = Number($("#sub-total-temp").val())
@@ -484,8 +421,6 @@
 
 
         $('#discountAmt').keyup(function() {
-            // $('#discountTk').attr('readonly',true)
-            // $('#discountAmt').attr('readonly',false)
             var sum = 0;
             var sumTk = 0;
             var amt = $("#total_amount").val()
@@ -499,25 +434,11 @@
                 sumTk = Number(percent);
             });
 
-
-            // credit_limit
-            // var credit_limit = Number($('#credit_limit').val())
-            // var due_amt = $('#due_amt').val()
-            // var net_amt = $('#net_amt').val()
-            // var total = Number(sum) + Number(due_amt);
-            // if((credit_limit > 0) && (total > credit_limit)){
-            //     $('#credit_limit_m').html(credit_limit - total + ' Credit limit over');
-            // }else{
-            //     $('#credit_limit_m').html('')
-            // }
-
             $('#net_amt').val(Math.round(sum));
             $('#discountTk').val(sumTk);
         });
 
         $('#discountTk').keyup(function() {
-            // $('#discountAmt').attr('readonly',true)
-            // $('#discountTk').attr('readonly',false)
             var sum = 0;
             var sumTk = 0;
             var amt = $("#total_amount").val()
@@ -531,17 +452,6 @@
                 sumTk = Number(percent);
             });
 
-            // credit_limit
-            // var credit_limit = Number($('#credit_limit').val())
-            // var due_amt = $('#due_amt').val()
-            // var net_amt = $('#net_amt').val()
-            // var total = Number(sum) + Number(due_amt);
-            // if((credit_limit > 0) && (total > credit_limit)){
-            //     $('#credit_limit_m').html(credit_limit - total + ' Credit limit over');
-            // }else{
-            //     $('#credit_limit_m').html('')
-            // }
-
             $('#net_amt').val(Math.round(sum));
             $('#discountAmt').val(sumTk.toFixed(2));
         });
@@ -551,7 +461,6 @@
             var customer_id = $("#customer_id").val()
             type = $(this).data('type');
             if (type == 'invoice_no') autoType = 'invoice_no';
-            // if (type == 'medicinesId') autoType = 'id';
             $(this).autocomplete({
                 minLength: 0,
                 source: function (request, response) {
@@ -591,51 +500,12 @@
                     $('#rate_per_qty' ).val(data.rate_per_qty);
                     $('#pro_dis' ).val(data.pro_dis);
                     $('#subtotal' ).val(data.amt);
-                    // $('#group_name').val(data.generic);
                 }
             });
         });
 })
 </script>
 
-<script>
-    // function btnClick() {
-    //     var checkLimit = $('#credit_limit_m').text()
-    //     var discountAmt = Number($("#discountAmt").val())
-    //     var net_amt = Number($("#net_amt").val())
-    //     if(checkLimit !=''){
-    //         alert('Credit Limit Is Over, Please Increase Your Credit Limit Or Pay Due Amount')
-    //         return false;
-    //     }
-
-    //     if((discountAmt > 100 || net_amt < 0)){
-    //         alert('Check Discount Amount')
-    //         return false;
-    //     }
-    // }
-</script>
-
-<script>
-    function toast(status,header,msg) {
-        Command: toastr[status](header, msg)
-        toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": true,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "2000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-    }
-</script>
+@include('admin.include.toast')
 @endpush
 @endsection

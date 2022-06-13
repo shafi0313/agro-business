@@ -54,48 +54,15 @@
 				</div>
 			</div>
 			<!-- End Logo Header -->
-
             {{-- Header --}}
             @include('admin.layout.header')
             {{-- End Header --}}
-
 		</div>
-
 
 		{{-- Navigation --}}
         @include('admin.layout.navigation')
         {{-- End Navigation --}}
-
         @yield('content')
-
-		<!-- Custom template | don't include it in your project! -->
-		<div class="custom-template">
-			<div class="title">Settings</div>
-			<div class="custom-content">
-				<div class="switcher">
-					<div class="switch-block">
-						<h4>Topbar</h4>
-						<div class="btnSwitch">
-							<button type="button" class="changeMainHeaderColor" data-color="blue"></button>
-							<button type="button" class="selected changeMainHeaderColor" data-color="purple"></button>
-							<button type="button" class="changeMainHeaderColor" data-color="light-blue"></button>
-							<button type="button" class="changeMainHeaderColor" data-color="green"></button>
-							<button type="button" class="changeMainHeaderColor" data-color="orange"></button>
-							<button type="button" class="changeMainHeaderColor" data-color="red"></button>
-						</div>
-					</div>
-					<div class="switch-block">
-						<h4>Background</h4>
-						<div class="btnSwitch">
-							<button type="button" class="changeBackgroundColor" data-color="bg2"></button>
-							<button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
-							<button type="button" class="changeBackgroundColor" data-color="bg3"></button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- End Custom template -->
 	</div>
 </div>
 
@@ -103,7 +70,6 @@
 <script src="{{ asset('backend/assets/js/core/jquery.3.2.1.min.js') }}"></script>
 <script src="{{ asset('backend/assets/js/core/popper.min.js') }}"></script>
 <script src="{{ asset('backend/assets/js/core/bootstrap.min.js') }}"></script>
-
 <!-- jQuery UI -->
 <script src="{{ asset('backend/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('backend/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
@@ -114,24 +80,19 @@
 <!-- Moment JS -->
 <script src="{{ asset('backend/assets/js/plugin/moment/moment.min.js') }}"></script>
 
-<!-- Chart JS -->
-{{-- <script src="{{ asset('backend/assets/js/plugin/chart.js/chart.min.js') }}"></script> --}}
-
 <!-- jQuery Sparkline -->
 <script src="{{ asset('backend/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
-
-<!-- Datatables -->
-{{-- <script src="{{ asset('backend/assets/js/plugin/datatables/datatables.min.js') }}"></script> --}}
 
 <!-- Azzara JS -->
 <script src="{{ asset('backend/assets/js/ready.min.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 @include('sweetalert::alert')
 
 <script>
     $("form").on('submit', function(e){
         $(this).find('button[type="submit"]').attr('disabled', 'disabled');
+        $(this).find('input[type="submit"]').attr('disabled', 'disabled');
     });
 </script>
 @stack('custom_scripts')

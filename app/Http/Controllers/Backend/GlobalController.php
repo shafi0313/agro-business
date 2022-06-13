@@ -162,9 +162,9 @@ class GlobalController extends Controller
     {
         $query = $request->get('term', '');
         $customer_id = $request->customer_id;
-        $isReturn = IsReturn::all()->pluck('sales_invoice_id');
-        $invoices = SalesInvoice::whereNotIn('id', $isReturn)
-                    ->whereInv_cancel(0)
+        // $isReturn = IsReturn::all()->pluck('sales_invoice_id');
+        // $invoices = SalesInvoice::whereNotIn('id', $isReturn)
+        $invoices = SalesInvoice::whereInv_cancel(0)
                     ->whereR_type(0)
                     ->whereIn('type', [1,3])
                     ->where('customer_id', $customer_id);
