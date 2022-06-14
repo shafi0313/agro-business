@@ -272,7 +272,6 @@
 @include('admin.printJS')
 <script>
     $(".stock_close").on('click', function(){
-        // $('#close_stock').attr('action',$(this).data('url'));
         $('#product_id').val($(this).data("id"));
         $('#pack_size_id').val($(this).data("id2"));
     });
