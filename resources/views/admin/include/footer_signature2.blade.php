@@ -4,7 +4,7 @@
         padding: 15px 15px 0 15px;
     } */
     .footer_signature div {
-        border-bottom: 1px solid black;
+        border-top: 1px solid black;
     }
 
     /* .footer_signature_area{
@@ -21,7 +21,7 @@
         .footer_signature .p {
             position: fixed;
             bottom: 0;
-            width: 200px;
+            width: 100px;
             left: 0;
             text-align: center;
         }
@@ -29,7 +29,7 @@
         .footer_signature .a {
             position: fixed;
             bottom: 0;
-            width: 200px;
+            width: 100px;
             right: 0;
             text-align: center;
         }
