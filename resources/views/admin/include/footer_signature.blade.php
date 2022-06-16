@@ -27,18 +27,11 @@
             left: 0;
             text-align: center;
         }
-        .footer_signature .c {
-            position: fixed;
-            bottom: 0;
-            width: 100px;
-            left: 280px;
-            text-align: center;
-        }
         .footer_signature .f {
             position: fixed;
             bottom: 0;
-            width: 150px;
-            left: 580px;
+            width: 120px;
+            left: 400px;
             text-align: center;
         }
 
@@ -55,7 +48,6 @@
 <div id="footer_signature_area">
     <div class="footer_signature">
         <div class="p">Prepared by</div>
-        <div class="c">Checked by</div>
         <div class="f">Factory Manager</div>
         <div class="a">Authorized by</div>
     </div>
