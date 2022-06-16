@@ -28,7 +28,6 @@ class AccountReceivedController extends Controller
         if ($error = $this->sendPermissionError('create')) {
             return $error;
         }
-        // return $settings = Setting::all();
         $tmmSoIds = EmployeeInfo::with(['user' => fn ($q) => $q->select(['id','tmm_so_id','name'])])->whereIn('employee_main_cat_id',[12,13])->get(['user_id']);
         $bankLists = BankList::all();
         $user = User::select(['id','name','business_name','phone','address'])->find($id);
@@ -149,7 +148,8 @@ class AccountReceivedController extends Controller
             }
             DB::commit();
             toast('Collection Successfully Inserted', 'success');
-            return redirect()->route('account-received.index');
+            // return redirect()->route('account-received.index');
+            return back();
         } catch (\Exception $ex) {
             DB::rollBack();
             toast('Collection Inserted Failed', 'error');
