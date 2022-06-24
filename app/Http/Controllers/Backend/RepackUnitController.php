@@ -44,16 +44,13 @@ class RepackUnitController extends Controller
         DB::beginTransaction();
         // For Status 1=Accept, 2=Reject
         foreach($request->id as $key => $v){
-            $data=[
-                "status" => ($request->a == 'Accept')?'1':'2',
-            ];
-            PurchaseInvoice::where('id', $request->id[$key])->first()->update($data);
+            PurchaseInvoice::where('id', $request->id[$key])->first()->update(['status' => $request->status]);
         }
         // return $request;
         $transaction_id = transaction_id('RPU');
 
         // Stock Update
-        if($request->a == 'Accept'){
+        if($request->status == 1){
             foreach ($request->product_id as $key => $v) {
                 $data=[
                     'tran_id' => $transaction_id,
@@ -101,7 +98,7 @@ class RepackUnitController extends Controller
 
         try {
             DB::commit();
-            toast('Accpeted','success');
+            toast('Accepted','success');
             return redirect()->route('repackingCheck.showAccpet');
         } catch (\Exception $ex) {
             toast($ex->getMessage().'Failed','error');
