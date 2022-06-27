@@ -45,13 +45,10 @@ class ProductionController extends Controller
         // return $request;
         DB::beginTransaction();
         foreach ($request->id as $key => $v) {
-            $data=[
-                "status" => ($request->a == 'Accept')?'1':'2',
-            ];
-            PurchaseInvoice::where('id', $request->id[$key])->first()->update($data);
+            PurchaseInvoice::where('id', $request->id[$key])->first()->update(['status' => $request->status]);
         }
         // Stock Update
-        if ($request->a == 'Accept') {
+        if ($request->status == 1) {
             foreach ($request->product_id as $key => $v) {
                 $data=[
                     'tran_id' => transaction_id('PDN'),

@@ -68,14 +68,25 @@
                                         <input type="hidden" name="spProductId[]" value="{{ $showInvoice->net_weight }}">
                                         <input type="hidden" name="spSizeId[]" value="{{ $showInvoice->use_weight }}">
                                         <input type="hidden" name="invoice_date[]" value="{{ $showInvoice->invoice_date }}">
-                                        {{-- <input type="hidden" name="amt[]" value="{{ $showInvoice->amt }}"> --}}
                                         @php
                                             $check = $showInvoice->status;
                                         @endphp
                                     @endforeach
                                     <div class="text-center" style="display: {{($check!='0')?'none':''}}">
-                                        <input type="submit" value="Reject" name="r" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
-                                        <input type="submit" value="Accept" name="a" class="btn btn-success btn-sm" onclick="return confirm('Are you sure?')">
+                                        <div class="col-md-12 text-center">
+                                            <div class="form-check">
+                                                {{-- <label>Status</label><br> --}}
+                                                <label class="form-radio-label">
+                                                    <input class="form-radio-input" type="radio" name="status" value="1" required>
+                                                    <span class="form-radio-sign">Accept</span>
+                                                </label>
+                                                <label class="form-radio-label ml-3">
+                                                    <input class="form-radio-input" type="radio" name="status" value="2" required>
+                                                    <span class="form-radio-sign">Reject</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <input type="submit" value="Submit" class="btn btn-success btn-sm" onclick="return confirm('Are you sure?')">
                                     </div>
                                 </form>
                             </div>
