@@ -24,7 +24,7 @@
             position: fixed;
             bottom: 0;
             width: 100px;
-            left: 0;
+            left: 20px;
             text-align: center;
         }
         .footer_signature .f {
@@ -39,13 +39,13 @@
             position: fixed;
             bottom: 0;
             width: 100px;
-            right: 0;
+            right: 20px;
             text-align: center;
         }
     }
 </style>
 {{-- <div id="footer_signature_area" style="display: none"> --}}
-<div id="footer_signature_area">
+<div id="footer_signature_area" style="display: none">
     <div class="footer_signature">
         <div class="p">Prepared by</div>
         <div class="f">Factory Manager</div>

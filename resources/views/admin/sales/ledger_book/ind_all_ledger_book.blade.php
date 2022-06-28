@@ -27,9 +27,6 @@
                         </div>
                         <div class="card-body" id="printableArea">
                             <div class="row">
-                                <style>
-
-                                </style>
                                 <div class="col-md-12">
                                     @include('admin.include.ledger_header')
                                 </div>
@@ -139,6 +136,8 @@
                                                     </a>
                                                 </div>
                                             </td>
+                                            @else
+                                            <td></td>
                                             @endif
                                         </tr>
                                         @endforeach
@@ -156,6 +155,7 @@
                                         <td>{{ number_format($invoices->sum('net_amt') - $payment,2) }}</td>
                                     </tr>
                                 </table>
+                                @include('admin.include.footer_signature2')
                             </div>
                         </div>
                     </div>

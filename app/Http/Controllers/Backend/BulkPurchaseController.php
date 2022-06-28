@@ -71,7 +71,6 @@ class BulkPurchaseController extends Controller
             $invoice = PurchaseInvoice::create($data);
             $invoiceArr[] = $invoice->id;
         }
-
         // Purchase Invoice End
 
         // Bulk Store Start
@@ -85,10 +84,7 @@ class BulkPurchaseController extends Controller
                 'stock_type' => 2, //Bulk
                 'challan_no' => $challan_no,
                 'quantity' => $request->quantity[$key],
-                // 'bonus' => $request->bonus[$key],
                 'net_weight' => $request->net_weight[$key],
-                // 'amt' => round($request->amt[$key]) - round($request->amt[$key])*$request->pro_dis[$key]/100,
-                // 'dis' => $request->pro_dis[$key],
                 'net_amt' => round($request->amt[$key]),
                 'date' => $request->invoice_date,
             ];
@@ -106,7 +102,7 @@ class BulkPurchaseController extends Controller
             'challan_no' => $challan_no,
             'purchase_amt' => $request->get('total_amt'),
             'discount' => $request->get('discount'),
-            'net_amt' => round($request->get('net_amt')),
+            'net_amt' => round($request->get('total_amt')),
             'payment' => round($request->get('payment')),
             'payment_date' =>  $request->get('payment_date'),
             'user_type' =>  $request->get('user_type'),

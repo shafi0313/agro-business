@@ -77,7 +77,7 @@
                                         </tr>
                                     </table>
                                 </div>
-                                @include('admin.include.footer_signature')
+                                @include('admin.include.footer_signature2')
                             </div>
                         </div>
                     </div>

@@ -32,7 +32,7 @@ class BulkController extends Controller
         $to_date = $request->get('to_date');
 
         $reports = PurchaseInvoice::whereBetween('invoice_date', [$form_date,$to_date])->whereIn('type', [7])->whereInv_cancel(0)->latest()->get();
-        $reportWithDiscount = PurchaseLedgerBook::whereBetween('invoice_date', [$form_date,$to_date])->whereIn('type', [7])->whereInv_cancel(0)->latest()->get();
+        $reportWithDiscount = PurchaseLedgerBook::whereBetween('invoice_date', [$form_date,$to_date])->whereIn('type', [7])->whereInv_cancel(0)->get();
         return view('admin.report.bulk.purchase', compact('reports','form_date','to_date','reportWithDiscount'));
     }
 

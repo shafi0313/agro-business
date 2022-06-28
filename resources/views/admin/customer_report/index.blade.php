@@ -89,6 +89,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                @include('admin.include.footer_signature2')
                             </div>
                         </div>
                     </div>

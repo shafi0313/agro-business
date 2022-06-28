@@ -5,8 +5,9 @@
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
         document.body.innerHTML = printContents;
-        $("body, table thead tr th, table thead, table tr th, table tbody tr th").css("font-weight", "bold");
+        $("table thead tr th, table thead, table tr th, table tbody tr th").css("font-weight", "bold");
         $("body, table thead tr th, table thead, table tr th, table tbody tr th, table tbody tr td, table tfoot tr td").css("color", "black");
+        // $("table thead tr th, table thead, table tr th, table tbody tr th, table tbody tr td, table tfoot tr td").css("border","1px solid black");
         $(".no-print, .dataTables_filter, #multi-filter-select_length, #multi-filter-select_info, #multi-filter-select_paginate").css("display", "none");
          window.print();
          document.body.innerHTML = originalContents;

@@ -64,27 +64,9 @@ class PurchaseLedgerBookController extends Controller
     {
         $supplierInfo = PurchaseInvoice::where('supplier_id', $supplier_id)->first();
         $openingBl = PurchaseLedgerBook::where('supplier_id',$supplier_id)->where('type',0)->first();
-        $invoices = PurchaseLedgerBook::where('supplier_id',$supplier_id)
-                ->where(function($q){
-                    $q->where('type', 7)
-                        ->orWhere('type', 8)
-                        ->orWhere('type', 13)
-                        ->orWhere('type', 14)
-                        ->orWhere('type', 26);
-                })
-                // ->orderBy('challan_no','DESC')
-                ->get();
-        // $purchaseInvoices = PurchaseLedgerBook::where('supplier_id',$supplier_id)
-        //         ->where(function($q){
-        //             $q->where('type', 7)
-        //                 ->orWhere('type', 8)
-        //                 ->orWhere('type', 13)
-        //                 ->orWhere('type', 14)
-        //                 ->orWhere('type', 26);
-        //         })
-        //         ->get();
+        $invoices = PurchaseLedgerBook::where('supplier_id',$supplier_id)->whereIn('type', ['7','8','13','14','26'])->get();
         $payment = PurchaseLedgerBook::where('supplier_id',$supplier_id)->where('type', 26)->get();
-        if($supplierInfo == ''){
+        if($supplierInfo->count() < 1){
             alert()->info('Alert','There are no data available.');
             return redirect()->back();
         }
@@ -160,12 +142,12 @@ class PurchaseLedgerBookController extends Controller
         try {
             PurchaseLedgerBook::find($id)->update($data);
             DB::commit();
-            toast('Paymet Successfully Updated','success');
+            toast('Payment Successfully Updated','success');
             return redirect()->back();
 
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Paymet Update Faild','error');
+            toast($ex->getMessage().'Payment Update Failed','error');
             return redirect()->back();
         }
     }

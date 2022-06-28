@@ -11,6 +11,9 @@
         position: fixed;
         bottom: 0;
     } */
+    /* @media print {
+
+} */
 
     @page {
         size: A4;
@@ -22,7 +25,7 @@
             position: fixed;
             bottom: 0;
             width: 100px;
-            left: 0;
+            left: 20px;
             text-align: center;
         }
 
@@ -30,7 +33,7 @@
             position: fixed;
             bottom: 0;
             width: 100px;
-            right: 0;
+            right: 20px;
             text-align: center;
         }
     }
@@ -41,3 +44,5 @@
         <div  class="a">Authorized by</div>
     </div>
 </div>
+
+

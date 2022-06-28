@@ -71,13 +71,13 @@
                                 <div class="col-md-6">
                                     <table class="table" >
                                         <tr class="bg-secondary text-light" style="font-weight:bold">
-                                            <td>Sales: {{ number_format($reportWithDiscount->sum('sales_amt'),2)}}</td>
-                                            <td>Discount: {{ number_format($reportWithDiscount->sum('sales_amt')-$reportWithDiscount->sum('net_amt') ,2)}}</td>
+                                            <td>Sales: {{ number_format($reportWithDiscount->sum('purchase_amt'),2)}}</td>
+                                            <td>Discount: {{ number_format($reportWithDiscount->sum('purchase_amt')-$reportWithDiscount->sum('net_amt') ,2)}}</td>
                                             <td>Net Amount: {{ number_format($reportWithDiscount->sum('net_amt'),2) }}</td>
                                         </tr>
                                     </table>
                                 </div>
-                                @include('admin.include.footer_signature')
+                                @include('admin.include.footer_signature2')
                             </div>
                         </div>
                     </div>

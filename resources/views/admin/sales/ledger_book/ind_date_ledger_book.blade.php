@@ -161,6 +161,7 @@
                                         <td>{{ number_format($openingBl + $invoices->sum('net_amt') - $payment,2) }}</td>
                                     </tr>
                                 </table>
+                                @include('admin.include.footer_signature2')
                             </div>
                         </div>
                     </div>

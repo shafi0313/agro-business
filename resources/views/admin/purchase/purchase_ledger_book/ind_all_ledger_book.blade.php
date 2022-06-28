@@ -147,6 +147,7 @@
                                         </tr>
                                     </tfoot>
                                 </table>
+                                @include('admin.include.footer_signature2')
                             </div>
                         </div>
                     </div>

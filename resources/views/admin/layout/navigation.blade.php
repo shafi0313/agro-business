@@ -577,16 +577,6 @@
                                     <span class="sub-item">Customer Report</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='bulkStock'?'activeSub':''}}">
-                                <a href="{{ route('stock.bulk.index')}}">
-                                    <span class="sub-item">Bulk Stock</span>
-                                </a>
-                            </li>
-                            <li class="{{$sm=='productionReport'?'activeSub':''}}">
-                                <a href="{{ route('production.selectDate')}}">
-                                    <span class="sub-item">Production Report</span>
-                                </a>
-                            </li>
                             <li class="{{$sm=='storeStock'?'activeSub':''}}">
                                 <a href="{{ route('stock.store.index')}}">
                                     <span class="sub-item">Store Stock</span>

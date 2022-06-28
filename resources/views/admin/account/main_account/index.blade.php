@@ -35,6 +35,7 @@
                                                 <th style="width:35px">SL</th>
                                                 <th>Trans Date</th>
                                                 <th>Post Date</th>
+                                                <th>Trans Date</th>
                                                 <th>Particulars</th>
                                                 <th>Voucher No</th>
                                                 <th>Cheque/Ds/V. No</th>
@@ -56,7 +57,8 @@
                                             <tr class="text-center">
                                                 <td class="text-center">{{ $x++ }}</td>
                                                 <td>{{ $account->m_r_date }}</td>
-                                                <td>{{ $account->date }}</td>
+                                                <td>{{ bdDate($account->date) }}</td>
+                                                <td>{{ bdDate($account->created_at) }}</td>
                                                 <td>{{ $account->note }}</td>
                                                 <td>{{ $account->m_r_no }}</td>
                                                 <td>{{ $account->cheque_no }}</td>
