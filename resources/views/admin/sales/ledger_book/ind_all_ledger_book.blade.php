@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive" id="printJS-form">
-                                <table id="multi-filter-select" class="display table table-striped table-hover" >
+                                <table id="multi-filter-select" class="display table table-bordered table-hover" >
                                     <thead class="bg-secondary thw">
                                         <tr class="text-center">
                                             <th style="width:35px">SL</th>
@@ -137,7 +137,7 @@
                                                 </div>
                                             </td>
                                             @else
-                                            <td></td>
+                                            <td class="no-print"></td>
                                             @endif
                                         </tr>
                                         @endforeach
