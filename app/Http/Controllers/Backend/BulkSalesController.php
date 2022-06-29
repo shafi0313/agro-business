@@ -8,6 +8,7 @@ use App\Models\InvoiceDue;
 use App\Models\SampleNote;
 use App\Models\SalesInvoice;
 use Illuminate\Http\Request;
+use App\Models\PurchaseInvoice;
 use App\Models\SalesLedgerBook;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -271,6 +272,19 @@ class BulkSalesController extends Controller
         $invoiceDueFirst = InvoiceDue::where('invoice_no', $invoice_no)->first();
         $ledger = SalesLedgerBook::with('preparedBy')->where('invoice_no', $invoice_no)->whereIn('type', [16, 18])->first();
         return view('admin.bulk.sales.print_challan', compact('showInvoices', 'invoiceDue', 'ledger', 'invoiceDueFirst'));
+    }
+
+    //Bulk Report
+    public function bulkSalesRepackChallan(Request $request)
+    {
+        $form_date = $request->form_date;
+        $to_date = $request->to_date;
+        $getShowInvoices = SalesInvoice::whereBetween('invoice_date', [$form_date, $to_date])->whereIn('type', [16, 18])->get();
+        $showInvoices = $getShowInvoices->groupBy('product_id');
+
+        $getPurchaseInvoices = PurchaseInvoice::whereBetween('invoice_date', [$form_date, $to_date])->whereIn('type', [9])->get();
+        $showPurchaseInvoices = $getPurchaseInvoices->groupBy('product_id');
+        return view('admin.bulk.sales_repack_challan.print_challan', compact('showInvoices','showPurchaseInvoices','form_date','to_date'));
     }
 
     // Soft Delete

@@ -385,6 +385,9 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
         Route::get('/select-date', [BulkSalesController::class, 'selectDate'])->name('salesBulk.selectDate');
         Route::post('/show/all/challan/by-date', [BulkSalesController::class, 'allInvoiceByDate'])->name('salesBulk.allInvoiceByDate');
         Route::get('/show/all/challan/by-date/{challan_no}', [BulkSalesController::class, 'allInvoiceShowByDate'])->name('salesBulk.allInvoiceShowByDate');
+
+
+        Route::post('/bulk-sales-repack-unit-challan', [BulkSalesController::class, 'bulkSalesRepackChallan'])->name('salesBulk.bulkSalesRepackChallan');
     });
 
 
