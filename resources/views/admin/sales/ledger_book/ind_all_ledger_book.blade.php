@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive" id="printJS-form">
-                                <table id="multi-filter-select" class="display table table-bordered table-hover" >
+                                <table class="display table table-bordered table-hover" >
                                     <thead class="bg-secondary thw">
                                         <tr class="text-center">
                                             <th style="width:35px">SL</th>
