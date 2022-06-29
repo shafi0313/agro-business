@@ -25,7 +25,7 @@
             position: fixed;
             bottom: 0;
             width: 100px;
-            left: 20px;
+            left: 150px;
             text-align: center;
         }
 
@@ -33,7 +33,7 @@
             position: fixed;
             bottom: 0;
             width: 100px;
-            right: 20px;
+            right: 150px;
             text-align: center;
         }
     }
