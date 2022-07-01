@@ -39,6 +39,10 @@
                     <div class="invoice_text">CHALLAN</div>
                     <table>
                         <tr>
+                            <td class="text-right"></td>
+                            <td>&nbsp;Factory: 01 </td>
+                        </tr>
+                        <tr>
                             <td class="text-right">Date</td>
                             <td>&nbsp;: {{bdDate($form_date)}} to {{bdDate($to_date)}}</td>
                         </tr>
@@ -51,7 +55,7 @@
         border: 0px solid white !important;
     }
     .inv_info {
-        height: 45px;
+        height: 70px;
     }
 </style>
             <div class="inv_s">Bulk Stock Out Challan</div>

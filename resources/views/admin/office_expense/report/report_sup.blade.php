@@ -13,7 +13,9 @@
                     <li class="nav-item active">Head Office Expense Report</li>
                 </ul>
             </div>
-            <div class="divider1"></div>
+            <style>
+                a{color:black}
+            </style>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -25,15 +27,15 @@
 
                         </div>
                         <div class="card-body" id="printableArea">
-                            @php $pageTitle='Head Office Expense Report' @endphp
+                            @php $pageTitle='Payment to Suppliers' @endphp
                             @include('admin.include.print_page_heading')
                             <div class="table-responsive">
-                                <table id="multi-filter-select" class="display table table-striped table-hover">
-                                    <thead class="bg-secondary thw text-center">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="bg-secondary thw">
                                         <tr>
                                             <th style="width:35px">SL</th>
-                                            <th>Supplier Name</th>
-                                            <th>Amount</th>
+                                            <th>Particulars</th>
+                                            <th class="text-right">Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -42,7 +44,7 @@
                                         @php $ac = $account->first() @endphp
                                         <tr>
                                             <td class="text-center">{{ $x++ }}</td>
-                                            <td><a href="{{ route('officeExp.reportView',[$ac->user_id.'Sup',$form_date,$to_date])}}">{{ $ac->users->name }}</a></td>
+                                            <td><a href="{{ route('officeExp.reportView',[$ac->user_id.'Sup',$form_date,$to_date, 0])}}">{{ $ac->users->name }}</a></td>
                                             <td class="text-right">{{ number_format($account->sum('debit'),2) }}</td>
                                         </tr>
                                         @endforeach

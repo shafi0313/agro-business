@@ -28,7 +28,7 @@
                             <div class="table-responsive">
                                 @php $pageTitle='Customer Report' @endphp
                                 @include('admin.include.print_page_heading')
-                                <table class="display table table-striped table-hover" >
+                                <table class="display table table-bordered table-hover" >
                                     <thead class="bg-secondary thw">
                                         <tr class="text-center">
                                             <th rowspan="2" style="width:40px">SN</th>

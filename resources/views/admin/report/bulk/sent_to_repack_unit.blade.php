@@ -68,7 +68,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div class="col-md-6">
+                                <div class="col-md-6 text-right">
                                     <table class="table" >
                                         <tr class="bg-secondary text-light" style="font-weight:bold">
                                             <td>Sales: {{ number_format($reportWithDiscount->sum('sales_amt'),2)}}</td>

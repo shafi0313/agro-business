@@ -19,23 +19,16 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Bank Statement</h4>
                                 <button type="button" class="btn btn-success btn-sm ml-auto" id="p" onclick="printDiv('printableArea')">Print</button>
                             </div>
                         </div>
                         <div class="card-body" id="printableArea">
-                            <div class="report_header">
-                                <img src="{{ asset('images/icons/company_bg.png') }}" width="80px" style="display: inline-block;margin:-70px 0 0 10px">
-                                <div class="report_header_text" style="display: inline-block; width: 800px; border-bottom: 1px solid black; padding-bottom:10px">
-                                    <h1 class="text-center">Mondol Traders</h1>
-                                    <h4 class="text-center">Bank Statement</h4>
-                                    <div style="font-size:18px; text-align:center">Form: {{Carbon\carbon::parse($form_date)->format('d/m/Y')}} To: {{Carbon\carbon::parse($to_date)->format('d/m/Y')}}</div>
-                                </div>
-                            </div>
+                            @php $pageTitle='Bank Statement' @endphp
+                            @include('admin.include.print_page_heading')
 
                             <div class="page-number"></div>
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover">
+                                <table class="table table-bordered table-hover">
                                     <thead class="bg-secondary thw">
                                         <tr>
                                             <th style="width:35px">SL</th>
@@ -89,6 +82,7 @@
                                             <td>{{ number_format($accounts->sum('credit'),2) }}</td>
                                         </tr>
                                 </table>
+                                @include('admin.include.footer_signature2')
                             </div>
                         </div>
                     </div>
@@ -101,7 +95,7 @@
 
 @push('custom_scripts')
 
-@include('admin.printJS');
+@include('admin.include.printJS');
 @endpush
 @endsection
 

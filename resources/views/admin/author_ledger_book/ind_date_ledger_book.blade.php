@@ -15,28 +15,20 @@
                     <li class="nav-item active">Report</li>
                 </ul>
             </div>
-            <div class="divider1"></div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <button type="button" class="btn btn-success btn-round ml-auto" id="p" onclick="printDiv('printableArea')">Print</button>
+                            </div>
+                        </div>
+                        <div class="card-body" id="printableArea">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <h3><strong>Name: </strong>{{$authorInfo->name}}</h3>
-                                    <p>
-                                        <span><strong>ID: </strong>{{$authorInfo->tmm_so_id}}</span><br>
-                                        <span><strong>Designation: </strong>{{$employeeInfo->designation->name}}</span><br>
-                                        <span><strong>Job Location: </strong>{{$employeeInfo->job_loc}}</span><br>
-                                        <span><strong>Phone: </strong>{{$authorInfo->phone}}</span><br>
-                                        <span><strong>Address: </strong>{{$authorInfo->address}}</span><br>
-                                    </p>
-                                </div>
-                                <div class="col-md-6 text-right my-auto">
-                                    <h3 style="font-weight:bold;">Form: {{ \Carbon\Carbon::parse($form_date)->format('d/m/Y') }} To: {{ \Carbon\Carbon::parse($to_date)->format('d/m/Y') }}</h3>
-                                </div>
+                                @include('admin.include.author_ledger_header')
                             </div>
                             <div class="table-responsive">
-                                <table  class="table table-bordered table-striped table-hover" >
+                                <table  class="table table-bordered table-hover" >
                                     <thead>
                                         <tr>
                                             <th style="width:35px">SL</th>
@@ -80,7 +72,7 @@
                                 <div>
                                     <h2 class="text-right"><strong>Total Dues: {{ number_format($reports->sum('credit') - $reports->sum('debit'),2) }}</strong></h2>
                                 </div>
-
+                                @include('admin.include.footer_signature2')
                             </div>
                         </div>
                     </div>
@@ -92,6 +84,8 @@
 
 @push('custom_scripts')
 @include('admin.include.data_table_js')
+@include('admin.include.printJS')
+
 @endpush
 @endsection
 

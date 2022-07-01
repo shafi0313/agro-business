@@ -15,7 +15,6 @@
                     <li class="nav-item active">Select Date</li>
                 </ul>
             </div>
-            <div class="divider1"></div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">

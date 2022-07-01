@@ -14,48 +14,11 @@
 	<div class="sidebar-background"></div>
 	<div class="sidebar-wrapper scrollbar-inner">
 		<div class="sidebar-content">
-			{{-- <div class="user">
-				<div class="avatar-sm float-left mr-2">
-					<img src="{{asset('backend/assets/img/profile.jpg')}}" alt="..." class="avatar-img rounded-circle">
-				</div>
-				<div class="info">
-					<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-						<span>
-							Hizrian
-							<span class="user-level">Administrator</span>
-							<span class="caret"></span>
-						</span>
-					</a>
-					<div class="clearfix"></div>
-
-					<div class="collapse in" id="collapseExample">
-						<ul class="nav">
-							<li>
-								<a href="#profile">
-									<span class="link-collapse">My Profile</span>
-								</a>
-							</li>
-							<li>
-								<a href="#edit">
-									<span class="link-collapse">Edit Profile</span>
-								</a>
-							</li>
-							<li>
-								<a href="#settings">
-									<span class="link-collapse">Settings</span>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-            </div> --}}
-
 			<ul class="nav">
 				<li class="nav-item {{$p=='da'?'active':''}}">
                     <a href="{{ route('admin.dashboard') }}">
 						<i class="fas fa-home"></i>
 						<p>Dashboard</p>
-						{{-- <span class="badge badge-count">5</span> --}}
 					</a>
                 </li>
 
@@ -577,7 +540,7 @@
                                     <span class="sub-item">Customer Report</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='storeStock'?'activeSub':''}}">
+                            {{-- <li class="{{$sm=='storeStock'?'activeSub':''}}">
                                 <a href="{{ route('stock.store.index')}}">
                                     <span class="sub-item">Store Stock</span>
                                 </a>
@@ -586,7 +549,7 @@
                                 <a href="{{ route('totalStock.selectDate')}}">
                                     <span class="sub-item">Total Stock</span>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="{{$sm=='salesAndStock'?'activeSub':''}}">
                                 <a href="{{ route('report.salesAndStock.selectDate')}}">
                                     <span class="sub-item">Sales Report</span>

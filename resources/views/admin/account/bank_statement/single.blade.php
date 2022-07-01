@@ -24,16 +24,8 @@
                             </div>
                         </div>
                         <div class="card-body" id="printableArea">
-                            <div class="report_header">
-                                <img src="{{ asset('images/icons/company_bg.png') }}" width="80px" style="display: inline-block;margin:-150px 0 0 10px">
-                                <div class="report_header_text" style="display: inline-block; width: 800px; border-bottom: 1px solid black; padding-bottom:10px">
-                                    <h1 class="text-center">Mondol Traders</h1>
-                                    <h4 class="text-center">Bank Statement</h4>
-                                    <h4 class="text-center">{{ $accounts->first()->userBank->bank->name }}</h4>
-                                    <h4 class="text-center">{{ $accounts->first()->userBank->ac_no }}</h4>
-                                    <div style="font-size:18px; text-align:center">Form: {{Carbon\carbon::parse($form_date)->format('d/m/Y')}} To: {{Carbon\carbon::parse($to_date)->format('d/m/Y')}}</div>
-                                </div>
-                            </div>
+                            @php $pageTitle='Cash Book Report' @endphp
+                            @include('admin.include.print_page_heading')
 
                             <div class="page-number"></div>
                             <div class="table-responsive">
@@ -93,6 +85,7 @@
                                             <td>{{ number_format($accounts->sum('credit'),2) }}</td>
                                         </tr>
                                 </table>
+                                @include('admin.include.footer_signature2')
                             </div>
                         </div>
                     </div>
@@ -100,12 +93,10 @@
             </div>
         </div>
     </div>
-    @include('admin.layout.footer')
-</div>
 
 @push('custom_scripts')
 
-@include('admin.printJS');
+@include('admin.include.printJS');
 @endpush
 @endsection
 

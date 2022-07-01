@@ -289,13 +289,13 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
     Route::prefix('office-expense-report')->group(function () {
         Route::get('/select-date', [OfficeExpenseReportController::class, 'selectDate'])->name('officeExp.selectDate');
         Route::post('/show-report', [OfficeExpenseReportController::class, 'report'])->name('officeExp.report');
-        Route::get('/view/{id}/{form_date}/{to_date}', [OfficeExpenseReportController::class, 'reportView'])->name('officeExp.reportView');
+        Route::get('/view/{id}/{form_date}/{to_date}/{expId}', [OfficeExpenseReportController::class, 'reportView'])->name('officeExp.reportView');
     });
 
     Route::prefix('office-income-report')->group(function () {
         Route::get('/select-date', [OfficeIncomeReportController::class, 'selectDate'])->name('officeIn.selectDate');
         Route::post('/show-report', [OfficeIncomeReportController::class, 'report'])->name('officeIn.report');
-        Route::get('/view/{id}/{form_date}/{to_date}', [OfficeIncomeReportController::class, 'reportView'])->name('officeIn.reportView');
+        Route::get('/view/{id}/{form_date}/{to_date}/{expId}', [OfficeIncomeReportController::class, 'reportView'])->name('officeIn.reportView');
     });
 
     Route::resource('/account-received', AccountReceivedController::class)->only(['index','store','show','destroy']);

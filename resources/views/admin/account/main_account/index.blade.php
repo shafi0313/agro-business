@@ -29,11 +29,10 @@
                                 @include('admin.include.print_page_heading')
                                 <div class="page-number"></div>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover">
+                                    <table class="table table-bordered table-hover">
                                         <thead class="bg-secondary thw">
                                             <tr class="text-center">
                                                 <th style="width:35px">SL</th>
-                                                <th>Trans Date</th>
                                                 <th>Post Date</th>
                                                 <th>Trans Date</th>
                                                 <th>Particulars</th>
@@ -56,7 +55,6 @@
                                             @foreach($accounts as $account)
                                             <tr class="text-center">
                                                 <td class="text-center">{{ $x++ }}</td>
-                                                <td>{{ $account->m_r_date }}</td>
                                                 <td>{{ bdDate($account->date) }}</td>
                                                 <td>{{ bdDate($account->created_at) }}</td>
                                                 <td>{{ $account->note }}</td>
@@ -90,7 +88,7 @@
 </div>
 
 @push('custom_scripts')
-@include('admin.printJS');
+@include('admin.include.printJS');
 
 @endpush
 @endsection

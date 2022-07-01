@@ -32,7 +32,7 @@
                             @include('admin.include.print_page_heading')
                             <div class="page-number"></div>
                             <div class="table-responsive">
-                                <table id="multi-filter-select" class="display table table-hover">
+                                <table class="display table table-hover">
                                     <thead class="bg-secondary thw text-center">
                                         <tr>
                                             <th style="width:35px" rowspan="2">SL</th>
@@ -207,7 +207,7 @@
     </div>
   </div>
 @push('custom_scripts')
-@include('admin.printJS');
+@include('admin.include.printJS');
 @endpush
 @endsection
 

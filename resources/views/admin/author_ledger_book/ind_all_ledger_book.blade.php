@@ -21,29 +21,18 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                {{-- <h4 class="card-title">Stock</h4> --}}
                                 <button type="button" class="btn btn-success btn-round ml-auto" id="p" onclick="printDiv('printableArea')">Print</button>
-
                             </div>
                         </div>
                         <div class="card-body" id="printableArea">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <h2><strong>Name: </strong>{{$authorInfo->name}}</h2>
-                                    <p>
-                                        <span><strong>ID: </strong>{{$authorInfo->tmm_so_id}}</span><br>
-                                        <span><strong>Designation: </strong>{{$employeeInfo->designation->name}}</span><br>
-                                        <span><strong>Job Location: </strong>{{$employeeInfo->job_loc}}</span><br>
-                                        <span><strong>Phone: </strong>{{$authorInfo->phone}}</span><br>
-                                        <span><strong>Address: </strong>{{$authorInfo->address}}</span><br>
-                                    </p>
-                                </div>
+                                @include('admin.include.author_ledger_header')
                                 <div class="col-md-6 text-right my-auto">
                                     {{-- <h3 style="font-weight:bold;">Form: {{ \Carbon\Carbon::parse($form_date)->format('d/m/Y') }} To: {{ \Carbon\Carbon::parse($to_date)->format('d/m/Y') }}</h3> --}}
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table  class="table table-bordered table-striped table-hover" >
+                                <table  class="table table-bordered table-hover" >
                                     <thead class="bg-secondary thw">
                                         <tr class="text-center">
                                             <th style="width:35px">SL</th>
@@ -74,7 +63,6 @@
                                             <td class="text-right">{{ number_format($balance +=$b,2) }}</td>
                                         </tr>
                                         @endforeach
-
                                     </tbody>
                                     <style>
                                         tfoot tr td{text-align: right;font-weight: bold; font-size: 14px !important}
@@ -88,10 +76,7 @@
                                         </tr>
                                     </tfoot>
                                 </table>
-                                {{-- <div>
-                                    <h2 class="text-right"><strong>Total Due: {{ number_format($reports->sum('credit') - $reports->sum('debit'),2) }}</strong></h2>
-                                </div> --}}
-
+                                @include('admin.include.footer_signature2')
                             </div>
                         </div>
                     </div>
@@ -102,7 +87,9 @@
 </div>
 
 @push('custom_scripts')
+@include('admin.include.data_table_js')
 @include('admin.include.printJS')
+
 @endpush
 @endsection
 

@@ -24,14 +24,14 @@
                             </div>
                         </div>
                         <div class="card-body" id="printableArea">
-                            @php $pageTitle='Office Income Report' @endphp
+                            {{$pageTitle =  $expenseCat->name}}
                             @include('admin.include.print_page_heading')
                             <div class="table-responsive">
                                 <table id="multi-filter-select" class="display table table-striped table-hover">
                                     <thead class="bg-secondary thw text-center">
                                         <tr>
                                             <th style="width:35px">SL</th>
-                                            <th>Expense Name</th>
+                                            <th>Particulars</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
@@ -41,7 +41,7 @@
                                         @php $ac = $account->first() @endphp
                                         <tr>
                                             <td class="text-center">{{ $x++ }}</td>
-                                            <td><a href="{{ route('officeIn.reportView',[$ac->officeExp->id,$form_date,$to_date])}}">{{ $ac->officeExp->name }}</a></td>
+                                            <td><a href="{{ route('officeIn.reportView',[$ac->officeExp->id,$form_date,$to_date, $expenseCat->id])}}">{{ $ac->officeExp->name }}</a></td>
                                             <td class="text-right">{{ number_format($account->sum('credit'),2) }}</td>
                                         </tr>
                                         @endforeach

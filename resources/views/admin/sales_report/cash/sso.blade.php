@@ -33,7 +33,7 @@
                                 <br><br>
                                 @php $pageTitle='Employee Sales Report' @endphp
                                 @include('admin.include.print_page_heading')
-                                <table id="multi-filter-select" class="display table table-striped table-hover" >
+                                <table class="table table-bordered table-hover" >
                                     <thead class="bg-secondary thw">
                                         <tr class="text-center">
                                             <th rowspan="2" style="width:35px">SL</th>

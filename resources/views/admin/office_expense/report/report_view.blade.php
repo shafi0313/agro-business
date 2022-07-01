@@ -26,11 +26,11 @@
 
                         </div>
                         <div class="card-body" id="printableArea">
-                            @php $pageTitle='Head Office Expense Report' @endphp
+                            {{ $pageTitle = $expenseCat->name }}
                             @include('admin.include.print_page_heading')
                             <div class="table-responsive">
                                 <table id="multi-filter-select" class="display table table-striped table-hover">
-                                    <thead class="bg-secondary thw text-center">
+                                    <thead class="bg-secondary thw">
                                         <tr>
                                             <th style="width:35px">SL</th>
                                             <th>Date</th>

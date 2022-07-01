@@ -31,7 +31,7 @@
                                     <thead class="bg-secondary thw text-center">
                                         <tr>
                                             <th style="width:35px">SL</th>
-                                            <th>Customer Name</th>
+                                            <th>Particulars</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
@@ -41,7 +41,7 @@
                                         @php $ac = $account->first() @endphp
                                         <tr>
                                             <td class="text-center">{{ $x++ }}</td>
-                                            <td><a href="{{ route('officeIn.reportView',[$ac->user_id.'Cus',$form_date,$to_date])}}">{{ $ac->users->business_name }}</a></td>
+                                            <td><a href="{{ route('officeIn.reportView',[$ac->user_id.'Cus',$form_date,$to_date, 0])}}">{{ $ac->users->business_name }}</a></td>
                                             <td class="text-right">{{ number_format($account->sum('credit'),2) }}</td>
                                         </tr>
                                         @endforeach
