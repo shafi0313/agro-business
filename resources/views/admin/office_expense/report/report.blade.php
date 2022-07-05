@@ -13,9 +13,6 @@
                     <li class="nav-item active">Head Office Expense Report</li>
                 </ul>
             </div>
-            <style>
-                a{color:black;}
-            </style>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -29,7 +26,7 @@
                              {{$pageTitle =  $expenseCat->name}}
                             @include('admin.include.print_page_heading')
                             <div class="table-responsive">
-                                <table id="multi-filter-select"class="display table table-striped table-hover">
+                                <table id="multi-filter-select" class="display table table-bordered table-hover cell-border" cellspacing="0">
                                     <thead class="bg-secondary thw">
                                         <tr>
                                             <th style="width:35px">SL</th>
