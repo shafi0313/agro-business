@@ -209,14 +209,13 @@ class SendToProductionController extends Controller
     // Customer Invoice Show
     public function show($id)
     {
-        $supplierInfo = PurchaseInvoice::where('supplier_id', $id)->whereInv_cancel(0)->first();
-        $getInvoice = PurchaseInvoice::where('supplier_id', $id)->whereInv_cancel(0)->latest()->get();
+        $getInvoice = PurchaseInvoice::where('supplier_id', $id)->whereInv_cancel(0)->whereStatus(1)->latest()->get();
         $invoices = $getInvoice->groupBy('challan_no');
         if($supplierInfo == ''){
             alert()->info('Alert','There are no invoice. First create invoice');
             return redirect()->back();
         }
-        return view('admin.repack_unit.send_to_production.customer_invoice', compact('invoices','supplierInfo'));
+        return view('admin.repack_unit.send_to_production.customer_invoice', compact('invoices'));
     }
 
     // Invoice Details
