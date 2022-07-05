@@ -28,7 +28,8 @@ class AccountReceivedController extends Controller
         if ($error = $this->sendPermissionError('create')) {
             return $error;
         }
-        $tmmSoIds = EmployeeInfo::with(['user' => fn ($q) => $q->select(['id','tmm_so_id','name'])])->whereIn('employee_main_cat_id',[12,13])->get(['user_id']);
+        // $tmmSoIds = EmployeeInfo::with(['user' => fn ($q) => $q->select(['id','tmm_so_id','name'])])->whereIn('employee_main_cat_id',[12,13])->get(['user_id']);
+        $tmmSoIds = User::select(['id','tmm_so_id','name'])->whereIn('role',[1,5])->where('name', '!=', 'Developer')->get();
         $bankLists = BankList::all();
         $user = User::select(['id','name','business_name','phone','address'])->find($id);
         $invNos = SalesLedgerBook::where('customer_id', $id)->whereIn('type', [1,3,7,16,18,25])->where('c_status', 0)->where('inv_cancel', 0)->orderby('invoice_no', 'DESC')->get(['id','invoice_no']);

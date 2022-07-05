@@ -56,7 +56,8 @@
                                         <select name="tmm_so_id" id="" class="form-control" required>
                                             <option selected value disabled>Select</option>
                                             @foreach ($tmmSoIds as $tmmSoId)
-                                                <option value="{{ $tmmSoId->user_id }}">{{ $tmmSoId->user->tmm_so_id }} => {{$tmmSoId->user->name}}</option>
+                                                {{-- <option value="{{ $tmmSoId->user_id }}">{{ $tmmSoId->user->tmm_so_id }} => {{$tmmSoId->user->name}}</option> --}}
+                                                <option value="{{ $tmmSoId->id }}">{{ $tmmSoId->tmm_so_id }} => {{$tmmSoId->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
