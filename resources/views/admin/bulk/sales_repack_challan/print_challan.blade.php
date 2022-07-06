@@ -134,7 +134,7 @@
                     </td>
                     <td class="p_0">
                         <table class="table p_0">
-                            @foreach ($showInvoice as $item)
+                            @foreach ($showPurchaseInvoice as $item)
                                 <tr>
                                     <td class="text-center">Send to Repack</td>
                                 </tr>
