@@ -1,6 +1,6 @@
 <script src="{{ asset('backend/assets/js/plugin/datatables/datatables.min.js') }}"></script>
-<script src="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+{{-- <script src="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"> --}}
 <script>
     $(document).ready(function() {
         $('#basic-datatables').DataTable({
