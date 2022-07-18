@@ -284,7 +284,7 @@
 									</ul>
 								</div>
 							</li>
-							<li>
+							{{-- <li>
 								<a data-toggle="collapse" href="#marketingSub">
                                     <i class="fas fa-bullhorn sub_icon"></i>
 									<span>Marketing</span>
@@ -299,7 +299,7 @@
 										</li>
 									</ul>
 								</div>
-							</li>
+							</li> --}}
 							{{-- <li>
 								<a href="#">
 									<span class="sub-item">Level 1</span>

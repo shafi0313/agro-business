@@ -178,13 +178,6 @@ class SalesSampleController extends Controller
         return view('admin.sales.sample.customer_invoice', compact('customerInvoices','customerInfo'));
     }
 
-    public function showInvoice($customer_id, $invoice_no)
-    {
-        $showInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->where('type', 6)->get();
-        $customerInfo = SalesInvoice::where('customer_id', $customer_id)->first();
-        return view('admin.sales.sample.show_invoice', compact('showInvoices','customerInfo'));
-    }
-
     public function printInvoice($customer_id, $invoice_no)
     {
         $getShowInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->where('type', 5)->get();
@@ -208,19 +201,19 @@ class SalesSampleController extends Controller
     }
 
     // Soft Delete
-    public function destroyInvoice($invoice_no)
-    {
-        if ($error = $this->sendPermissionError('delete')) {
-            return $error;
-        }
-        SalesInvoice::where('invoice_no',$invoice_no)->delete();
-        SalesLedgerBook::where('invoice_no',$invoice_no)->delete();
-        if(SalesInvoice::count() < 1){
-            toast('Sales Invoice Successfully Deleted','success');
-            return redirect()->route('sample-invoice.index');
-        }else{
-            toast('Sales Invoice Successfully Deleted','success');
-            return redirect()->back();
-        }
-    }
+    // public function destroyInvoice($invoice_no)
+    // {
+    //     if ($error = $this->sendPermissionError('delete')) {
+    //         return $error;
+    //     }
+    //     SalesInvoice::where('invoice_no',$invoice_no)->delete();
+    //     SalesLedgerBook::where('invoice_no',$invoice_no)->delete();
+    //     if(SalesInvoice::count() < 1){
+    //         toast('Sales Invoice Successfully Deleted','success');
+    //         return redirect()->route('sample-invoice.index');
+    //     }else{
+    //         toast('Sales Invoice Successfully Deleted','success');
+    //         return redirect()->back();
+    //     }
+    // }
 }

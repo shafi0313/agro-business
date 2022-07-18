@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = [
+        $admin = User::create([
             'name' => 'Developer',
             'email' => 'admin@shafi95.com',
             'role' => 1,
@@ -22,7 +22,17 @@ class UserSeeder extends Seeder
             'phone' => 1725848515,
             'address' => 'Hatboalia, Alamdanga, Chuadaga',
             'password' => bcrypt('##Zxc1234'),
-        ];
-        User::insert($user);
+        ]);
+        $admin->assignRole(['admin']);
+        $user = User::create([
+            'name' => 'Developer',
+            'email' => 'user@shafi95.com',
+            'role' => 1,
+            'is' => 1,
+            'phone' => 1725848515,
+            'address' => 'Hatboalia, Alamdanga, Chuadaga',
+            'password' => bcrypt('##Zxc1234'),
+        ]);
+        $user->assignRole(['user']);
     }
 }

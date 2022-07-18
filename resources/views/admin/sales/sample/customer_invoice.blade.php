@@ -34,8 +34,6 @@
                                             <th>Date</th>
                                             <th>Amount</th>
                                             <th class="no-sort text-center" style="width:120px">Print</th>
-                                            <th class="no-sort text-center" style="width:60px">Report</th>
-                                            <th class="no-sort text-center" style="width:60px">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -64,16 +62,6 @@
                                                 <span> | </span>
                                                 <a href="{{ route('salesSample.printChallan', [$invoice->customer_id, $invoice->invoice_no]) }}" target="_blank">Challan</a>
 
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="{{ route('salesSample.show', [$invoice->customer_id, $invoice->invoice_no]) }}">Show</a>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="form-button-action">
-                                                    <a href="{{ route('salesSample.destroy', $invoice->invoice_no) }} " title="Delete" class="btn btn-link btn-danger" onclick="return confirm('Are you sure?')">
-                                                        <i class="fa fa-times"></i>
-                                                    </a>
-                                                </div>
                                             </td>
                                         </tr>
                                         @endforeach

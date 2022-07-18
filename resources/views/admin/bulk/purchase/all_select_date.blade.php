@@ -10,7 +10,9 @@
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item"><a href="{{ route('purchase-bulk.index') }}">Bulk Purchase</a></li>
+                    <li class="nav-item">Bulk</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item"><a href="{{ route('purchase-bulk.index') }}">Purchase</a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Select Date</li>
                 </ul>
@@ -18,11 +20,6 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            {{-- <div class="d-flex align-items-center">
-                                <h4 class="card-title">Select Date</h4>
-                            </div> --}}
-                        </div>
                         <div class="card-body" >
                             <h1 class="text-center mr-5 mb-3">Select the date and show the report</h1>
                             <form action="{{ route('purchaseBulk.allInvoiceByDate') }}" method="post">

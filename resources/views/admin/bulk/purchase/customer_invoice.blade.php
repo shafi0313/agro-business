@@ -9,9 +9,11 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item"><a href="{{ route('purchase-bulk.index')}}">Bulk Purchase</a></li>
+                    <li class="nav-item">Bulk</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Challan</li>
+                    <li class="nav-item"><a href="{{ route('purchase-bulk.index')}}">Purchase</a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Show</li>
                 </ul>
             </div>
             <div class="divider1"></div>
@@ -33,8 +35,6 @@
                                             <th>Date</th>
                                             <th>Amount</th>
                                             <th class="no-sort text-center" style="width:130px">Print</th>
-                                            {{-- <th class="no-sort text-center" style="width:100px">Report</th>
-                                            <th class="no-sort text-center" style="width:60px">Action</th> --}}
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -60,16 +60,6 @@
                                                 <a href="{{ route('purchaseBulk.printChallan', [$challan->supplier_id, $challan->challan_no]) }}" target="_blank">Challan</a>
 
                                             </td>
-                                            {{-- <td class="text-center">
-                                                <a href="{{ route('purchaseBulk.show', [$challan->supplier_id, $challan->challan_no]) }}">Show</a>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="form-button-action">
-                                                    <a href="{{ route('purchaseBulk.destroy', $challan->challan_no) }} " title="Delete" class="btn btn-link btn-danger" onclick="return confirm('Are you sure?')">
-                                                        <i class="fa fa-times"></i>
-                                                    </a>
-                                                </div>
-                                            </td> --}}
                                         </tr>
                                         @endforeach
                                     </tbody>

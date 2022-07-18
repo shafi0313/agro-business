@@ -153,13 +153,6 @@ class BulkPurchaseController extends Controller
         return view('admin.bulk.purchase.all_invoice', compact('supplierChallans'));
     }
 
-    public function allInvoiceShow($challan_no)
-    {
-        $showInvoices = PurchaseInvoice::where('challan_no', $challan_no)->where('type', 7)->get(); // 7 = Purchase Bulk
-        $supplierInfo = PurchaseInvoice::where('challan_no', $challan_no)->where('type', 7)->first();
-        return view('admin.bulk.purchase.all_invoice_show', compact('showInvoices', 'supplierInfo'));
-    }
-
     public function selectDate()
     {
         return view('admin.bulk.purchase.all_select_date');
@@ -174,14 +167,6 @@ class BulkPurchaseController extends Controller
         $supplierChallans = $getChallan->groupBy('challan_no');
         return view('admin.bulk.purchase.all_invoice_by_date', compact('supplierChallans'));
     }
-
-    public function allInvoiceShowByDate($challan_no)
-    {
-        $showInvoices = PurchaseInvoice::where('challan_no', $challan_no)->where('type', 7)->get(); // 7 = Purchase Bulk
-        $supplierInfo = PurchaseInvoice::where('challan_no', $challan_no)->where('type', 7)->first();
-        return view('admin.bulk.purchase.all_invoice_show_by_date', compact('showInvoices', 'supplierInfo'));
-    }
-
 
     // Print
     public function printInvoice($supplier_id, $challan_no)
@@ -200,21 +185,6 @@ class BulkPurchaseController extends Controller
         return view('admin.bulk.purchase.print_challan', compact('showInvoices', 'ledger'));
     }
 
-    public function destroyInvoice($challan_no)
-    {
-        if ($error = $this->sendPermissionError('delete')) {
-            return $error;
-        }
-        PurchaseInvoice::where('challan_no', $challan_no)->delete();
-        PurchaseLedgerBook::where('challan_no', $challan_no)->delete();
-        if (PurchaseInvoice::count() < 1) {
-            toast('Invoice Successfully Deleted', 'success');
-            return redirect()->route('purchase-invoice.index');
-        } else {
-            toast('Invoice Successfully Deleted', 'success');
-            return redirect()->back();
-        }
-    }
 
     public function destroy(Request $request, $id)
     {

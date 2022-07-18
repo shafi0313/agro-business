@@ -10,7 +10,9 @@
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Bulk Purchase</li>
+                    <li class="nav-item active">Bulk</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Purchase</li>
                 </ul>
             </div>
             <div class="divider1"></div>
@@ -39,7 +41,7 @@
                                             <th>Proprietor</th>
                                             <th>Phone</th>
                                             <th>Address</th>
-                                            <th class="no-sort" style="width:150px;text-align:center">Invoice</th>
+                                            <th class="no-sort" style="width:140px;text-align:center">Invoice</th>
                                         </tr>
                                     </thead>
                                     <tfoot>

@@ -347,17 +347,14 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
     // Bulk Start ________________________________________________________________________________
     // Bulk Purchase
     Route::resource('/purchase-bulk', BulkPurchaseController::class);
-    Route::prefix('purchase-bulk')->group(function () {
+    Route::prefix('purchase_bulk')->group(function () {
         Route::get('/create/{id}', [BulkPurchaseController::class, 'createId'])->name('purchaseBulk.create');
         Route::get('/show/{supplier_id}/{challan_no}', [BulkPurchaseController::class, 'showInvoice'])->name('purchaseBulk.show');
-        Route::get('/destroy/{challan_no}', [BulkPurchaseController::class, 'destroyInvoice'])->name('purchaseBulk.destroy');
         // All
         Route::get('/all/show', [BulkPurchaseController::class, 'allInvoice'])->name('purchaseBulk.allInvoice');
-        Route::get('/all/show/{challan_no}', [BulkPurchaseController::class, 'allInvoiceShow'])->name('purchaseBulk.allInvoiceShow');
         // By Date
         Route::get('/select-date', [BulkPurchaseController::class, 'selectDate'])->name('purchaseBulk.selectDate');
         Route::post('/show/all/challan/by-date', [BulkPurchaseController::class, 'allInvoiceByDate'])->name('purchaseBulk.allInvoiceByDate');
-        Route::get('/show/all/challan/by-date/{challan_no}', [BulkPurchaseController::class, 'allInvoiceShowByDate'])->name('purchaseBulk.allInvoiceShowByDate');
 
         Route::get('/product_Pack_Sizes', [BulkPurchaseController::class, 'productPackSizes'])->name('purchaseBulk.productPackSizes');
         Route::get('/get/productSize', [BulkPurchaseController::class, 'productSize'])->name('purchaseBulk.productSize');
@@ -487,8 +484,8 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
     // Sample
     Route::resource('/sample-invoive', SalesSampleController::class);
     Route::get('/sample/invoice/create/{id}', [SalesSampleController::class, 'createId'])->name('salesSample.create');
-    Route::get('/sample/invoice/show-invoive/{customer_id}/{invoice_no}', [SalesSampleController::class, 'showInvoice'])->name('salesSample.show');
-    Route::get('/sample/invoice/show-invoive/{invoice_no}', [SalesSampleController::class, 'destroyInvoice'])->name('salesSample.destroy');
+    // Route::get('/sample/invoice/show-invoive/{customer_id}/{invoice_no}', [SalesSampleController::class, 'showInvoice'])->name('salesSample.show');
+    // Route::get('/sample/invoice/show-invoive/{invoice_no}', [SalesSampleController::class, 'destroyInvoice'])->name('salesSample.destroy');
 
     // Sample Report
     Route::get('/samole-report/select-date', [SalesSampleReportController::class, 'selectDate'])->name('salesSample.selectDate');
