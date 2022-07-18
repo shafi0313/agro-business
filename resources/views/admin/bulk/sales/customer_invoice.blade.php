@@ -10,7 +10,11 @@
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Invoice</li>
+                    <li class="nav-item">Bulk</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item"><a href="{{ route('sales-bulk.index')}}">Sales</a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Challan and Invoice</li>
                 </ul>
             </div>
             <div class="divider1"></div>
@@ -32,8 +36,6 @@
                                             <th>Date</th>
                                             <th>Amount</th>
                                             <th class="no-sort text-center" style="width:120px">Print</th>
-                                            {{-- <th class="no-sort text-center" style="width:100px">Report</th> --}}
-                                            {{-- <th class="no-sort text-center" style="width:60px">Action</th> --}}
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -59,16 +61,6 @@
                                                 <a href="{{ route('bulkSales.printChallan', [$invoice->customer_id, $invoice->invoice_no]) }}" target="_blank">Challan</a>
 
                                             </td>
-                                            {{-- <td class="text-center">
-                                                <a href="{{ route('purchaseBulk.show', [$invoice->customer_id, $invoice->invoice_no]) }}">Show</a>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="form-button-action">
-                                                    <a href="{{ route('purchaseBulk.destroy', $invoice->invoice_no) }} " title="Delete" class="btn btn-link btn-danger" onclick="return confirm('Are you sure?')">
-                                                        <i class="fa fa-times"></i>
-                                                    </a>
-                                                </div>
-                                            </td> --}}
                                         </tr>
                                         @endforeach
                                     </tbody>

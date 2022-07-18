@@ -77,15 +77,17 @@
 </div>
 
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
+  @can('pack-size-add')
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+            <h5 class="modal-title" id="exampleModalLabel">Add New Pack Size</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="modal-body">
             <form action="{{route('pack-size.store')}}" method="POST">
@@ -106,24 +108,20 @@
                 <div class="form-group">
                     <label for="size" class="col-sm-2 control-label">Size <span class="t_r">*</span></label>
                     <div class="col-sm-12">
-                        <input type="text" class="form-control" id="size" name="size" placeholder="Enter Size" required>
+                        <input type="text" class="form-control" id="size" name="size" placeholder="Enter Size"
+                            required>
                     </div>
                 </div>
-
-                {{-- <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes
-                 </button>
-                </div> --}}
-
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
-    </form>
-      </div>
+        </form>
     </div>
-  </div>
+</div>
+</div>
+  @endcan
 
 @push('custom_scripts')
 @include('admin.include.data_table_js')

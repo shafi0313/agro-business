@@ -12,17 +12,26 @@ class AdminUserController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('user-manage')) {
+            return $error;
+        }
         $adminUsers = User::where('role', 1)->get();
         return view('admin.user_management.admin.index', compact('adminUsers'));
     }
 
     public function create()
     {
+        if ($error = $this->authorize('user-add')) {
+            return $error;
+        }
         return view('admin.user_management.admin.create');
     }
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('user-manage')) {
+            return $error;
+        }
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -111,6 +120,9 @@ class AdminUserController extends Controller
     // User File Store
     public function userFileStore(Request $request)
     {
+        if ($error = $this->authorize('user-add')) {
+            return $error;
+        }
         $user_id = $request->get('user_id');
         if ($request->hasFile('name')!='') {
             $this->validate($request, [
@@ -141,6 +153,9 @@ class AdminUserController extends Controller
 
     public function edit($id)
     {
+        if ($error = $this->authorize('user-edit')) {
+            return $error;
+        }
         $adminUsers = User::find($id);
         $userFiles = UserFile::where('user_id', $id)->get();
         return view('admin.user_management.admin.edit', compact('adminUsers', 'userFiles'));
@@ -148,6 +163,9 @@ class AdminUserController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($error = $this->authorize('user-edit')) {
+            return $error;
+        }
         $this->validate($request, [
             'name' => 'required',
             'phone' => 'required|numeric',
@@ -230,6 +248,9 @@ class AdminUserController extends Controller
     // Only User File Delete
     public function userFileDestroy($id)
     {
+        if ($error = $this->authorize('user-delete')) {
+            return $error;
+        }
         $userFile = UserFile::find($id);
         $path =  public_path('files/user_file/'.$userFile->name);
 

@@ -10,7 +10,9 @@
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Bulk Sales</li>
+                    <li class="nav-item">Bulk</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Sales</li>
                 </ul>
             </div>
             <div class="divider1"></div>

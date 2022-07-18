@@ -32,7 +32,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('about.update', $about->id) }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('about.update', 1) }}" method="post">
                                 @csrf
                                 @method('PUT')
                                 <div class="row justify-content-center">

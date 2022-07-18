@@ -16,15 +16,19 @@ class UserEmployeeController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('employee-manage')) {
+            return $error;
+        }
         $employeeUsers = User::where('role', 5)->get();
         return view('admin.user_management.employee.index', compact('employeeUsers'));
     }
 
     public function create()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('employee-add')) {
             return $error;
         }
+
         $employeeMainCats = EmployeeMainCat::all();
         $bankLists = BankList::all();
         $empInfos = EmployeeInfo::select(['user_id','employee_main_cat_id'])->get();
@@ -35,7 +39,7 @@ class UserEmployeeController extends Controller
 
     public function store(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('employee-add')) {
             return $error;
         }
         // return $request;
@@ -217,7 +221,7 @@ class UserEmployeeController extends Controller
     // User File Store
     public function userFileStore(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('employee-add')) {
             return $error;
         }
         $user_id = $request->get('user_id');
@@ -250,7 +254,7 @@ class UserEmployeeController extends Controller
 
     public function edit($id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('employee-edit')) {
             return $error;
         }
         $employee = User::find($id);
@@ -271,7 +275,7 @@ class UserEmployeeController extends Controller
 
     public function update(Request $request, $id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('employee-edit')) {
             return $error;
         }
         // return$request;
@@ -443,7 +447,7 @@ class UserEmployeeController extends Controller
        // Only User File Delete
        public function userFileDestroy($id)
        {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('employee-delete')) {
             return $error;
         }
            $userFile = UserFile::find($id);
@@ -469,7 +473,7 @@ class UserEmployeeController extends Controller
 
     public function destroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('employee-delete')) {
             return $error;
         }
         User::find($id)->delete();

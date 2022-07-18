@@ -191,7 +191,7 @@
                 </tr>
                 <tr class="total_amt">
                     <td colspan="6" class="text-right" style="border: none !important">Discount(-):</td>
-                    <td class="text-right" style="border: none !important"><span class="net_border">{{ number_format(round($ledger->sales_amt * $ledger->discount/100),2) }}</span> </td>
+                    <td class="text-right" style="border: none !important"><span class="net_border">{{ number_format(round($ledger->discount_amt),2) }}</span> </td>
                 </tr>
                 <tr class="net_amt " style="border-top: 1px ">
                     <input id="net_amt" value="{{$ledger->net_amt}}" type="hidden">

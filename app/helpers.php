@@ -16,6 +16,12 @@ if (!function_exists('bdDate')) {
         return Carbon::parse($date)->format('d/m/Y');
     }
 }
+if (!function_exists('user')) {
+    function user()
+    {
+        return auth()->user();
+    }
+}
 
 if (!function_exists('transaction_id')) {
     function transaction_id($src = '', $length = 12)

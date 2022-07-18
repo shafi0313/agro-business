@@ -10,6 +10,19 @@
 @else
 @php $ssm = '' @endphp
 @endisset
+
+@isset($p)
+@php $p = $p @endphp
+@else
+@php $p = '' @endphp
+@endisset
+
+@isset($sm)
+@php $sm = $sm @endphp
+@else
+@php $sm = '' @endphp
+@endisset
+
 <div class="sidebar">
 	<div class="sidebar-background"></div>
 	<div class="sidebar-wrapper scrollbar-inner">
@@ -29,25 +42,29 @@
 					<h4 class="text-section">Components</h4>
                 </li>
 
-                @role('admin')
-                <li class="nav-item {{$p=='admin'?'active':''}}">
+
+                <li class="nav-item {{ activeNav(['admin-user.*','employee.*']) }}">
                     <a data-toggle="collapse" href="#admin">
                         <i class="fas fa-user-shield"></i>
                         <p>Admin</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{$p=='admin'?'show':''}}" id="admin">
+                    <div class="collapse {{ openNav(['admin-user.*','employee.*']) }}" id="admin">
                         <ul class="nav nav-collapse">
-                            <li class="{{$sm=='adminIndex'?'activeSub':''}}">
+                            @can('user-manage')
+                            <li class="{{ activeSubNav('admin-user.*') }}">
                                 <a href="{{ route('admin-user.index')}}">
                                     <span class="sub-item">User Management</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='empIndex'?'activeSub':''}}">
+                            @endcan
+                            @can('employee-manage')
+                            <li class="{{ activeSubNav('employee.*') }}">
                                 <a href="{{ route('employee.index')}}">
                                     <span class="sub-item">Employee</span>
                                 </a>
                             </li>
+                            @endcan
                             <li class="{{$sm=='companyInfoAdmin'?'activeSub':''}}">
                                 <a href="{{ route('admin.companyInfo.adminIndex')}}">
                                     <span class="sub-item">Company Info Das.</span>
@@ -61,58 +78,43 @@
                         </ul>
                     </div>
                 </li>
-                @endrole
 
-                <li class="nav-item {{$p=='frontend'?'active':''}}">
-					<a data-toggle="collapse" href="#submenu2">
+                @can('about-edit','slider-manage')
+                <li class="nav-item {{ activeNav(['about.*','slider.*']) }}">
+					<a data-toggle="collapse" href="#forUserView">
 						<i class="fas fa-bars"></i>
 						<p>For User View</p>
 						<span class="caret"></span>
 					</a>
-					<div class="collapse {{$p=='frontend'?'show':''}}" id="submenu2">
+					<div class="collapse {{ openNav(['about.*','slider.*']) }}" id="forUserView">
 						<ul class="nav nav-collapse">
-                            <li class="{{$sm=='about'?'activeSub':''}}">
-                                <a href="{{ url('admin/about/1/edit') }}">
-                                    <i class="fas fa-info-circle sub_icon"></i>
-                                    <span class="">About</span>
+                            @can('about-edit')
+                            <li class="{{ activeSubNav('about.*') }}">
+                                <a href="{{ route('about.edit', 1) }}">
+                                    <span class="sub-item">About</span>
                                 </a>
 							</li>
-
-							<li>
-								<a data-toggle="collapse" href="#sliderSub">
-                                    <i class="far fa-images sub_icon"></i>
-									<span class="">Slider</span>
-									<span class="caret"></span>
-								</a>
-								<div class="collapse" id="sliderSub">
-									<ul class="nav nav-collapse subnav">
-										<li class="{{($sm=='sliderIndex')?'activeSub':''}}">
-                                            <a href="{{ route('slider.index')}}">
-                                                <span class="sub-item">Show Sliders</span>
-                                            </a>
-                                        </li>
-										<li>
-											<li class="{{($sm=='sliderCreate')?'activeSub':''}}">
-                                                <a href="{{ route('slider.create')}}">
-                                                    <span class="sub-item">Add Slider</span>
-                                                </a>
-                                            </li>
-										</li>
-									</ul>
-								</div>
-                            </li>
+                            @endcan
+                            @can('slider-manage')
+                            <li class="{{ activeSubNav('slider.*') }}">
+                                <a href="{{ route('slider.index') }}">
+                                    <span class="sub-item">Slider</span>
+                                </a>
+							</li>
+                            @endcan
 						</ul>
 					</div>
                 </li>
+                @endcan
 
                 {{-- Tools --}}
-                <li class="nav-item {{$p=='tools'?'active':''}}">
+                <li class="nav-item {{ activeNav(['pack-size.*','bank-list.*','employee-main-cat.*','product-category.*','license-category.*','product-license.*','user-bank-ac.*','office-expense-cat.*','office-income-cat.*']) }}">
 					<a data-toggle="collapse" href="#tools">
 						<i class="fas fa-tools"></i>
 						<p>Tools</p>
 						<span class="caret"></span>
 					</a>
-					<div class="collapse {{$p=='tools'?'show':''}}" id="tools">
+					<div class="collapse {{ openNav(['pack-size.*','bank-list.*','employee-main-cat.*','product-category.*','license-category.*','product-license.*','user-bank-ac.*','office-expense-cat.*','office-income-cat.*']) }}" id="tools">
 						<ul class="nav nav-collapse">
                             {{-- <li class="{{$sm=='balkPurchase'?'activeSub':''}}">
                                 <a href="{{route('account-entry.index')}}">
@@ -120,47 +122,49 @@
                                     <p>Account Entry</p>
                                 </a>
                             </li> --}}
-                            <li class="{{$sm=='packSize'?'activeSub':''}}">
+                            @can('pack-size-manage')
+                            <li class="{{ activeSubNav('pack-size.*') }}">
                                 <a href="{{route('pack-size.index')}}">
                                     <span class="sub-item">Pack Size</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='bankList'?'activeSub':''}}">
+                            @endcan
+                            <li class="{{ activeSubNav('bank-list.*') }}">
                                 <a href="{{route('bank-list.index')}}">
                                     <span class="sub-item">Bank List</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='empCat'?'activeSub':''}}">
+                            <li class="{{ activeSubNav('employee-main-cat.*') }}">
                                 <a href="{{route('employee-main-cat.index')}}">
                                     <span class="sub-item">Employee Category</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='productCat'?'activeSub':''}}">
+                            <li class="{{ activeSubNav('product-category.*') }}">
                                 <a href="{{route('product-category.index')}}">
                                     <span class="sub-item">Product Category</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='licenseCat'?'activeSub':''}}">
+                            <li class="{{ activeSubNav('license-category.*') }}">
                                 <a href="{{route('license-category.index')}}">
                                     <span class="sub-item">License Category</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='productLicense'?'activeSub':''}}">
+                            <li class="{{ activeSubNav('product-license.*') }}">
                                 <a href="{{route('product-license.index')}}">
                                     <span class="sub-item">Product License</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='userBank'?'activeSub':''}}">
+                            <li class="{{ activeSubNav('user-bank-ac.*') }}">
                                 <a href="{{route('user-bank-ac.index')}}">
                                     <span class="sub-item">User Bank Accounts</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='officeExCat'?'activeSub':''}}">
+                            <li class="{{ activeSubNav('office-expense-cat.*') }}">
                                 <a href="{{ route('office-expense-cat.index')}}">
                                     <span class="sub-item">Office Expense Category</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='officeInCat'?'activeSub':''}}">
+                            <li class="{{ activeSubNav('office-income-cat.*') }}">
                                 <a href="{{ route('office-income-cat.index')}}">
                                     <span class="sub-item">Office Income Category</span>
                                 </a>
@@ -592,94 +596,45 @@
                     </a>
                 </li>
 
+                <li class="nav-item {{ activeNav(['admin.role.*','admin.backup.*','admin.visitorInfo.*','admin.permission.*']) }}">
+                    <a data-toggle="collapse" href="#settings">
+                        <i class="fa-solid fa-gears"></i>
+                        <p>Settings</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{openNav(['admin.role.*','admin.backup.*','admin.visitorInfo.*','admin.permission.*'])}}" id="settings">
+                        <ul class="nav nav-collapse">
+                            @canany('role-manage','permission-manage')
+                            <li class="{{ activeSubNav('admin.role.*','admin.permission.*')}}">
+                                <a href="{{ route('admin.role.index') }}">
+                                    <span class="sub-item">@lang('nav.role-permission')</span>
+                                </a>
+                            </li>
+                            @endcanany
+                            @canany('backup-manage')
+                            <li class="{{ activeSubNav('admin.backup.*')}}">
+                                <a href="{{ route('admin.backup.password') }}">
+                                    <span class="sub-item">App Backup</span>
+                                </a>
+                            </li>
+                            @endcanany
+                            @canany('visitor-manage')
+                            <li class="{{ activeSubNav('admin.visitorInfo.*')}}">
+                                <a href="{{ route('admin.visitorInfo.index') }}">
+                                    <span class="sub-item">Visitor Info</span>
+                                </a>
+                            </li>
+                            @endcanany
+                        </ul>
+                    </div>
+                </li>
+
                 <li class="nav-item">
                     <a class="dropdown-item" href="{{ route('logout') }}">
                         <i class="fas fa-sign-out-alt"></i>
                         <p>Logout</p>
                     </a>
                 </li>
-
-                {{-- <li class="nav-item {{$p=='customer'?'active':''}}">
-                    <a data-toggle="collapse" href="#customer">
-                        <i class="fas fa-users"></i>
-                        <p>Customer</p>
-                        <span class="caret"></span>
-                    </a>
-                    <div class="collapse" id="customer">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('customer.index')}}">
-                                    <span class="sub-item">Show Customer</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('customer.create')}}">
-                                    <span class="sub-item">Add Customer</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> --}}
-
-
-                {{-- <li class="nav-item {{$p=='invoice'?'active':''}}">
-                    <a href="{{ route('invoice.index')}}">
-                        <i class="fas fa-file-invoice-dollar"></i>
-                        <p>Invoice</p>
-                    </a>
-                </li> --}}
-
-				{{-- <li class="nav-item">
-					<a data-toggle="collapse" href="#submenu">
-						<i class="fas fa-bars"></i>
-						<p>Menu Levels</p>
-						<span class="caret"></span>
-					</a>
-					<div class="collapse" id="submenu">
-						<ul class="nav nav-collapse">
-							<li>
-								<a data-toggle="collapse" href="#subnav1">
-									<span class="sub-item">Level 1</span>
-									<span class="caret"></span>
-								</a>
-								<div class="collapse" id="subnav1">
-									<ul class="nav nav-collapse subnav">
-										<li>
-											<a href="#">
-												<span class="sub-item">Level 2</span>
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<span class="sub-item">Level 2</span>
-											</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li>
-								<a data-toggle="collapse" href="#subnav2">
-									<span class="sub-item">Level 1</span>
-									<span class="caret"></span>
-								</a>
-								<div class="collapse" id="subnav2">
-									<ul class="nav nav-collapse subnav">
-										<li>
-											<a href="#">
-												<span class="sub-item">Level 2</span>
-											</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li>
-								<a href="#">
-									<span class="sub-item">Level 1</span>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</li> --}}
 			</ul>
 		</div>
 	</div>

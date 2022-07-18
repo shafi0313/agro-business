@@ -71,7 +71,6 @@ class RolesAndPermissionsSeeder extends Seeder
                 'employee-delete'
             ],
             'about'=>[
-                'about-manage',
                 'about-edit',
             ],
             'slider'=>[

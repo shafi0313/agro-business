@@ -9,14 +9,20 @@ use App\Http\Controllers\Controller;
 
 class AboutController extends Controller
 {
-    public function edit($id)
+    public function edit()
     {
-        $about = About::find($id);
+        if ($error = $this->authorize('about-edit')) {
+            return $error;
+        }
+        $about = About::find(1);
         return view('admin.about.index', compact('about'));
     }
 
     public function update(Request $request, $id)
     {
+        if ($error = $this->authorize('about-edit')) {
+            return $error;
+        }
         $data = [
             'title' => $request->get('title'),
             'texts' => $request->get('texts'),

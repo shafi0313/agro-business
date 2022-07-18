@@ -5,21 +5,22 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\PackSize;
 use Illuminate\Http\Request;
-use DataTables;
-use Illuminate\Auth\Events\Validated;
-use RealRashid\SweetAlert\ToSweetAlert;
 
 class PackSizeController extends Controller
 {
     public function index(Request $request)
     {
+        if ($error = $this->authorize('pack-size-manage')) {
+            return $error;
+        }
         $PackSizes = PackSize::all();
         return view('admin.pack_size.index', compact('PackSizes'));
     }
 
     public function store(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+
+        if ($error = $this->authorize('pack-size-add')) {
             return $error;
         }
         $data = $this->validate($request, [
@@ -40,7 +41,7 @@ class PackSizeController extends Controller
 
     public function edit($id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('pack-size-edit')) {
             return $error;
         }
         $packSize = PackSize::find($id);
@@ -49,6 +50,9 @@ class PackSizeController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($error = $this->authorize('pack-size-edit')) {
+            return $error;
+        }
         $data = [
             'type' => $request->get('type'),
             'size' => $request->get('size'),
@@ -67,7 +71,7 @@ class PackSizeController extends Controller
 
     public function destroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('pack-size-delete')) {
             return $error;
         }
         PackSize::find($id)->delete();
