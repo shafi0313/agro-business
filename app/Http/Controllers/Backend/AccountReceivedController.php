@@ -166,17 +166,20 @@ class AccountReceivedController extends Controller
 
     public function destroy($tranId)
     {
-        if ($error = $this->sendPermissionError('delete')) {
-            return $error;
-        }
+        // if ($error = $this->sendPermissionError('delete')) {
+        //     return $error;
+        // }
         if($tranId == 0){
             Alert::info('This is old data you can not delete this data.');
             return back();
         }
         // Ledger invoice net amount update
         $findLedgerData = SalesLedgerBook::whereTran_id($tranId)->first(['invoice_no','discount_amt']);
+
         $ledgerData = SalesLedgerBook::whereInvoice_no($findLedgerData->invoice_no)->whereType(1)->first(['id','net_amt']);
-        SalesLedgerBook::find($ledgerData->id)->update(['net_amt' => $findLedgerData->discount_amt + $ledgerData->net_amt]);
+        if(!empty($ledgerData->id)){
+            SalesLedgerBook::find($ledgerData->id)->update(['net_amt' => $findLedgerData->discount_amt + $ledgerData->net_amt]);
+        }
 
         try{
             Account::whereTran_id($tranId)->delete();
