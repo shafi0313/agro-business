@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
-@section('title', 'Office Expense')
+@section('title', 'Office Expense Categories')
 @section('content')
-@php $p = 'tools'; $sm='officeExCat'; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -10,9 +9,9 @@
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Accounts</li>
+                    <li class="nav-item">Tools</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Office Expense</li>
+                    <li class="nav-item active">Office Expense Categories</li>
                 </ul>
             </div>
             <div class="divider1"></div>
@@ -92,18 +91,13 @@
     </div>
 </div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-  </button>
-
   <!-- Add Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Add New Office Expense</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Add New Office Expense Category</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>

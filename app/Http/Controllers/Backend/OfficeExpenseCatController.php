@@ -2,20 +2,27 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\OfficeExpenseCat;
 use Illuminate\Http\Request;
+use App\Models\OfficeExpenseCat;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OfficeExpenseCatController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('office-expense-category-manage')) {
+            return $error;
+        }
         $officeExpenses = OfficeExpenseCat::whereType(1)->whereParent_id(0)->get();
         return view('admin.office_expense.office_expense_cat.index', compact('officeExpenses'));
     }
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('office-expense-category-add')) {
+            return $error;
+        }
         $data = $this->validate($request, [
             'name' => 'required',
         ]);
@@ -33,12 +40,14 @@ class OfficeExpenseCatController extends Controller
 
     public function subCatStore(Request $request)
     {
+        if ($error = $this->authorize('office-expense-category-add')) {
+            return $error;
+        }
         $data = $this->validate($request, [
             'parent_id' => 'required',
             'name' => 'required',
         ]);
         $data['type'] = 1;
-
         try {
             OfficeExpenseCat::create($data);
             toast('Success', 'success');
@@ -51,6 +60,9 @@ class OfficeExpenseCatController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($error = $this->authorize('office-expense-category-edit')) {
+            return $error;
+        }
         $data = $this->validate($request, [
             'name' => 'required',
         ]);
@@ -67,16 +79,16 @@ class OfficeExpenseCatController extends Controller
 
     public function subCatEdit(Request $request, $id)
     {
+        if ($error = $this->authorize('office-expense-category-edit')) {
+            return $error;
+        }
         $data = $this->validate($request, [
             'name' => 'required',
         ]);
-
         $parent_id = preg_replace('/[^0-9]/', '', $request->parent_id);
-
         if(!empty($parent_id)){
             $data['parent_id'] = $request->parent_id;
         }
-        // return $data;
 
         try {
             OfficeExpenseCat::find($id)->update($data);
@@ -90,11 +102,16 @@ class OfficeExpenseCatController extends Controller
 
     public function destroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('office-expense-category-delete')) {
             return $error;
         }
-        OfficeExpenseCat::find($id)->delete();
-        toast('Successfully Deleted', 'success');
-        return redirect()->back();
+        try{
+            OfficeExpenseCat::find($id)->delete();
+            Alert::success(__('app.success'),__('app.delete-success-message'));
+            return redirect()->back();
+        }catch (\Exception $ex) {
+            Alert::error(__('app.oops'),__('app.delete-error-message'));
+            return back();
+        }
     }
 }

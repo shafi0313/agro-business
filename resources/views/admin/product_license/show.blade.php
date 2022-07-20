@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'Product License')
 @section('content')
-@php $p='tools'; $sm="productLicense"; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -9,6 +8,8 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Tools</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Product License</li>
                 </ul>
@@ -59,10 +60,6 @@
                                                     <a href="{{ route('product-license.edit', $product->id) }}" title="Edit" class="btn btn-link btn-primary">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-
-                                                    {{-- <a href="admin/users/destroy/{{$adminUser->id}}" data-toggle="tooltip" title="" class="btn btn-link btn-danger delete" data-original-title="Remove">
-                                                        <i class="fa fa-times"></i>
-                                                    </a> --}}
                                                 </div>
                                             </td>
                                         </tr>

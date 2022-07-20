@@ -13,13 +13,16 @@ class ProductLicenseController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('product-license-manage')) {
+            return $error;
+        }
         $licenseCats = LicenseCat::all();
         return view('admin.product_license.index', compact('licenseCats'));
     }
 
     public function create()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('product-license-add')) {
             return $error;
         }
         $products = Product::select(['id','name','type'])->where('type', 1)->get();
@@ -29,6 +32,9 @@ class ProductLicenseController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('product-license-add')) {
+            return $error;
+        }
         $data = $this->validate($request, [
             'license_cat_id' => 'required',
             'product_id' => 'required',
@@ -50,6 +56,9 @@ class ProductLicenseController extends Controller
 
     public function show($id)
     {
+        if ($error = $this->authorize('product-license-show')) {
+            return $error;
+        }
         $licese = LicenseCat::where('id', $id)->first();
         $products = ProductLicense::where('license_cat_id', $id)->orderBy('renewal_date','DESC')->get();
         return view('admin.product_license.show', compact('products','licese'));
@@ -57,7 +66,7 @@ class ProductLicenseController extends Controller
 
     public function edit($id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('product-license-edit')) {
             return $error;
         }
         $product = ProductLicense::find($id);
@@ -69,6 +78,9 @@ class ProductLicenseController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($error = $this->authorize('product-license-edit')) {
+            return $error;
+        }
         $data = $this->validate($request, [
             'license_cat_id' => 'required',
             'product_id' => 'required',
@@ -92,6 +104,5 @@ class ProductLicenseController extends Controller
             return redirect()->back();
         }
     }
-
 
 }

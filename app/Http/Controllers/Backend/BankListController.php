@@ -5,18 +5,22 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\BankList;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BankListController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('bank-list-manage')) {
+            return $error;
+        }
         $bankLists = BankList::all();
         return view('admin.bank_list.index', compact('bankLists'));
     }
 
     public function create()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('bank-list-add')) {
             return $error;
         }
         return view('admin.bank_list.create');
@@ -24,6 +28,9 @@ class BankListController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('bank-list-add')) {
+            return $error;
+        }
         $data = $this->validate($request, [
             'name' => 'required|string',
         ]);
@@ -40,7 +47,7 @@ class BankListController extends Controller
 
     public function edit($id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('bank-list-edit')) {
             return $error;
         }
         $bankList = BankList::find($id);
@@ -49,6 +56,9 @@ class BankListController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($error = $this->authorize('bank-list-edit')) {
+            return $error;
+        }
         $data = $this->validate($request, [
             'name' => 'required|string',
         ]);
@@ -58,18 +68,24 @@ class BankListController extends Controller
             toast('Bank Successfully Updated', 'success');
             return redirect()->route('bank-list.index');
         } catch (\Exception $ex) {
-            toast($ex->getMessage().'Bank Updated Faild', 'error');
+            toast($ex->getMessage().'Bank Updated Failed', 'error');
             return back();
         }
     }
 
     public function destroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('bank-list-delete')) {
             return $error;
         }
-        BankList::find($id)->delete();
-        toast('Product Size Successfully Inserted', 'success');
-        return redirect()->back();
+        try{
+            BankList::find($id)->delete();
+            Alert::success('Success','Successfully Deleted');
+            return redirect()->back();
+        }catch (\Exception $ex) {
+            Alert::error('Oops...','Delete Failed');
+            return back();
+        }
+
     }
 }

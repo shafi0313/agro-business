@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
 use App\Models\ProductCat;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductCatController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('product-category-manage')) {
+            return $error;
+        }
         $productCats = ProductCat::all();
         return view('admin.product_cat.index', compact('productCats'));
     }
 
     public function store(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('product-category-add')) {
             return $error;
         }
         $data = $this->validate($request, [
@@ -35,7 +39,7 @@ class ProductCatController extends Controller
 
     public function edit($id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('product-category-edit')) {
             return $error;
         }
         $productCat = ProductCat::find($id);
@@ -44,6 +48,9 @@ class ProductCatController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($error = $this->authorize('product-category-edit')) {
+            return $error;
+        }
         $data = $this->validate($request, [
             'name' => 'required',
         ]);
@@ -60,11 +67,16 @@ class ProductCatController extends Controller
 
     public function destroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('product-category-delete')) {
             return $error;
         }
-        ProductCat::find($id)->delete();
-        toast('Successfully Deleted', 'success');
-        return redirect()->back();
+        try{
+            ProductCat::find($id)->delete();
+            Alert::success(__('app.success'),__('app.delete-success-message'));
+            return redirect()->back();
+        }catch (\Exception $ex) {
+            Alert::error(__('app.oops'),__('app.delete-error-message'));
+            return back();
+        }
     }
 }

@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
-@section('title', 'Office Income')
+@section('title', 'Office Income Category')
 @section('content')
-@php $p = 'tools'; $sm='officeInCat'; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -10,9 +9,9 @@
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Accounts</li>
+                    <li class="nav-item">Tools</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Office Expense</li>
+                    <li class="nav-item active">Office Income Categories</li>
                 </ul>
             </div>
             <div class="divider1"></div>
@@ -98,7 +97,7 @@
       <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Add New Office Expense</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Add New Office Income Category</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
@@ -131,7 +130,7 @@
       <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="editModal">Edit Office Expense</h5>
+                  <h5 class="modal-title" id="editModal">Edit Office Income Category</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>

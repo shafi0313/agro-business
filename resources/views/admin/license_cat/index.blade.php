@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
-@section('title', 'license Category')
+@section('title', 'License Category')
 @section('content')
-@php $p = 'tools'; $sm="licenseCat"; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -10,7 +9,9 @@
                     <li class="nav-home">
                     <a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">license Category</li>
+                    <li class="nav-item">Tools</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">License Category</li>
                 </ul>
             </div>
             <div class="divider1"></div>
@@ -19,8 +20,10 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">License</h4>
+                                <h4 class="card-title">License Categories</h4>
+                                @can('license-category-add')
                                 <a class="btn btn-primary btn-round ml-auto text-light" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Add New</a>
+                                @endcan
                             </div>
                         </div>
                         <div class="card-body">
@@ -75,8 +78,9 @@
 </div>
 
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  @can('license-category-add')
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -109,6 +113,7 @@
       </div>
     </div>
   </div>
+  @endcan
 
 @push('custom_scripts')
 @include('admin.include.data_table_js')

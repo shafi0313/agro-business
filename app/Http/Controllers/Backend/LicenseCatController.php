@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
 use App\Models\LicenseCat;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LicenseCatController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('license-category-manage')) {
+            return $error;
+        }
         $licenseCats = LicenseCat::all();
         return view('admin.license_cat.index', compact('licenseCats'));
     }
 
     public function store(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('license-category-add')) {
             return $error;
         }
         $data = $this->validate($request, [
@@ -36,21 +40,24 @@ class LicenseCatController extends Controller
 
     public function edit($id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('license-category-edit')) {
             return $error;
         }
-        $licenseCat = licenseCat::find($id);
+        $licenseCat = LicenseCat::find($id);
         return view('admin.license_cat.edit', compact('licenseCat'));
     }
 
     public function update(Request $request, $id)
     {
+        if ($error = $this->authorize('license-category-edit')) {
+            return $error;
+        }
         $data = $this->validate($request, [
             'name' => 'required',
         ]);
 
         try {
-            licenseCat::find($id)->update($data);
+            LicenseCat::find($id)->update($data);
             toast('Category Successfully Update', 'success');
             return redirect()->route('license-category.index');
         } catch (\Exception $ex) {
@@ -61,11 +68,16 @@ class LicenseCatController extends Controller
 
     public function destroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('license-category-delete')) {
             return $error;
         }
-        licenseCat::find($id)->delete();
-        toast('Successfully Deleted', 'success');
-        return redirect()->back();
+        try{
+            LicenseCat::find($id)->delete();
+            Alert::success(__('app.success'),__('app.delete-success-message'));
+            return redirect()->back();
+        }catch (\Exception $ex) {
+            Alert::error(__('app.oops'),__('app.delete-error-message'));
+            return back();
+        }
     }
 }

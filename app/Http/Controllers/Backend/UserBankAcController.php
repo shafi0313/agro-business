@@ -9,17 +9,21 @@ use App\Models\UserBankAc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserBankAcController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('user-bank-accounts-manage')) {
+            return $error;
+        }
         $userBankAcs = UserBankAc::all();
         return view('admin.user_bank_ac.index', compact('userBankAcs'));
     }
     public function create()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('user-bank-accounts-add')) {
             return $error;
         }
         $users = User::select(['id','name'])->where('role',1)->where('role',5)->orwhere('name','!=', 'Developer')->get();
@@ -29,6 +33,9 @@ class UserBankAcController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('user-bank-accounts-add')) {
+            return $error;
+        }
         DB::beginTransaction();
         $data = $this->validate($request, [
             'user_id' => 'required',
@@ -70,7 +77,7 @@ class UserBankAcController extends Controller
 
     public function edit($id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('user-bank-accounts-edit')) {
             return $error;
         }
         $userBankAc = UserBankAc::find($id);
@@ -83,6 +90,9 @@ class UserBankAcController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($error = $this->authorize('user-bank-accounts-edit')) {
+            return $error;
+        }
         // return $request;
         $data = $this->validate($request, [
             'user_id' => 'required',
@@ -121,11 +131,17 @@ class UserBankAcController extends Controller
 
     public function destroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('user-bank-accounts-delete')) {
             return $error;
         }
-        UserBankAc::find($id)->delete();
-        toast('Success','success');
-        return redirect()->back();
+
+        try{
+            UserBankAc::find($id)->delete();
+            Alert::success(__('app.success'),__('app.delete-success-message'));
+            return redirect()->back();
+        }catch (\Exception $ex) {
+            Alert::error(__('app.oops'),__('app.delete-error-message'));
+            return back();
+        }
     }
 }

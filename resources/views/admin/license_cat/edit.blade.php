@@ -1,13 +1,14 @@
 @extends('admin.layout.master')
 @section('title', 'License Category')
 @section('content')
-@php $p = 'tools'; $sm="licenseCat"; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Tools</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item"><a href="{{ route('license-category.index')}}">License Category</a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>

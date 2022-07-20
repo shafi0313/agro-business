@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'Product License')
 @section('content')
-@php $p='tools'; $sm="productLicense"; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -9,9 +8,11 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item"><a href="{{ route('product.index')}}">Show Product License</a></li>
+                    <li class="nav-item">Tools</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Create Product License</li>
+                    <li class="nav-item"><a href="{{ route('product.index')}}">Product License</a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Create</li>
                 </ul>
             </div>
             <div class="divider1"></div>

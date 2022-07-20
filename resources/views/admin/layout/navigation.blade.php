@@ -129,46 +129,64 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('bank-list-manage')
                             <li class="{{ activeSubNav('bank-list.*') }}">
                                 <a href="{{route('bank-list.index')}}">
                                     <span class="sub-item">Bank List</span>
                                 </a>
                             </li>
+                            @endcan
+                            @can('employee-category-manage')
                             <li class="{{ activeSubNav('employee-main-cat.*') }}">
                                 <a href="{{route('employee-main-cat.index')}}">
                                     <span class="sub-item">Employee Category</span>
                                 </a>
                             </li>
+                            @endcan
+
+                            @can('product-category-manage')
                             <li class="{{ activeSubNav('product-category.*') }}">
                                 <a href="{{route('product-category.index')}}">
                                     <span class="sub-item">Product Category</span>
                                 </a>
                             </li>
+                            @endcan
+
+                            @can('license-category-manage')
                             <li class="{{ activeSubNav('license-category.*') }}">
                                 <a href="{{route('license-category.index')}}">
                                     <span class="sub-item">License Category</span>
                                 </a>
                             </li>
+                            @endcan
+                            @can('product-license-manage')
                             <li class="{{ activeSubNav('product-license.*') }}">
                                 <a href="{{route('product-license.index')}}">
                                     <span class="sub-item">Product License</span>
                                 </a>
                             </li>
+                            @endcan
+                            @can('user-bank-accounts-manage')
                             <li class="{{ activeSubNav('user-bank-ac.*') }}">
                                 <a href="{{route('user-bank-ac.index')}}">
                                     <span class="sub-item">User Bank Accounts</span>
                                 </a>
                             </li>
+                            @endcan
+                            @can('office-expense-category-manage')
                             <li class="{{ activeSubNav('office-expense-cat.*') }}">
                                 <a href="{{ route('office-expense-cat.index')}}">
                                     <span class="sub-item">Office Expense Category</span>
                                 </a>
                             </li>
+                            @endcan
+                            @can('office-income-category-manage')
                             <li class="{{ activeSubNav('office-income-cat.*') }}">
                                 <a href="{{ route('office-income-cat.index')}}">
                                     <span class="sub-item">Office Income Category</span>
                                 </a>
                             </li>
+                            @endcan
 						</ul>
 					</div>
                 </li>

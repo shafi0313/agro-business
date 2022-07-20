@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'Product Category')
 @section('content')
-@php $p = 'tools'; $sm="productCat"; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -10,7 +9,11 @@
                     <li class="nav-home">
                     <a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Product Category</ul>
+                    <li class="nav-item">Tools</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Product Category</li>
+
+                </ul>
             </div>
             <div class="divider1"></div>
             <div class="row">
@@ -18,7 +21,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">All Size</h4>
+                                <h4 class="card-title">Product Category</h4>
                                 <a class="btn btn-primary btn-round ml-auto text-light" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Add New</a>
                             </div>
                         </div>
@@ -72,12 +75,13 @@
 </div>
 
 
+@can('product-category-add')
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Porduct Category</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Add Product Category</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -100,6 +104,7 @@
       </div>
     </div>
   </div>
+@endcan
 
 @push('custom_scripts')
 @include('admin.include.data_table_js')

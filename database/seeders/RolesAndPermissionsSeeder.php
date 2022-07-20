@@ -85,6 +85,12 @@ class RolesAndPermissionsSeeder extends Seeder
                 'pack-size-edit',
                 'pack-size-delete'
             ],
+            'bank-list'=>[
+                'bank-list-manage',
+                'bank-list-add',
+                'bank-list-edit',
+                'bank-list-delete'
+            ],
             'employee-category'=>[
                 'employee-category-manage',
                 'employee-category-add',
@@ -106,6 +112,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'product-license'=>[
                 'product-license-manage',
                 'product-license-add',
+                'product-license-show',
                 'product-license-edit',
                 'product-license-delete'
             ],

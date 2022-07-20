@@ -43,8 +43,12 @@ return [
     'setting'   => 'Setting',
     'settings'  => 'Settings',
 
-    'oops'               => 'Oops! A Server Error Has Occurred.',
-    'success-message'    => 'The action has been performed successfully.',
+    'oops'               => 'Oops...',
+    'success'            => 'Success',
+    'delete-success-message'    => 'This data has been deleted.',
+    'delete-error-message'      => 'Failed to delete this record.',
+    'delete-alert'       => 'The action will permanently delete this record.',
+
     'soft-delete-alert'  => 'This action will soft delete all selected records.',
     'force-delete-alert' => 'This action will permanent delete all selected records.',
     'warning-message'    => 'You cannot performed this action.',
