@@ -136,7 +136,7 @@ class LabelSendToRepackingController extends Controller
             return redirect()->route('label-send-to-repack-unit.index');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Send Inserted Faild', 'error');
+            toast($ex->getMessage().'Send Inserted Failed', 'error');
             return back();
         }
     }

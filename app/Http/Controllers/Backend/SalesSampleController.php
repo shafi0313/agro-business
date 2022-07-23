@@ -34,14 +34,14 @@ class SalesSampleController extends Controller
 
         $challan_no = SalesLedgerBook::select(['challan_no','type'])->where('type', 1)->orwhere('type', 3)->orwhere('type', 5)->count() + 665;
 
-        $ledger = SalesLedgerBook::where('customer_id',$id)->orderBy('id','DESC')->get();
+        $ledger = SalesLedgerBook::where('customer_id', $id)->orderBy('id', 'DESC')->get();
         $ledgerPayment = SalesLedgerBook::where('customer_id', $id)->get();
-        return view('admin.sales.sample.create', compact('customer','invoice_no','userId','ledger','ledgerPayment','challan_no'));
+        return view('admin.sales.sample.create', compact('customer', 'invoice_no', 'userId', 'ledger', 'ledgerPayment', 'challan_no'));
     }
 
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             // 'invoice_no' => 'required',
             'size' => 'required',
             'quantity' => 'required',
@@ -59,12 +59,12 @@ class SalesSampleController extends Controller
 
 
         $ledgerBookCheck = SalesLedgerBook::where('type', 5)->where('invoice_no', $request->invoice_no)->get();
-        if($ledgerBookCheck->count() > 0){
-            alert()->error('ErrorAlert','Something went wrong! Please try again');
+        if ($ledgerBookCheck->count() > 0) {
+            alert()->error('ErrorAlert', 'Something went wrong! Please try again');
             return redirect()->back();
-        }else{
+        } else {
             DB::beginTransaction();
-            foreach($request->product_id as $key => $v){
+            foreach ($request->product_id as $key => $v) {
                 $data=[
                     'tran_id' => $transaction_id,
                     'user_id' => 10,
@@ -156,11 +156,11 @@ class SalesSampleController extends Controller
                 // $ledgerBook = SalesLedgerBook::create($ledgerBook);
                 $invoice == true;
                 DB::commit();
-                toast('Invoice Successfully Inserted','success');
+                toast('Invoice Successfully Inserted', 'success');
                 return redirect()->route('sample-invoive.index');
             } catch (\Exception $ex) {
                 DB::rollBack();
-                toast($ex->getMessage().'Invoice Inserted Faild','error');
+                toast($ex->getMessage().'Invoice Inserted Failed', 'error');
                 return back();
             }
         }
@@ -171,11 +171,11 @@ class SalesSampleController extends Controller
         $customerInfo = SalesInvoice::where('customer_id', $id)->first();
         $getInvoice = SalesInvoice::where('customer_id', $id)->where('type', 5)->latest()->get();
         $customerInvoices = $getInvoice->groupBy('invoice_no');
-        if($customerInfo == ''){
-            alert()->info('Alert','There are no invoice. First create invoice');
+        if ($customerInfo == '') {
+            alert()->info('Alert', 'There are no invoice. First create invoice');
             return redirect()->back();
         }
-        return view('admin.sales.sample.customer_invoice', compact('customerInvoices','customerInfo'));
+        return view('admin.sales.sample.customer_invoice', compact('customerInvoices', 'customerInfo'));
     }
 
     public function printInvoice($customer_id, $invoice_no)
@@ -186,7 +186,7 @@ class SalesSampleController extends Controller
         // $invoiceDue = InvoiceDue::where('invoice_no',$invoice_no)->get();
         // $invoiceDueFirst = InvoiceDue::where('invoice_no',$invoice_no)->first();
         $ledger = SalesLedgerBook::where('invoice_no', $invoice_no)->first();
-        return view('admin.sales.sample.print_invoice', compact('showInvoices','ledger','getShowInvoices'));
+        return view('admin.sales.sample.print_invoice', compact('showInvoices', 'ledger', 'getShowInvoices'));
     }
 
     public function printChallan($customer_id, $invoice_no)
@@ -197,7 +197,7 @@ class SalesSampleController extends Controller
         // $invoiceDue = InvoiceDue::where('invoice_no',$invoice_no)->get();
         // $invoiceDueFirst = InvoiceDue::where('invoice_no',$invoice_no)->first();
         $ledger = SalesLedgerBook::where('invoice_no', $invoice_no)->first();
-        return view('admin.sales.sample.print_challan', compact('showInvoices','ledger'));
+        return view('admin.sales.sample.print_challan', compact('showInvoices', 'ledger'));
     }
 
     // Soft Delete

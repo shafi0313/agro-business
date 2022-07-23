@@ -1,14 +1,12 @@
 @extends('admin.layout.master')
 @section('title', 'Trash')
 @section('content')
-@php $p = 'trash'; $sm='rReceived'; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
                 <ul class="breadcrumbs">
-                    <li class="nav-home">
-                        <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                    <li class="nav-home"><a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Trash</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>

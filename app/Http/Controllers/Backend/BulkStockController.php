@@ -14,13 +14,16 @@ class BulkStockController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('bulk-stock-manage')) {
+            return $error;
+        }
         $stocks = Stock::where('stock_type', 2)->whereInv_cancel(0)->get();
         return view('admin.stock.bulk.index', compact('stocks'));
     }
 
     public function create()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('bulk-stock-add')) {
             return $error;
         }
         return view('admin.stock.bulk.create');
@@ -28,7 +31,7 @@ class BulkStockController extends Controller
 
     public function store(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('bulk-stock-add')) {
             return $error;
         }
         $data=[
@@ -67,7 +70,7 @@ class BulkStockController extends Controller
 
     public function update(Request $request)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('bulk-stock-edit')) {
             return $error;
         }
         $id = $request->id;
@@ -87,7 +90,7 @@ class BulkStockController extends Controller
 
     public function close(Request $request)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('bulk-stock-stock-close')) {
             return $error;
         }
         $product_id = $request->product_id;

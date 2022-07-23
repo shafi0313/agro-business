@@ -124,7 +124,7 @@ class LabelPurchaseController extends Controller
             return redirect()->route('purchase-bulk.index');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Purchase Bulk Inserted Faild', 'error');
+            toast($ex->getMessage().'Purchase Bulk Inserted Failed', 'error');
             return back();
         }
     }

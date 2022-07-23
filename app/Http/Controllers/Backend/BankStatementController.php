@@ -14,12 +14,18 @@ class BankStatementController extends Controller
 {
     public function selectDate()
     {
+        if ($error = $this->authorize('bank-statement-manage')) {
+            return $error;
+        }
         $userBankAcs = BankList::all();
         return view('admin.account.bank_statement.select_date', compact('userBankAcs'));
     }
 
     public function index(Request $request)
     {
+        if ($error = $this->authorize('bank-statement-manage')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
         $bank_id = $request->get('bank_id');
@@ -84,7 +90,7 @@ class BankStatementController extends Controller
 
     public function bankPreStore(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('bank-statement-previous-add')) {
             return $error;
         }
 

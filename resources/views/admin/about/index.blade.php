@@ -1,8 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'About')
-@php $p='frontend'; $sm="about" @endphp
 @section('content')
-<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -66,22 +64,23 @@
     @include('admin.layout.footer')
 </div>
 
-@include('sweetalert::alert')
 @push('custom_scripts')
+<script src="{{ asset('backend/assets/ckeditor/ckeditor.js') }}"></script>
 <script>
+    CKEDITOR.replace('editor')
     // ClassicEditor
     //     .create( document.querySelector( '#editor' ) )
     //     .catch( error => {
     //         console.error( error );
     //     });
-    ClassicEditor
-    .create( document.querySelector( '#editor' ), {
-        removePlugins: [  ],
-        toolbar: ['Heading', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' , 'Link']
-    } )
-    .catch( error => {
-        console.log( error );
-    });
+    // ClassicEditor
+    // .create( document.querySelector( '#editor' ), {
+    //     removePlugins: [  ],
+    //     toolbar: ['Heading', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' , 'Link']
+    // } )
+    // .catch( error => {
+    //     console.log( error );
+    // });
 </script>
 @endpush
 @endsection

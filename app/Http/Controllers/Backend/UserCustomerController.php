@@ -10,19 +10,22 @@ use Illuminate\Http\Request;
 use App\Models\SalesLedgerBook;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserCustomerController extends Controller
-
 {
     public function index()
     {
-        $users = User::where('role', 2)->orderby('business_name','ASC')->get();
+        if ($error = $this->authorize('customer-manage')) {
+            return $error;
+        }
+        $users = User::where('role', 2)->orderby('business_name', 'ASC')->get();
         return view('admin.user.customer.index', compact('users'));
     }
 
     public function create()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('customer-add')) {
             return $error;
         }
         return view('admin.user.customer.create');
@@ -30,7 +33,9 @@ class UserCustomerController extends Controller
 
     public function store(Request $request)
     {
-        // return $request;
+        if ($error = $this->authorize('customer-add')) {
+            return $error;
+        }
         $this->validate($request, [
             'name' => 'required',
             'email' => 'email|unique:users,email',
@@ -43,20 +48,20 @@ class UserCustomerController extends Controller
 
         // Tmm So Id
         $getTmmId = User::where('role', 2)->count() + 1;
-        if(strlen($getTmmId) == 1){
+        if (strlen($getTmmId) == 1) {
             $tmmId = '00'. $getTmmId;
-        }elseif(strlen($getTmmId) == 2){
+        } elseif (strlen($getTmmId) == 2) {
             $tmmId = '0'. $getTmmId;
-        }else{
+        } else {
             $tmmId = $getTmmId;
         }
 
         $image_name = '';
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $image_name = "user_photo".rand(0,10000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/users/',$image_name);
-        }else{
+            $image_name = "user_photo".rand(0, 10000).'.'.$image->getClientOriginalExtension();
+            $request->image->move('images/users/', $image_name);
+        } else {
             $image_name = "company_logo.png";
         }
 
@@ -89,11 +94,11 @@ class UserCustomerController extends Controller
         ];
         CustomerInfo::create($customerInfo);
 
-        if($request->hasFile('name')) {
+        if ($request->hasFile('name')) {
             $files = $request->file('name');
-            foreach($files as $key => $file){
+            foreach ($files as $key => $file) {
                 $extension = $file->getClientOriginalExtension();
-                $fileName = "user_file_".rand(0,100000).".".$extension;
+                $fileName = "user_file_".rand(0, 100000).".".$extension;
                 $destinationPath = 'files/user_file'.'/';
                 $file->move($destinationPath, $fileName);
                 $userFile = [
@@ -155,11 +160,11 @@ class UserCustomerController extends Controller
         try {
             $user == true;
             DB::commit();
-            toast('Successfully Inserted','success');
+            toast('Successfully Inserted', 'success');
             return redirect()->route('customer.index');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Inserted Faild','error');
+            toast($ex->getMessage().'Inserted Failed', 'error');
             return back();
         }
     }
@@ -167,6 +172,9 @@ class UserCustomerController extends Controller
     // User File Store
     public function userFileStore(Request $request)
     {
+        if ($error = $this->authorize('customer-edit')) {
+            return $error;
+        }
         $user_id = $request->get('user_id');
         if ($request->hasFile('name')!='') {
             $this->validate($request, [
@@ -197,6 +205,9 @@ class UserCustomerController extends Controller
 
     public function show($id)
     {
+        if ($error = $this->authorize('customer-show')) {
+            return $error;
+        }
         $customers = User::find($id);
         return view('admin.user.customer.show', compact('customers'));
     }
@@ -204,25 +215,27 @@ class UserCustomerController extends Controller
     // Edit
     public function edit($id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('customer-edit')) {
             return $error;
         }
         $user = User::find($id);
         $userFiles = UserFile::where('user_id', $id)->get();
         $opening_bl = SalesLedgerBook::where('customer_id', $id)->where('invoice_no', 0)->first();
-        return view('admin.user.customer.edit', compact('user','userFiles','opening_bl'));
+        return view('admin.user.customer.edit', compact('user', 'userFiles', 'opening_bl'));
     }
 
     // Update
     public function update(Request $request, $id)
     {
+        if ($error = $this->authorize('customer-edit')) {
+            return $error;
+        }
         // return $request;
-        if($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $image_name = "user_photo".rand(0,10000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/users/',$image_name);
-        }else{
+            $image_name = "user_photo".rand(0, 10000).'.'.$image->getClientOriginalExtension();
+            $request->image->move('images/users/', $image_name);
+        } else {
             $image_name = $request->get('old_image');
         }
 
@@ -251,15 +264,15 @@ class UserCustomerController extends Controller
 
         // Ledger Book
         $open = $request->get('total');
-        if($open > 0){
+        if ($open > 0) {
             // $ledgerBook['sales_amt'] = $open;
             $ledgerBook['net_amt'] = $open;
             $ledgerBook['payment'] = 0;
-        }else{
+        } else {
             $ledgerBook['payment'] = abs($open);
             $ledgerBook['net_amt'] = 0;
         }
-        $salesLedgerUpdate = SalesLedgerBook::where('invoice_no', 0)->where('customer_id',$id)->update($ledgerBook);
+        $salesLedgerUpdate = SalesLedgerBook::where('invoice_no', 0)->where('customer_id', $id)->update($ledgerBook);
 
         // Ledger Book
         if ($salesLedgerUpdate==null) {
@@ -304,8 +317,8 @@ class UserCustomerController extends Controller
             }
         }
 
-        if($request->note != '' && $request->hasFile('name')==''){
-            foreach($request->note as $key => $value){
+        if ($request->note != '' && $request->hasFile('name')=='') {
+            foreach ($request->note as $key => $value) {
                 $data = [
                     'note' => $request->note[$key],
                 ];
@@ -317,10 +330,10 @@ class UserCustomerController extends Controller
         try {
             $update  = User::find($id);
             $update->update($data);
-            toast('Customer Update Successfully','success');
+            toast('Customer Update Successfully', 'success');
             return redirect()->back();
-        } catch(\Exception $ex) {
-            toast($ex->getMessage().'Customer Update Faild','error');
+        } catch (\Exception $ex) {
+            toast($ex->getMessage().'Customer Update Failed', 'error');
             return redirect()->back();
         }
     }
@@ -328,65 +341,63 @@ class UserCustomerController extends Controller
     // Only User File Delete
     public function userFileDestroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('customer-delete')) {
             return $error;
         }
         $userFile = UserFile::find($id);
         $path =  public_path('files/user_file/'.$userFile->name);
-
-        if($userFile->name == 'company_logo.png'){
-            $userFile->delete();
-            toast('File Successfully Deleted','success');
-            return redirect()->back();
-        }else{
-            if(file_exists($path)){
-                unlink($path);
+        try {
+            if ($userFile->name == 'company_logo.png') {
                 $userFile->delete();
-                toast('File Successfully Deleted','success');
-                return redirect()->back();
-            }else{
-                $userFile->delete();
-                toast('File Delete Field','error');
-                return redirect()->back();
+            } else {
+                if (file_exists($path)) {
+                    unlink($path);
+                    $userFile->delete();
+                } else {
+                    $userFile->delete();
+                }
             }
+            Alert::success(__('app.success'), __('app.delete-success-message'));
+            return redirect()->back();
+        } catch (\Exception $ex) {
+            Alert::error(__('app.oops'), __('app.delete-error-message'));
+            return back();
         }
     }
 
     // Customer Delete
     public function destroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('customer-delete')) {
             return $error;
         }
         $user = User::find($id);
         $path =  public_path('images/users/'.$user->profile_photo_path);
-
         // User File Delete
         $userFiles = UserFile::where('user_id', $id)->get();
-        foreach($userFiles as $userFile){
+        foreach ($userFiles as $userFile) {
             $currentFile = $userFile->name;
             $userFilePath = public_path('files/user_file/'.$currentFile);
-            if(file_exists($userFilePath)){
+            if (file_exists($userFilePath)) {
                 unlink($userFilePath);
             }
-
         }
-
-        if($user->profile_photo_path == 'company_logo.png'){
-            $user->delete();
-            toast('File Successfully Deleted','success');
-            return redirect()->back();
-        }else{
-            if(file_exists($path)){
+        try {
+            if ($user->profile_photo_path == 'company_logo.png') {
                 $user->delete();
-                unlink($path);
-                toast('File Successfully Deleted','success');
-                return redirect()->back();
-            }else{
-                $user->delete();
-                toast('File Successfully Deleted','success');
-                return redirect()->back();
+            } else {
+                if (file_exists($path)) {
+                    $user->delete();
+                    unlink($path);
+                } else {
+                    $user->delete();
+                }
             }
+            Alert::success(__('app.success'), __('app.delete-success-message'));
+            return redirect()->back();
+        } catch (\Exception $ex) {
+            Alert::error(__('app.oops'), __('app.delete-error-message'));
+            return back();
         }
     }
 }

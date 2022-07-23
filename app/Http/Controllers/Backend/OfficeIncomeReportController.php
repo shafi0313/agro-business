@@ -11,12 +11,18 @@ class OfficeIncomeReportController extends Controller
 {
     public function selectDate()
     {
+        if ($error = $this->authorize('income-report-manage')) {
+            return $error;
+        }
         $expenseCats = OfficeExpenseCat::whereType(2)->whereParent_id(0)->get();
         return view('admin.office_income.report.select_date', compact('expenseCats'));
     }
 
     public function report(Request $request)
     {
+        if ($error = $this->authorize('income-report-manage')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
@@ -34,6 +40,9 @@ class OfficeIncomeReportController extends Controller
 
     public function reportView($id, $form_date, $to_date, $expCat)
     {
+        if ($error = $this->authorize('income-report-manage')) {
+            return $error;
+        }
         $cusReport = preg_replace('/[^a-z A-Z]/', '', $id);
         $cusId = preg_replace('/[^0-9]/', '', $id);
         if (empty($cusReport)) {

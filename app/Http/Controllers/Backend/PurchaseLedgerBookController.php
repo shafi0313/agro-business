@@ -14,12 +14,18 @@ class PurchaseLedgerBookController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('purchase-ledger-book-manage')) {
+            return $error;
+        }
         $suppliers = user::where('role', 3)->orderBy('business_name')->get();
         return view('admin.purchase.purchase_ledger_book.index', compact('suppliers'));
     }
 
     public function ledgerBookSelectDate(User $supplier_id)
     {
+        if ($error = $this->authorize('purchase-ledger-book-show-by-date')) {
+            return $error;
+        }
         $supplierInfo = PurchaseInvoice::where('supplier_id', $supplier_id->id)->get();
         return view('admin.purchase.purchase_ledger_book.ind_select_date', compact('supplierInfo','supplier_id'));
     }
@@ -27,6 +33,9 @@ class PurchaseLedgerBookController extends Controller
     // Ledger Book By Date
     public function showInvoice(Request $request)
     {
+        if ($error = $this->authorize('purchase-ledger-book-show-by-date')) {
+            return $error;
+        }
         $supplier_id = $request->get('supplier_id');
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
@@ -62,6 +71,9 @@ class PurchaseLedgerBookController extends Controller
     // Ledger Book All
     public function indAllLedgerBook($supplier_id)
     {
+        if ($error = $this->authorize('purchase-ledger-book-show-all')) {
+            return $error;
+        }
         $supplierInfo = PurchaseInvoice::where('supplier_id', $supplier_id)->first();
         $openingBl = PurchaseLedgerBook::where('supplier_id',$supplier_id)->where('type',0)->first();
         $invoices = PurchaseLedgerBook::where('supplier_id',$supplier_id)->whereIn('type', ['7','8','13','14','26'])->get();
@@ -76,6 +88,9 @@ class PurchaseLedgerBookController extends Controller
 
     public function allShowInvoice()
     {
+        if ($error = $this->authorize('purchase-ledger-book-all-ledger-book')) {
+            return $error;
+        }
         $invoices = PurchaseLedgerBook::orderBy('challan_no','DESC')
                     ->where('type', 7)
                     ->orWhere('type', 8)
@@ -119,36 +134,36 @@ class PurchaseLedgerBookController extends Controller
         // return $pdf->download('purchase-ledger_book_all.pdf');
     }
 
-    public function ledgerUpdate(Request $request, $id)
-    {
-        if ($error = $this->sendPermissionError('edit')) {
-            return $error;
-        }
-        $total_amt = $request->get('total_amt');
-        $payment_amt = $request->get('payment');
-        $courier_pay = $request->get('courier_pay');
-        $dues_amt = $total_amt -   $payment_amt - $courier_pay ;
+    // public function ledgerUpdate(Request $request, $id)
+    // {
+    //     if ($error = $this->sendPermissionError('edit')) {
+    //         return $error;
+    //     }
+    //     $total_amt = $request->get('total_amt');
+    //     $payment_amt = $request->get('payment');
+    //     $courier_pay = $request->get('courier_pay');
+    //     $dues_amt = $total_amt -   $payment_amt - $courier_pay ;
 
 
-        $data = [
-            'payment' => $payment_amt,
-            'courier_pay' => $courier_pay,
-            'dues_amt' => $dues_amt,
-            'payment_date' => Carbon::now(),
-        ];
+    //     $data = [
+    //         'payment' => $payment_amt,
+    //         'courier_pay' => $courier_pay,
+    //         'dues_amt' => $dues_amt,
+    //         'payment_date' => Carbon::now(),
+    //     ];
 
 
-        DB::beginTransaction();
-        try {
-            PurchaseLedgerBook::find($id)->update($data);
-            DB::commit();
-            toast('Payment Successfully Updated','success');
-            return redirect()->back();
+    //     DB::beginTransaction();
+    //     try {
+    //         PurchaseLedgerBook::find($id)->update($data);
+    //         DB::commit();
+    //         toast('Payment Successfully Updated','success');
+    //         return redirect()->back();
 
-        } catch (\Exception $ex) {
-            DB::rollBack();
-            toast($ex->getMessage().'Payment Update Failed','error');
-            return redirect()->back();
-        }
-    }
+    //     } catch (\Exception $ex) {
+    //         DB::rollBack();
+    //         toast($ex->getMessage().'Payment Update Failed','error');
+    //         return redirect()->back();
+    //     }
+    // }
 }

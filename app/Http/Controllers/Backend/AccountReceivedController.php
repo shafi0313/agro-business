@@ -19,13 +19,16 @@ class AccountReceivedController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('collection-manage')) {
+            return $error;
+        }
         $users = User::whereIn('role', [1,2,5])->where('name', '!=', 'Developer')->orderby('business_name')->get(['id','name','phone','address','business_name','role']);
         return view('admin.account.received.index', compact('users'));
     }
 
     public function createId($id)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('collection-add')) {
             return $error;
         }
         // $tmmSoIds = EmployeeInfo::with(['user' => fn ($q) => $q->select(['id','tmm_so_id','name'])])->whereIn('employee_main_cat_id',[12,13])->get(['user_id']);
@@ -39,20 +42,20 @@ class AccountReceivedController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('collection-add')) {
+            return $error;
+        }
         $this->validate($request, [
             'sales_amt' => 'nullable|numeric',
             'credit' => 'numeric',
             'discount' => 'nullable|numeric',
             'discount_amt' => 'nullable|numeric',
         ]);
-
         $customer_id = $request->get('customer_id');
         $tmm_so_id = $request->get('tmm_so_id');
         $user_bank_ac_id = $request->get('user_bank_ac_id');
         $transaction_id = transaction_id('REC');
-
         DB::beginTransaction();
-
         $account = [
             'tran_id' => $transaction_id,
             'user_id' => $customer_id,
@@ -70,15 +73,12 @@ class AccountReceivedController extends Controller
             'date' => $request->get('date'),
             'cheque_no' => $request->get('cheque_no'),
         ];
-
         if (!$user_bank_ac_id) {
             $account['type'] = 1; // Cash
         } else {
             $account['type'] = 2; // Bank
         }
-
         $account = Account::create($account);
-
         $ledgerBook = [
             'tran_id' => $transaction_id,
             'user_id' => $tmm_so_id,
@@ -96,7 +96,6 @@ class AccountReceivedController extends Controller
             'discount_amt' => round($request->discount_amt),
         ];
         SalesLedgerBook::create($ledgerBook);
-
         // Complete Status
         if (($request->net_amt == null) && ($request->credit >= $request->due_amt)) {
             $c_status = 1;
@@ -105,15 +104,12 @@ class AccountReceivedController extends Controller
         } else {
             $c_status = 0;
         }
-
         $ledger = SalesLedgerBook::where('invoice_no', $request->invoice_no)->get();
         $ledgerBookUpdate['c_status'] = $c_status;
         if ($request->net_amt!=null) {
             $ledgerBookUpdate['net_amt'] = $ledger->sum('sales_amt') - ($request->discount_amt + $ledger->sum('discount_amt'));
         }
         SalesLedgerBook::where('type', '!=', 25)->where('invoice_no', $request->invoice_no)->update($ledgerBookUpdate);
-
-
         $salesReport = SalesReport::where('user_id', $tmm_so_id)->first();
         if (!empty($salesReport->user_id)) {
             $report = [
@@ -134,7 +130,6 @@ class AccountReceivedController extends Controller
             ];
             SalesReport::create($report);
         }
-
         try {
             if((CompanyInfo::whereId(1)->first('sms_service')->sms_service == 1) && (env('SMS_API') != "")){
                 $salesLedger = SalesLedgerBook::whereCustomer_id($customer_id);
@@ -166,9 +161,9 @@ class AccountReceivedController extends Controller
 
     public function destroy($tranId)
     {
-        // if ($error = $this->sendPermissionError('delete')) {
-        //     return $error;
-        // }
+        if ($error = $this->authorize('collection-delete')) {
+            return $error;
+        }
         if($tranId == 0){
             Alert::info('This is old data you can not delete this data.');
             return back();
@@ -179,7 +174,6 @@ class AccountReceivedController extends Controller
         if(!empty($ledgerData->id)){
             SalesLedgerBook::find($ledgerData->id)->update(['net_amt' => $findLedgerData->discount_amt + $ledgerData->net_amt]);
         }
-
         try{
             Account::whereTran_id($tranId)->delete();
             SalesLedgerBook::whereTran_id($tranId)->delete();

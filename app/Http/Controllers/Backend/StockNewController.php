@@ -53,7 +53,7 @@ class StockNewController extends Controller
             return redirect()->route('stock.store.index');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Sales Invoice Inserted Faild', 'error');
+            toast($ex->getMessage().'Sales Invoice Inserted Failed', 'error');
             return back();
         }
     }

@@ -163,7 +163,7 @@ class ProductController extends Controller
             return redirect()->back();
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'New Size Inserted Faild', 'error');
+            toast($ex->getMessage().'New Size Inserted Failed', 'error');
             return redirect()->back();
         }
     }
@@ -225,7 +225,7 @@ class ProductController extends Controller
             return redirect()->route('product.index');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Product Inserted Faild', 'error');
+            toast($ex->getMessage().'Product Inserted Failed', 'error');
             return redirect()->back();
         }
     }

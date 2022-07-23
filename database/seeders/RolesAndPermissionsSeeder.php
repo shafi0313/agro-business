@@ -137,6 +137,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'customer'=>[
                 'customer-manage',
                 'customer-add',
+                'customer-show',
                 'customer-edit',
                 'customer-delete'
             ],
@@ -162,11 +163,13 @@ class RolesAndPermissionsSeeder extends Seeder
                 'collection-manage',
                 'collection-add',
                 'collection-show',
+                'collection-delete',
             ],
             'payment'=>[
                 'payment-manage',
                 'payment-add',
                 'payment-show',
+                'payment-delete',
             ],
             'deposit'=>[
                 'deposit-manage',
@@ -196,6 +199,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ],
             'cashbook'=>[
                 'cashbook-manage',
+                'cashbook-previous-add',
             ],
             'author-ledger-book'=>[
                 'author-ledger-book-manage',
@@ -207,6 +211,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ],
             'bank-statement'=>[
                 'bank-statement-manage',
+                'bank-statement-previous-add',
             ],
             'balk-name'=>[
                 'balk-name-manage',
@@ -236,7 +241,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ],
             'send-to-repack-unit'=>[
                 'send-to-repack-unit-manage',
-                'send-to-repack-unit-add',
+                'send-to-repack-unit-send',
                 'send-to-repack-unit-show',
                 'send-to-repack-unit-accept',
                 'send-to-repack-unit-reject',

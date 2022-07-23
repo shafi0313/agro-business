@@ -15,13 +15,16 @@ class BulkPurchaseController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('bulk-purchase-manage')) {
+            return $error;
+        }
         $suppliers = User::select(['id','name','tmm_so_id','business_name','phone','address','role'])->where('role', 3)->orderby('business_name', 'ASC')->get();
         return view('admin.bulk.purchase.index', compact('suppliers'));
     }
 
     public function createId($id)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('bulk-purchase-purchase')) {
             return $error;
         }
         $userId = User::select(['id','tmm_so_id','role','name'])->where('role', 1)->where('name', '!=', 'Developer')->orwhere('role', 5)->get();
@@ -31,6 +34,9 @@ class BulkPurchaseController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('bulk-purchase-purchase')) {
+            return $error;
+        }
         $this->validate($request, [
             'challan_no' => 'required',
             'size' => 'required',
@@ -126,6 +132,9 @@ class BulkPurchaseController extends Controller
     // Customer Invoice Show
     public function show($id)
     {
+        if ($error = $this->authorize('bulk-purchase-show')) {
+            return $error;
+        }
         $supplierInfo = PurchaseInvoice::where('supplier_id', $id)->first();
         $getChallan = PurchaseInvoice::where('supplier_id', $id)->latest()->get();
         $supplierChallans = $getChallan->groupBy('challan_no');
@@ -139,6 +148,9 @@ class BulkPurchaseController extends Controller
     // Invoice Details
     public function showInvoice($supplier_id, $challan_no)
     {
+        if ($error = $this->authorize('bulk-purchase-show')) {
+            return $error;
+        }
         $showInvoices = PurchaseInvoice::where('supplier_id', $supplier_id)->where('challan_no', $challan_no)->where('type', 7)->get(); // 7 = Purchase Bulk
         $supplierInfo = PurchaseInvoice::where('supplier_id', $supplier_id)->where('challan_no', $challan_no)->where('type', 7)->first();
         return view('admin.bulk.purchase.ind_show_invoice', compact('showInvoices', 'supplierInfo'));
@@ -147,6 +159,9 @@ class BulkPurchaseController extends Controller
     // All
     public function allInvoice()
     {
+        if ($error = $this->authorize('bulk-purchase-all-challan')) {
+            return $error;
+        }
         $getChallan = PurchaseInvoice::where('type', 7)->latest()->get();
         $supplierChallans = $getChallan->groupBy('challan_no');
 
@@ -155,11 +170,17 @@ class BulkPurchaseController extends Controller
 
     public function selectDate()
     {
+        if ($error = $this->authorize('bulk-purchase-all-challan-by-date')) {
+            return $error;
+        }
         return view('admin.bulk.purchase.all_select_date');
     }
 
     public function allInvoiceByDate(Request $request)
     {
+        if ($error = $this->authorize('bulk-purchase-all-challan-by-date')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
@@ -186,27 +207,27 @@ class BulkPurchaseController extends Controller
     }
 
 
-    public function destroy(Request $request, $id)
-    {
-        PurchaseInvoice::find($id)->delete();
-        $amt = 0;
-        $invoice_no = $request->get('invoice_no');
-        $customer_id = $request->get('customer_id');
-        $invoices = PurchaseInvoice::select('amt')->where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get()->sum('amt');
+    // public function destroy(Request $request, $id)
+    // {
+    //     PurchaseInvoice::find($id)->delete();
+    //     $amt = 0;
+    //     $invoice_no = $request->get('invoice_no');
+    //     $customer_id = $request->get('customer_id');
+    //     $invoices = PurchaseInvoice::select('amt')->where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get()->sum('amt');
 
-        $ledgerBooks = SalesLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get();
+    //     $ledgerBooks = SalesLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get();
 
-        foreach ($ledgerBooks as $ledgerBook) {
-            $courier_pay = $ledgerBook->courier_pay;
-            $payment = $ledgerBook->payment;
-        }
+    //     foreach ($ledgerBooks as $ledgerBook) {
+    //         $courier_pay = $ledgerBook->courier_pay;
+    //         $payment = $ledgerBook->payment;
+    //     }
 
-        $ledgerUpdate = [
-            'total_amt' =>$invoices,
-            'dues_amt' =>$invoices - $courier_pay - $payment,
-        ];
+    //     $ledgerUpdate = [
+    //         'total_amt' =>$invoices,
+    //         'dues_amt' =>$invoices - $courier_pay - $payment,
+    //     ];
 
-        SalesLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->update($ledgerUpdate);
-        return redirect()->back();
-    }
+    //     SalesLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->update($ledgerUpdate);
+    //     return redirect()->back();
+    // }
 }

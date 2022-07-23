@@ -13,9 +13,9 @@ class SalesLedgerBookController extends Controller
 {
     public function index()
     {
-        $customers = User::with(['invoice' => function($q){
-            return $q->select('customer_id','payment_date','c_status','inv_cancel')
-            ->whereNotNull('payment_date')->where('c_status',0)
+        $customers = User::with(['invoice' => function ($q) {
+            return $q->select('customer_id', 'payment_date', 'c_status', 'inv_cancel')
+            ->whereNotNull('payment_date')->where('c_status', 0)
             ->whereInv_cancel(0)
             ->where('payment_date', '<', date('Y-m-d'))
             ->count();
@@ -43,11 +43,11 @@ class SalesLedgerBookController extends Controller
                 ->get(['net_amt','payment']);
         $openingBl = $opening->sum('net_amt') - $opening->sum('payment');
 
-        $invoices = SalesLedgerBook::with(['invoice' => function($q){
-                    return $q->select('id','pro_dis','invoice_no');
-                }])
-                ->with(['account' => function($q){
-                    return $q->select('id','m_r_date','m_r_no','payment_by','note');
+        $invoices = SalesLedgerBook::with(['invoice' => function ($q) {
+            return $q->select('id', 'pro_dis', 'invoice_no');
+        }])
+                ->with(['account' => function ($q) {
+                    return $q->select('id', 'm_r_date', 'm_r_no', 'payment_by', 'note');
                 }])
                 ->whereBetween('invoice_date', [$form_date,$to_date])
                 ->where('customer_id', $customer_id)
@@ -57,39 +57,39 @@ class SalesLedgerBookController extends Controller
 
         $payment = SalesLedgerBook::where('customer_id', $customer_id)->whereBetween('invoice_date', [$form_date,$to_date])->where('type', 25)->sum('payment');
 
-        return view('admin.sales.ledger_book.ind_date_ledger_book', compact('customer_Info','invoices','form_date','to_date','openingBl','payment'));
+        return view('admin.sales.ledger_book.ind_date_ledger_book', compact('customer_Info', 'invoices', 'form_date', 'to_date', 'openingBl', 'payment'));
     }
 
     // Ledger Book All
     public function indAllLedgerBook($customer_id)
     {
-        $customer_Info = User::with(['customerInfo' => function($q){
-            return $q->select('user_id','credit_limit');
-        }])->select('id','business_name','name','phone','address')->where('id', $customer_id)->first();
+        $customer_Info = User::with(['customerInfo' => function ($q) {
+            return $q->select('user_id', 'credit_limit');
+        }])->select('id', 'business_name', 'name', 'phone', 'address')->where('id', $customer_id)->first();
 
         $openingBl = SalesLedgerBook::where('customer_id', $customer_id)->where('type', 0)->first();
-        $invoices = SalesLedgerBook::with(['invoice' => function($q){
-                        return $q->select('id','pro_dis','invoice_no');
-                    }])
-                    ->with(['account' => function($q){
-                        return $q->select('id','m_r_date','m_r_no','payment_by','note');
+        $invoices = SalesLedgerBook::with(['invoice' => function ($q) {
+            return $q->select('id', 'pro_dis', 'invoice_no');
+        }])
+                    ->with(['account' => function ($q) {
+                        return $q->select('id', 'm_r_date', 'm_r_no', 'payment_by', 'note');
                     }])
                     ->where('customer_id', $customer_id)
                     ->whereIn('type', [0,1,2,3,4,5,7,8,16,17,18,19,25])
                     ->get(['id','account_id','payment_date','c_status','inv_cancel','invoice_date','invoice_no','type','sales_amt','discount','discount_amt','net_amt','payment_date','payment']);
 
         $payment = SalesLedgerBook::where('customer_id', $customer_id)->where('type', 25)->sum('payment');
-        
+
         return view('admin.sales.ledger_book.ind_all_ledger_book', compact('customer_Info', 'invoices', 'payment', 'openingBl'));
     }
 
     public function allShowInvoice()
     {
-        $invoices = SalesLedgerBook::with(['invoice' => function($q){
-                    return $q->select('id','pro_dis','invoice_no');
-                }])
-                ->with(['account' => function($q){
-                    return $q->select('id','m_r_date','m_r_no','payment_by','note');
+        $invoices = SalesLedgerBook::with(['invoice' => function ($q) {
+            return $q->select('id', 'pro_dis', 'invoice_no');
+        }])
+                ->with(['account' => function ($q) {
+                    return $q->select('id', 'm_r_date', 'm_r_no', 'payment_by', 'note');
                 }])
                 ->whereIn('type', [0,1,2,3,4,5,7,8,16,17,18,19,25])
                 ->get(['id','account_id','payment_date','c_status','inv_cancel','invoice_date','invoice_no','type','sales_amt','discount','discount_amt','net_amt','payment_date','payment']);
@@ -126,7 +126,7 @@ class SalesLedgerBookController extends Controller
             toast(' Successfully Update', 'success');
             return redirect()->back();
         } catch (\Exception $ex) {
-            toast('Update Faild', 'error');
+            toast('Update Failed', 'error');
             return redirect()->back();
         }
     }

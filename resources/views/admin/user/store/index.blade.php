@@ -1,25 +1,24 @@
 @extends('admin.layout.master')
 @section('title', 'Store')
 @section('content')
-@php $p='business'; $sm="store"; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
                 <ul class="breadcrumbs">
-                    <li class="nav-home">
-                        <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                    <li class="nav-home"><a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Business Person/Factory/Store</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Store</li>
                 </ul>
             </div>
-            <div class="divider1"></div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Store</h4>
+                                <h4 class="card-title">Store List</h4>
                                 <a class="btn btn-primary btn-round ml-auto" href="{{ route('company-store.create') }}">
                                     <i class="fa fa-plus"></i>
                                     Add New Store

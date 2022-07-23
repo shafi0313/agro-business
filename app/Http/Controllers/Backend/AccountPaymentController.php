@@ -14,13 +14,16 @@ class AccountPaymentController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('payment-manage')) {
+            return $error;
+        }
         $users = User::select(['id','name','phone','address','business_name','role'])->where('role', 1)->where('name','!=','Developer')->orWhere('role', 3)->orWhere('role', 5)->orderBy('name')->get();
         return view('admin.account.payment.index', compact('users'));
     }
 
     public function createId($id)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('payment-add')) {
             return $error;
         }
         $totalCashCredit = Account::where('type', 1)->sum('credit') - Account::where('type', 1)->sum('debit');
@@ -33,6 +36,9 @@ class AccountPaymentController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('payment-add')) {
+            return $error;
+        }
         $this->validate($request,[
             'date' => 'required|date',
             'chequeco_no' => 'nullable|numeric',
@@ -65,10 +71,7 @@ class AccountPaymentController extends Controller
         }else{
             $account['type'] = 2; // Bank
         }
-
-
         $account = Account::create($account);
-
         $ledgerBook = [
             'tran_id' => $transaction_id,
             'user_id' =>  $tmm_so_id,

@@ -191,47 +191,74 @@
 					</div>
                 </li>
 
-                <li class="nav-item {{$p=='business'?'active':''}}">
-                    <a data-toggle="collapse" href="#user">
+                @can('customer-manage','supplier-manage','store-manage','factory-manage')
+                <li class="nav-item {{ activeNav(['customer.*','supplier.*','company-store.*','company-factory.*']) }}">
+                    <a data-toggle="collapse" href="#businessPerson">
                         <i class="fas fa-user-tie"></i>
                         <p>Business Per./Fac.</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{$p=='business'?'show':''}}" id="user">
+                    <div class="collapse {{ openNav(['customer.*','supplier.*','company-store.*','company-factory.*']) }}" id="businessPerson">
                         <ul class="nav nav-collapse">
-                            <li class="{{$sm=='customer'?'activeSub':''}}">
+                            @can('customer-manage')
+                            <li class="{{ activeSubNav('customer.*') }}">
                                 <a href="{{ route('customer.index')}}">
                                     <span class="sub-item">Customer</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='supplier'?'activeSub':''}}">
+                            @endcan
+                            @can('supplier-manage')
+                            <li class="{{ activeSubNav('supplier.*') }}">
                                 <a href="{{ route('supplier.index')}}">
                                     <span class="sub-item">Supplier</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='store'?'activeSub':''}}">
+                            @endcan
+                            @can('store-manage')
+                            <li class="{{ activeSubNav('company-store.*') }}">
                                 <a href="{{ route('company-store.index')}}">
                                     <span class="sub-item">Store</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='factory'?'activeSub':''}}">
+                            @endcan
+                            @can('factory-manage')
+                            <li class="{{ activeSubNav('company-factory.*') }}">
                                 <a href="{{ route('company-factory.index')}}">
                                     <span class="sub-item">Factory</span>
                                 </a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
-
+                @endcan
 
 {{-- ________________________ Office Start ________________________ --}}
-                <li class="nav-item {{$p=='account'?'active':''}}">
+                <li class="nav-item {{ ActiveNav(
+                    ['account-received.*',
+                    'account-payment.*',
+                    'bankDeposit.*','bankWithdraw.*',
+                    'office-expense.*','officeExp.*',
+                    'officeExp.*','office-income.*',
+                    'officeIn.*','cashBook.*',
+                    'authorLedgerBook.*',
+                    'mainAccount.*',
+                    'bankStatement.*']) }}">
 					<a data-toggle="collapse" href="#office">
 						<i class="fas fa-briefcase"></i>
 						<p>Office</p>
 						<span class="caret"></span>
 					</a>
-					<div class="collapse {{$p=='account'?'show':''}}" id="office">
+					<div class="collapse {{ openNav(
+                        ['account-received.*',
+                        'account-payment.*',
+                        'bankDeposit.*','bankWithdraw.*',
+                        'office-expense.*','officeExp.*',
+                        'officeExp.*','office-income.*',
+                        'officeIn.*','cashBook.*',
+                        'authorLedgerBook.*',
+                        'mainAccount.*',
+                        'bankStatement.*']) }}" id="office">
 						<ul class="nav nav-collapse">
 							<li>
 								<a data-toggle="collapse" href="#accSub">
@@ -239,70 +266,101 @@
 									<span>Account</span>
 									<span class="caret"></span>
 								</a>
-								<div class="collapse {{$p=='account'?'show':''}}" id="accSub">
+								<div class="collapse {{ openNav(
+                                    ['account-received.*',
+                                    'account-payment.*',
+                                    'bankDeposit.*','bankWithdraw.*',
+                                    'office-expense.*','officeExp.*',
+                                    'officeExp.*','office-income.*',
+                                    'officeIn.*','cashBook.*',
+                                    'authorLedgerBook.*',
+                                    'mainAccount.*',
+                                    'bankStatement.*']) }}" id="accSub">
 									<ul class="nav nav-collapse subnav">
-										<li class="{{$sm=='receved'?'activeSub':''}}">
+										@can('collection-manage')
+                                        <li class="{{ activeSubNav('account-received.*') }}">
 											<a href="{{ route('account-received.index')}}">
                                                 <span class="sub-item">Collection</span>
                                             </a>
 										</li>
-										<li class="{{$sm=='payment'?'activeSub':''}}">
+                                        @endcan
+										@can('payment-manage')
+                                        <li class="{{ activeSubNav('account-payment.*') }}">
 											<a href="{{ route('account-payment.index')}}">
                                                 <span class="sub-item">Payment</span>
                                             </a>
                                         </li>
-                                        <li class="{{$sm=='deposit'?'activeSub':''}}">
+                                        @endcan
+                                        @can('deposit-manage')
+                                        <li class="{{ activeSubNav('bankDeposit.*') }}">
                                             <a href="{{ route('bankDeposit.dCreate')}}">
                                                 <span class="sub-item">Deposit</span>
                                             </a>
                                         </li>
-                                        <li class="{{$sm=='withdraw'?'activeSub':''}}">
+                                        @endcan
+                                        @can('withdraw-manage')
+                                        <li class="{{ activeSubNav('bankWithdraw.*') }}">
                                             <a href="{{ route('bankWithdraw.wCreate')}}">
                                                 <span class="sub-item">Withdraw</span>
                                             </a>
                                         </li>
-										<li class="{{$sm=='officeExp'?'activeSub':''}}">
+                                        @endcan
+										@can('expense-manage')
+                                        <li class="{{ activeSubNav('office-expense.*') }}">
 											<a href="{{ route('office-expense.create')}}">
                                                 <span class="sub-item">Expense</span>
                                             </a>
                                         </li>
-										<li class="{{$sm=='officeExpRe'?'activeSub':''}}">
+                                        @endcan
+										@can('expense-report-manage')
+                                        <li class="{{ activeSubNav('officeExp.*') }}">
 											<a href="{{ route('officeExp.selectDate')}}">
                                                 <span class="sub-item">Expense Report</span>
                                             </a>
                                         </li>
-
-                                        <li class="{{$sm=='officeIn'?'activeSub':''}}">
+                                        @endcan
+                                        @can('income-manage')
+                                        <li class="{{ activeSubNav('office-income.*') }}">
 											<a href="{{ route('office-income.create')}}">
                                                 <span class="sub-item">Income</span>
                                             </a>
                                         </li>
-                                        <li class="{{$sm=='officeInRe'?'activeSub':''}}">
+                                        @endcan
+                                        @can('income-report-manage')
+                                        <li class="{{ activeSubNav('officeIn.*') }}">
 											<a href="{{ route('officeIn.selectDate')}}">
                                                 <span class="sub-item">Income Report</span>
                                             </a>
                                         </li>
-                                        <li class="{{$sm=='cashBook'?'activeSub':''}}">
+                                        @endcan
+                                        @can('cashbook-manage')
+                                        <li class="{{ activeSubNav('cashBook.*') }}">
                                             <a href="{{ route('cashBook.selectDate')}}">
                                                 <span class="sub-item">Cash Book</span>
                                             </a>
                                         </li>
-                                        <li class="{{$sm=='autherLedger'?'activeSub':''}}">
+                                        @endcan
+                                        @can('author-ledger-book-manage')
+                                        <li class="{{ activeSubNav('authorLedgerBook.*') }}">
                                             <a href="{{ route('authorLedgerBook.index')}}">
                                                 <span class="sub-item">Author Ledger Book</span>
                                             </a>
                                         </li>
-                                        <li class="{{$sm=='mainAc'?'activeSub':''}}">
+                                        @endcan
+                                        @can('main-account-manage')
+                                        <li class="{{ activeSubNav('mainAccount.*') }}">
                                             <a href="{{ route('mainAccount.selectDate')}}">
                                                 <span class="sub-item">Main Accounts</span>
                                             </a>
                                         </li>
-
-                                        <li class="{{$sm=='bankStat'?'activeSub':''}}">
+                                        @endcan
+                                        @can('bank-statement-manage')
+                                        <li class="{{ activeSubNav('bankStatement.*') }}">
                                             <a href="{{ route('bankStatement.selectDate')}}">
                                                 <span class="sub-item">Bank Statement</span>
                                             </a>
                                         </li>
+                                        @endcan
 									</ul>
 								</div>
 							</li>
@@ -334,14 +392,14 @@
 
 
 {{-- ________________________ Factory Start ________________________ --}}
-                <li class="nav-item {{$p=='factory'?'active':''}}">
-					<a data-toggle="collapse" href="#submenuR">
+                <li class="nav-item {{ openNav(['raw-material.*','purchase-bulk.*','sales-bulk.*','stock.bulk.*','send-to-repack-unit.*','purchaseLedgerBook.*','report.bulk.*']) }}">
+					<a data-toggle="collapse" href="#factory">
 						<i class="fas fa-industry"></i>
 						<p>Factory</p>
 						<span class="caret"></span>
                     </a>
 
-					<div class="collapse {{$p=='factory'?'show':''}}" id="submenuR">
+					<div class="collapse {{ openNav(['raw-material.*','purchase-bulk.*','sales-bulk.*','stock.bulk.*','send-to-repack-unit.*','purchaseLedgerBook.*','report.bulk.*']) }}" id="factory">
 						<ul class="nav nav-collapse">
                             <li>
 								<a data-toggle="collapse" href="#subRaw">
@@ -349,39 +407,39 @@
 									<span>Bulk</span>
 									<span class="caret"></span>
 								</a>
-								<div class="collapse {{$ssm=='bulkShow'?'show':''}}" id="subRaw">
+								<div class="collapse {{ openNav(['raw-material.*','purchase-bulk.*','sales-bulk.*','stock.bulk.*','send-to-repack-unit.*','purchaseLedgerBook.*','report.bulk.*']) }}" id="subRaw">
 									<ul class="nav nav-collapse subnav">
-                                        <li class="{{$sm=='balkName'?'activeSub':''}}">
+                                        <li class="{{ activeSubNav('raw-material.*') }}">
 											<a href="{{ route('raw-material.index')}}">
 												<span class="sub-item">Bulk Name</span>
 											</a>
 										</li>
-										<li class="{{$sm=='balkPurchase'?'activeSub':''}}">
+										<li class="{{ activeSubNav('purchase-bulk.*') }}">
 											<a href="{{ route('purchase-bulk.index')}}">
 												<span class="sub-item">Purchase</span>
 											</a>
 										</li>
-										<li class="{{$sm=='balkSales'?'activeSub':''}}">
+										<li class="{{ activeSubNav('sales-bulk.*') }}">
 											<a href="{{ route('sales-bulk.index')}}">
 												<span class="sub-item">Bulk Sales</span>
 											</a>
 										</li>
-										<li class="{{$sm=='bulkStock'?'activeSub':''}}">
+										<li class="{{ activeSubNav('stock.bulk.*') }}">
 											<a href="{{ route('stock.bulk.index')}}">
 												<span class="sub-item">Bulk Stock</span>
 											</a>
 										</li>
-										<li class="{{$sm=='balkRepack'?'activeSub':''}}">
+										<li class="{{ activeSubNav('send-to-repack-unit.*') }}">
 											<a href="{{ route('send-to-repack-unit.index')}}">
 												<span class="sub-item">Send to Repack Unit</span>
 											</a>
 										</li>
-										<li class="{{$sm=='purchaseLed'?'activeSub':''}}">
+										<li class="{{ activeSubNav('purchaseLedgerBook.*') }}">
 											<a href="{{ route('purchaseLedgerBook.index')}}">
 												<span class="sub-item">Purchase Ledger Book</span>
 											</a>
 										</li>
-										<li class="{{$sm=='bulkReport'?'activeSub':''}}">
+										<li class="{{ activeSubNav('report.bulk.*') }}">
 											<a href="{{ route('report.bulk.selectDate')}}">
 												<span class="sub-item">Report</span>
 											</a>

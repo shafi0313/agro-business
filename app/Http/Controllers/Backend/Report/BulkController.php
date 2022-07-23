@@ -18,6 +18,9 @@ class BulkController extends Controller
 
     public function sales(Request $request)
     {
+        if ($error = $this->authorize('bulk-report-sales')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
@@ -28,6 +31,9 @@ class BulkController extends Controller
 
     public function purchase(Request $request)
     {
+        if ($error = $this->authorize('bulk-report-purchase')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
@@ -38,6 +44,9 @@ class BulkController extends Controller
 
     public function sendToRepackUnit(Request $request)
     {
+        if ($error = $this->authorize('bulk-report-send-to-repack-unit')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 

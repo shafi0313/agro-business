@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'Collection')
 @section('content')
-@php $p = 'account'; $sm='received'; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -10,7 +9,9 @@
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Accounts</li>
+                    <li class="nav-item">Office</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Accounts</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Collection</li>
                 </ul>
@@ -21,7 +22,7 @@
                     <div class="card">
                         {{-- <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Supplier Table</h4>
+                                <h4 class="card-title">Customer List</h4>
                             </div>
                         </div> --}}
                         <div class="card-body">

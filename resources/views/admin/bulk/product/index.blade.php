@@ -1,16 +1,18 @@
 @extends('admin.layout.master')
-@section('title', 'Bulk')
+@section('title', 'Bulk Name')
 @section('content')
-@php $p='factory'; $sm="balkName"; $ssm = 'bulkShow'  @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
                 <ul class="breadcrumbs">
-                    <li class="nav-home">
-                        <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                    <li class="nav-home"><a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Bulk</li>
+                    <li class="nav-item">Factory</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Bulk</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Bulk Name</li>
                 </ul>
             </div>
             <div class="divider1"></div>
@@ -19,7 +21,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Bulk</h4>
+                                <h4 class="card-title">Bulk List</h4>
                                 <a class="btn btn-primary btn-round ml-auto" href="{{ route('raw-material.create') }}">
                                     <i class="fa fa-plus"></i>
                                     Add New Bulk

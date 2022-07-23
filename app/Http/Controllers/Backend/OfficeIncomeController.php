@@ -14,6 +14,9 @@ class OfficeIncomeController extends Controller
 {
     public function create()
     {
+        if ($error = $this->authorize('income-add')) {
+            return $error;
+        }
         $tmmSoIds = User::select(['id','tmm_so_id','name'])->where('role', 1)->where('name', '!=', 'Developer')->orWhere('role', 5)->get();
         $officeIncomes = OfficeExpenseCat::whereType(2)->whereParent_id(0)->get();
         $bankLists = BankList::all();
@@ -22,8 +25,10 @@ class OfficeIncomeController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('income-add')) {
+            return $error;
+        }
         DB::beginTransaction();
-
         $user_bank_ac_id = $request->user_bank_ac_id;
         $account = [
             'tmm_so_id' => $request->tmm_so_id,

@@ -1,14 +1,16 @@
 @extends('admin.layout.master')
 @section('title', 'Purchase ledger Book')
 @section('content')
-@php $p='factory'; $sm="purchaseLed"; $ssm='bulkShow'  @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
                 <ul class="breadcrumbs">
-                    <li class="nav-home">
-                        <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                    <li class="nav-home"><a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Factory</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Bulk</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item"><a href="{{ route('purchaseLedgerBook.index') }}">Purchase ledger Book</a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>

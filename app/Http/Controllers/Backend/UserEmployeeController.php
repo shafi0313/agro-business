@@ -34,7 +34,7 @@ class UserEmployeeController extends Controller
         $empInfos = EmployeeInfo::select(['user_id','employee_main_cat_id'])->get();
         $empDesignations = EmployeeInfo::select(['user_id','employee_main_cat_id'])->get();
         $dealers = User::select(['id','name','business_name'])->where('role', 2)->get();
-        return view('admin.user_management.employee.create', compact('bankLists','employeeMainCats','empInfos','empDesignations','dealers'));
+        return view('admin.user_management.employee.create', compact('bankLists', 'employeeMainCats', 'empInfos', 'empDesignations', 'dealers'));
     }
 
     public function store(Request $request)
@@ -59,23 +59,23 @@ class UserEmployeeController extends Controller
         ]);
 
         $image_name = '';
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $image_name = "employee_".rand(0,10000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/users/',$image_name);
-        }else{
+            $image_name = "employee_".rand(0, 10000).'.'.$image->getClientOriginalExtension();
+            $request->image->move('images/users/', $image_name);
+        } else {
             $image_name = "company_logo.png";
         }
 
-         // Tmm So Id
-         $getTmmId = User::where('role', 5)->count() + 1;
-         if(strlen($getTmmId) == 1){
-             $tmmId = '00'. $getTmmId;
-         }elseif(strlen($getTmmId) == 2){
-             $tmmId = '0'. $getTmmId;
-         }else{
-             $tmmId = $getTmmId;
-         }
+        // Tmm So Id
+        $getTmmId = User::where('role', 5)->count() + 1;
+        if (strlen($getTmmId) == 1) {
+            $tmmId = '00'. $getTmmId;
+        } elseif (strlen($getTmmId) == 2) {
+            $tmmId = '0'. $getTmmId;
+        } else {
+            $tmmId = $getTmmId;
+        }
 
         DB::beginTransaction();
 
@@ -94,17 +94,17 @@ class UserEmployeeController extends Controller
         ];
         $user = User::create($data);
 
-        if($request->hasFile('name')!=''){
+        if ($request->hasFile('name')!='') {
             $this->validate($request, [
                 'name' => 'required',
                 'name.*' => 'required',
                 'note' => 'required',
             ]);
-            if($request->hasFile('name')) {
+            if ($request->hasFile('name')) {
                 $files = $request->file('name');
-                foreach($files as $key => $file){
+                foreach ($files as $key => $file) {
                     $extension = $file->getClientOriginalExtension();
-                    $fileName = "employee_file_".rand(0,100000).".".$extension;
+                    $fileName = "employee_file_".rand(0, 100000).".".$extension;
                     $destinationPath = 'files/user_file'.'/';
                     $file->move($destinationPath, $fileName);
                     $userFile = [
@@ -155,20 +155,20 @@ class UserEmployeeController extends Controller
         ];
         EmployeeInfo::create($employeeInfo);
 
-        if($request->employee_main_cat_id==11){
+        if ($request->employee_main_cat_id==11) {
             $salesReport = [
                 'user_id' => $user->id,
                 'zsm_id' => $user->id,
             ];
             SalesReport::create($salesReport);
-        }elseif($request->employee_main_cat_id==12){
+        } elseif ($request->employee_main_cat_id==12) {
             $salesReport = [
                 'zsm_id' => $request->zsm_id,
                 'sso_id' => $user->id,
                 'user_id' => $user->id,
             ];
             SalesReport::create($salesReport);
-        }elseif($request->employee_main_cat_id==13){
+        } elseif ($request->employee_main_cat_id==13) {
             $salesReport = [
                 'zsm_id' => $request->zsm_id,
                 'sso_id' => $request->sso_id,
@@ -176,7 +176,7 @@ class UserEmployeeController extends Controller
                 'user_id' => $user->id,
             ];
             SalesReport::create($salesReport);
-        }elseif($request->employee_main_cat_id==14){
+        } elseif ($request->employee_main_cat_id==14) {
             $salesReport = [
                 'zsm_id' => $request->zsm_id,
                 'sso_id' => $request->sso_id,
@@ -200,7 +200,7 @@ class UserEmployeeController extends Controller
         // UserBankAc::Create($bank);
 
         try {
-            if($request->permission == 1){
+            if ($request->permission == 1) {
                 $permission = [
                     'role_id' => $request->input('is_'),
                     'model_type' => "App\Models\User",
@@ -209,11 +209,11 @@ class UserEmployeeController extends Controller
                 DB::table('model_has_roles')->insert($permission);
             }
             DB::commit();
-            toast('User Successfully Inserted','success');
+            toast('User Successfully Inserted', 'success');
             return redirect()->route('employee.index');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'User Inserted Faild','error');
+            toast($ex->getMessage().'User Inserted Failed', 'error');
             return back();
         }
     }
@@ -259,8 +259,8 @@ class UserEmployeeController extends Controller
         }
         $employee = User::find($id);
         $emp = EmployeeInfo::where('user_id', $id)->first();
-        $selectBank = BankList::where('id',$emp->bank_list_id)->first();
-        $bankLists = BankList::where('id','!=',$emp->bank_list_id)->get();
+        $selectBank = BankList::where('id', $emp->bank_list_id)->first();
+        $bankLists = BankList::where('id', '!=', $emp->bank_list_id)->get();
         $userFiles = UserFile::where('user_id', $id)->get();
 
         $salesReport = SalesReport::where('user_id', $id)->get();
@@ -270,7 +270,7 @@ class UserEmployeeController extends Controller
         $empInfos = EmployeeInfo::select(['user_id','employee_main_cat_id'])->get();
         $empDesignations = EmployeeInfo::select(['user_id','employee_main_cat_id'])->get();
         $dealers = User::select(['id','name','business_name'])->where('role', 2)->get();
-        return view('admin.user_management.employee.edit', compact('employee','userFiles','selectBank','bankLists','empInfos','empDesignations','dealers','employeeMainCats'));
+        return view('admin.user_management.employee.edit', compact('employee', 'userFiles', 'selectBank', 'bankLists', 'empInfos', 'empDesignations', 'dealers', 'employeeMainCats'));
     }
 
     public function update(Request $request, $id)
@@ -295,12 +295,11 @@ class UserEmployeeController extends Controller
         // DB::beginTransaction();
 
         $image_name = '';
-        if($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $image_name = "employee_".rand(0,10000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/users/',$image_name);
-        }else{
+            $image_name = "employee_".rand(0, 10000).'.'.$image->getClientOriginalExtension();
+            $request->image->move('images/users/', $image_name);
+        } else {
             $image_name = $request->old_image;
         }
 
@@ -317,7 +316,7 @@ class UserEmployeeController extends Controller
             'profile_photo_path' => $image_name,
             // 'password' => bcrypt($request->input('password')),
         ];
-        if(!empty($request->password)){
+        if (!empty($request->password)) {
             $data['password'] = bcrypt($request->input('password'));
         }
 
@@ -356,7 +355,7 @@ class UserEmployeeController extends Controller
             'cheque_no' => $request->cheque_no,
             'branch' => $request->branch,
         ];
-        if(!empty($request->employee_main_cat_id)){
+        if (!empty($request->employee_main_cat_id)) {
             return$employeeInfo['employee_main_cat_id'] = $request->employee_main_cat_id;
         }
         EmployeeInfo::where('user_id', $id)->update($employeeInfo);
@@ -386,7 +385,7 @@ class UserEmployeeController extends Controller
             }
         }
 
-        if(!empty($request->employee_main_cat_id==11)){
+        if (!empty($request->employee_main_cat_id==11)) {
             if ($request->employee_main_cat_id==11) {
                 $salesReport = [
                     'user_id' => $id,
@@ -416,17 +415,17 @@ class UserEmployeeController extends Controller
             }
         }
         // return $salesReport;
-        if($request->employee_main_cat_id==11 || $request->employee_main_cat_id==12 || $request->employee_main_cat_id==13 ||$request->employee_main_cat_id==14){
-            if(SalesReport::where('user_id', $id)->count()<1){
+        if ($request->employee_main_cat_id==11 || $request->employee_main_cat_id==12 || $request->employee_main_cat_id==13 ||$request->employee_main_cat_id==14) {
+            if (SalesReport::where('user_id', $id)->count()<1) {
                 SalesReport::create($salesReport);
-            }else{
+            } else {
                 SalesReport::where('user_id', $id)->update($salesReport);
             }
         }
 
 
-        if($request->note != '' && $request->hasFile('name')==''){
-            foreach($request->note as $key => $value){
+        if ($request->note != '' && $request->hasFile('name')=='') {
+            foreach ($request->note as $key => $value) {
                 $data = [
                     'note' => $request->note[$key],
                 ];
@@ -436,40 +435,40 @@ class UserEmployeeController extends Controller
         }
 
         try {
-            toast('Employee Update Successfully','success');
+            toast('Employee Update Successfully', 'success');
             return redirect()->route('employee.index');
-        } catch(\Exception $ex) {
-            toast($ex->getMessage().'Employee Update Faild','error');
+        } catch (\Exception $ex) {
+            toast($ex->getMessage().'Employee Update Failed', 'error');
             return redirect()->back();
         }
     }
 
-       // Only User File Delete
-       public function userFileDestroy($id)
-       {
+    // Only User File Delete
+    public function userFileDestroy($id)
+    {
         if ($error = $this->authorize('employee-delete')) {
             return $error;
         }
-           $userFile = UserFile::find($id);
-           $path =  public_path('files/user_file/'.$userFile->name);
+        $userFile = UserFile::find($id);
+        $path =  public_path('files/user_file/'.$userFile->name);
 
-           if($userFile->name == 'company_logo.png'){
-               $userFile->delete();
-               toast('File Successfully Deleted','success');
-               return redirect()->back();
-           }else{
-               if(file_exists($path)){
-                   unlink($path);
-                   $userFile->delete();
-                   toast('File Successfully Deleted','success');
-                   return redirect()->back();
-               }else{
-                   $userFile->delete();
-                   toast('File Delete Field','error');
-                   return redirect()->back();
-               }
-           }
-       }
+        if ($userFile->name == 'company_logo.png') {
+            $userFile->delete();
+            toast('File Successfully Deleted', 'success');
+            return redirect()->back();
+        } else {
+            if (file_exists($path)) {
+                unlink($path);
+                $userFile->delete();
+                toast('File Successfully Deleted', 'success');
+                return redirect()->back();
+            } else {
+                $userFile->delete();
+                toast('File Delete Field', 'error');
+                return redirect()->back();
+            }
+        }
+    }
 
     public function destroy($id)
     {
@@ -477,8 +476,8 @@ class UserEmployeeController extends Controller
             return $error;
         }
         User::find($id)->delete();
-        toast('File Delete Field','error');
-                return redirect()->back();
+        toast('File Delete Field', 'error');
+        return redirect()->back();
 
 
 

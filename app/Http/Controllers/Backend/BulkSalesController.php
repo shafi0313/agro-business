@@ -17,13 +17,16 @@ class BulkSalesController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('bulk-sales-manage')) {
+            return $error;
+        }
         $customers = User::where('role', 2)->orderby('business_name', 'ASC')->get();
         return view('admin.bulk.sales.index', compact('customers'));
     }
 
     public function createId($id)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('bulk-sales-sales')) {
             return $error;
         }
         $customer = User::find($id);
@@ -44,6 +47,9 @@ class BulkSalesController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('bulk-sales-sales')) {
+            return $error;
+        }
         $this->validate($request, [
             'invoice_no' => 'required',
             'size' => 'required',
@@ -197,6 +203,9 @@ class BulkSalesController extends Controller
     // Customer Invoice Show
     public function show($id)
     {
+        if ($error = $this->authorize('bulk-sales-show')) {
+            return $error;
+        }
         $customerInfo = SalesInvoice::where('customer_id', $id)->first();
         $getInvoice = SalesInvoice::where('customer_id', $id)->whereIn('type', [16, 18])->latest()->get();
         $customerInvoices = $getInvoice->groupBy('invoice_no');
@@ -210,6 +219,9 @@ class BulkSalesController extends Controller
     // Invoice Details
     public function showInvoice($customer_id, $invoice_no)
     {
+        if ($error = $this->authorize('bulk-sales-show')) {
+            return $error;
+        }
         $showInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [16, 18])->get();
         $customerInfo = SalesInvoice::where('customer_id', $customer_id)->first();
         $total_amt = SalesLedgerBook::where('invoice_no', $invoice_no)->first();
@@ -220,6 +232,9 @@ class BulkSalesController extends Controller
     // All
     public function allInvoice()
     {
+        if ($error = $this->authorize('bulk-sales-all-challan')) {
+            return $error;
+        }
         $getChallan = SalesInvoice::whereIn('type', [16, 18])->latest()->get();
         $supplierChallans = $getChallan->groupBy('challan_no');
         return view('admin.bulk.sales.all_invoice', compact('supplierChallans'));
@@ -227,6 +242,9 @@ class BulkSalesController extends Controller
 
     public function allInvoiceShow($challan_no)
     {
+        if ($error = $this->authorize('bulk-sales-all-challan')) {
+            return $error;
+        }
         $showInvoices = SalesInvoice::where('challan_no', $challan_no)->whereIn('type', [16, 18])->get(); // 7 = Purchase Bulk
         $supplierInfo = SalesInvoice::where('type', 7)->first();
         return view('admin.bulk.sales.all_invoice_show', compact('showInvoices', 'supplierInfo'));
@@ -234,24 +252,23 @@ class BulkSalesController extends Controller
 
     public function selectDate()
     {
+        if ($error = $this->authorize('bulk-sales-all-challan-by-date')) {
+            return $error;
+        }
         return view('admin.bulk.sales.select_date');
     }
 
     public function allInvoiceByDate(Request $request)
     {
+        if ($error = $this->authorize('bulk-sales-all-challan-by-date')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
         $getChallan = SalesInvoice::whereBetween('invoice_date', [$form_date,$to_date])->whereIn('type', [16, 18])->latest()->get();
         $supplierChallans = $getChallan->groupBy('challan_no');
         return view('admin.bulk.sales.all_invoice_by_date', compact('supplierChallans'));
-    }
-
-    public function allInvoiceShowByDate($challan_no)
-    {
-        $showInvoices = SalesInvoice::where('challan_no', $challan_no)->whereIn('type', [16, 18])->get();
-        $supplierInfo = SalesInvoice::where('type', 7)->first();
-        return view('admin.bulk.sales.all_invoice_show_by_date', compact('showInvoices', 'supplierInfo'));
     }
 
     // Print
@@ -277,6 +294,9 @@ class BulkSalesController extends Controller
     //Bulk Report
     public function bulkSalesRepackChallan(Request $request)
     {
+        if ($error = $this->authorize('bulk-report-send-sales-&-repack-unit-challan')) {
+            return $error;
+        }
         $form_date = $request->form_date;
         $to_date = $request->to_date;
         $getShowInvoices = SalesInvoice::whereBetween('invoice_date', [$form_date, $to_date])->whereIn('type', [16, 18])->get();
@@ -288,44 +308,44 @@ class BulkSalesController extends Controller
     }
 
     // Soft Delete
-    public function destroyInvoice($invoice_no)
-    {
-        if ($error = $this->sendPermissionError('delete')) {
-            return $error;
-        }
-        SalesInvoice::where('invoice_no', $invoice_no)->delete();
-        SalesLedgerBook::where('invoice_no', $invoice_no)->delete();
-        if (SalesInvoice::count() < 1) {
-            toast('Sales Invoice Successfully Deleted', 'success');
-            return redirect()->route('invoice.index');
-        } else {
-            toast('Sales Invoice Successfully Deleted', 'success');
-            return redirect()->back();
-        }
-    }
+    // public function destroyInvoice($invoice_no)
+    // {
+    //     if ($error = $this->sendPermissionError('delete')) {
+    //         return $error;
+    //     }
+    //     SalesInvoice::where('invoice_no', $invoice_no)->delete();
+    //     SalesLedgerBook::where('invoice_no', $invoice_no)->delete();
+    //     if (SalesInvoice::count() < 1) {
+    //         toast('Sales Invoice Successfully Deleted', 'success');
+    //         return redirect()->route('invoice.index');
+    //     } else {
+    //         toast('Sales Invoice Successfully Deleted', 'success');
+    //         return redirect()->back();
+    //     }
+    // }
 
-    public function destroy(Request $request, $id)
-    {
-        if ($error = $this->sendPermissionError('delete')) {
-            return $error;
-        }
-        SalesInvoice::find($id)->delete();
-        $invoice_no = $request->get('invoice_no');
-        $customer_id = $request->get('customer_id');
-        $invoices = SalesInvoice::select('amt')->where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get()->sum('amt');
+    // public function destroy(Request $request, $id)
+    // {
+    //     if ($error = $this->sendPermissionError('delete')) {
+    //         return $error;
+    //     }
+    //     SalesInvoice::find($id)->delete();
+    //     $invoice_no = $request->get('invoice_no');
+    //     $customer_id = $request->get('customer_id');
+    //     $invoices = SalesInvoice::select('amt')->where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get()->sum('amt');
 
-        $ledgerBooks = SalesLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get();
+    //     $ledgerBooks = SalesLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get();
 
-        foreach ($ledgerBooks as $ledgerBook) {
-            $courier_pay = $ledgerBook->courier_pay;
-            $payment = $ledgerBook->payment;
-        }
+    //     foreach ($ledgerBooks as $ledgerBook) {
+    //         $courier_pay = $ledgerBook->courier_pay;
+    //         $payment = $ledgerBook->payment;
+    //     }
 
-        $ledgerUpdate = [
-            'total_amt' =>$invoices,
-            'dues_amt' =>$invoices - $courier_pay - $payment,
-        ];
-        SalesLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->update($ledgerUpdate);
-        return redirect()->back();
-    }
+    //     $ledgerUpdate = [
+    //         'total_amt' =>$invoices,
+    //         'dues_amt' =>$invoices - $courier_pay - $payment,
+    //     ];
+    //     SalesLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->update($ledgerUpdate);
+    //     return redirect()->back();
+    // }
 }

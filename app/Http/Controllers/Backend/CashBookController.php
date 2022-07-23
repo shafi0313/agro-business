@@ -11,11 +11,17 @@ class CashBookController extends Controller
 {
     public function selectDate()
     {
+        if ($error = $this->authorize('cashbook-manage')) {
+            return $error;
+        }
         return view('admin.account.cash_book.select_date');
     }
 
     public function report(Request $request)
     {
+        if ($error = $this->authorize('cashbook-manage')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
@@ -37,7 +43,7 @@ class CashBookController extends Controller
                         ->whereNull('office_expense_cat_id')
                         ->whereBetween('date', [$form_date, $to_date])
                         ->get(['id','user_bank_ac_id','date','note','trn_type','type','m_r_no','debit','credit']);
-                        
+
         $accountsTotal = Account::whereBetween('date', [$form_date, $to_date]);
         $accountsTotalCredit = $accountsTotal->sum('credit');
         $accountsTotalDebit = $accountsTotal->sum('debit');
@@ -47,15 +53,13 @@ class CashBookController extends Controller
 
     public function cashPreStore(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('cashbook-previous-add')) {
             return $error;
         }
-
         $this->validate($request, [
             'credit' => 'required|numeric',
             'date' => 'required'
         ]);
-
         $account = [
             'user_id' => null,
             'tmm_so_id' => null,

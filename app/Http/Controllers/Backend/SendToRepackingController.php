@@ -15,13 +15,16 @@ class SendToRepackingController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('send-to-repack-unit-manage')) {
+            return $error;
+        }
         $suppliers  = User::where('role', 4)->get();
         return view('admin.bulk.send_to_repacking.index', compact('suppliers'));
     }
 
     public function createId($id)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('send-to-repack-unit-send')) {
             return $error;
         }
         $supplier  = User::find($id);
@@ -35,6 +38,9 @@ class SendToRepackingController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('send-to-repack-unit-send')) {
+            return $error;
+        }
         // return $request;
        $this->validate($request,[
             'challan_no' => 'required',
@@ -129,6 +135,9 @@ class SendToRepackingController extends Controller
     // Customer Invoice Show
     public function show($id)
     {
+        if ($error = $this->authorize('send-to-repack-unit-show')) {
+            return $error;
+        }
         $supplierInfo = PurchaseInvoice::where('supplier_id', $id)->first();
         $getInvoice = PurchaseInvoice::where('supplier_id', $id)->latest()->get();
         $invoices = $getInvoice->groupBy('challan_no');
@@ -169,45 +178,45 @@ class SendToRepackingController extends Controller
     }
 
      // Soft Delete
-    public function destroyInvoice($invoice_no)
-    {
-        if ($error = $this->sendPermissionError('delete')) {
-            return $error;
-        }
-        PurchaseInvoice::where('invoice_no',$invoice_no)->delete();
-        PurchaseLedgerBook::where('invoice_no',$invoice_no)->delete();
-        if(PurchaseInvoice::count() < 1){
-            toast('Sales Invoice Successfully Deleted','success');
-            return redirect()->route('invoice.index');
-        }else{
-            toast('Sales Invoice Successfully Deleted','success');
-            return redirect()->back();
-        }
-    }
+    // public function destroyInvoice($invoice_no)
+    // {
+    //     if ($error = $this->sendPermissionError('delete')) {
+    //         return $error;
+    //     }
+    //     PurchaseInvoice::where('invoice_no',$invoice_no)->delete();
+    //     PurchaseLedgerBook::where('invoice_no',$invoice_no)->delete();
+    //     if(PurchaseInvoice::count() < 1){
+    //         toast('Sales Invoice Successfully Deleted','success');
+    //         return redirect()->route('invoice.index');
+    //     }else{
+    //         toast('Sales Invoice Successfully Deleted','success');
+    //         return redirect()->back();
+    //     }
+    // }
 
-    public function destroy(Request $request, $id)
-    {
-        if ($error = $this->sendPermissionError('delete')) {
-            return $error;
-        }
-        PurchaseInvoice::find($id)->delete();
-        $invoice_no = $request->get('invoice_no');
-        $customer_id = $request->get('customer_id');
-        $invoices = PurchaseInvoice::select('amt')->where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get()->sum('amt');
+    // public function destroy(Request $request, $id)
+    // {
+    //     if ($error = $this->sendPermissionError('delete')) {
+    //         return $error;
+    //     }
+    //     PurchaseInvoice::find($id)->delete();
+    //     $invoice_no = $request->get('invoice_no');
+    //     $customer_id = $request->get('customer_id');
+    //     $invoices = PurchaseInvoice::select('amt')->where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get()->sum('amt');
 
-        $ledgerBooks = PurchaseLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get();
+    //     $ledgerBooks = PurchaseLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->get();
 
-        foreach($ledgerBooks as $ledgerBook)
-        {
-            $courier_pay = $ledgerBook->courier_pay;
-            $payment = $ledgerBook->payment;
-        }
+    //     foreach($ledgerBooks as $ledgerBook)
+    //     {
+    //         $courier_pay = $ledgerBook->courier_pay;
+    //         $payment = $ledgerBook->payment;
+    //     }
 
-        $ledgerUpdate = [
-            'total_amt' =>$invoices,
-            'dues_amt' =>$invoices - $courier_pay - $payment,
-        ];
-        PurchaseLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->update($ledgerUpdate);
-        return redirect()->back();
-    }
+    //     $ledgerUpdate = [
+    //         'total_amt' =>$invoices,
+    //         'dues_amt' =>$invoices - $courier_pay - $payment,
+    //     ];
+    //     PurchaseLedgerBook::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->update($ledgerUpdate);
+    //     return redirect()->back();
+    // }
 }

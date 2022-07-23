@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
-@section('title', 'Bulk')
+@section('title', 'Bulk Name')
 @section('content')
-@php $p='factory'; $sm="balkName"; $ssm = 'bulkShow' @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -9,7 +8,11 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item"><a href="{{ route('raw-material.index')}}">Bulk</a></li>
+                    <li class="nav-item">Factory</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Bulk</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item"><a href="{{ route('raw-material.index')}}">Bulk Name</a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Add</li>
                 </ul>
@@ -115,17 +118,9 @@
     }
 </script>
 
+<script src="{{ asset('backend/assets/ckeditor/ckeditor.js') }}"></script>
 <script>
-    ClassicEditor
-    .create( document.querySelector('#editor'), {
-        removePlugins: [  ],
-        toolbar: ['Heading', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' , 'Link'],
-    } )
-    .catch( error => {
-        console.log( error );
-    });
-
-
+    CKEDITOR.replace('editor')
 </script>
 @endpush
 @endsection

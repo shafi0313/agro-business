@@ -17,10 +17,10 @@ class WithdrawDepositController extends Controller
         if ($error = $this->sendPermissionError('create')) {
             return $error;
         }
-        $totalCashCredit = Account::where('type',1)->sum('credit') - Account::where('type',1)->sum('debit');
+        $totalCashCredit = Account::where('type', 1)->sum('credit') - Account::where('type', 1)->sum('debit');
         $bankLists = BankList::all();
-        $tmmSoIds = User::select(['id','tmm_so_id','name'])->where('role',1)->where('name','!=','Developer')->orwhere('role',5)->get();
-        return view('admin.account.deposit.create', compact('bankLists','tmmSoIds','totalCashCredit'));
+        $tmmSoIds = User::select(['id','tmm_so_id','name'])->where('role', 1)->where('name', '!=', 'Developer')->orwhere('role', 5)->get();
+        return view('admin.account.deposit.create', compact('bankLists', 'tmmSoIds', 'totalCashCredit'));
     }
 
     public function dStore(Request $request)
@@ -72,13 +72,13 @@ class WithdrawDepositController extends Controller
         ];
         $account = Account::create($account);
 
-        try{
+        try {
             DB::commit();
-            toast('Success','success');
+            toast('Success', 'success');
             return redirect()->back();
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Inserted Faild','error');
+            toast($ex->getMessage().'Inserted Failed', 'error');
             return back();
         }
     }
@@ -90,8 +90,8 @@ class WithdrawDepositController extends Controller
             return $error;
         }
         $bankLists = BankList::all();
-        $tmmSoIds = User::select(['id','tmm_so_id','name'])->where('role',1)->where('name','!=','Developer')->orwhere('role',5)->get();
-        return view('admin.account.withdraw.create', compact('bankLists','tmmSoIds'));
+        $tmmSoIds = User::select(['id','tmm_so_id','name'])->where('role', 1)->where('name', '!=', 'Developer')->orwhere('role', 5)->get();
+        return view('admin.account.withdraw.create', compact('bankLists', 'tmmSoIds'));
     }
 
     public function wStore(Request $request)
@@ -99,7 +99,7 @@ class WithdrawDepositController extends Controller
         if ($error = $this->sendPermissionError('create')) {
             return $error;
         }
-        $this->validate($request,[
+        $this->validate($request, [
             'user_bank_ac_id' => 'required',
             'tmm_so_id' => 'required',
             'debit' => 'required|numeric',
@@ -142,15 +142,14 @@ class WithdrawDepositController extends Controller
         ];
         $account = Account::create($account);
 
-        try{
+        try {
             DB::commit();
-            toast('Payment Successfully Inserted','success');
+            toast('Payment Successfully Inserted', 'success');
             return redirect()->back();
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Payment Inserted Faild','error');
+            toast($ex->getMessage().'Payment Inserted Failed', 'error');
             return back();
         }
     }
-
 }

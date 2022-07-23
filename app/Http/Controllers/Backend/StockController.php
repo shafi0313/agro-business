@@ -11,9 +11,9 @@ class StockController extends Controller
     // Repack Stock ___________________________________________________________________________
     public function repackStockIndex()
     {
-        $stocks = ProductStock::get()->sortBy(function($query){
+        $stocks = ProductStock::get()->sortBy(function ($query) {
             return $query->product->generic;
-         })->where('type',3)->all();
+        })->where('type', 3)->all();
         return view('admin.repack_unit.stock.index', compact('stocks'));
     }
 
@@ -28,7 +28,7 @@ class StockController extends Controller
 
     public function repackStockUpdate(Request $request, $id)
     {
-        $data = $this->validate($request,[
+        $data = $this->validate($request, [
             'quantity' => 'sometimes|numeric',
             'net_weight' => 'sometimes|numeric',
             'damage' => 'sometimes|numeric',
@@ -36,10 +36,10 @@ class StockController extends Controller
 
         try {
             ProductStock::find($id)->update($data);
-            toast('Stock Successfully Updated','success');
+            toast('Stock Successfully Updated', 'success');
             return back();
         } catch (\Exception $ex) {
-            toast($ex->getMessage().'Stock Update Failed','error');
+            toast($ex->getMessage().'Stock Update Failed', 'error');
             return back();
         }
     }
@@ -64,7 +64,7 @@ class StockController extends Controller
 
     public function labelStockUpdate(Request $request, $id)
     {
-        $data = $this->validate($request,[
+        $data = $this->validate($request, [
             // 'quantity' => 'sometimes|numeric',
             'net_weight' => 'sometimes|numeric',
             'damage' => 'sometimes|numeric',
@@ -72,10 +72,10 @@ class StockController extends Controller
 
         try {
             ProductStock::find($id)->update($data);
-            toast('Stock Successfully Updated','success');
+            toast('Stock Successfully Updated', 'success');
             return back();
         } catch (\Exception $ex) {
-            toast($ex->getMessage().'Stock Update Faild','error');
+            toast($ex->getMessage().'Stock Update Failed', 'error');
             return back();
         }
     }

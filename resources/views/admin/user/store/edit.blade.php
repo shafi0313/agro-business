@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'Store')
 @section('content')
-@php $p='business'; $sm="store"; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -9,9 +8,11 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item"><a href="{{ route('company-store.index')}}">Show Customer</a></li>
+                    <li class="nav-item">Business Person/Factory/Store</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Edit Store</li>
+                    <li class="nav-item"><a href="{{ route('company-store.index')}}">Store</a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Edit</li>
                 </ul>
             </div>
             <div class="row">

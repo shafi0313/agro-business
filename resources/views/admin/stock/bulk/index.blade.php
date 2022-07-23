@@ -1,6 +1,5 @@
 @extends('admin.layout.master')
 @section('title', 'Bulk Stock')
-@php $p='factory'; $sm='bulkStock'; $ssm='bulkShow'; @endphp
 @section('content')
 <div class="main-panel">
     <div class="content">
@@ -8,6 +7,10 @@
             <div class="page-header">
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Factory</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Bulk</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Bulk Stock</li>
                 </ul>

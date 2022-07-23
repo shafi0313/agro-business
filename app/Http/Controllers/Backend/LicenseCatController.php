@@ -33,7 +33,7 @@ class LicenseCatController extends Controller
             toast('Size Successfully Inserted', 'success');
             return redirect()->route('license-category.index');
         } catch (\Exception $ex) {
-            toast($ex->getMessage().'Size Inserted Faild', 'error');
+            toast($ex->getMessage().'Size Inserted Failed', 'error');
             return redirect()->back();
         }
     }
@@ -71,12 +71,12 @@ class LicenseCatController extends Controller
         if ($error = $this->authorize('license-category-delete')) {
             return $error;
         }
-        try{
+        try {
             LicenseCat::find($id)->delete();
-            Alert::success(__('app.success'),__('app.delete-success-message'));
+            Alert::success(__('app.success'), __('app.delete-success-message'));
             return redirect()->back();
-        }catch (\Exception $ex) {
-            Alert::error(__('app.oops'),__('app.delete-error-message'));
+        } catch (\Exception $ex) {
+            Alert::error(__('app.oops'), __('app.delete-error-message'));
             return back();
         }
     }

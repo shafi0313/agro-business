@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'Supplier')
 @section('content')
-@php $p='business'; $sm="supplier"; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -9,6 +8,8 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                        <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Business Person/Factory/Store</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Supplier</li>
                 </ul>
@@ -19,7 +20,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Supplier</h4>
+                                <h4 class="card-title">Supplier List</h4>
                                 <a class="btn btn-primary btn-round ml-auto" href="{{ route('supplier.create') }}">
                                     <i class="fa fa-plus"></i>
                                     Add New Supplier

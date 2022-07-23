@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'Customer')
 @section('content')
-@php $p='business'; $sm="customer"; @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -10,16 +9,17 @@
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item">Business Person/Factory/Store</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Customer</li>
                 </ul>
             </div>
-            <div class="divider1"></div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Customer</h4>
+                                <h4 class="card-title">Customer List</h4>
                                 <a class="btn btn-primary btn-round ml-auto" href="{{ route('customer.create') }}">
                                     <i class="fa fa-plus"></i>
                                     Add New Customer

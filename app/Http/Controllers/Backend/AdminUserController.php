@@ -112,7 +112,7 @@ class AdminUserController extends Controller
             return redirect()->route('admin-user.index');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'User Inserted Faild', 'error');
+            toast($ex->getMessage().'User Inserted Failed', 'error');
             return back();
         }
     }

@@ -8,19 +8,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\PurchaseLedgerBook;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserSupplierController extends Controller
-
 {
     public function index()
     {
-        $users = User::where('role', 3)->orderby('business_name','ASC')->get();
+        if ($error = $this->authorize('supplier-manage')) {
+            return $error;
+        }
+        $users = User::where('role', 3)->orderby('business_name', 'ASC')->get();
         return view('admin.user.supplier.index', compact('users'));
     }
 
     public function create()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('supplier-add')) {
             return $error;
         }
         return view('admin.user.supplier.create');
@@ -28,7 +31,7 @@ class UserSupplierController extends Controller
 
     public function store(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('supplier-add')) {
             return $error;
         }
         $this->validate($request, [
@@ -40,21 +43,21 @@ class UserSupplierController extends Controller
 
         // Tmm So Id
         $getTmmId = User::where('role', 3)->count() + 1;
-        if(strlen($getTmmId) == 1){
+        if (strlen($getTmmId) == 1) {
             $tmmId = '00'. $getTmmId;
-        }elseif(strlen($getTmmId) == 2){
+        } elseif (strlen($getTmmId) == 2) {
             $tmmId = '0'. $getTmmId;
-        }else{
+        } else {
             $tmmId = $getTmmId;
         }
 
         // Image
         $image_name = '';
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $image_name = "user_photo".rand(0,10000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/users/',$image_name);
-        }else{
+            $image_name = "user_photo".rand(0, 10000).'.'.$image->getClientOriginalExtension();
+            $request->image->move('images/users/', $image_name);
+        } else {
             $image_name = "company_logo.png";
         }
 
@@ -76,17 +79,17 @@ class UserSupplierController extends Controller
 
         $user = User::create($data);
 
-        if($request->hasFile('name')!=''){
+        if ($request->hasFile('name')!='') {
             $this->validate($request, [
                 'name' => 'required',
                 'name.*' => 'required',
                 'note' => 'required',
             ]);
-            if($request->hasFile('name')) {
+            if ($request->hasFile('name')) {
                 $files = $request->file('name');
-                foreach($files as $key => $file){
+                foreach ($files as $key => $file) {
                     $extension = $file->getClientOriginalExtension();
-                    $fileName = "user_file_".rand(0,100000).".".$extension;
+                    $fileName = "user_file_".rand(0, 100000).".".$extension;
                     $destinationPath = 'files/user_file'.'/';
                     $file->move($destinationPath, $fileName);
                     $userFile = [
@@ -107,20 +110,20 @@ class UserSupplierController extends Controller
         $ledgerBook['prepared_id'] = auth()->user()->id;
         $ledgerBook['type'] = 0;
         $ledgerBook['invoice_no'] = 0;
-        if($request->preCal==1){
-            if($open > 0){
+        if ($request->preCal==1) {
+            if ($open > 0) {
                 $ledgerBook['purchase_amt'] = $open;
                 $ledgerBook['payment'] = 0;
-            }else{
+            } else {
                 $ledgerBook['payment'] = $open;
                 $ledgerBook['purchase_amt'] = 0;
             }
             PurchaseLedgerBook::create($ledgerBook);
-        }else{
-            if($open > 0){
+        } else {
+            if ($open > 0) {
                 $ledgerBook['purchase_amt'] = 0;
                 $ledgerBook['payment'] = 0;
-            }else{
+            } else {
                 $ledgerBook['payment'] = 0;
                 $ledgerBook['purchase_amt'] = 0;
             }
@@ -130,11 +133,11 @@ class UserSupplierController extends Controller
         try {
             $user == true;
             DB::commit();
-            toast('Successfully Inserted','success');
+            toast('Successfully Inserted', 'success');
             return redirect()->route('supplier.index');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Inserted Faild','error');
+            toast($ex->getMessage().'Inserted Failed', 'error');
             return back();
         }
     }
@@ -142,7 +145,7 @@ class UserSupplierController extends Controller
     // User File Store
     public function userFileStore(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('supplier-add')) {
             return $error;
         }
         $user_id = $request->get('user_id');
@@ -182,26 +185,26 @@ class UserSupplierController extends Controller
     // Edit
     public function edit($id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('supplier-edit')) {
             return $error;
         }
         $user = User::find($id);
-        $opening_bl = PurchaseLedgerBook::where('type',0)->where('supplier_id', $id)->first();
+        $opening_bl = PurchaseLedgerBook::where('type', 0)->where('supplier_id', $id)->first();
         $userFiles = UserFile::where('user_id', $id)->get();
-        return view('admin.user.supplier.edit', compact('user','userFiles','opening_bl'));
+        return view('admin.user.supplier.edit', compact('user', 'userFiles', 'opening_bl'));
     }
 
     // Update
     public function update(Request $request, $id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('supplier-edit')) {
             return $error;
         }
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $image_name = "user_photo".rand(0,10000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/users/',$image_name);
-        }else{
+            $image_name = "user_photo".rand(0, 10000).'.'.$image->getClientOriginalExtension();
+            $request->image->move('images/users/', $image_name);
+        } else {
             $image_name = $request->get('old_image');
         }
 
@@ -221,15 +224,15 @@ class UserSupplierController extends Controller
 
         // Ledger Book
         $open = $request->get('total');
-        if($open > 0){
+        if ($open > 0) {
             // $ledgerBook['sales_amt'] = $open;
             $ledgerBook['purchase_amt'] = $open;
             $ledgerBook['payment'] = 0;
-        }else{
+        } else {
             $ledgerBook['payment'] = abs($open);
             $ledgerBook['purchase_amt'] = 0;
         }
-        $salesLedgerUpdate = PurchaseLedgerBook::where('invoice_no', 0)->where('supplier_id',$id)->update($ledgerBook);
+        $salesLedgerUpdate = PurchaseLedgerBook::where('invoice_no', 0)->where('supplier_id', $id)->update($ledgerBook);
 
         // User File
         if ($request->hasFile('name')) {
@@ -256,8 +259,8 @@ class UserSupplierController extends Controller
             }
         }
 
-        if($request->note != '' && $request->hasFile('name')==''){
-            foreach($request->note as $key => $value){
+        if ($request->note != '' && $request->hasFile('name')=='') {
+            foreach ($request->note as $key => $value) {
                 $data = [
                     'note' => $request->note[$key],
                 ];
@@ -269,10 +272,10 @@ class UserSupplierController extends Controller
         try {
             $update  = User::find($id);
             $update->update($data);
-            toast('Supplier Update Successfully','success');
+            toast('Supplier Update Successfully', 'success');
             return redirect()->back();
-        } catch(\Exception $ex) {
-            toast($ex->getMessage().'Supplier Update Faild','error');
+        } catch (\Exception $ex) {
+            toast($ex->getMessage().'Supplier Update Failed', 'error');
             return redirect()->back();
         }
     }
@@ -280,64 +283,63 @@ class UserSupplierController extends Controller
     // Only User File Delete
     public function userFileDestroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('supplier-delete')) {
             return $error;
         }
         $userFile = UserFile::find($id);
         $path =  public_path('files/user_file/'.$userFile->name);
-
-        if($userFile->name == 'company_logo.png'){
-            $userFile->delete();
-            toast('File Successfully Deleted','success');
-            return redirect()->back();
-        }else{
-            if(file_exists($path)){
-                unlink($path);
+        try {
+            if ($userFile->name == 'company_logo.png') {
                 $userFile->delete();
-                toast('File Successfully Deleted','success');
-                return redirect()->back();
-            }else{
-                $userFile->delete();
-                toast('File Delete Field','error');
-                return redirect()->back();
+            } else {
+                if (file_exists($path)) {
+                    unlink($path);
+                    $userFile->delete();
+                } else {
+                    $userFile->delete();
+                }
             }
+            Alert::success(__('app.success'), __('app.delete-success-message'));
+            return redirect()->back();
+        } catch (\Exception $ex) {
+            Alert::error(__('app.oops'), __('app.delete-error-message'));
+            return back();
         }
     }
 
     // Supplier Delete
     public function destroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('supplier-delete')) {
             return $error;
         }
         $user = User::find($id);
         $path =  public_path('images/users/'.$user->profile_photo_path);
-
         // User File Delete
         $userFiles = UserFile::where('user_id', $id)->get();
-        foreach($userFiles as $userFile){
+        foreach ($userFiles as $userFile) {
             $currentFile = $userFile->name;
             $userFilePath = public_path('files/user_file/'.$currentFile);
-            if(file_exists($userFilePath)){
+            if (file_exists($userFilePath)) {
                 unlink($userFilePath);
             }
         }
-
-        if($user->profile_photo_path == 'company_logo.png'){
-            $user->delete();
-            toast('File Successfully Deleted','success');
-            return redirect()->back();
-        }else{
-            if(file_exists($path)){
+        try {
+            if ($user->profile_photo_path == 'company_logo.png') {
                 $user->delete();
-                unlink($path);
-                toast('File Successfully Deleted','success');
-                return redirect()->back();
-            }else{
-                $user->delete();
-                toast('File Successfully Deleted','success');
-                return redirect()->back();
+            } else {
+                if (file_exists($path)) {
+                    $user->delete();
+                    unlink($path);
+                } else {
+                    $user->delete();
+                }
             }
+            Alert::success(__('app.success'), __('app.delete-success-message'));
+            return redirect()->back();
+        } catch (\Exception $ex) {
+            Alert::error(__('app.oops'), __('app.delete-error-message'));
+            return back();
         }
     }
 }
