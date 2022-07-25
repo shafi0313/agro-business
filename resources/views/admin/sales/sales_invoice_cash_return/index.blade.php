@@ -21,10 +21,10 @@
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title">Customer</h4>
                                 <a class="btn btn-success btn-sm  ml-auto" href="{{ route('salesInvoiceCashReturn.selectDate') }}">
-                                    All Challan By Date
+                                    All Invoice By Date
                                 </a>
                                 <a class="btn btn-primary btn-sm ml-3" href="{{ route('salesInvoiceCashReturn.allInvoice') }}">
-                                    All Challan
+                                    All Invoice
                                 </a>
                             </div>
                         </div>

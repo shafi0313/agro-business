@@ -13,6 +13,9 @@ class SalesLedgerBookController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('sales-ledger-book-manage')) {
+            return $error;
+        }
         $customers = User::with(['invoice' => function ($q) {
             return $q->select('customer_id', 'payment_date', 'c_status', 'inv_cancel')
             ->whereNotNull('payment_date')->where('c_status', 0)
@@ -26,6 +29,9 @@ class SalesLedgerBookController extends Controller
 
     public function ledgerBookSelectDate(User $customer_id)
     {
+        if ($error = $this->authorize('sales-ledger-book-show-by-date')) {
+            return $error;
+        }
         $customer_Info = SalesInvoice::where('customer_id', $customer_id->id)->get();
         return view('admin.sales.ledger_book.ind_select_date', compact('customer_Info', 'customer_id'));
     }
@@ -33,6 +39,9 @@ class SalesLedgerBookController extends Controller
     // Ledger Book By Date
     public function indDateLedgerBook(Request $request)
     {
+        if ($error = $this->authorize('sales-ledger-book-show-by-date')) {
+            return $error;
+        }
         $customer_id = $request->get('customer_id');
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
@@ -63,6 +72,9 @@ class SalesLedgerBookController extends Controller
     // Ledger Book All
     public function indAllLedgerBook($customer_id)
     {
+        if ($error = $this->authorize('sales-ledger-book-show-all')) {
+            return $error;
+        }
         $customer_Info = User::with(['customerInfo' => function ($q) {
             return $q->select('user_id', 'credit_limit');
         }])->select('id', 'business_name', 'name', 'phone', 'address')->where('id', $customer_id)->first();
@@ -85,6 +97,9 @@ class SalesLedgerBookController extends Controller
 
     public function allShowInvoice()
     {
+        if ($error = $this->authorize('sales-ledger-book-all-ledger-book')) {
+            return $error;
+        }
         $invoices = SalesLedgerBook::with(['invoice' => function ($q) {
             return $q->select('id', 'pro_dis', 'invoice_no');
         }])
@@ -93,15 +108,13 @@ class SalesLedgerBookController extends Controller
                 }])
                 ->whereIn('type', [0,1,2,3,4,5,7,8,16,17,18,19,25])
                 ->get(['id','account_id','payment_date','c_status','inv_cancel','invoice_date','invoice_no','type','sales_amt','discount','discount_amt','net_amt','payment_date','payment']);
-
         $payment = SalesLedgerBook::where('type', 25)->sum('payment');
-
         return view('admin.sales.ledger_book.all_ledger_book', compact('invoices', 'payment'));
     }
 
     public function ledgerReportEdit($id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('sales-ledger-book-edit')) {
             return $error;
         }
         $ledgerBook = SalesLedgerBook::find($id);
@@ -110,6 +123,9 @@ class SalesLedgerBookController extends Controller
 
     public function ledgerReportUpdate(Request $request, $id)
     {
+        if ($error = $this->authorize('sales-ledger-book-edit')) {
+            return $error;
+        }
         $data = [
             'sales_amt' => $request->sales_amt,
             'discount' => $request->discount,

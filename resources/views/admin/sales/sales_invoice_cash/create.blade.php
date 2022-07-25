@@ -22,7 +22,9 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item"><a href="{{ route('sales-invoice-cash.index')}}">Sales of Cash Invoice</a></li>
+                    <li class="nav-item">Sales</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item"><a href="{{ route('sales-invoice-cash.index')}}">Sales</a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Create</li>
                 </ul>

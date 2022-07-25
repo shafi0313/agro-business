@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Stock;
-use App\Models\SalesInvoice;
 use Illuminate\Http\Request;
 use App\Models\PurchaseInvoice;
-use App\Models\SalesLedgerBook;
 use App\Models\PurchaseLedgerBook;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -15,7 +13,7 @@ class ProductionController extends Controller
 {
     public function showAccpet()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('store-qa/qc-manage')) {
             return $error;
         }
         $customerInfo = PurchaseInvoice::first();
@@ -30,7 +28,7 @@ class ProductionController extends Controller
 
     public function showInvoiceAccpet($challan_no)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('store-qa/qc-show')) {
             return $error;
         }
         $showInvoices = PurchaseInvoice::where('challan_no', $challan_no)->where('type', 11)->get();
@@ -42,7 +40,9 @@ class ProductionController extends Controller
 
     public function store(Request $request)
     {
-        // return $request;
+        if ($error = $this->authorize('store-qa/qc-accept-or-reject')) {
+            return $error;
+        }
         DB::beginTransaction();
         foreach ($request->id as $key => $v) {
             PurchaseInvoice::where('id', $request->id[$key])->first()->update(['status' => $request->status]);
@@ -70,7 +70,6 @@ class ProductionController extends Controller
             };
         }
         try {
-            // ($bulkUpdatee == true || $factoryUpdatee == true);
             DB::commit();
             toast('Done', 'success');
             return redirect()->route('productionCheck.showAccpet');
@@ -82,44 +81,44 @@ class ProductionController extends Controller
     }
 
     // Soft Delete
-    public function destroyInvoice($challan_no)
-    {
-        if ($error = $this->sendPermissionError('delete')) {
-            return $error;
-        }
-        SalesInvoice::where('challan_no', $challan_no)->delete();
-        SalesLedgerBook::where('challan_no', $challan_no)->delete();
-        if (SalesInvoice::count() < 1) {
-            toast('Sales Invoice Successfully Deleted', 'success');
-            return redirect()->route('invoice.index');
-        } else {
-            toast('Sales Invoice Successfully Deleted', 'success');
-            return redirect()->back();
-        }
-    }
+    // public function destroyInvoice($challan_no)
+    // {
+    //     if ($error = $this->sendPermissionError('delete')) {
+    //         return $error;
+    //     }
+    //     SalesInvoice::where('challan_no', $challan_no)->delete();
+    //     SalesLedgerBook::where('challan_no', $challan_no)->delete();
+    //     if (SalesInvoice::count() < 1) {
+    //         toast('Sales Invoice Successfully Deleted', 'success');
+    //         return redirect()->route('invoice.index');
+    //     } else {
+    //         toast('Sales Invoice Successfully Deleted', 'success');
+    //         return redirect()->back();
+    //     }
+    // }
 
-    public function destroy(Request $request, $id)
-    {
-        if ($error = $this->sendPermissionError('delete')) {
-            return $error;
-        }
-        SalesInvoice::find($id)->delete();
-        $challan_no = $request->get('challan_no');
-        $customer_id = $request->get('customer_id');
-        $invoices = SalesInvoice::select('amt')->where('challan_no', $challan_no)->where('customer_id', $customer_id)->get()->sum('amt');
+    // public function destroy(Request $request, $id)
+    // {
+    //     if ($error = $this->sendPermissionError('delete')) {
+    //         return $error;
+    //     }
+    //     SalesInvoice::find($id)->delete();
+    //     $challan_no = $request->get('challan_no');
+    //     $customer_id = $request->get('customer_id');
+    //     $invoices = SalesInvoice::select('amt')->where('challan_no', $challan_no)->where('customer_id', $customer_id)->get()->sum('amt');
 
-        $ledgerBooks = SalesLedgerBook::where('challan_no', $challan_no)->where('customer_id', $customer_id)->get();
+    //     $ledgerBooks = SalesLedgerBook::where('challan_no', $challan_no)->where('customer_id', $customer_id)->get();
 
-        foreach ($ledgerBooks as $ledgerBook) {
-            $courier_pay = $ledgerBook->courier_pay;
-            $payment = $ledgerBook->payment;
-        }
+    //     foreach ($ledgerBooks as $ledgerBook) {
+    //         $courier_pay = $ledgerBook->courier_pay;
+    //         $payment = $ledgerBook->payment;
+    //     }
 
-        $ledgerUpdate = [
-            'total_amt' =>$invoices,
-            'dues_amt' =>$invoices - $courier_pay - $payment,
-        ];
-        SalesLedgerBook::where('challan_no', $challan_no)->where('customer_id', $customer_id)->update($ledgerUpdate);
-        return redirect()->back();
-    }
+    //     $ledgerUpdate = [
+    //         'total_amt' =>$invoices,
+    //         'dues_amt' =>$invoices - $courier_pay - $payment,
+    //     ];
+    //     SalesLedgerBook::where('challan_no', $challan_no)->where('customer_id', $customer_id)->update($ledgerUpdate);
+    //     return redirect()->back();
+    // }
 }

@@ -1,8 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'Product')
 @section('content')
-@php $p='factory'; $sm="product"; $ssm='storeShow'; @endphp
-<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -10,9 +8,13 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item"><a href="{{ route('product.index')}}">Show Product</a></li>
+                    <li class="nav-item">Factory</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Create Product</li>
+                    <li class="nav-item">Store</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item"><a href="{{ route('product.index')}}">Product</a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Create</li>
                 </ul>
             </div>
             <div class="divider1"></div>
@@ -50,7 +52,6 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
                                     <div class="form-group col-sm-4">
                                         <label for="name">Brand Name<span class="t_r">*</span></label>
                                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" placeholder="Enter Brand Name" required>
@@ -58,7 +59,6 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
                                     <div class="form-group col-sm-4">
                                         <label for="generic">Group Name<span class="t_r">*</span></label>
                                         <input type="text" name="generic" class="form-control @error('generic') is-invalid @enderror" value="{{old('materials')}}" placeholder="Enter Group Name" required>
@@ -66,7 +66,6 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
                                     <div class="col-md-12">
                                         <table class="table table-bordered">
                                             <tr>
@@ -93,7 +92,6 @@
                                             <tbody id="showItem" class=""></tbody>
                                         </table>
                                     </div>
-
                                     <div class="form-group col-sm-12">
                                         <label for="origin">Origin<span class="t_r">*</span></label>
                                         <textarea class="form-control @error('origin') is-invalid @enderror" id="origin" name="origin" {{old('origin')}}></textarea>
@@ -101,7 +99,6 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
                                     <div class="form-group col-sm-12">
                                         <label for="indications">Main Indications<span class="t_r">*</span></label>
                                         <textarea class="form-control @error('indications') is-invalid @enderror" id="editor" name="indications" {{old('indications')}}></textarea>
@@ -109,7 +106,6 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
                                     <div class="form-group col-sm-12">
                                         <label for="dosage">Dosage<span class="t_r">*</span></label>
                                         <textarea class="form-control @error('dosage') is-invalid @enderror" id="editor2" name="dosage" {{old('dosage')}}></textarea>
@@ -117,21 +113,17 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
                                     <div class="form-group col-md-3">
                                         <label for="image" class="placeholder">Image<span class="t_r">*</span></label>
                                         <input id="image" name="image" type="file" class="form-control">
                                     </div>
                                 </div>
-
                                 <div align="center" class="mr-auto card-action">
                                     <button type="submit" class="btn btn-success">Submit</button>
                                     <button type="reset" class="btn btn-danger">Reset</button>
                                 </div>
                             </form>
                         </div>
-
-
                     {{-- Page Content End --}}
                     </div>
                 </div>
@@ -168,35 +160,11 @@
     }
 </script>
 
+<script src="{{ asset('backend/assets/ckeditor/ckeditor.js') }}"></script>
 <script>
-    ClassicEditor
-    .create( document.querySelector('#origin'), {
-        removePlugins: [  ],
-        toolbar: ['Heading', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' , 'Link']
-    } )
-    .catch( error => {
-        console.log( error );
-    });
-</script>
-<script>
-    ClassicEditor
-    .create( document.querySelector('#editor2'), {
-        removePlugins: [  ],
-        toolbar: ['Heading', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' , 'Link']
-    } )
-    .catch( error => {
-        console.log( error );
-    });
-</script>
-<script>
-    ClassicEditor
-    .create( document.querySelector('#editor'), {
-        removePlugins: [  ],
-        toolbar: ['Heading', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' , 'Link']
-    } )
-    .catch( error => {
-        console.log( error );
-    });
+    CKEDITOR.replace('editor')
+    CKEDITOR.replace('editor2')
+    CKEDITOR.replace('origin')
 </script>
 @endpush
 @endsection

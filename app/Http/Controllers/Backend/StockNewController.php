@@ -14,13 +14,16 @@ class StockNewController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('store-stock-manage')) {
+            return $error;
+        }
         $stocks = Stock::where('stock_type', 1)->whereInv_cancel(0)->get();
         return view('admin.stock.store.index', compact('stocks'));
     }
 
     public function create()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('store-stock-add')) {
             return $error;
         }
         return view('admin.stock.store.create');
@@ -28,7 +31,7 @@ class StockNewController extends Controller
 
     public function store(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('store-stock-add')) {
             return $error;
         }
         $data=[
@@ -66,13 +69,16 @@ class StockNewController extends Controller
 
     public function edit($id)
     {
+        if ($error = $this->authorize('store-product-edit')) {
+            return $error;
+        }
         $stock = Stock::find($id);
         return view('admin.stock.store.edit', compact('stock'));
     }
 
     public function update(Request $request)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('store-product-edit')) {
             return $error;
         }
         $id = $request->id;
@@ -91,7 +97,7 @@ class StockNewController extends Controller
 
     public function close(Request $request)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('store-stock-stock-close')) {
             return $error;
         }
         $product_id = $request->product_id;

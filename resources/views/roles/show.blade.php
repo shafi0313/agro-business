@@ -85,17 +85,39 @@
 
                                             {{--! Roles --}}
                                             @include('roles.permissions.roles')
-
                                             {{--! Permissions --}}
                                             @include('roles.permissions.permissions')
                                             {{--! activity --}}
                                             @include('roles.permissions.activity')
-                                            {{--! user --}}
-                                            @include('roles.permissions.user')
                                             {{--! setting --}}
                                             @include('roles.permissions.setting')
-                                            {{--! subject --}}
-                                            @include('roles.permissions.subject')
+                                            {{--! employee --}}
+                                            @include('roles.permissions.employee')
+                                            {{--! about --}}
+                                            @include('roles.permissions.about')
+                                            {{--! slider --}}
+                                            @include('roles.permissions.slider')
+                                            {{--! Pack Size --}}
+                                            @include('roles.permissions.pack_size')
+                                            {{--! Bank List --}}
+                                            @include('roles.permissions.bank_list')
+                                            {{--! Employee Category --}}
+                                            @include('roles.permissions.employee_category')
+                                            {{--! Product Category --}}
+                                            @include('roles.permissions.product_category')
+                                            {{--! License Category --}}
+                                            @include('roles.permissions.license_category')
+                                            {{--! Product License --}}
+                                            @include('roles.permissions.product_license')
+                                            {{--! User bank account --}}
+                                            @include('roles.permissions.user_bank_account')
+                                            {{--! Office Expense Category --}}
+                                            @include('roles.permissions.office_expense_category')
+                                            {{--! Office Income Category --}}
+                                            @include('roles.permissions.office_income_category')
+                                            {{--! Customer --}}
+                                            @include('roles.permissions.customer')
+
 
                                             <div class="form-row py-3">
                                                 <div class="col-sm-8 mx-auto">

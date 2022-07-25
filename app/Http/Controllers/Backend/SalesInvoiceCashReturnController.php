@@ -17,13 +17,16 @@ class SalesInvoiceCashReturnController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('sales-return-manage')) {
+            return $error;
+        }
         $customers = User::where('role',2)->orderby('business_name','ASC')->get();
         return view('admin.sales.sales_invoice_cash_return.index', compact('customers'));
     }
 
     public function createId($id)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('sales-return-return')) {
             return $error;
         }
 
@@ -47,6 +50,10 @@ class SalesInvoiceCashReturnController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('sales-return-return')) {
+            return $error;
+        }
+
        $this->validate($request,[
             'invoice_no' => 'required',
             'challan_no' => 'required',
@@ -177,6 +184,9 @@ class SalesInvoiceCashReturnController extends Controller
 
     public function show($id)
     {
+        if ($error = $this->authorize('sales-return-show')) {
+            return $error;
+        }
         $customerInfo = SalesInvoice::where('customer_id', $id)->first();
         $getInvoice = SalesInvoice::where('customer_id', $id)->whereIn('type', [2,4])->latest()->get();
         $customerInvoices = $getInvoice->groupBy('invoice_no');
@@ -188,37 +198,46 @@ class SalesInvoiceCashReturnController extends Controller
     }
 
     // ind show
-    public function showInvoice($customer_id, $invoice_no)
-    {
-        $showInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [2,4])->get();
-        $customerInfo = SalesInvoice::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->whereIn('type', [2,4])->first();
-        $total_amt = SalesLedgerBook::where('invoice_no', $invoice_no)->whereIn('type', [2,4])->first();
-        return view('admin.sales.sales_invoice_cash_return.show_invoice', compact('showInvoices','customerInfo','total_amt'));
-    }
+    // public function showInvoice($customer_id, $invoice_no)
+    // {
+    //     $showInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [2,4])->get();
+    //     $customerInfo = SalesInvoice::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->whereIn('type', [2,4])->first();
+    //     $total_amt = SalesLedgerBook::where('invoice_no', $invoice_no)->whereIn('type', [2,4])->first();
+    //     return view('admin.sales.sales_invoice_cash_return.show_invoice', compact('showInvoices','customerInfo','total_amt'));
+    // }
 
     // All invoice
     public function allInvoice()
     {
+        if ($error = $this->authorize('sales-return-all-invoice')) {
+            return $error;
+        }
         $getChallan = SalesInvoice::whereIn('type', [2,4])->latest()->get();
         $supplierChallans = $getChallan->groupBy('invoice_no');
         return view('admin.sales.sales_invoice_cash_return.all_invoice', compact('supplierChallans'));
     }
 
-    public function allInvoiceShow($invoice_no)
-    {
-        $showInvoices = SalesInvoice::where('invoice_no', $invoice_no)->whereIn('type', [2,4])->get(); // 1 = Sales of Cash Return
-        $supplierInfo = SalesInvoice::whereIn('type', [2,4])->first();
-        return view('admin.sales.sales_invoice_cash_return.all_invoice_show', compact('showInvoices','supplierInfo'));
-    }
+    // public function allInvoiceShow($invoice_no)
+    // {
+    //     $showInvoices = SalesInvoice::where('invoice_no', $invoice_no)->whereIn('type', [2,4])->get(); // 1 = Sales of Cash Return
+    //     $supplierInfo = SalesInvoice::whereIn('type', [2,4])->first();
+    //     return view('admin.sales.sales_invoice_cash_return.all_invoice_show', compact('showInvoices','supplierInfo'));
+    // }
 
     // All by date
     public function selectDate()
     {
+        if ($error = $this->authorize('sales-return-all-challan-and-invoice-by-date')) {
+            return $error;
+        }
         return view('admin.sales.sales_invoice_cash_return.select_date');
     }
 
     public function allInvoiceByDate(Request $request)
     {
+        if ($error = $this->authorize('sales-return-all-invoice-by-date')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
@@ -227,15 +246,18 @@ class SalesInvoiceCashReturnController extends Controller
         return view('admin.sales.sales_invoice_cash_return.all_invoice_by_date', compact('supplierChallans'));
     }
 
-    public function allInvoiceShowByDate($invoice_no)
-    {
-        $showInvoices = SalesInvoice::where('invoice_no', $invoice_no)->whereIn('type', [2,4])->get(); // 1 = Sales of Cash
-        $customerInfo = SalesInvoice::where('type', 7)->first();
-        return view('admin.sales.sales_invoice_cash_return.all_invoice_show_by_date', compact('showInvoices','customerInfo'));
-    }
+    // public function allInvoiceShowByDate($invoice_no)
+    // {
+    //     $showInvoices = SalesInvoice::where('invoice_no', $invoice_no)->whereIn('type', [2,4])->get(); // 1 = Sales of Cash
+    //     $customerInfo = SalesInvoice::where('type', 7)->first();
+    //     return view('admin.sales.sales_invoice_cash_return.all_invoice_show_by_date', compact('showInvoices','customerInfo'));
+    // }
 
     public function printInvoice($customer_id, $invoice_no)
     {
+        if ($error = $this->authorize('sales-return-invoice')) {
+            return $error;
+        }
         $getShowInvoices = SalesInvoice::with(['isReturnInvC'])->where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [2,4])->get();
         $showInvoices = $getShowInvoices->groupBy('product_id');
 
@@ -245,31 +267,34 @@ class SalesInvoiceCashReturnController extends Controller
         return view('admin.sales.sales_invoice_cash_return.print_invoice', compact('showInvoices','invoiceDue','ledger','invoiceDueFirst','getShowInvoices'));
     }
 
-    public function printChallan($customer_id, $invoice_no)
-    {
-        $getShowInvoices = SalesInvoice::with(['isReturnInvC'])->where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [2,4])->get();
-        $showInvoices = $getShowInvoices->groupBy('product_id');
+    // public function printChallan($customer_id, $invoice_no)
+    // {
+    //     if ($error = $this->authorize('sales-return-challan')) {
+    //         return $error;
+    //     }
+    //     $getShowInvoices = SalesInvoice::with(['isReturnInvC'])->where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [2,4])->get();
+    //     $showInvoices = $getShowInvoices->groupBy('product_id');
 
-        $invoiceDue = InvoiceDue::where('invoice_no',$invoice_no)->get();
-        $invoiceDueFirst = InvoiceDue::where('invoice_no',$invoice_no)->first();
-        $ledger = SalesLedgerBook::with(['customer','tmmSoId','preparedBy'])->where('invoice_no', $invoice_no)->first();
-        return view('admin.sales.sales_invoice_cash_return.print_challan', compact('showInvoices','invoiceDue','ledger','invoiceDueFirst'));
-    }
+    //     $invoiceDue = InvoiceDue::where('invoice_no',$invoice_no)->get();
+    //     $invoiceDueFirst = InvoiceDue::where('invoice_no',$invoice_no)->first();
+    //     $ledger = SalesLedgerBook::with(['customer','tmmSoId','preparedBy'])->where('invoice_no', $invoice_no)->first();
+    //     return view('admin.sales.sales_invoice_cash_return.print_challan', compact('showInvoices','invoiceDue','ledger','invoiceDueFirst'));
+    // }
 
      // Soft Delete
-    public function destroyInvoice($invoice_no)
-    {
-        if ($error = $this->sendPermissionError('delete')) {
-            return $error;
-        }
-        SalesInvoice::where('invoice_no',$invoice_no)->delete();
-        SalesLedgerBook::where('invoice_no',$invoice_no)->delete();
-        if(SalesInvoice::count() < 1){
-            toast('Sales Invoice Successfully Deleted','success');
-            return redirect()->route('invoice.index');
-        }else{
-            toast('Sales Invoice Successfully Deleted','success');
-            return redirect()->back();
-        }
-    }
+    // public function destroyInvoice($invoice_no)
+    // {
+    //     if ($error = $this->sendPermissionError('delete')) {
+    //         return $error;
+    //     }
+    //     SalesInvoice::where('invoice_no',$invoice_no)->delete();
+    //     SalesLedgerBook::where('invoice_no',$invoice_no)->delete();
+    //     if(SalesInvoice::count() < 1){
+    //         toast('Sales Invoice Successfully Deleted','success');
+    //         return redirect()->route('invoice.index');
+    //     }else{
+    //         toast('Sales Invoice Successfully Deleted','success');
+    //         return redirect()->back();
+    //     }
+    // }
 }

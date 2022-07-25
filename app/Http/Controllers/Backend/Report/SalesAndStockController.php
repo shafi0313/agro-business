@@ -18,6 +18,9 @@ class SalesAndStockController extends Controller
 
     public function salesReport(Request $request)
     {
+        if ($error = $this->authorize('sales-report-manage')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
@@ -28,6 +31,9 @@ class SalesAndStockController extends Controller
 
     public function salesReturnReport(Request $request)
     {
+        if ($error = $this->authorize('sales-return-report-manage')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
@@ -38,6 +44,9 @@ class SalesAndStockController extends Controller
 
     public function sampleReport(Request $request)
     {
+        if ($error = $this->authorize('sample-report-manage')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
@@ -48,6 +57,9 @@ class SalesAndStockController extends Controller
 
     public function productionReport(Request $request)
     {
+        if ($error = $this->authorize('production-report-manage')) {
+            return $error;
+        }
 
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');

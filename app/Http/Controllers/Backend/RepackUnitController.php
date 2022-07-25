@@ -14,7 +14,7 @@ class RepackUnitController extends Controller
 {
     public function showAccpet()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('repack-unit-qa/qc-manage')) {
             return $error;
         }
         $customerInfo = PurchaseInvoice::first();
@@ -29,7 +29,7 @@ class RepackUnitController extends Controller
 
     public function showInvoiceAccpet($challan_no)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('repack-unit-qa/qc-show')) {
             return $error;
         }
         $showInvoices = PurchaseInvoice::where('challan_no', $challan_no)->where('type', 9)->get();
@@ -41,6 +41,9 @@ class RepackUnitController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('repack-unit-qa/qc-accept-or-reject')) {
+            return $error;
+        }
         DB::beginTransaction();
         // For Status 1=Accept, 2=Reject
         foreach($request->id as $key => $v){

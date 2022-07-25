@@ -20,6 +20,9 @@ class SalesInvoiceCashController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('sales-sales-manage')) {
+            return $error;
+        }
         $customers = User::where('role', 2)->orderby('business_name', 'ASC')->get();
         $ceo = User::where('id', 10)->first();
         return view('admin.sales.sales_invoice_cash.index', compact('customers', 'ceo'));
@@ -27,10 +30,9 @@ class SalesInvoiceCashController extends Controller
 
     public function createId($id)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('sales-sales-sales')) {
             return $error;
         }
-
         $customer = User::with(['customerInfo' => function ($q) {
             return $q->select('user_id', 'type', 'credit_limit');
         }])->select('id', 'name', 'business_name', 'address')->find($id);
@@ -63,6 +65,9 @@ class SalesInvoiceCashController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('sales-sales-sales')) {
+            return $error;
+        }
         $this->validate($request, [
             'invoice_no' => 'required',
             'size' => 'required',
@@ -226,6 +231,9 @@ class SalesInvoiceCashController extends Controller
 
     public function show($id)
     {
+        if ($error = $this->authorize('sales-sales-show')) {
+            return $error;
+        }
         $customerInfo = SalesInvoice::with(['customer' => function ($q) {
             $q->select('id', 'business_name', 'name');
         }])->where('customer_id', $id)->first(['customer_id']);
@@ -242,6 +250,9 @@ class SalesInvoiceCashController extends Controller
     //Edit invoice
     public function edit($user_id, $challan_no)
     {
+        if ($error = $this->authorize('sales-sales-reinvoice')) {
+            return $error;
+        }
         $customer = User::where('id', $user_id)->first();
         $userId = SalesReport::with(['userForSR' => function ($q) {
             return $q->select('id', 'tmm_so_id', 'name', 'role')->whereIn('role', ['1','5']);
@@ -266,8 +277,7 @@ class SalesInvoiceCashController extends Controller
     // Reinvoice ___________________________
     public function update(Request $request)
     {
-        // return $request->all;
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('sales-sales-reinvoice')) {
             return $error;
         }
         $this->validate($request, [
@@ -278,7 +288,6 @@ class SalesInvoiceCashController extends Controller
             'invoice_date' => 'required',
             'amt' => 'required',
         ]);
-
 
         $invoice_id = $request->invoice_id;
         $cancel_led_id = $request->cancel_led_id;
@@ -445,7 +454,7 @@ class SalesInvoiceCashController extends Controller
 
     public function cancelInv($challan_no)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('sales-sales-cancel-invoice')) {
             return $error;
         }
         DB::transaction(function () use($challan_no){
@@ -474,7 +483,7 @@ class SalesInvoiceCashController extends Controller
 
     public function delete($invoice_id, $challan_no)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('sales-sales-cancel-invoice')) {
             return $error;
         }
         DB::transaction(function () use($invoice_id, $challan_no){
@@ -505,6 +514,9 @@ class SalesInvoiceCashController extends Controller
     // ind show
     public function showInvoice($customer_id, $invoice_no)
     {
+        if ($error = $this->authorize('sales-sales-show')) {
+            return $error;
+        }
         $showInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [1,3])->get();
         $customerInfo = SalesInvoice::where('invoice_no', $invoice_no)->where('customer_id', $customer_id)->whereIn('type', [1,3])->first();
         $total_amt = SalesLedgerBook::where('invoice_no', $invoice_no)->whereIn('type', [1,3])->first();
@@ -514,6 +526,9 @@ class SalesInvoiceCashController extends Controller
     // All invoice
     public function allInvoice()
     {
+        if ($error = $this->authorize('sales-sales-all-challan-and-invoice')) {
+            return $error;
+        }
         $getChallan = SalesInvoice::whereIn('type', [1,3])->latest()->get();
         $supplierChallans = $getChallan->groupBy('invoice_no');
         return view('admin.sales.sales_invoice_cash.all_invoice', compact('supplierChallans'));
@@ -529,11 +544,17 @@ class SalesInvoiceCashController extends Controller
     // All by date
     public function selectDate()
     {
+        if ($error = $this->authorize('sales-sales-all-challan-and-invoice-by-date')) {
+            return $error;
+        }
         return view('admin.sales.sales_invoice_cash.select_date');
     }
 
     public function allInvoiceByDate(Request $request)
     {
+        if ($error = $this->authorize('sales-sales-all-challan-and-invoice-by-date')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
 
@@ -542,15 +563,18 @@ class SalesInvoiceCashController extends Controller
         return view('admin.sales.sales_invoice_cash.all_invoice_by_date', compact('supplierChallans'));
     }
 
-    public function allInvoiceShowByDate($invoice_no)
-    {
-        $showInvoices = SalesInvoice::where('invoice_no', $invoice_no)->whereIn('type', [1,3])->get(); // 1 = Sales of Cash
-        $customerInfo = SalesInvoice::where('type', 7)->first();
-        return view('admin.sales.sales_invoice_cash.all_invoice_show_by_date', compact('showInvoices', 'customerInfo'));
-    }
+    // public function allInvoiceShowByDate($invoice_no)
+    // {
+    //     $showInvoices = SalesInvoice::where('invoice_no', $invoice_no)->whereIn('type', [1,3])->get(); // 1 = Sales of Cash
+    //     $customerInfo = SalesInvoice::where('type', 7)->first();
+    //     return view('admin.sales.sales_invoice_cash.all_invoice_show_by_date', compact('showInvoices', 'customerInfo'));
+    // }
 
     public function printInvoice($customer_id, $invoice_no)
     {
+        if ($error = $this->authorize('sales-sales-invoice')) {
+            return $error;
+        }
         $getShowInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [1,3])->get();
         $showInvoices = $getShowInvoices->groupBy('product_id');
 
@@ -562,6 +586,9 @@ class SalesInvoiceCashController extends Controller
 
     public function printChallan($customer_id, $invoice_no)
     {
+        if ($error = $this->authorize('sales-sales-challan')) {
+            return $error;
+        }
         $getShowInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->whereIn('type', [1,3])->get();
         $showInvoices = $getShowInvoices->groupBy('product_id');
 

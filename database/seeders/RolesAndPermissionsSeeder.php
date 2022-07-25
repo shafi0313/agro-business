@@ -261,14 +261,14 @@ class RolesAndPermissionsSeeder extends Seeder
             'repack-unit-qa/qc'=>[
                 'repack-unit-qa/qc-manage',
                 'repack-unit-qa/qc-show',
-                'repack-unit-qa/qc-accept',
-                'repack-unit-qa/qc-reject',
+                'repack-unit-qa/qc-accept-or-reject',
             ],
             'repack-unit-production'=>[
                 'repack-unit-production-manage',
+                'repack-unit-production-ongoing',
+                'repack-unit-production-complete',
                 'repack-unit-production-send-to-store',
                 'repack-unit-production-on-going',
-                'repack-unit-production-complete',
                 'repack-unit-production-show',
             ],
             'repack-unit-production-report'=>[
@@ -283,8 +283,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'store-qa/qc'=>[
                 'store-qa/qc-manage',
                 'store-qa/qc-show',
-                'store-qa/qc-accept',
-                'store-qa/qc-reject',
+                'store-qa/qc-accept-or-reject',
             ],
             'store-stock'=>[
                 'store-stock-manage',
@@ -295,8 +294,57 @@ class RolesAndPermissionsSeeder extends Seeder
             'sales-sample'=>[
                 'sales-sample-manage',
                 'sales-sample-sample',
+                'sales-sample-show',
                 'sales-sample-challan',
                 'sales-sample-invoice',
+            ],
+            'sales-sales'=>[
+                'sales-sales-manage',
+                'sales-sales-sales',
+                'sales-sales-show',
+                'sales-sales-reinvoice',
+                'sales-sales-cancel-invoice',
+                'sales-sales-all-challan-and-invoice',
+                'sales-sales-all-challan-and-invoice-by-date',
+                'sales-sales-challan',
+                'sales-sales-invoice',
+            ],
+            'sales-return'=>[
+                'sales-return-manage',
+                'sales-return-return',
+                'sales-return-show',
+                'sales-return-all-invoice',
+                'sales-return-all-invoice-by-date',
+                'sales-return-invoice',
+            ],
+            'sales-ledger-book'=>[
+                'sales-ledger-book-manage',
+                'sales-ledger-book-edit',
+                'sales-ledger-book-show-all',
+                'sales-ledger-book-show-by-date',
+                'sales-ledger-book-all-ledger-book',
+            ],
+            'sales-report'=>[
+                'sales-report-manage',
+            ],
+            'sales-return-report'=>[
+                'sales-return-report-manage',
+            ],
+            'sample-report'=>[
+                'sample-report-manage',
+            ],
+            'production-report'=>[
+                'production-report-manage',
+            ],
+            'employee-report'=>[
+                'employee-report-manage',
+                'employee-report-show',
+            ],
+            'customer-report'=>[
+                'customer-report-manage',
+            ],
+            'trash-collection'=>[
+                'trash-collection',
             ],
 
         ];
@@ -311,9 +359,9 @@ class RolesAndPermissionsSeeder extends Seeder
         }
 
 
-        // $superadmin = Role::create(['name' => 'superadmin','removable'=> 0]);
+        $superadmin = Role::create(['name' => 'superadmin','removable'=> 0]);
         $admin      = Role::create(['name' => 'admin','removable'=> 0]);
         $admin->givePermissionTo(Permission::all());
-        $teacher    = Role::create(['name' => 'user','removable'=> 0]);
+        $teacher    = Role::create(['name' => 'accountant','removable'=> 0]);
     }
 }

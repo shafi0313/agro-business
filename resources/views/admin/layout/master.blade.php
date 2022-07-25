@@ -87,6 +87,8 @@
 <script src="{{ asset('backend/assets/js/ready.min.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<script src="{{ asset('backend/assets/js/plugins-init.js') }}"></script>
 @include('sweetalert::alert')
 
 <script>

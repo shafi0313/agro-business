@@ -18,6 +18,9 @@ class SendToProductionController extends Controller
 {
     public function showInvoiceTracking()
     {
+        if ($error = $this->authorize('repack-unit-production-manage')) {
+            return $error;
+        }
         $showInvoices = PurchaseInvoice::with(['product','packSize'])->orderBy('id','DESC')->where('type', 9)->where('status', 1)->whereInv_cancel(0)->latest()->get();
         if(count($showInvoices)<1){
             alert()->info('Alert','There are no Data.');
@@ -30,7 +33,7 @@ class SendToProductionController extends Controller
     // Bulk Tracking Start
     public function trackingUpdateOnGoing(Request $request, $id)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('repack-unit-production-ongoing')) {
             return $error;
         }
         $data['tracking'] = $request->tracking;
@@ -40,7 +43,7 @@ class SendToProductionController extends Controller
 
     public function trackingUpdateComplete(Request $request, $id)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('repack-unit-production-complete')) {
             return $error;
         }
         $data['tracking'] = $request->tracking;
@@ -56,9 +59,19 @@ class SendToProductionController extends Controller
         return view('admin.repack_unit.send_to_production.index', compact('suppliers'));
     }
 
+    // Production Cal
+    public function productionCalShow($id)
+    {
+        if ($error = $this->authorize('repack-unit-production-show')) {
+            return $error;
+        }
+        $poductionCals = ProductionCal::where('pur_inv_id', $id)->whereInv_cancel(0)->latest()->get();
+        return view('admin.repack_unit.check.production_cal', compact('poductionCals'));
+    }
+
     public function createId($inv_id)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('repack-unit-production-send-to-store')) {
             return $error;
         }
         $products = Product::select(['id','generic','type'])->where('type',2)->get();
@@ -71,16 +84,9 @@ class SendToProductionController extends Controller
         return view('admin.repack_unit.send_to_production.create', compact('invoice_no','userId','invoice_id','stores','products'));
     }
 
-    // Production Cal
-    public function productionCalShow($id)
-    {
-        $poductionCals = ProductionCal::where('pur_inv_id', $id)->whereInv_cancel(0)->latest()->get();
-        return view('admin.repack_unit.check.production_cal', compact('poductionCals'));
-    }
-
     public function store(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('repack-unit-production-send-to-store')) {
             return $error;
         }
        $this->validate($request,[
@@ -196,27 +202,27 @@ class SendToProductionController extends Controller
         }
     }
 
-    public function productionDelete($production_id)
-    {
+    // public function 1productionDelete($production_id)
+    // {
         // PurchaseInvoice::where('id',$production_id)->update(['inv_cancel' => 1]);
         // PurchaseLedgerBook::where('production_id',$production_id)->update(['inv_cancel' => 1]);
         // Stock::where('inv_id',$production_id)->update(['inv_cancel' => 1]);
         // ProductionCal::where('production_id',$production_id)->update(['inv_cancel' => 1]);
         // toast('success','Success');
         // return back();
-    }
+    // }
 
     // Customer Invoice Show
-    public function show($id)
-    {
-        $getInvoice = PurchaseInvoice::where('supplier_id', $id)->whereInv_cancel(0)->whereStatus(1)->latest()->get();
-        $invoices = $getInvoice->groupBy('challan_no');
-        if($supplierInfo == ''){
-            alert()->info('Alert','There are no invoice. First create invoice');
-            return redirect()->back();
-        }
-        return view('admin.repack_unit.send_to_production.customer_invoice', compact('invoices'));
-    }
+    // public function show($id)
+    // {
+    //     $getInvoice = PurchaseInvoice::where('supplier_id', $id)->whereInv_cancel(0)->whereStatus(1)->latest()->get();
+    //     $invoices = $getInvoice->groupBy('challan_no');
+    //     if($supplierInfo == ''){
+    //         alert()->info('Alert','There are no invoice. First create invoice');
+    //         return redirect()->back();
+    //     }
+    //     return view('admin.repack_unit.send_to_production.customer_invoice', compact('invoices'));
+    // }
 
     // Invoice Details
     public function showInvoice($supplier_id, $challan_no)
@@ -239,11 +245,17 @@ class SendToProductionController extends Controller
 
     public function selectDate()
     {
+        if ($error = $this->authorize('repack-unit-production-report-manage')) {
+            return $error;
+        }
         return view('admin.repack_unit.production_report.select_date');
     }
 
     public function report(Request $request)
     {
+        if ($error = $this->authorize('repack-unit-production-report-manage')) {
+            return $error;
+        }
         $form_date = $request->get('form_date');
         $to_date = $request->get('to_date');
         $productions = PurchaseInvoice::whereBetween('invoice_date', [$form_date,$to_date])->where('type', 11)->whereInv_cancel(0)->latest()->get();

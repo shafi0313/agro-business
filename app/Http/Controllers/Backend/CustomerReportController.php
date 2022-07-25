@@ -12,6 +12,9 @@ class CustomerReportController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('customer-report-manage')) {
+            return $error;
+        }
         $customers = User::with(['invoice' => function ($q) {
             return $q->select('id', 'type', 'customer_id', 'sales_amt', 'discount_amt', 'net_amt', 'payment', 'pay_type');
         }])

@@ -1,8 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'Product')
 @section('content')
-@php $p='factory'; $sm="product"; $ssm='storeShow'; @endphp
-<script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -10,9 +8,13 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item"><a href="{{ route('product.index')}}">Show Product</a></li>
+                    <li class="nav-item">Factory</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Create Product</li>
+                    <li class="nav-item">Store</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item"><a href="{{ route('product.index')}}">Product</a></li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Edit</li>
                 </ul>
             </div>
             <div class="divider1"></div>
@@ -22,7 +24,7 @@
                         {{-- Page Content Start --}}
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Edit Porduct</h4>
+                                <h4 class="card-title">Edit Product</h4>
                                 {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                     Launch demo modal
                                   </button> --}}
@@ -43,9 +45,7 @@
                                 </div>
                             @endif
                             <form action="{{ route('product.update', $product->id)}}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
-
+                                @csrf @method('PUT')
                                 <div class="row">
                                     <div class="form-group col-sm-4">
                                         <label for="name">Category<span class="t_r">*</span></label>
@@ -244,35 +244,11 @@
 		total_price();
     }
 </script>
+<script src="{{ asset('backend/assets/ckeditor/ckeditor.js') }}"></script>
 <script>
-    ClassicEditor
-    .create( document.querySelector('#origin'), {
-        removePlugins: [  ],
-        toolbar: ['Heading', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' , 'Link']
-    } )
-    .catch( error => {
-        console.log( error );
-    });
-</script>
-<script>
-    ClassicEditor
-    .create( document.querySelector('#editor2'), {
-        removePlugins: [  ],
-        toolbar: ['Heading', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' , 'Link']
-    } )
-    .catch( error => {
-        console.log( error );
-    });
-</script>
-<script>
-    ClassicEditor
-    .create( document.querySelector('#editor'), {
-        removePlugins: [  ],
-        toolbar: ['Heading', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' , 'Link']
-    } )
-    .catch( error => {
-        console.log( error );
-    });
+    CKEDITOR.replace('editor')
+    CKEDITOR.replace('editor2')
+    CKEDITOR.replace('origin')
 </script>
 @endpush
 

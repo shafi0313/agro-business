@@ -17,13 +17,16 @@ class SalesSampleController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('sales-sample-manage')) {
+            return $error;
+        }
         $customers = User::where('id', 10)->get();
         return view('admin.sales.sample.index', compact('customers'));
     }
 
     public function createId($id)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('sales-sample-sample')) {
             return $error;
         }
 
@@ -41,6 +44,9 @@ class SalesSampleController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('sales-sample-sample')) {
+            return $error;
+        }
         $this->validate($request, [
             // 'invoice_no' => 'required',
             'size' => 'required',
@@ -56,7 +62,6 @@ class SalesSampleController extends Controller
         $challan_no = $request->get('challan_no');
         $user_id = $request->get('user_id');
         $transaction_id = transaction_id('SSM');
-
 
         $ledgerBookCheck = SalesLedgerBook::where('type', 5)->where('invoice_no', $request->invoice_no)->get();
         if ($ledgerBookCheck->count() > 0) {
@@ -168,6 +173,9 @@ class SalesSampleController extends Controller
 
     public function show($id)
     {
+        if ($error = $this->authorize('sales-sample-show')) {
+            return $error;
+        }
         $customerInfo = SalesInvoice::where('customer_id', $id)->first();
         $getInvoice = SalesInvoice::where('customer_id', $id)->where('type', 5)->latest()->get();
         $customerInvoices = $getInvoice->groupBy('invoice_no');
@@ -180,6 +188,9 @@ class SalesSampleController extends Controller
 
     public function printInvoice($customer_id, $invoice_no)
     {
+        if ($error = $this->authorize('sales-sample-invoice')) {
+            return $error;
+        }
         $getShowInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->where('type', 5)->get();
         $showInvoices = $getShowInvoices->groupby('product_id');
 
@@ -191,6 +202,9 @@ class SalesSampleController extends Controller
 
     public function printChallan($customer_id, $invoice_no)
     {
+        if ($error = $this->authorize('sales-sample-challan')) {
+            return $error;
+        }
         $getShowInvoices = SalesInvoice::where('customer_id', $customer_id)->where('invoice_no', $invoice_no)->where('type', 5)->get();
         $showInvoices = $getShowInvoices->groupby('product_id');
 

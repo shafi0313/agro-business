@@ -4,24 +4,28 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Product;
 use App\Models\PackSize;
+use App\Models\ProductCat;
+use App\Models\ProductStock;
 use Illuminate\Http\Request;
 use App\Models\ProductPackSize;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\ProductCat;
-use App\Models\ProductStock;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductController extends Controller
 {
     public function index()
     {
+        if ($error = $this->authorize('store-product-manage')) {
+            return $error;
+        }
         $porducts = Product::where('type', 1)->orderBy('name', 'ASC')->get();
         return view('admin.product.index', compact('porducts'));
     }
 
     public function create()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('store-product-add')) {
             return $error;
         }
         $productCats = ProductCat::all();
@@ -31,6 +35,9 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        if ($error = $this->authorize('store-product-add')) {
+            return $error;
+        }
         $this->validate($request, [
             'name' => 'required',
             'generic' => 'required',
@@ -115,6 +122,9 @@ class ProductController extends Controller
 
     public function addSizePrice(Request $request)
     {
+        if ($error = $this->authorize('store-product-add')) {
+            return $error;
+        }
         $this->validate($request, [
             'size' => 'required',
             'purchase' => 'required',
@@ -135,10 +145,9 @@ class ProductController extends Controller
                 'mrp' => $request->mrp[$key],
                 'type' => 1,
             ];
-            // dd($data);
             $productPackSize = ProductPackSize::create($data);
+            
             $productPackSizeId = $productPackSize->id;
-
             $productStock = [
                 'product_id' => $product_id,
                 'product_pack_size_id' => $productPackSizeId,
@@ -170,10 +179,9 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        if ($error = $this->sendPermissionError('edit')) {
+        if ($error = $this->authorize('store-product-edit')) {
             return $error;
         }
-
         $packSizess = PackSize::where('type', 1)->get();
         $product = Product::find($id);
         $productCats = ProductCat::where('id', '!=', $product->cat_id)->get();
@@ -183,6 +191,9 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($error = $this->authorize('store-product-edit')) {
+            return $error;
+        }
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = "product_".rand(0, 1000).'.'.$image->getClientOriginalExtension();
@@ -233,7 +244,7 @@ class ProductController extends Controller
 
     public function deletePackSize($packId)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('store-product-delete')) {
             return $error;
         }
         ProductPackSize::findOrFail($packId)->delete();
@@ -243,29 +254,29 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
+        if ($error = $this->authorize('store-product-delete')) {
             return $error;
         }
-
         $product = Product::find($id);
         $productPackSize = ProductPackSize::where('product_id', $id)->delete();
         $path =  public_path('images/product/'.$product->image);
 
-        if ($product->image=='company_logo.png') {
-            $product->delete();
-            toast('Product Successfully Deleted', 'success');
-            return redirect()->back();
-        } else {
-            if (file_exists($path)) {
-                unlink($path);
+        try{
+            if ($product->image=='company_logo.png') {
                 $product->delete();
-                toast('Product Successfully Deleted', 'success');
-                return redirect()->back();
             } else {
-                $product->delete();
-                toast('Product Successfully Deleted', 'success');
-                return redirect()->back();
+                if (file_exists($path)) {
+                    unlink($path);
+                    $product->delete();
+                } else {
+                    $product->delete();
+                }
             }
+            Alert::success('Success','Successfully Deleted');
+            return redirect()->back();
+        }catch (\Exception $ex) {
+            Alert::error('Oops...','Delete Failed');
+            return back();
         }
     }
 

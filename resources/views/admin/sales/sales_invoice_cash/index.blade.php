@@ -1,16 +1,16 @@
 @extends('admin.layout.master')
 @section('title', 'Sales of Cash')
 @section('content')
-@php $p='sales'; $sm='salesCash' @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
                 <ul class="breadcrumbs">
-                    <li class="nav-home">
-                        <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                    <li class="nav-home"><a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Sales of Cash</li>
+                    <li class="nav-item">Sales</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Sales</li>
                 </ul>
             </div>
             <div class="divider1"></div>

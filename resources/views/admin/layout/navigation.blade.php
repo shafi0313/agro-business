@@ -392,14 +392,14 @@
 
 
 {{-- ________________________ Factory Start ________________________ --}}
-                <li class="nav-item {{ openNav(['raw-material.*','purchase-bulk.*','sales-bulk.*','stock.bulk.*','send-to-repack-unit.*','purchaseLedgerBook.*','report.bulk.*']) }}">
+                <li class="nav-item {{ activeNav(['raw-material.*','purchase-bulk.*','sales-bulk.*','stock.bulk.*','send-to-repack-unit.*','purchaseLedgerBook.*','report.bulk.*','repackingCheck.*','bulkTracking.*','production.*','product.*','productionCheck.*','stock.store.*']) }}">
 					<a data-toggle="collapse" href="#factory">
 						<i class="fas fa-industry"></i>
 						<p>Factory</p>
 						<span class="caret"></span>
                     </a>
 
-					<div class="collapse {{ openNav(['raw-material.*','purchase-bulk.*','sales-bulk.*','stock.bulk.*','send-to-repack-unit.*','purchaseLedgerBook.*','report.bulk.*']) }}" id="factory">
+					<div class="collapse {{ openNav(['raw-material.*','purchase-bulk.*','sales-bulk.*','stock.bulk.*','send-to-repack-unit.*','purchaseLedgerBook.*','report.bulk.*','repackingCheck.*','bulkTracking.*','production.*','product.*','productionCheck.*','stock.store.*']) }}" id="factory">
 						<ul class="nav nav-collapse">
                             <li>
 								<a data-toggle="collapse" href="#subRaw">
@@ -454,23 +454,29 @@
 									<span>Repack Unit</span>
 									<span class="caret"></span>
 								</a>
-								<div class="collapse {{$ssm=='repackUnitShow'?'show':''}}" id="subRp">
+								<div class="collapse {{ openNav(['repackingCheck.*','bulkTracking.*','production.*']) }}" id="subRp">
 									<ul class="nav nav-collapse subnav">
-										<li class="{{$sm=='qaqc'?'activeSub':''}}">
+										@can('repack-unit-qa/qc-manage')
+                                        <li class="{{ activeSubNav('repackingCheck.*') }}">
 											<a href="{{ route('repackingCheck.showAccpet')}}">
 												<span class="sub-item">QA/QC</span>
 											</a>
                                         </li>
-										<li class="{{$sm=='bulkProduction'?'activeSub':''}}">
+                                        @endcan
+										@can('repack-unit-production-manage')
+                                        <li class="{{ activeSubNav('bulkTracking.*') }}">
 											<a href="{{ route('bulkTracking.showInvoice')}}">
 												<span class="sub-item">Production</span>
 											</a>
                                         </li>
-										<li class="{{$sm=='productionReport'?'activeSub':''}}">
+                                        @endcan
+										@can('repack-unit-production-report-manage')
+                                        <li class="{{ activeSubNav('production.*') }}">
 											<a href="{{ route('production.selectDate')}}">
 												<span class="sub-item">Production Report</span>
 											</a>
                                         </li>
+                                        @endcan
 										{{-- <li>
 											<a href="{{ route('repackStock.index')}}">
 												<span class="sub-item">Bulk Stock</span>
@@ -496,19 +502,21 @@
 									<span>Store</span>
 									<span class="caret"></span>
 								</a>
-								<div class="collapse {{$ssm=='storeShow'?'show':''}}" id="subFac">
+								<div class="collapse {{ openNav(['product.*','productionCheck.*','stock.store.*']) }}" id="subFac">
 									<ul class="nav nav-collapse subnav">
-                                        <li class="{{$sm=='product'?'activeSub':''}}">
+                                        @can('store-product-manage')
+                                        <li class="{{ activeSubNav('product.*') }}">
 											<a href="{{ route('product.index')}}">
 												<span class="sub-item">Product</span>
 											</a>
 										</li>
-										<li class="{{$sm=='storeQaqc'?'activeSub':''}}">
+                                        @endcan
+										<li class="{{ activeSubNav('productionCheck.*') }}">
 											<a href="{{ route('productionCheck.showAccpet')}}">
 												<span class="sub-item">QA/QC</span>
 											</a>
 										</li>
-										<li class="{{$sm=='storeStock'?'activeSub':''}}">
+										<li class="{{ activeSubNav('stock.store.*') }}">
 											<a href="{{ route('stock.store.index')}}">
 												<span class="sub-item">Stock</span>
 											</a>
@@ -517,7 +525,7 @@
 								</div>
                             </li>
 
-                            <li>
+                            {{-- <li>
 								<a data-toggle="collapse" href="#subEqu">
                                     <i class="fas fa-toolbox sub_icon"></i>
 									<span>Packaging</span>
@@ -542,7 +550,7 @@
 										</li>
 									</ul>
 								</div>
-                            </li>
+                            </li> --}}
 						</ul>
 					</div>
                 </li>
@@ -550,35 +558,37 @@
 
 
 {{-- ________________________ Sales Start ________________________ --}}
-                <li class="nav-item {{$p=='sales'?'active':''}}">
+                <li class="nav-item {{ activeNav(['sample-invoive.*','salesInvoiceCash.*','sales-invoice-cash.*','sales-invoice-cash-return.*','salesInvoiceCashReturn.*','salesLedgerBook.*','report.salesAndStock.*']) }}">
                     <a data-toggle="collapse" href="#invoice">
                         <i class="fas fa-file-invoice-dollar"></i>
                         <p>Sales</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{$p=='sales'?'show':''}}" id="invoice">
+                    <div class="collapse {{ openNav(['sample-invoive.*','salesInvoiceCash.*','sales-invoice-cash.*','sales-invoice-cash-return.*','salesInvoiceCashReturn.*','salesLedgerBook.*','report.salesAndStock.*']) }}" id="invoice">
                         <ul class="nav nav-collapse">
-                            <li class="{{$sm=='sample'?'activeSub':''}}">
+                            @can('sales-sample-manage')
+                            <li class="{{ activeSubNav('sample-invoive.*') }}">
                                 <a href="{{ route('sample-invoive.index')}}">
                                     <span class="sub-item">Sample</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='salesCash'?'activeSub':''}}">
+                            @endcan
+                            <li class="{{ activeSubNav(['sales-invoice-cash.*','salesInvoiceCash.*']) }}">
                                 <a href="{{ route('sales-invoice-cash.index')}}">
                                     <span class="sub-item">Sales</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='salesCashRe'?'activeSub':''}}">
+                            <li class="{{ activeSubNav(['sales-invoice-cash-return.*','salesInvoiceCashReturn.*']) }}">
                                 <a href="{{ route('sales-invoice-cash-return.index')}}">
                                     <span class="sub-item">Sales Return</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='salesLedger'?'activeSub':''}}">
+                            <li class="{{ activeSubNav('salesLedgerBook.*') }}">
                                 <a href="{{ route('salesLedgerBook.index')}}">
                                     <span class="sub-item">Ledger Book</span>
                                 </a>
                             </li>
-                            <li class="{{$sm=='salesReport'?'activeSub':''}}">
+                            <li class="{{ activeSubNav('report.salesAndStock.*') }}">
                                 <a href="{{ route('report.salesAndStock.selectDate')}}">
                                     <span class="sub-item">Report</span>
                                 </a>

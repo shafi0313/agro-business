@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'Challan Check')
 @section('content')
-@php $p='factory'; $sm='qaqc'; $ssm='repackUnitShow' @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -38,7 +37,7 @@
                                             <th>Size</th>
                                             <th>Quantity</th>
                                             <th>Use Weight</th>
-                                            <th>Action</th>
+                                            {{-- <th>Action</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -53,23 +52,16 @@
                                             <td>{{$poductionCal->packSize->size}}</td>
                                             <td>{{$poductionCal->quantity}}</td>
                                             <td>{{$poductionCal->use_weight}}</td>
-                                            <td>
+                                            {{-- <td>
                                                 @isset($poductionCal->production_id)
                                                 <div class="form-button-action">
                                                     <a href="{{ route('production.productionDelete', $poductionCal->production_id)}}" title="Delete" class="btn btn-link btn-danger" onclick="return confirm('Are you sure?')">
                                                         <i class="fa fa-times"></i>
                                                     </a>
-                                                    {{-- <form action="{{ route('company-store.destroy',$user->id)}}" style="display: initial;" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button title="Delete" class="btn btn-link btn-danger" onclick="return confirm('Are you sure?')">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </form> --}}
                                                 </div>
                                                 @endisset
 
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                         @endforeach
                                     </tbody>

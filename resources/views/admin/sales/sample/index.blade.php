@@ -1,16 +1,16 @@
 @extends('admin.layout.master')
 @section('title', 'Sample Invoice')
 @section('content')
-@php $p='sales'; $sm='sample' @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
                 <ul class="breadcrumbs">
-                    <li class="nav-home">
-                        <a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
+                    <li class="nav-home"><a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    {{-- <li class="nav-item active">Sample Invoice</li> --}}
+                    <li class="nav-item">Sales</li>
+                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
+                    <li class="nav-item active">Sample</li>
                 </ul>
             </div>
             <div class="divider1"></div>
@@ -20,14 +20,14 @@
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 {{-- <h4 class="card-title">Customer</h4> --}}
-                                <a class="btn btn-info btn-sm  ml-auto" href="{{ route('salesSample.selectDate') }}">
+                                {{-- <a class="btn btn-info btn-sm  ml-auto" href="{{ route('salesSample.selectDate') }}">
                                     Report
                                 </a><a class="btn btn-success btn-sm ml-3" href="{{ route('salesInvoiceCash.selectDate') }}">
                                     All Challan By Date
                                 </a>
                                 <a class="btn btn-primary btn-sm ml-3" href="{{ route('salesInvoiceCash.allInvoice') }}">
                                     All Challan
-                                </a>
+                                </a> --}}
                             </div>
                         </div>
                         <div class="card-body">
