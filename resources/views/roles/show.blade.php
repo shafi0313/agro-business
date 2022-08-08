@@ -117,6 +117,43 @@
                                             @include('roles.permissions.office_income_category')
                                             {{--! Customer --}}
                                             @include('roles.permissions.customer')
+                                            {{--! Supplier --}}
+                                            @include('roles.permissions.supplier')
+                                            {{--! Store --}}
+                                            @include('roles.permissions.store')
+                                            {{--! factory --}}
+                                            @include('roles.permissions.factory')
+                                            {{--! collection --}}
+                                            @include('roles.permissions.collection')
+                                            {{--! payment --}}
+                                            @include('roles.permissions.payment')
+                                            {{--! deposit --}}
+                                            @include('roles.permissions.deposit')
+                                            {{--! withdraw --}}
+                                            @include('roles.permissions.withdraw')
+                                            {{--! expense --}}
+                                            @include('roles.permissions.expense')
+                                            {{--! expense-report --}}
+                                            @include('roles.permissions.expense_report')
+                                            {{--! income --}}
+                                            @include('roles.permissions.income')
+                                            {{--! income-report --}}
+                                            @include('roles.permissions.income_report')
+                                            {{--! cashbook --}}
+                                            @include('roles.permissions.cashbook')
+                                            {{--! author-ledger-book --}}
+                                            @include('roles.permissions.author_edger_book')
+                                            {{--! main_account --}}
+                                            @include('roles.permissions.main_account')
+                                            {{--! bank-statement --}}
+                                            @include('roles.permissions.bank_statement')
+                                            {{--! bulk_name --}}
+                                            @include('roles.permissions.bulk_name')
+                                            {{--! bulk-purchase --}}
+                                            @include('roles.permissions.bulk_purchase')
+                                            {{--! bulk-sales --}}
+                                            @include('roles.permissions.bulk_sales')
+
 
 
                                             <div class="form-row py-3">

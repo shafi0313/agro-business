@@ -175,16 +175,19 @@ class RolesAndPermissionsSeeder extends Seeder
                 'deposit-manage',
                 'deposit-add',
                 'deposit-show',
+                'deposit-delete',
             ],
             'withdraw'=>[
                 'withdraw-manage',
                 'withdraw-add',
                 'withdraw-show',
+                'withdraw-delete',
             ],
             'expense'=>[
                 'expense-manage',
                 'expense-add',
                 'expense-show',
+                'expense-delete',
             ],
             'expense-report'=>[
                 'expense-report-manage',
@@ -193,6 +196,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'income-manage',
                 'income-add',
                 'income-show',
+                'income-delete',
             ],
             'income-report'=>[
                 'income-report-manage',
@@ -213,11 +217,11 @@ class RolesAndPermissionsSeeder extends Seeder
                 'bank-statement-manage',
                 'bank-statement-previous-add',
             ],
-            'balk-name'=>[
-                'balk-name-manage',
-                'balk-name-add',
-                'balk-name-edit',
-                'balk-name-delete'
+            'bulk-name'=>[
+                'bulk-name-manage',
+                'bulk-name-add',
+                'bulk-name-edit',
+                'bulk-name-delete'
             ],
             'bulk-purchase'=>[
                 'bulk-purchase-manage',

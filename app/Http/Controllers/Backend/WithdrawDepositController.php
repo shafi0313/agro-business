@@ -14,7 +14,7 @@ class WithdrawDepositController extends Controller
     // Deposit _____________________________________________
     public function dCreate()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('deposit-add')) {
             return $error;
         }
         $totalCashCredit = Account::where('type', 1)->sum('credit') - Account::where('type', 1)->sum('debit');
@@ -25,7 +25,7 @@ class WithdrawDepositController extends Controller
 
     public function dStore(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('deposit-add')) {
             return $error;
         }
         $this->validate($request, [
@@ -86,7 +86,7 @@ class WithdrawDepositController extends Controller
     // Withdraw ____________________________________________________________
     public function wCreate()
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('withdraw-add')) {
             return $error;
         }
         $bankLists = BankList::all();
@@ -96,7 +96,7 @@ class WithdrawDepositController extends Controller
 
     public function wStore(Request $request)
     {
-        if ($error = $this->sendPermissionError('create')) {
+        if ($error = $this->authorize('withdraw-add')) {
             return $error;
         }
         $this->validate($request, [
