@@ -257,6 +257,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'purchase-ledger-book-all-ledger-book',
             ],
             'bulk-report'=>[
+                'bulk-report-manage',
                 'bulk-report-sales',
                 'bulk-report-purchase',
                 'bulk-report-send-to-repack-unit',
@@ -272,7 +273,6 @@ class RolesAndPermissionsSeeder extends Seeder
                 'repack-unit-production-ongoing',
                 'repack-unit-production-complete',
                 'repack-unit-production-send-to-store',
-                'repack-unit-production-on-going',
                 'repack-unit-production-show',
             ],
             'repack-unit-production-report'=>[

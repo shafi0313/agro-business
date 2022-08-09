@@ -153,6 +153,18 @@
                                             @include('roles.permissions.bulk_purchase')
                                             {{--! bulk-sales --}}
                                             @include('roles.permissions.bulk_sales')
+                                            {{--! bulk-stock --}}
+                                            @include('roles.permissions.bulk_stock')
+                                            {{--! send-to-repack-unit --}}
+                                            @include('roles.permissions.send_to_repack_unit')
+                                            {{--! purchase-ledger-book --}}
+                                            @include('roles.permissions.purchase_ledger_book')
+                                            {{--! bulk-report --}}
+                                            @include('roles.permissions.bulk_report')
+                                            {{--! repack-unit-qa/qc --}}
+                                            @include('roles.permissions.repack_unit_qa_qc')
+                                            {{--! repack-unit-production --}}
+                                            @include('roles.permissions.repack_unit_production')
 
 
 
