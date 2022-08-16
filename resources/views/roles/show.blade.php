@@ -165,6 +165,22 @@
                                             @include('roles.permissions.repack_unit_qa_qc')
                                             {{--! repack-unit-production --}}
                                             @include('roles.permissions.repack_unit_production')
+                                            {{--! repack-unit-production-report --}}
+                                            @include('roles.permissions.repack_unit_production_report')
+                                            {{--! store-product --}}
+                                            @include('roles.permissions.store_product')
+                                            {{--! store-qa/qc --}}
+                                            @include('roles.permissions.store_qa_qc')
+                                            {{--! store-stock --}}
+                                            @include('roles.permissions.store_stock')
+                                            {{--! sales-sample --}}
+                                            @include('roles.permissions.sales_sample')
+                                            {{--! sales-sales --}}
+                                            @include('roles.permissions.sales_sales')
+                                            {{--! sales-return --}}
+                                            @include('roles.permissions.sales_return')
+                                            {{--! sales-ledger-book --}}
+                                            @include('roles.permissions.sales_ledger_book')
 
 
 
