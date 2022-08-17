@@ -40,25 +40,24 @@
                                     <div class="form-check col-sm-3">
 										<label>Login Permission <span class="t_r">*</span></label><br>
 										<label class="form-radio-label" id="permissionYes">
-											<input class="form-radio-input" type="radio" name="permission" value="1" >
+											<input class="form-radio-input" type="radio" name="permission_status" value="1" >
 											<span class="form-radio-sign">Yes</span>
 										</label>
 										<label class="form-radio-label ml-3">
-											<input class="form-radio-input" type="radio" name="permission" value="0" checked id="permissionNo">
+											<input class="form-radio-input" type="radio" name="permission_status" value="0" checked id="permissionNo">
 											<span class="form-radio-sign">No</span>
 										</label>
 									</div>
 
                                     <div class="form-group col-sm-6">
                                         <div style="display: none" id="permissionShow">
-                                            <label for="business_name">Permission <span class="t_r">*</span></label>
-                                            <select name="is_" id="" class="form-control @error('is_') is-invalid @enderror">
+                                            <select name="permission" id="" class="form-control @error('permission') is-invalid @enderror">
                                                 <option selected >Select</option>
-                                                <option value="1">Admin</option>
-                                                <option value="2">Editor</option>
-                                                <option value="3">Viewer</option>
+                                                @foreach ($roles as $role)
+                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                                @endforeach
                                             </select>
-                                            @error('is_')
+                                            @error('permission')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>

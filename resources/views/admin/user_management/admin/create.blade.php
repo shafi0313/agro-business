@@ -38,16 +38,18 @@
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        <label for="business_name">Permission <span class="t_r">*</span></label>
-                                        <select name="is_" id="" class="form-control @error('is_') is-invalid @enderror">
-                                            <option selected value disabled>Select</option>
-                                            <option value="1">Admin</option>
-                                            <option value="2">Editor</option>
-                                            <option value="3">Viewer</option>
-                                        </select>
-                                        @error('is_')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="permissionShow">
+                                            <label for="permission">Permission <span class="t_r">*</span></label>
+                                            <select name="permission" id="" class="form-control @error('permission') is-invalid @enderror">
+                                                <option selected >Select</option>
+                                                @foreach ($roles as $role)
+                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('permission')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <div class="form-group col-sm-6">

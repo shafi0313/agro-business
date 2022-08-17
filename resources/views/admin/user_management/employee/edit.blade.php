@@ -41,11 +41,11 @@
                                     <div class="form-check col-sm-3">
 										<label>Login Permission <span class="t_r">*</span></label><br>
 										<label class="form-radio-label" id="permissionYes">
-											<input class="form-radio-input" type="radio" name="permission" value="1" {{($employee->is_ == '1') ? 'checked':''}}>
+											<input class="form-radio-input" type="radio" name="permission_status" value="1" {{($employee->is_ == '1') ? 'checked':''}}>
 											<span class="form-radio-sign">Yes</span>
 										</label>
 										<label class="form-radio-label ml-3">
-											<input class="form-radio-input" type="radio" name="permission" value="0" id="permissionNo" {{($employee->is_ == '0') ? 'checked':''}}>
+											<input class="form-radio-input" type="radio" name="permission_status" value="0" id="permissionNo" {{($employee->is_ == '0') ? 'checked':''}}>
 											<span class="form-radio-sign">No</span>
 										</label>
 									</div>
@@ -54,18 +54,18 @@
                                     <div class="form-group col-sm-6">
                                         <div style="display: none" id="permissionShow">
                                             <label for="business_name">Permission <span class="t_r">*</span></label>
-
-                                            @if (isset($employee->permission->role_id))
+                                            {{-- @if (isset($employee->permission->role_id))
                                                 @php $role = $employee->permission->role_id @endphp
                                             @else
                                                 @php $role = '' @endphp
-                                            @endif
-                                            <select name="is_" id="" class="form-control @error('is_') is-invalid @enderror" required>
-                                                <option {{($role==1?'selected':'')}} value="1">Admin</option>
-                                                <option {{($role==2?'selected':'')}} value="2">Editor</option>
-                                                <option {{($role==3?'selected':'')}} value="3">Viewer</option>
+                                            @endif --}}
+                                            <select name="permission" id="" class="form-control @error('permission') is-invalid @enderror">
+                                                <option selected >Select</option>
+                                                @foreach ($roles as $role)
+                                                <option value="{{ $role->id }}" @selected($role->id==$modelHasRole)>{{ $role->name }}</option>
+                                                @endforeach
                                             </select>
-                                            @error('is_')
+                                            @error('permission')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>

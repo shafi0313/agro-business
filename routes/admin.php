@@ -135,11 +135,11 @@ Route::prefix('/company-info')->controller(CompanyInfoController::class)->group(
 
 // User Start________________________________________________________________________________________________________________
 
-Route::resource('/admin-user', AdminUserController::class)->middleware('role:admin')->except(['show']);
+Route::resource('/admin-user', AdminUserController::class)->except(['show']);
 Route::post('/admin-user/user-file-store', [AdminUserController::class, 'userFileStore'])->name('admin.userFileStore');
 Route::get('/admin-user/file/destroy/{id}', [AdminUserController::class, 'userFileDestroy'])->name('admin.userFileDestroy');
 
-Route::resource('/employee', UserEmployeeController::class)->middleware('role:admin')->except('show');
+Route::resource('/employee', UserEmployeeController::class)->except('show');
 Route::post('employee/user-file-store', [UserEmployeeController::class, 'userFileStore'])->name('employee.userFileStore');
 Route::get('/employee/file/destroy/{id}', [UserEmployeeController::class, 'userFileDestroy'])->name('employee.userFileDestroy');
 

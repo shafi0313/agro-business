@@ -7,9 +7,11 @@ use App\Models\BankList;
 use App\Models\UserFile;
 use App\Models\SalesReport;
 use App\Models\EmployeeInfo;
+use App\Models\ModelHasRole;
 use Illuminate\Http\Request;
 use App\Models\EmployeeMainCat;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 
 class UserEmployeeController extends Controller
@@ -34,7 +36,8 @@ class UserEmployeeController extends Controller
         $empInfos = EmployeeInfo::select(['user_id','employee_main_cat_id'])->get();
         $empDesignations = EmployeeInfo::select(['user_id','employee_main_cat_id'])->get();
         $dealers = User::select(['id','name','business_name'])->where('role', 2)->get();
-        return view('admin.user_management.employee.create', compact('bankLists', 'employeeMainCats', 'empInfos', 'empDesignations', 'dealers'));
+        $roles = Role::all();
+        return view('admin.user_management.employee.create', compact('bankLists', 'employeeMainCats', 'empInfos', 'empDesignations', 'dealers','roles'));
     }
 
     public function store(Request $request)
@@ -87,7 +90,7 @@ class UserEmployeeController extends Controller
             'age' => $request->input('age'),
             'gender' => $request->input('gender'),
             'role' => 5,
-            'is' => $request->input('permission'),
+            'is_' => $request->input('permission_status'),
             'address' => $request->input('address'),
             'profile_photo_path' => $image_name,
             'password' => bcrypt($request->input('password')),
@@ -200,13 +203,15 @@ class UserEmployeeController extends Controller
         // UserBankAc::Create($bank);
 
         try {
-            if ($request->permission == 1) {
-                $permission = [
-                    'role_id' => $request->input('is_'),
-                    'model_type' => "App\Models\User",
-                    'model_id' =>  $user->id,
-                ];
-                DB::table('model_has_roles')->insert($permission);
+            if ($request->permission_status == 1) {
+                if($request->permission){
+                    $permission = [
+                        'role_id' =>  $request->permission,
+                        'model_type' => "App\Models\User",
+                        'model_id' =>  $user->id,
+                    ];
+                    ModelHasRole::create($permission);
+                }
             }
             DB::commit();
             toast('User Successfully Inserted', 'success');
@@ -270,7 +275,9 @@ class UserEmployeeController extends Controller
         $empInfos = EmployeeInfo::select(['user_id','employee_main_cat_id'])->get();
         $empDesignations = EmployeeInfo::select(['user_id','employee_main_cat_id'])->get();
         $dealers = User::select(['id','name','business_name'])->where('role', 2)->get();
-        return view('admin.user_management.employee.edit', compact('employee', 'userFiles', 'selectBank', 'bankLists', 'empInfos', 'empDesignations', 'dealers', 'employeeMainCats'));
+        $roles = Role::all();
+        $modelHasRole = ModelHasRole::whereModel_id($id)->first()->role_id ?? 0;
+        return view('admin.user_management.employee.edit', compact('employee', 'userFiles', 'selectBank', 'bankLists', 'empInfos', 'empDesignations', 'dealers', 'employeeMainCats', 'roles', 'modelHasRole'));
     }
 
     public function update(Request $request, $id)
@@ -311,7 +318,7 @@ class UserEmployeeController extends Controller
             'age' => $request->input('age'),
             'gender' => $request->input('gender'),
             'role' => 5,
-            'is_' => $request->input('permission'),
+            'is_' => $request->input('permission_status'),
             'address' => $request->input('address'),
             'profile_photo_path' => $image_name,
             // 'password' => bcrypt($request->input('password')),
@@ -435,6 +442,17 @@ class UserEmployeeController extends Controller
         }
 
         try {
+            if($request->permission){
+                if(ModelHasRole::where('model_id',$id)->first()){
+                    ModelHasRole::where('model_id',$id)->update(['role_id' =>  $request->permission]);
+                }else{
+                    ModelHasRole::create([
+                        'role_id' =>  $request->permission,
+                        'model_type' => "App\Models\User",
+                        'model_id' =>  $id,
+                    ]);
+                }
+            }
             toast('Employee Update Successfully', 'success');
             return redirect()->route('employee.index');
         } catch (\Exception $ex) {

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\User;
 use App\Models\UserFile;
+use App\Models\ModelHasRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 
 class AdminUserController extends Controller
@@ -24,7 +26,8 @@ class AdminUserController extends Controller
         if ($error = $this->authorize('user-add')) {
             return $error;
         }
-        return view('admin.user_management.admin.create');
+        $roles = Role::all();
+        return view('admin.user_management.admin.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -100,12 +103,14 @@ class AdminUserController extends Controller
         };
 
         try {
-            // $user = User::create($data);
-            $permission = [
-                'role_id' => $request->input('is_'),
-                'model_type' => "App\Models\User",
-                'model_id' =>  $user->id,
-            ];
+            if($request->permission){
+                $permission = [
+                    'role_id' =>  $request->permission,
+                    'model_type' => "App\Models\User",
+                    'model_id' =>  $user->id,
+                ];
+                ModelHasRole::create($permission);
+            }
             DB::table('model_has_roles')->insert($permission);
             DB::commit();
             toast('User Successfully Inserted', 'success');
@@ -158,7 +163,9 @@ class AdminUserController extends Controller
         }
         $adminUsers = User::find($id);
         $userFiles = UserFile::where('user_id', $id)->get();
-        return view('admin.user_management.admin.edit', compact('adminUsers', 'userFiles'));
+        $roles = Role::all();
+        $modelHasRole = ModelHasRole::whereModel_id($id)->first()->role_id ?? 0;
+        return view('admin.user_management.admin.edit', compact('adminUsers', 'userFiles','roles','modelHasRole'));
     }
 
     public function update(Request $request, $id)
@@ -170,7 +177,7 @@ class AdminUserController extends Controller
             'name' => 'required',
             'phone' => 'required|numeric',
             'address' => 'required',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'nullable|confirmed|min:6',
         ]);
 
         $image_name = '';
@@ -191,8 +198,10 @@ class AdminUserController extends Controller
             'gender' => $request->input('gender'),
             'address' => $request->input('address'),
             'profile_photo_path' => $image_name,
-            'password' => bcrypt($request->input('password')),
         ];
+        if (!empty($request->password)) {
+            $data['password'] = bcrypt($request->input('password'));
+        }
 
         // User File
         if ($request->hasFile('name')) {
@@ -229,12 +238,19 @@ class AdminUserController extends Controller
             }
         }
 
-        $permission = [
-            'role_id' => $request->input('is_')
-        ];
+        if($request->permission){
+            if(ModelHasRole::where('model_id',$id)->first()){
+                ModelHasRole::where('model_id',$id)->update(['role_id' =>  $request->permission]);
+            }else{
+                ModelHasRole::create([
+                    'role_id' =>  $request->permission,
+                    'model_type' => "App\Models\User",
+                    'model_id' =>  $id,
+                ]);
+            }
+        }
         try {
             User::find($id)->update($data);
-            DB::table('model_has_roles')->where('model_id', $id)->update($permission);
             DB::commit();
             toast('User Successfully Updated', 'success');
             return redirect()->route('admin-user.index');

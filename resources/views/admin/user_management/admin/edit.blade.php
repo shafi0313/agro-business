@@ -40,12 +40,13 @@
                                 <div class="row">
                                     <div class="form-group col-sm-6">
                                         <label for="business_name">Permission <span class="t_r">*</span></label>
-                                        <select name="is_" id="" class="form-control @error('is_') is-invalid @enderror">
-                                            <option {{($adminUsers->permission->role_id==1?'select':'')}} value="1">Admin</option>
-                                            <option {{($adminUsers->permission->role_id==2?'select':'')}} value="2">Editor</option>
-                                            <option {{($adminUsers->permission->role_id==3?'select':'')}} value="3">Viewer</option>
+                                        <select name="permission" id="" class="form-control @error('permission') is-invalid @enderror">
+                                            <option selected >Select</option>
+                                            @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}" @selected($role->id==$modelHasRole)>{{ $role->name }}</option>
+                                            @endforeach
                                         </select>
-                                        @error('is_')
+                                        @error('permission')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
