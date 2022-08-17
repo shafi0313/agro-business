@@ -181,6 +181,18 @@
                                             @include('roles.permissions.sales_return')
                                             {{--! sales-ledger-book --}}
                                             @include('roles.permissions.sales_ledger_book')
+                                            {{--! sales-report --}}
+                                            @include('roles.permissions.sales_report')
+                                            {{--! sales-return-report --}}
+                                            @include('roles.permissions.sales_return_report')
+                                            {{--! sample-report --}}
+                                            @include('roles.permissions.sample_report')
+                                            {{--! production-report --}}
+                                            @include('roles.permissions.production_report')
+                                            {{--! employee-report --}}
+                                            @include('roles.permissions.employee_report')
+                                            {{--! customer-report --}}
+                                            @include('roles.permissions.customer_report')
 
 
 
