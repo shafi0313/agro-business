@@ -163,7 +163,7 @@
                 </div>
             </div>
 
-            @role('admin')
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="dash_menu">
@@ -339,41 +339,47 @@
                 </div>
             </div>
 
-            {{-- <div class="row col-md-12">
-                 <table class="table table-bordered">
-                     <thead>
-                         <tr>
-                             <th>Bulk</th>
-                             <th>Repaking Unit</th>
-                             <th>Store</th>
-                         </tr>
-                     </thead>
-                     <tbody>
-                         <tr>
-                             <td><a href="{{ route('raw-material.index')}}">Bulk Name</a></td>
-            <td><a href="{{ route('repackingCheck.showAccpet')}}">QA/QC</a></td>
-            <td><a href="{{ route('product.index')}}">Product</a></td>
-            </tr>
-            <tr>
-                <td><a href="{{ route('purchase-bulk.index')}}">Purchase</a></td>
-                <td><a href="{{ route('bulkTracking.showInvoice')}}">Production</a></td>
-                <td><a href="{{ route('productionCheck.showAccpet')}}">QA/QC</a></td>
-            </tr>
-            <tr>
-                <td><a href="{{ route('sales-bulk.index')}}">Sales</a></td>
-                <td><a href="{{ route('send-to-production.index')}}">Send to Store</a></td>
-            </tr>
-            <tr>
-                <td><a href="{{ route('send-to-repack-unit.index')}}">Send to Repack Unit</a></td>
-            </tr>
-            <tr>
-                <td><a href="{{ route('purchaseLedgerBook.index')}}">Purchase Ledger Book</a></td>
-            </tr>
-            </tbody>
-            </table>
-        </div> --}}
-        @endrole
-
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-primary text-center">
+                        <div class="card-header">
+                            <div class="card-title">Today's Sale</div>
+                            <div class="card-category">{{ bdDate(now()) }}</div>
+                        </div>
+                        <div class="card-body pb-0">
+                            <div class="mb-4 mt-2">
+                                <h1>&#2547; {{ number_format($todaysSale,2) }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-secondary text-center">
+                        <div class="card-header">
+                            <div class="card-title">Today's Collection</div>
+                            <div class="card-category">{{ bdDate(now()) }}</div>
+                        </div>
+                        <div class="card-body pb-0">
+                            <div class="mb-4 mt-2">
+                                <h1>&#2547; {{ number_format($todaysCollection,2) }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-success text-center">
+                        <div class="card-header">
+                            <div class="card-title">Today's Expense</div>
+                            <div class="card-category">{{ bdDate(now()) }}</div>
+                        </div>
+                        <div class="card-body pb-0">
+                            <div class="mb-4 mt-2">
+                                <h1>&#2547; {{ number_format($todaysExpense,2) }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     </div>
 </div>
