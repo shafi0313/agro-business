@@ -668,19 +668,19 @@
                 </li>
                 {{-- Trash end --}}
 
-                <li class="nav-item {{$p=='backup'?'active':''}}">
+                {{-- <li class="nav-item {{$p=='backup'?'active':''}}">
                     <a class="dropdown-item" href="{{ route('admin.backup.password') }}" >
                         <i class="fas fa-database"></i>
                         <p>App Backup</p>
                     </a>
-                </li>
+                </li> --}}
 
-                <li class="nav-item {{$p=='visitor'?'active':''}}">
+                {{-- <li class="nav-item {{$p=='visitor'?'active':''}}">
                     <a class="dropdown-item" href="{{ route('admin.visitorInfo.index') }}" >
                         <i class="fas fa-user-secret"></i>
                         <p>Visitor Info</p>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="nav-item {{ activeNav(['admin.role.*','admin.backup.*','admin.visitorInfo.*','admin.permission.*']) }}">
                     <a data-toggle="collapse" href="#settings">
