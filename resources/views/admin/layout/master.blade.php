@@ -36,7 +36,7 @@
 </head>
 <body>
 	<div class="wrapper">
-		<div class="main-header" data-background-color="purple">
+		<div class="main-header" data-background-color="blue">
 			<!-- Logo Header -->
 			<div class="logo-header">
                 <a href="{{ route('admin.dashboard') }}" class="logo"> <h3 class="display:4 text-light mt-3">{{ $companyInfo->name }}</h3>
