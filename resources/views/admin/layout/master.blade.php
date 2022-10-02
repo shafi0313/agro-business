@@ -63,6 +63,7 @@
         @include('admin.layout.navigation')
         {{-- End Navigation --}}
         @yield('content')
+        <div id="ajax_modal_container"></div>
 	</div>
 </div>
 

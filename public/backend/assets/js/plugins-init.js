@@ -198,60 +198,60 @@ $(function() {
 // }
 
 
-// function ajaxEdit(arg, type) {
-//     let args = $(arg);
-//     $.ajax({
-//         url: args.data('route'),
-//         type: 'get',
-//         data: {
-//             id: args.data('value'),
-//         },
-//         success: res => {
-//             $("#ajax_modal_container").html(res.modal);
-//             $("#editModal").modal('show');
-//         },
-//         error: err => {
-//             swal({
-//                 icon: 'error',
-//                 title: 'Oops...',
-//                 text: err.responseJSON.message
-//             });
-//         }
-//     });
-// };
+function ajaxEdit(arg, type) {
+    let args = $(arg);
+    $.ajax({
+        url: args.data('route'),
+        type: 'get',
+        data: {
+            id: args.data('value'),
+        },
+        success: res => {
+            $("#ajax_modal_container").html(res.modal);
+            $("#editModal").modal('show');
+        },
+        error: err => {
+            swal({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.responseJSON.message
+            });
+        }
+    });
+};
 
-// function ajaxStore(e, form, modal) {
-//     e.preventDefault();
-//     // let formData = $(form).serialize();
-//     let formData = new FormData(form);
-//     $.ajax({
-//         url: $(form).attr('action'),
-//         type: 'POST',
-//         data: formData,
-//         contentType: false,
-//         processData: false,
-//         success: res => {
-//             swal({
-//                 icon: 'success',
-//                 title: 'Success',
-//                 text: res.message
-//             }).then((confirm) => {
-//                 if (confirm) {
-//                     $('.table').DataTable().ajax.reload();
-//                     $("#" + modal).modal('hide');
-//                     $(form).trigger("reset");
-//                 }
-//             });
-//         },
-//         error: err => {
-//             swal({
-//                 icon: 'error',
-//                 title: 'Oops...',
-//                 text: err.responseJSON.message
-//             });
-//         }
-//     });
-// }
+function ajaxStore(e, form, modal) {
+    e.preventDefault();
+    // let formData = $(form).serialize();
+    let formData = new FormData(form);
+    $.ajax({
+        url: $(form).attr('action'),
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: res => {
+            swal({
+                icon: 'success',
+                title: 'Success',
+                text: res.message
+            }).then((confirm) => {
+                if (confirm) {
+                    $('.table').DataTable().ajax.reload();
+                    $("#" + modal).modal('hide');
+                    $(form).trigger("reset");
+                }
+            });
+        },
+        error: err => {
+            swal({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.responseJSON.message
+            });
+        }
+    });
+}
 
 // function select2Ajax(id, placeholder, route, dropdown = 'body') {
 //     $('#' + id).select2({
