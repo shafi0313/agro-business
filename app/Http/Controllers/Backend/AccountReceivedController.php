@@ -104,10 +104,10 @@ class AccountReceivedController extends Controller
         } else {
             $c_status = 0;
         }
-        $ledger = SalesLedgerBook::where('invoice_no', $request->invoice_no)->get();
+        $ledger = SalesLedgerBook::where('invoice_no', $request->invoice_no)->where('type','!=', 25)->first();
         $ledgerBookUpdate['c_status'] = $c_status;
-        if ($request->net_amt!=null) {
-            $ledgerBookUpdate['net_amt'] = $ledger->sum('sales_amt') - ($request->discount_amt + $ledger->sum('discount_amt'));
+        if ($request->net_amt != null) {
+            $ledgerBookUpdate['net_amt'] = $ledger->sales_amt - ($request->discount_amt + $ledger->discount_amt);
         }
         SalesLedgerBook::where('type', '!=', 25)->where('invoice_no', $request->invoice_no)->update($ledgerBookUpdate);
         $salesReport = SalesReport::where('user_id', $tmm_so_id)->first();

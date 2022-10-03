@@ -121,6 +121,7 @@
                                             @else
                                                 <th></th>
                                             @endif
+                                            
                                             <td>{{$invoice->inv_cancel==1?'Invoice Cancel':($invoice->inv_cancel==2?'Reinvoice':'')}} {{ $invoice->account->note ??'' }}</td>
                                             <th title="Defaulter">{{ $pAlart }} </th>
                                             <td class="text-right">{{ number_format($invoice->payment,2) }}</td>

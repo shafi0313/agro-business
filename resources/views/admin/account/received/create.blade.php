@@ -215,7 +215,7 @@
         var due_amt = Number($('#due_amt').val())
         var discountTk = Number($('#discountTk').val())
         var discount = Number($('#discount').val())
-        console.log(invoice_no)
+        // console.log(invoice_no)
         if(invoice_no != null){
             if(discount > 100 || net_amt < 0){
                 alert('Check Discount and Net Amount')
