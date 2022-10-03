@@ -87,7 +87,7 @@ class SalesInvoiceCashController extends Controller
 
         $ledgerBookCheck = SalesLedgerBook::whereIn('type', [1,3])->where('invoice_no', $request->invoice_no)->get();
         if ($ledgerBookCheck->count() > 0) {
-            alert()->error('ErrorAlert', 'Something went wrong! Please try again');
+            alert()->error('Error Alert', 'Something went wrong! Please try again');
             return redirect()->back();
         } else {
             $invoiceArr = [];

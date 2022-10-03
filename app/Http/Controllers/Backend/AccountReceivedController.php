@@ -35,7 +35,7 @@ class AccountReceivedController extends Controller
         $tmmSoIds = User::select(['id','tmm_so_id','name'])->whereIn('role',[1,5])->where('name', '!=', 'Developer')->get();
         $bankLists = BankList::all();
         $user = User::select(['id','name','business_name','phone','address'])->find($id);
-        $invNos = SalesLedgerBook::where('customer_id', $id)->whereIn('type', [1,3,7,16,18,25])->where('c_status', 0)->where('inv_cancel', 0)->orderby('invoice_no', 'DESC')->get(['id','invoice_no']);
+        $invNos = SalesLedgerBook::where('customer_id', $id)->whereIn('type', [1,3,16,18,25])->where('c_status', 0)->where('inv_cancel', 0)->orderby('invoice_no', 'DESC')->get(['id','invoice_no']);
         return view('admin.account.received.create', compact('user', 'tmmSoIds', 'bankLists', 'invNos'));
     }
 
@@ -104,7 +104,7 @@ class AccountReceivedController extends Controller
         } else {
             $c_status = 0;
         }
-        $ledger = SalesLedgerBook::where('invoice_no', $request->invoice_no)->where('type','!=', 25)->first();
+        $ledger = SalesLedgerBook::where('invoice_no', $request->invoice_no)->whereIn('type',[1,3,16,18])->first();
         $ledgerBookUpdate['c_status'] = $c_status;
         if ($request->net_amt != null) {
             $ledgerBookUpdate['net_amt'] = $ledger->sales_amt - ($request->discount_amt + $ledger->discount_amt);
