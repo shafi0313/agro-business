@@ -75,7 +75,196 @@
                     color: white;
                     font-weight: bold;
                 }
+
+                .card{
+                    margin-bottom: 14px;
+                }
             </style>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center font-weight-bold">Today's Account</h2>
+                        </div>
+                        <div class="card-body py-0 my-0">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="card card-primary text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Sale</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($todaysSale,2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card card-info text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Collection</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($todaysCollection,2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card card-danger text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Expense</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($todaysExpense,2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card card-primary text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Profit/Loss</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($todaysCollection-$todaysExpense,2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center font-weight-bold">This Week's Account</h2>
+                        </div>
+                        <div class="card-body py-0 my-0">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="card card-success text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Sales</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($data['thisWeekSale'],2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card card-primary text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Collection</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($data['thisWeekCollection'],2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card card-danger text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Expense</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($data['thisWeekExpense'],2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card card-primary text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Profit/Loss</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($data['thisWeekCollection'] - $data['thisWeekExpense'],2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center font-weight-bold">This Month's Account</h2>
+                        </div>
+                        <div class="card-body py-0 my-0">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="card card-secondary text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Sales</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($data['thisMonthSale'],2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card card-primary text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Collection</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($data['thisMonthCollection'],2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card card-danger text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Expense</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($data['thisMonthExpense'],2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card card-primary text-center">
+                                        <div class="card-header">
+                                            <div class="card-title">Profit/Loss</div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="mb-1">
+                                                <h1>&#2547; {{ number_format($data['thisMonthCollection'] - $data['thisMonthExpense'],2) }}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+
             <div class="row">
                 <div class="col-sm-6 col-md-3">
                     <div class="card card-stats card-info card-round">
@@ -339,7 +528,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-md-3">
                     <div class="card card-primary text-center">
                         <div class="card-header">
@@ -379,7 +568,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
     </div>
 </div>
