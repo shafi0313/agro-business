@@ -31,7 +31,7 @@
 				<li class="nav-item {{$p=='da'?'active':''}}">
                     <a href="{{ route('admin.dashboard') }}">
 						<i class="fas fa-home"></i>
-						<p>Dashboard</p>
+						<p>@lang('app.dashboard')</p>
 					</a>
                 </li>
 
@@ -39,14 +39,13 @@
 					<span class="sidebar-mini-icon">
 						<i class="fa fa-ellipsis-h"></i>
 					</span>
-					<h4 class="text-section">Components</h4>
+					<h4 class="text-section">@lang('app.component')</h4>
                 </li>
-
 
                 <li class="nav-item {{ activeNav(['admin-user.*','employee.*']) }}">
                     <a data-toggle="collapse" href="#admin">
                         <i class="fas fa-user-shield"></i>
-                        <p>Admin</p>
+                        <p>@lang('app.admin')</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse {{ openNav(['admin-user.*','employee.*']) }}" id="admin">
@@ -83,7 +82,7 @@
                 <li class="nav-item {{ activeNav(['about.*','slider.*']) }}">
 					<a data-toggle="collapse" href="#forUserView">
 						<i class="fas fa-bars"></i>
-						<p>For User View</p>
+						<p>@lang('app.frontend')</p>
 						<span class="caret"></span>
 					</a>
 					<div class="collapse {{ openNav(['about.*','slider.*']) }}" id="forUserView">
@@ -111,7 +110,7 @@
                 <li class="nav-item {{ activeNav(['pack-size.*','bank-list.*','employee-main-cat.*','product-category.*','license-category.*','product-license.*','user-bank-ac.*','office-expense-cat.*','office-income-cat.*']) }}">
 					<a data-toggle="collapse" href="#tools">
 						<i class="fas fa-tools"></i>
-						<p>Tools</p>
+						<p>@lang('app.tools')</p>
 						<span class="caret"></span>
 					</a>
 					<div class="collapse {{ openNav(['pack-size.*','bank-list.*','employee-main-cat.*','product-category.*','license-category.*','product-license.*','user-bank-ac.*','office-expense-cat.*','office-income-cat.*']) }}" id="tools">

@@ -64,7 +64,7 @@ return [
     'website-settings'  => 'Website settings',
     'school-settings'   => 'School settings',
     'payment-settings'  => 'Payment settings',
-    ';anguage-settings' => 'Language settings',
+    'language-settings' => 'Language settings',
     'smtp-settings'     => 'Smtp settings',
     'About'             => 'About',
 ];

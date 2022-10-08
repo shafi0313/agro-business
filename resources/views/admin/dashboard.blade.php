@@ -84,14 +84,14 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="text-center font-weight-bold">Today's Account</h2>
+                            <h2 class="text-center font-weight-bold">@lang('dashboard.todaysAccount')</h2>
                         </div>
                         <div class="card-body py-0 my-0">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="card card-primary text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Sale</div>
+                                            <div class="card-title">@lang('app.sales')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -103,7 +103,7 @@
                                 <div class="col-md-2">
                                     <div class="card card-danger text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Sale Return</div>
+                                            <div class="card-title">@lang('app.salesReturn')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -115,7 +115,7 @@
                                 <div class="col-md-2">
                                     <div class="card card-info text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Collection</div>
+                                            <div class="card-title">@lang('app.collection')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -127,7 +127,7 @@
                                 <div class="col-md-3">
                                     <div class="card card-danger text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Expense</div>
+                                            <div class="card-title">@lang('app.expense')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -139,7 +139,7 @@
                                 <div class="col-md-3">
                                     <div class="card card-primary text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Profit/Loss</div>
+                                            <div class="card-title">@lang('app.profitLoss')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -157,14 +157,14 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="text-center font-weight-bold">This Week's Account</h2>
+                            <h2 class="text-center font-weight-bold">@lang('dashboard.weekAccount')</h2>
                         </div>
                         <div class="card-body py-0 my-0">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="card card-success text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Sales</div>
+                                            <div class="card-title">@lang('app.sales')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -176,7 +176,7 @@
                                 <div class="col-md-2">
                                     <div class="card card-danger text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Sales Return</div>
+                                            <div class="card-title">@lang('app.salesReturn')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -188,7 +188,7 @@
                                 <div class="col-md-2">
                                     <div class="card card-primary text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Collection</div>
+                                            <div class="card-title">@lang('app.collection')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -200,7 +200,7 @@
                                 <div class="col-md-3">
                                     <div class="card card-danger text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Expense</div>
+                                            <div class="card-title">@lang('app.expense')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -212,7 +212,7 @@
                                 <div class="col-md-3">
                                     <div class="card card-primary text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Profit/Loss</div>
+                                            <div class="card-title">@lang('app.profitLoss')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -230,14 +230,14 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="text-center font-weight-bold">This Month's Account</h2>
+                            <h2 class="text-center font-weight-bold">@lang('dashboard.monthAccount')</h2>
                         </div>
                         <div class="card-body py-0 my-0">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="card card-secondary text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Sales</div>
+                                            <div class="card-title">@lang('app.sales')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -249,7 +249,7 @@
                                 <div class="col-md-2">
                                     <div class="card card-danger text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Sales Return</div>
+                                            <div class="card-title">@lang('app.salesReturn')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -261,7 +261,7 @@
                                 <div class="col-md-2">
                                     <div class="card card-primary text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Collection</div>
+                                            <div class="card-title">@lang('app.collection')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -273,7 +273,7 @@
                                 <div class="col-md-3">
                                     <div class="card card-danger text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Expense</div>
+                                            <div class="card-title">@lang('app.expense')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -285,7 +285,7 @@
                                 <div class="col-md-3">
                                     <div class="card card-primary text-center">
                                         <div class="card-header">
-                                            <div class="card-title">Profit/Loss</div>
+                                            <div class="card-title">@lang('app.profitLoss')</div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
@@ -396,9 +396,9 @@
                             <li><a href="{{ route('product.index') }}">Product</a></li>
                             <li><a href="{{ route('stock.bulk.index') }}">Bulk Stock</a></li>
                             <li><a href="{{ route('stock.store.index') }}">Stock</a></li>
-                            <li><a href="{{ route('sales-invoice-cash.index') }}">Sales</a></li>
-                            <li><a href="{{ route('salesLedgerBook.index') }}">Sales Ledger Book</a></li>
-                            <li><a href="{{ route('report.salesAndStock.selectDate') }}">Sales Report</a></li>
+                            <li><a href="{{ route('sales-invoice-cash.index') }}">@lang('app.sales')</a></li>
+                            <li><a href="{{ route('salesLedgerBook.index') }}">@lang('app.sales') Ledger Book</a></li>
+                            <li><a href="{{ route('report.salesAndStock.selectDate') }}">@lang('app.sales') Report</a></li>
                             <li><a href="{{ route('empReport.user') }}">Employee Report</a></li>
                         </ul>
                     </div>
@@ -581,7 +581,7 @@
                 <div class="col-md-3">
                     <div class="card card-secondary text-center">
                         <div class="card-header">
-                            <div class="card-title">Today's Collection</div>
+                            <div class="card-title">Today's @lang('app.collection')</div>
                             <div class="card-category">{{ bdDate(now()) }}</div>
                         </div>
                         <div class="card-body pb-0">
@@ -594,7 +594,7 @@
                 <div class="col-md-3">
                     <div class="card card-success text-center">
                         <div class="card-header">
-                            <div class="card-title">Today's Expense</div>
+                            <div class="card-title">Today's @lang('app.expense')</div>
                             <div class="card-category">{{ bdDate(now()) }}</div>
                         </div>
                         <div class="card-body pb-0">

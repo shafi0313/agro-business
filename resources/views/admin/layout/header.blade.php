@@ -12,12 +12,21 @@
                 </div>
             </form>
         </div>
+
         <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
             <li class="nav-item toggle-nav-search hidden-caret">
                 <a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
                     <i class="fa fa-search"></i>
                 </a>
             </li>
+            
+            @if (config('app.locale')=='en')
+            <li><a class="btn btn-primary" style="color: white !important" href="/locale/bn">বাংলা <i
+                        class="fas fa-language" style="color: white"></i></a></li>
+            @else
+            <li><a class="btn btn-primary" style="color: white !important" href="/locale/en">English <i
+                        class="fas fa-language" style="color: white"></i></a></li>
+            @endif
             {{-- <li class="nav-item dropdown hidden-caret">
                 <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-envelope"></i>
@@ -150,7 +159,6 @@
         @php
             $licenseNotify = App\Models\ProductLicense::where('renewal_date','<=', date('ymd')-1)->count();
             $licenseExs = App\Models\ProductLicense::where('renewal_date','<=', date('ymd')-1)->get();
-
         @endphp
         <style>
         .notif-icon{
@@ -193,8 +201,6 @@
                     </li> --}}
                 </ul>
             </li>
-
-
 
             <li class="nav-item dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
