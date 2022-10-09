@@ -19,12 +19,12 @@
                     <i class="fa fa-search"></i>
                 </a>
             </li>
-            
+
             @if (config('app.locale')=='en')
-            <li><a class="btn btn-primary" style="color: white !important" href="/locale/bn">বাংলা <i
+            <li title="If you change the language click this button"><a class="btn btn-primary" style="color: white !important" href="/locale/bn">বাংলা <i
                         class="fas fa-language" style="color: white"></i></a></li>
             @else
-            <li><a class="btn btn-primary" style="color: white !important" href="/locale/en">English <i
+            <li title="If you change the language click this button"><a class="btn btn-primary" style="color: white !important" href="/locale/en">English <i
                         class="fas fa-language" style="color: white"></i></a></li>
             @endif
             {{-- <li class="nav-item dropdown hidden-caret">

@@ -41,7 +41,6 @@
                     list-style: none;
                     margin-bottom: 5px;
                 }
-
                 .dash_menu ul li a {
                     position: relative;
                     text-decoration: none;
@@ -65,9 +64,7 @@
                     background: #716aca;
                     transition: .5s;
                     z-index: -1;
-
                 }
-
                 .dash_menu ul li a:hover:before {
                     width: 100%;
                 }
@@ -75,7 +72,6 @@
                     color: white;
                     font-weight: bold;
                 }
-
                 .card{
                     margin-bottom: 14px;
                 }
@@ -277,7 +273,7 @@
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
-                                                <h1>&#2547; {{ number_format($data['thisMonthExpense'],2) }}</h1>
+                                                <h1>&#2547;{{ number_format($data['thisMonthExpense'],2) }}</h1>
                                             </div>
                                         </div>
                                     </div>
@@ -289,7 +285,7 @@
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="mb-1">
-                                                <h1>&#2547; {{ number_format($data['thisMonthProfitLoss'],2) }}</h1>
+                                                <h1>&#2547;{{ number_format($data['thisMonthProfitLoss'],2) }}</h1>
                                             </div>
                                         </div>
                                     </div>
