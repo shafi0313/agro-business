@@ -97,7 +97,8 @@ class AccountReceivedController extends Controller
         ];
         SalesLedgerBook::create($ledgerBook);
         // Complete Status
-        if (($request->net_amt == null) && ($request->credit >= $request->due_amt)) {
+        $returnInvAmt = SalesLedgerBook::where('invoice_no', $request->invoice_no)->whereIn('type',[2,4])->whereInv_cancel(0)->sum('net_amt');
+        if (($request->net_amt == null) && ($request->credit >= $request->due_amt) || ($request->credit >= $request->due_amt - abs($returnInvAmt))) {
             $c_status = 1;
         } elseif (!empty($request->net_amt) && ($request->credit >= $request->net_amt) || ($request->credit == 0 && $request->net_amt == 0)) {
             $c_status = 1;
