@@ -10,11 +10,7 @@ return [
     // '' => '',
 
 
-    'dashboard' => 'ড্যাশবোর্ড',
-    'component' => 'কম্পোনেন্ট',
-    'admin' => 'অ্যাডমিন',
-    'frontend' => 'ফ্রন্ট এন্ড',
-    'tools' => 'টুলস',
+    
     'home'      => 'Home',
     'homepage'  => 'Homepage',
     'page'      => 'Page',

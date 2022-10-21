@@ -11,14 +11,7 @@ return [
 
 
     'dashboard' => 'Dashboard',
-    'component' => 'Component',
-    'admin' => 'Admin',
-    'frontend' => 'Frontend',
-    'tools' => 'Tools',
-    'home'      => 'Home',
-    'homepage'  => 'Homepage',
-    'page'      => 'Page',
-    'pages'     => 'Pages',
+    
 
     'action'    => 'Action',
     'add'       => 'Add',

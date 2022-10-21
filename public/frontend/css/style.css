@@ -1,5 +1,5 @@
 /* CSS Document
-Project Name: oasis it professional training center
+Project Name: Agro Business
 Version:  2.0
 Author Name: Md. Shafiul Hasan
 */
@@ -13,7 +13,7 @@ Author Name: Md. Shafiul Hasan
 @import "../vendor/owlcarousel/css/owl.theme.default.min.css";
 @import "../vendor/owlcarousel/css/owl.carousel.min.css";
 @import "../vendor/animatecss/animate.min.css";
-@import "../vendor/font/css/gallery.css";
+/* @import "../vendor/font/css/gallery.css"; */
 
 /*---------------- Google Fonts ------------*/
 @import url("https://fonts.googleapis.com/css?family=Encode+Sans+Expanded&display=swap");
