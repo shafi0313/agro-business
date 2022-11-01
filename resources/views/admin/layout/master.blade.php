@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>@yield('title') | {{ setting('app_name') }}</title>
+	<title>@yield('title') | {{ config('app.locale')=='en'?setting('app_name'):setting('app_name_b') }}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <meta content='{{csrf_token()}}' name='csrf-token' />
 	<link rel="icon" href="{{ asset('files/images/icon/'.$companyInfo->favicon) }}" type="image/x-icon"/>
@@ -39,7 +39,7 @@
 		<div class="main-header" data-background-color="blue">
 			<!-- Logo Header -->
 			<div class="logo-header">
-                <a href="{{ route('admin.dashboard') }}" class="logo"> <h3 class="display:4 text-light mt-3">{{ $companyInfo->name }}</h3>
+                <a href="{{ route('admin.dashboard') }}" class="logo"> <h3 class="display:4 text-light mt-3">{{ config('app.locale')=='en'?setting('app_name'):setting('app_name_b') }}</h3>
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">

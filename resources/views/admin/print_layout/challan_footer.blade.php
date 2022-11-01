@@ -23,11 +23,12 @@
     </div>
     {{-- <hr style="padding: 0; margin:0; border: 1px solid balck"> --}}
     <div class="conpany_info" style="font-size: 15px;">
-        <p>
+        {{-- <p>
             Head office: High Road, Alamdanga, Chuadanga. <i class="fas fa-tty"></i> 07622-56385, <i class="fas fa-mobile-alt"></i>+8801318-302500,
                 Dhaka Office: House # 14, Road # 3, <br> Block # E, Extended Rupnagar (R/A) Sector # 12, Mirpur, Dhaka-1216.
                 <i class="far fa-envelope"></i> r.tuhin@icloud.com, <i class="fas fa-globe-asia"></i> www.mondolag.com
-        </p>
+        </p> --}}
+        {{ setting('inv_footer') }}
     </div>
 </footer>
 </div>

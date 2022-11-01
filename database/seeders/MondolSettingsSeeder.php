@@ -17,6 +17,7 @@ class MondolSettingsSeeder extends Seeder
         // AppInfo
         Setting(['company_name'=> 'Mondol Traders'])->save();
         Setting(['app_name'=> 'Mondol Traders'])->save();
+        Setting(['app_name_b'=> 'মন্ডল ট্রেডার্স'])->save();
         Setting(['app_url'=> 'https://mondolag.com'])->save();
         Setting(['app_description'=> ''])->save();
         Setting(['app_keyword'=> 'Mondol, Agro, Mondol Agro, Mondol Traders, Alamdanga, mondolag'])->save();

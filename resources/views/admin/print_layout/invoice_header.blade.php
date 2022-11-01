@@ -23,8 +23,8 @@
             <div class="header" >
                 <div class="heater_text">
                     <ul style="margin: 0; padding:0">
-                        <li class="title">MONDOL TRADERS</li>
-                        <li style="font-size: 18px; margin-left: 22px">Alamdanga, Chuadanga.</li>
+                        <li class="title">{{ config('app.locale')=='en'?setting('app_name'):setting('app_name_b') }}</li>
+                        <li style="font-size: 18px; margin-left: 22px">{{ setting('inv_header_address') }}</li>
                     </ul>
                 </div>
                 <div class="img">
