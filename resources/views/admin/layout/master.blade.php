@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>@yield('title') | {{$companyInfo->name}}</title>
+	<title>@yield('title') | {{ setting('app_name') }}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <meta content='{{csrf_token()}}' name='csrf-token' />
 	<link rel="icon" href="{{ asset('files/images/icon/'.$companyInfo->favicon) }}" type="image/x-icon"/>
