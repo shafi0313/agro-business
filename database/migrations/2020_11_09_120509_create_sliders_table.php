@@ -17,12 +17,14 @@ class CreateSlidersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('status')->default('1')->comment('1=Published');
             $table->string('title')->nullable();
             $table->string('sub_title')->nullable();
             $table->string('link',155)->nullable();
             $table->string('link_name',100)->nullable();
             $table->string('image');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

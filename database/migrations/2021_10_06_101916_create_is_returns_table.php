@@ -17,6 +17,7 @@ class CreateIsReturnsTable extends Migration
             $table->id();
             $table->foreignId('sales_invoice_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('invoice_no')->nullable();
+            $table->softDeletes();
         });
     }
 

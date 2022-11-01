@@ -23,7 +23,7 @@ class CreateProductionCalsTable extends Migration
             $table->unsignedBigInteger('production_id');
             $table->string('challan_no')->nullable();
             $table->integer('quantity');
-            $table->unsignedBigInteger('production_id');
+            // $table->unsignedBigInteger('production_id');
             $table->integer('use_weight')->nullable();
             $table->boolean('inv_cancel')->default(0);
             $table->date('date')->nullable();

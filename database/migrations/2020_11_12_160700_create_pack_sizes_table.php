@@ -19,6 +19,7 @@ class CreatePackSizesTable extends Migration
             $table->tinyInteger('type');
             $table->string('size');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

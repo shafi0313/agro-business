@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('name',100)->nullable();
             $table->string('email')->unique();
             $table->tinyInteger('role')->default(0)->comment('1=Admin,2=Customer,3=Supplier	');
-            $table->tinyInteger('is')->default(0)->comment('1=Admin');
+            $table->tinyInteger('is_')->default(0)->comment('1=Admin');
             $table->tinyInteger('age')->nullable();
             $table->string('phone')->nullable();
             $table->string('business_name')->nullable();
@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
+            // $table->foreignId('current_team_id')->nullable();
             $table->text('profile_photo_path')->nullable();
             $table->timestamps();
             $table->softDeletes();

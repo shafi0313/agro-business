@@ -32,6 +32,7 @@ class CreateStocksTable extends Migration
             $table->boolean('inv_cancel')->default(0);
             $table->boolean('stock_close')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

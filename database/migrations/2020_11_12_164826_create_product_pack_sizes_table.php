@@ -26,6 +26,7 @@ class CreateProductPackSizesTable extends Migration
             $table->decimal('trade_price',8,2)->nullable();
             $table->decimal('mrp',8,2)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

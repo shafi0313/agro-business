@@ -23,6 +23,7 @@ class CreateUserBankAcsTable extends Migration
             $table->string('branch',100);
             $table->string('address')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

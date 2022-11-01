@@ -17,6 +17,7 @@ class CreateBankListsTable extends Migration
             $table->id();
             $table->string('name',155);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

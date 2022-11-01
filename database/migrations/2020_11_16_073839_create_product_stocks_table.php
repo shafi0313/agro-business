@@ -25,6 +25,7 @@ class CreateProductStocksTable extends Migration
             $table->integer('damage')->default(0);
             $table->date('date')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

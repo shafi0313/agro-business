@@ -19,6 +19,7 @@ class CreateOfficeExpenseCatsTable extends Migration
             $table->boolean('exp_or_in_type')->comment('1=Office,2=Author,3=Other');
             $table->string('name');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

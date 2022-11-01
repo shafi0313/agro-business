@@ -18,6 +18,7 @@ class CreateSampleNotesTable extends Migration
             $table->foreignId('sales_ledger_book_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->text('note');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
