@@ -1,29 +1,14 @@
 <!-- HEADER AREA START (header-5) -->
-<header class="ltn__header-area ltn__header-5 ltn__header-transparent-- gradient-color-4---">
+<header class="ltn__header-area ltn__header-5 ltn__header-transparent gradient-color-2">
     <!-- ltn__header-top-area start -->
-    <div class="ltn__header-top-area">
+    <div class="ltn__header-top-area top-area-color-white d-none">
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
                     <div class="ltn__top-bar-menu">
                         <ul>
-                            {{-- <li><a href="locations.html"><i class="icon-placeholder"></i> 15/A, Nest Tower, NYC</a></li> --}}
-                            <li>
-                                <a href="mailto:{{ setting('email_1') }}">
-                                    <i class="icon-mail"></i> {{ setting('email_1') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="mailto:{{ setting('email_2') }}">{{ setting('email_2') }}</a>
-                            </li>
-                            <li>
-                                <a href="mailto:{{ setting('phone_1') }}">
-                                    <i class="icon-call"></i> {{ setting('phone_1') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="mailto:{{ setting('phone_2') }}">{{ setting('phone_2') }}</a>
-                            </li>
+                            <li><a href="locations.html"><i class="icon-placeholder"></i> 15/A, Nest Tower, NYC</a></li>
+                            <li><a href="mailto:info@webmail.com?Subject=Flower%20greetings%20to%20you"><i class="icon-mail"></i> info@webmail.com</a></li>
                         </ul>
                     </div>
                 </div>
@@ -35,11 +20,14 @@
                                     <!-- ltn__language-menu -->
                                     <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
                                         <ul>
-                                            <li><a href="#" class="dropdown-toggle"><span
-                                                        class="active-currency">Language</span></a>
+                                            <li><a href="#" class="dropdown-toggle"><span class="active-currency">English</span></a>
                                                 <ul>
+                                                    <li><a href="#">Arabic</a></li>
                                                     <li><a href="#">Bengali</a></li>
+                                                    <li><a href="#">Chinese</a></li>
                                                     <li><a href="#">English</a></li>
+                                                    <li><a href="#">French</a></li>
+                                                    <li><a href="#">Hindi</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -49,15 +37,11 @@
                                     <!-- ltn__social-media -->
                                     <div class="ltn__social-media">
                                         <ul>
-                                            <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                                            </li>
-                                            <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                                            </li>
+                                            <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
 
-                                            {{-- <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                                            </li>
-                                            <li><a href="#" title="Dribbble"><i class="fab fa-dribbble"></i></a>
-                                            </li> --}}
+                                            <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                                            <li><a href="#" title="Dribbble"><i class="fab fa-dribbble"></i></a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -71,42 +55,51 @@
     <!-- ltn__header-top-area end -->
 
     <!-- ltn__header-middle-area start -->
-    <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-white sticky-active-into-mobile plr--9---">
+    <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-black sticky-active-into-mobile plr--9---">
         <div class="container">
             <div class="row">
                 <div class="col">
                     <div class="site-logo-wrap">
                         <div class="site-logo">
-                            <a href="{{ route('index') }}"><img src="{{ asset(setting('app_logo_png')) }}" alt="Logo" width="150px"></a>
+                            <a href="index.html"><img src="{{ asset(setting('app_logo_png')) }}" width="255px" alt="Logo"></a>
                         </div>
                     </div>
                 </div>
-                <div class="col header-menu-column menu-color-white---">
+                <div class="col header-menu-column menu-color-white">
                     <div class="header-menu d-none d-xl-block">
                         <nav>
                             <div class="ltn__main-menu">
                                 <ul>
-                                    <li><a href="{{ route('index') }}">Home</a></li>
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="contact.html">Contact</a></li>
                                     <li class="menu-icon"><a href="#">Products</a>
                                         <ul>
-                                            @php
-                                                $productCats = App\Models\ProductCat::select(['id', 'name'])->get();
-                                            @endphp
-                                            @foreach ($productCats as $productCat)
-                                                <li><a
-                                                        href="{{ route('allPproductsByCatroducts', $productCat->id) }}">{{ $productCat->name }}</a>
-                                                </li>
-                                            @endforeach
+                    @php
+                    $productCats = App\Models\ProductCat::select(['id','name'])->get();
+                    @endphp
+                    @foreach ($productCats as $productCat)
+                    <li><a href="{{ route('allPproductsByCatroducts', $productCat->id )}}">{{$productCat->name}}</a></li>
+                    @endforeach
+                                            {{-- <li><a href="about.html">About</a></li>
+                                            <li><a href="service.html">Services</a></li>
+                                            <li><a href="service-details.html">Service Details</a></li>
+                                            <li><a href="portfolio.html">Gallery</a></li>
+                                            <li><a href="portfolio-2.html">Gallery - 02</a></li>
+                                            <li><a href="portfolio-details.html">Gallery Details</a></li>
+                                            <li><a href="team.html">Team</a></li>
+                                            <li><a href="team-details.html">Team Details</a></li>
+                                            <li><a href="faq.html">FAQ</a></li>
+                                            <li><a href="locations.html">Google Map Locations</a></li> --}}
                                         </ul>
                                     </li>
-                                    <li><a href="{{ route('contact') }}">Contact</a></li>
-                                    <li><a href="{{ route('about') }}">About</a></li>
+                                    
+
                                 </ul>
                             </div>
                         </nav>
                     </div>
                 </div>
-                <div class="ltn__header-options ltn__header-options-2 mb-sm-20">
+                <div class="ltn__header-options ltn__header-options-2">
                     <!-- header-search-1 -->
                     <div class="header-search-wrap">
                         <div class="header-search-1">
@@ -116,8 +109,8 @@
                             </div>
                         </div>
                         <div class="header-search-1-form">
-                            <form id="#" method="get" action="#">
-                                <input type="text" name="search" value="" placeholder="Search here..." />
+                            <form id="#" method="get"  action="#">
+                                <input type="text" name="search" value="" placeholder="Search here..."/>
                                 <button type="submit">
                                     <span><i class="icon-search"></i></span>
                                 </button>
@@ -130,7 +123,7 @@
                             <li>
                                 <a href="#"><i class="icon-user"></i></a>
                                 <ul>
-                                    <li><a href="{{ route('login') }}">Login</a></li>
+                                    <li><a href="login.html">Sign in</a></li>
                                     {{-- <li><a href="register.html">Register</a></li>
                                     <li><a href="account.html">My Account</a></li>
                                     <li><a href="wishlist.html">Wishlist</a></li> --}}
@@ -150,14 +143,9 @@
                     <div class="mobile-menu-toggle d-xl-none">
                         <a href="#ltn__utilize-mobile-menu" class="ltn__utilize-toggle">
                             <svg viewBox="0 0 800 600">
-                                <path
-                                    d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200"
-                                    id="top"></path>
+                                <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" id="top"></path>
                                 <path d="M300,320 L540,320" id="middle"></path>
-                                <path
-                                    d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190"
-                                    id="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) ">
-                                </path>
+                                <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190" id="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
                             </svg>
                         </a>
                     </div>
@@ -179,7 +167,7 @@
         <div class="mini-cart-product-area ltn__scrollbar">
             <div class="mini-cart-item clearfix">
                 <div class="mini-cart-img">
-                    <a href="#"><img src="img/product/1.png" alt="Image"></a>
+                    <a href="#"><img src="{{ asset('frontend/img/product/1.png') }}" alt="Image"></a>
                     <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                 </div>
                 <div class="mini-cart-info">
@@ -189,7 +177,7 @@
             </div>
             <div class="mini-cart-item clearfix">
                 <div class="mini-cart-img">
-                    <a href="#"><img src="img/product/2.png" alt="Image"></a>
+                    <a href="#"><img src="{{ asset('frontend/img/product/2.png') }}" alt="Image"></a>
                     <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                 </div>
                 <div class="mini-cart-info">
@@ -199,7 +187,7 @@
             </div>
             <div class="mini-cart-item clearfix">
                 <div class="mini-cart-img">
-                    <a href="#"><img src="img/product/3.png" alt="Image"></a>
+                    <a href="#"><img src="{{ asset('frontend/img/product/3.png') }}" alt="Image"></a>
                     <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                 </div>
                 <div class="mini-cart-info">
@@ -209,7 +197,7 @@
             </div>
             <div class="mini-cart-item clearfix">
                 <div class="mini-cart-img">
-                    <a href="#"><img src="img/product/4.png" alt="Image"></a>
+                    <a href="#"><img src="{{ asset('frontend/img/product/4.png') }}" alt="Image"></a>
                     <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                 </div>
                 <div class="mini-cart-info">
@@ -238,7 +226,7 @@
     <div class="ltn__utilize-menu-inner ltn__scrollbar">
         <div class="ltn__utilize-menu-head">
             <div class="site-logo">
-                <a href="index.html"><img src="{{ asset(setting('app_logo_png')) }}" alt="Logo"></a>
+                <a href="index.html"><img src="img/logo.png" alt="Logo"></a>
             </div>
             <button class="ltn__utilize-close">×</button>
         </div>
@@ -250,33 +238,18 @@
         </div>
         <div class="ltn__utilize-menu">
             <ul>
-                <li><a href="{{ route('index') }}">Home</a></li>
-                <li><a href="#">Products</a>
-                    <ul class="sub-menu">
-                        @php
-                            $productCats = App\Models\ProductCat::select(['id', 'name'])->get();
-                        @endphp
-                        @foreach ($productCats as $productCat)
-                            <li><a
-                                    href="{{ route('allPproductsByCatroducts', $productCat->id) }}">{{ $productCat->name }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
+                <li><a href="#">Home</a></li>
                 <li><a href="contact.html">Contact</a></li>
-
-
-
             </ul>
         </div>
         <div class="ltn__utilize-buttons ltn__utilize-buttons-2">
             <ul>
                 <li>
-                    <a href="{{ route('login') }}" title="My Account">
+                    <a href="account.html" title="My Account">
                         <span class="utilize-btn-icon">
                             <i class="far fa-user"></i>
                         </span>
-                        Login
+                        My Account
                     </a>
                 </li>
                 {{-- <li>
@@ -310,5 +283,3 @@
     </div>
 </div>
 <!-- Utilize Mobile Menu End -->
-
-<div class="ltn__utilize-overlay"></div>

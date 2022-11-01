@@ -21,7 +21,7 @@
                         <div class="card-header" style="background-image: url('../assets/img/blogpost.jpg')">
                             <div class="profile-picture">
                                 <div class="avatar avatar-xl">
-                                    <img src="{{ asset('images/users/'.$user->profile_photo_path) }}" alt="{{$user->name}}" class="avatar-img rounded-circle">
+                                    <img src="{{ asset('uploads/images/product/'.$user->profile_photo_path) }}" alt="{{$user->name}}" class="avatar-img rounded-circle">
                                 </div>
                             </div>
                         </div>
@@ -206,7 +206,7 @@
 
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <img src="{{ asset('images/users/'.$user->profile_photo_path) }}" height="200" width="200" alt="">
+                                        <img src="{{ asset('uploads/images/product/'.$user->profile_photo_path) }}" height="200" width="200" alt="">
                                     </div>
 
                                     <div class="form-group col-md-3">

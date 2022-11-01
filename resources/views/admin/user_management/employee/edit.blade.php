@@ -426,7 +426,7 @@
                                 <hr class="bg-warning">
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <img src="{{ asset('images/users/'.$employee->profile_photo_path) }}" height="200" width="200" alt="">
+                                        <img src="{{ asset('uploads/images/product/'.$employee->profile_photo_path) }}" height="200" width="200" alt="">
                                     </div>
 
                                     <div class="form-group col-md-3">

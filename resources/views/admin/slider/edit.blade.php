@@ -54,7 +54,7 @@
                                         <input id="link_name" name="link_name" type="text" class="form-control" value="{{$slider->link_name}}" placeholder="Click">
                                     </div>
                                     <div class="col-md-5">
-                                        <img src="{{ asset('images/slider/'.$slider->image) }}" height="150" width="400" alt="">
+                                        <img src="{{ imagePath('slider', $slider->image) }}" height="150" width="400" alt="">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="image" class="placeholder">Image <span class="t_r">* Height:1200px Widht:450px</span></label>

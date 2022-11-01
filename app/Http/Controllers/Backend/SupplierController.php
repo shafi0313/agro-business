@@ -49,7 +49,7 @@ class SupplierController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = "supplier_".rand(0, 100000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/users/', $image_name);
+            $request->image->move('uploads/images/product/', $image_name);
         } else {
             $image_name = "company_logo.png";
         }
@@ -254,7 +254,7 @@ class SupplierController extends Controller
             return $error;
         }
         $user = User::find($id);
-        $path =  public_path('images/users/'.$user->profile_photo_path);
+        $path =  public_path('uploads/images/product/'.$user->profile_photo_path);
 
         // User File Delete
         $userFiles = UserFile::where('user_id', $id)->get();

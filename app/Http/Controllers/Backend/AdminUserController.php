@@ -47,7 +47,7 @@ class AdminUserController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = "user_".rand(0, 1000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/users/', $image_name);
+            $request->image->move('uploads/images/product/', $image_name);
         } else {
             $image_name = "company_logo.png";
         }
@@ -184,7 +184,7 @@ class AdminUserController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = "user_".rand(0, 10000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/users/', $image_name);
+            $request->image->move('uploads/images/product/', $image_name);
         } else {
             $image_name = $request->oldImage;
         }

@@ -60,7 +60,7 @@ class UserCustomerController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = "user_photo".rand(0, 10000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/users/', $image_name);
+            $request->image->move('uploads/images/product/', $image_name);
         } else {
             $image_name = "company_logo.png";
         }
@@ -234,7 +234,7 @@ class UserCustomerController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = "user_photo".rand(0, 10000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/users/', $image_name);
+            $request->image->move('uploads/images/product/', $image_name);
         } else {
             $image_name = $request->get('old_image');
         }
@@ -372,7 +372,7 @@ class UserCustomerController extends Controller
             return $error;
         }
         $user = User::find($id);
-        $path =  public_path('images/users/'.$user->profile_photo_path);
+        $path =  public_path('uploads/images/product/'.$user->profile_photo_path);
         // User File Delete
         $userFiles = UserFile::where('user_id', $id)->get();
         foreach ($userFiles as $userFile) {

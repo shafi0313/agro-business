@@ -24,7 +24,7 @@ class AboutController extends Controller
             return $error;
         }
         $data = [
-            'title' => $request->get('title'),
+            // 'title' => $request->get('title'),
             'texts' => $request->get('texts'),
         ];
 

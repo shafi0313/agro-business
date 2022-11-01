@@ -72,7 +72,7 @@
                                             <td>{{ $porduct->productPackSize->trade_price }}</td>
                                             <td>{{ $porduct->productPackSize->cash }}</td>
                                             <td>{{ $porduct->productPackSize->mrp }}</td>
-                                            <td width="70"><img src="{{ asset('images/product/' .$porduct->image) }}" height="100" width="100" alt=""> </td>
+                                            <td width="70"><img src="{{ asset('uploads/images/product/' .$porduct->image) }}" height="100" width="100" alt=""> </td>
                                             <td>
                                                 <div class="form-button-action">
                                                     <a href="{{ route('product.edit', $porduct->id)}}" title="Edit" class="btn btn-link btn-primary">

@@ -34,13 +34,13 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="row justify-content-center">
-                                    <div class="form-group col-sm-12">
+                                    {{-- <div class="form-group col-sm-12">
                                         <label for="title">Title<span class="t_r">*</span></label>
                                         <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"  value="{{ $about->title }}" placeholder="Enter Product Name" required>
                                         @error('title')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="form-group col-sm-12">
                                         <label for="texts">Info<span class="t_r">*</span></label>
@@ -68,19 +68,6 @@
 <script src="{{ asset('backend/assets/ckeditor/ckeditor.js') }}"></script>
 <script>
     CKEDITOR.replace('editor')
-    // ClassicEditor
-    //     .create( document.querySelector( '#editor' ) )
-    //     .catch( error => {
-    //         console.error( error );
-    //     });
-    // ClassicEditor
-    // .create( document.querySelector( '#editor' ), {
-    //     removePlugins: [  ],
-    //     toolbar: ['Heading', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' , 'Link']
-    // } )
-    // .catch( error => {
-    //     console.log( error );
-    // });
 </script>
 @endpush
 @endsection

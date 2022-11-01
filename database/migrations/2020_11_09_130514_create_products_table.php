@@ -22,9 +22,9 @@ class CreateProductsTable extends Migration
             $table->string('name',100)->nullable();
             $table->string('generic',100)->nullable();
             $table->text('indications')->nullable();
-            $table->text('dosage')->nullable();
-            $table->string('quantity')->nullable();
-            $table->string('origin')->nullable();
+            // $table->text('dosage')->nullable();
+            // $table->string('quantity')->nullable();
+            // $table->string('origin')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

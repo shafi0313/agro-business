@@ -116,14 +116,14 @@
                                         </table>
                                     </div>
 
-                                    <div class="form-group col-sm-12">
+                                    {{-- <div class="form-group col-sm-12">
                                         <label for="origin">Origin<span class="t_r">*</span></label>
                                         <textarea class="form-control @error('origin') is-invalid @enderror" id="origin" name="origin"></textarea>
                                         <script>document.getElementById("origin").value = "{!! $product->origin !!}";</script>
                                         @error('origin')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="form-group col-sm-12">
                                         <label for="indications">Main Indications<span class="t_r">*</span></label>
@@ -134,16 +134,16 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group col-sm-12">
+                                    {{-- <div class="form-group col-sm-12">
                                         <label for="dosage">Dosage<span class="t_r">*</span></label>
                                         <textarea class="form-control @error('dosage') is-invalid @enderror" id="editor2" name="dosage"></textarea>
                                         <script>document.getElementById("editor2").value = "{!! $product->dosage !!}";</script>
                                         @error('dosage')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-5">
-                                        <img src="{{ asset('images/product/'.$product->image) }}" height="200" width="200" alt="">
+                                        <img src="{{ asset('uploads/images/product/'.$product->image) }}" height="200" width="200" alt="">
                                     </div>
 
                                     <div class="form-group col-md-3">

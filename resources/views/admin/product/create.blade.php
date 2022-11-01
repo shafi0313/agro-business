@@ -92,27 +92,27 @@
                                             <tbody id="showItem" class=""></tbody>
                                         </table>
                                     </div>
-                                    <div class="form-group col-sm-12">
+                                    {{-- <div class="form-group col-sm-12">
                                         <label for="origin">Origin<span class="t_r">*</span></label>
                                         <textarea class="form-control @error('origin') is-invalid @enderror" id="origin" name="origin" {{old('origin')}}></textarea>
                                         @error('origin')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group col-sm-12">
                                         <label for="indications">Main Indications<span class="t_r">*</span></label>
-                                        <textarea class="form-control @error('indications') is-invalid @enderror" id="editor" name="indications" {{old('indications')}}></textarea>
+                                        <textarea class="form-control @error('indications') is-invalid @enderror" id="indications" name="indications" {{old('indications')}}></textarea>
                                         @error('indications')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-sm-12">
+                                    {{-- <div class="form-group col-sm-12">
                                         <label for="dosage">Dosage<span class="t_r">*</span></label>
                                         <textarea class="form-control @error('dosage') is-invalid @enderror" id="editor2" name="dosage" {{old('dosage')}}></textarea>
                                         @error('dosage')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group col-md-3">
                                         <label for="image" class="placeholder">Image<span class="t_r">*</span></label>
                                         <input id="image" name="image" type="file" class="form-control">
@@ -162,9 +162,9 @@
 
 <script src="{{ asset('backend/assets/ckeditor/ckeditor.js') }}"></script>
 <script>
-    CKEDITOR.replace('editor')
-    CKEDITOR.replace('editor2')
-    CKEDITOR.replace('origin')
+    // CKEDITOR.replace('editor')
+    CKEDITOR.replace('indications')
+    // CKEDITOR.replace('origin')
 </script>
 @endpush
 @endsection

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\About;
 use App\Models\Slider;
 use App\Models\Product;
+use App\Models\ProductCat;
 use Illuminate\Http\Request;
 use App\Models\ProductPackSize;
 use App\Http\Controllers\Controller;
@@ -16,15 +17,16 @@ class IndexController extends Controller
     {
         $about = About::where('id',1)->first();
         $sliders = Slider::all();
-        $products = Product::where('type', 1)->get();
+        $productCats = ProductCat::with(['products.productPack','products' => fn($q) => $q->select('id','cat_id','name','generic','image')->whereType(1)])->select(['id','name'])->get();
+        $products = Product::where('type', 1)->count();
         $users = User::whereRole(2)->count();
-        return view('frontend.index', compact('sliders','products','about','users'));
+        return view('frontend.index', compact('sliders','about','users','products','productCats'));
     }
 
     public function productsByCat($id)
     {
-        $allProducts = Product::where('cat_id', $id)->get();
-        return view('frontend.products_by_cat', compact('allProducts'));
+        $products = Product::where('cat_id', $id)->get();
+        return view('frontend.products_by_cat', compact('products'));
     }
 
     public function allProducts()

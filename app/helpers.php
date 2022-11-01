@@ -17,6 +17,13 @@ if (!function_exists('user')) {
     }
 }
 
+if (!function_exists('imagePath')) {
+    function imagePath($folder,$image)
+    {
+        return asset('uploads/images/'.$folder.'/'.$image);
+    }
+}
+
 if (!function_exists('transaction_id')) {
     function transaction_id($src = '', $length = 12)
     {

@@ -30,7 +30,7 @@ class SliderController extends Controller
         {
             $image = $request->file('image');
             $image_name = "slider_".rand(0,1000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/slider/',$image_name);
+            $request->image->move('uploads/images/slider/',$image_name);
         }
         $user = auth()->user()->id;
         $data = [
@@ -64,7 +64,7 @@ class SliderController extends Controller
         {
             $image = $request->file('image');
             $image_name = "slider_".rand(0,1000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/slider/',$image_name);
+            $request->image->move('uploads/images/slider/',$image_name);
         }else{
             $image_name = $request->get('old_image');
         }
@@ -80,7 +80,7 @@ class SliderController extends Controller
         try {
             $update  = Slider::find($id);
             $update->update($data);
-            Alert::success('Slider Updeated', 'Slider Successfully Updeated');
+            Alert::success('Slider Updated', 'Slider Successfully Updated');
             return redirect()->route('slider.index');
         } catch(\Exception $ex) {
             Alert::error('DataInsert', $ex->getMessage());
@@ -94,7 +94,7 @@ class SliderController extends Controller
             return $error;
         }
         $slider = Slider::find($id);
-        $path =  public_path('images/slider/'.$slider->image);
+        $path =  public_path('uploads/images/slider/'.$slider->image);
         if(file_exists($path)){
             unlink($path);
             $slider->delete();

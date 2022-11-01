@@ -187,7 +187,7 @@
                                     <hr class="bg-warning">
                                     <div class="row">
                                         <div class="form-group col-md-3">
-                                            <img src="{{asset('images/users/'.$adminUsers->profile_photo_path)}}" alt="">
+                                            <img src="{{asset('uploads/images/product/'.$adminUsers->profile_photo_path)}}" alt="">
                                             <input id="image" name="oldImage" type="hidden" value="{{$adminUsers->profile_photo_path}}" class="form-control">
                                         </div>
                                         <div class="form-group col-md-3">

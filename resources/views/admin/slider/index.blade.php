@@ -57,7 +57,7 @@
                                             <td>{{ $slider->title }}</td>
                                             <td>{{ $slider->sub_title }}</td>
                                             <td>{{ $slider->link }}</td>
-                                            <td width="70"><img src="{{ asset('images/slider/' .$slider->image) }}" height="60" width="110" alt=""> </td>
+                                            <td width="70"><img src="{{ imagePath('slider', $slider->image) }}" height="60" width="110" alt=""> </td>
                                             <td width="70">{{ \Carbon\Carbon::parse($slider->created_at)->format('d/m/Y') }}</td>
                                             <td>
                                                 <div class="form-button-action">

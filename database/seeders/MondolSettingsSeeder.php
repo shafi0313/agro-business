@@ -20,13 +20,21 @@ class MondolSettingsSeeder extends Seeder
         Setting(['app_name_b'=> 'মন্ডল ট্রেডার্স'])->save();
         Setting(['app_favicon'=> 'uploads/images/icon/mondol_favicon.png'])->save();
         Setting(['app_logo'=> 'uploads/images/icon/mondol_logo.jpg'])->save();
+        Setting(['app_logo_png'=> 'uploads/images/icon/mondol_logo_png.png'])->save();
         Setting(['app_url'=> 'https://mondolag.com'])->save();
         Setting(['app_description'=> ''])->save();
         Setting(['app_keyword'=> 'Mondol, Agro, Mondol Agro, Mondol Traders, Alamdanga, mondolag'])->save();
-        Setting(['credit_footer'=> ''])->save();
+        // Setting(['credit_footer'=> ''])->save();
 
         Setting(['inv_header_address'=> 'Alamdanga, Chuadanga.'])->save();
         Setting(['inv_footer'=> '<p>Head office: High Road, Alamdanga, Chuadanga. <i class="fas fa-tty"></i> 07622-56385, <i class="fas fa-mobile-alt"></i>+8801318-302500, Dhaka Office: House # 14, Road # 3, <br> Block # E, Extended Rupnagar (R/A) Sector # 12, Mirpur, Dhaka-1216. <i class="far fa-envelope"></i> r.tuhin@icloud.com, <i class="fas fa-globe-asia"></i> www.mondolag.com</p>.'])->save();
+
+        Setting(['front_address'=> 'Head office: High Road, Alamdanga, Chuadanga. <br>Dhaka Office: House # 14, Road # 3, Block # E, Extended Rupnagar (R/A) Sector # 12, Mirpur, Dhaka-1216.'])->save();
+        Setting(['phone_1'=> '+8801318-302500'])->save();
+        Setting(['phone_2'=> '+8807622-56385'])->save();
+        Setting(['email_1'=> 'r.tuhin@icloud.com'])->save();
+        Setting(['email_2'=> 'info@mondolag.com'])->save();
+        Setting(['map'=> 'https://www.google.com/maps/place/Alamdanga+Upazila/@23.7636748,88.9389079,14.5z/data=!4m5!3m4!1s0x39fec84f2e2dc219:0x3d5527c829fc16e!8m2!3d23.7625846!4d88.9438166'])->save();
 
         // AppContact
         // Setting(['app_phone'=> '+8801711-000000'])->save();

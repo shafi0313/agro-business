@@ -42,8 +42,8 @@ class ProductController extends Controller
             'name' => 'required',
             'generic' => 'required',
             'indications' => 'required',
-            'dosage' => 'required',
-            'origin' => 'required',
+            // 'dosage' => 'required',
+            // 'origin' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -53,7 +53,7 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = "product_".rand(0, 1000000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/product/', $image_name);
+            $request->image->move('uploads/images/product/', $image_name);
         } else {
             $image_name = "company_logo.png";
         }
@@ -146,7 +146,7 @@ class ProductController extends Controller
                 'type' => 1,
             ];
             $productPackSize = ProductPackSize::create($data);
-            
+
             $productPackSizeId = $productPackSize->id;
             $productStock = [
                 'product_id' => $product_id,
@@ -197,7 +197,7 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = "product_".rand(0, 1000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('images/product/', $image_name);
+            $request->image->move('uploads/images/product/', $image_name);
         } else {
             $image_name = $request->get('old_image');
         }
@@ -259,7 +259,7 @@ class ProductController extends Controller
         }
         $product = Product::find($id);
         $productPackSize = ProductPackSize::where('product_id', $id)->delete();
-        $path =  public_path('images/product/'.$product->image);
+        $path =  public_path('uploads/images/product/'.$product->image);
 
         try{
             if ($product->image=='company_logo.png') {

@@ -20,7 +20,7 @@
                         <div class="card-header" style="background-image: url('../assets/img/blogpost.jpg')">
                             <div class="profile-picture">
                                 <div class="avatar avatar-xl">
-                                    <img src="{{ asset('images/users/'.$user->profile_photo_path) }}" alt="{{$user->name}}" class="avatar-img rounded-circle">
+                                    <img src="{{ asset('uploads/images/product/'.$user->profile_photo_path) }}" alt="{{$user->name}}" class="avatar-img rounded-circle">
                                 </div>
                             </div>
                         </div>

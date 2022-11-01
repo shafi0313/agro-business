@@ -11,4 +11,8 @@ class ProductCat extends Model
     use HasFactory, SoftDeletes;
     protected $guarded = [];
     protected $dates = ['deleted_at'];
+
+    public function products(){
+        return $this->hasMany(Product::class, 'cat_id', 'id');
+    }
 }

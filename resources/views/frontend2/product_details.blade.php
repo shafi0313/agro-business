@@ -38,7 +38,7 @@
             <div class="col-md-5">
                 <div class="read_product_img">
                     <img style="height: 400px; width:400px;"
-                        src="{{ asset('images/product/' .$product->image) }}" alt="{{ $product->name }}"></td>
+                        src="{{ asset('uploads/images/product/' .$product->image) }}" alt="{{ $product->name }}"></td>
                 </div>
             </div>
             <div class="col-md-7">

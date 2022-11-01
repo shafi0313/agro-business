@@ -35,11 +35,12 @@ Route::get('/reset-verify-notification', [AuthController::class, 'resetVerifyNot
 Route::post('/login-process', [AuthController::class, 'loginProcess'])->name('loginProcess');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('compressed')->group(function () {
+// Route::middleware('compressed')->group(function () {
+// Route::middleware('compressed')->group(function () {
     Route::get('/', 'App\Http\Controllers\Frontend\IndexController@index')->name('index');
     Route::get('/all-products', 'App\Http\Controllers\Frontend\IndexController@allProducts')->name('allProducts');
     Route::get('/all-products/{catId}', 'App\Http\Controllers\Frontend\IndexController@productsByCat')->name('allPproductsByCatroducts');
     Route::get('/read-product/{id}', 'App\Http\Controllers\Frontend\IndexController@productDetails')->name('productDetails');
     Route::get('/about', 'App\Http\Controllers\Frontend\IndexController@about')->name('about');
     Route::get('/contact', 'App\Http\Controllers\Frontend\IndexController@contact')->name('contact');
-});
+// });

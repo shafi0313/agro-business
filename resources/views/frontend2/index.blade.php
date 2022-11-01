@@ -88,7 +88,7 @@
                                     <div class="col-md-12">
                                         <div class="card">
                                             <div class="card_img"> <img
-                                                    src="{{ asset('images/product/' .$product->image) }}"
+                                                    src="{{ asset('uploads/images/product/' .$product->image) }}"
                                                     class="card-img-top" alt="..."> </div>
                                             <a href="{{ route('productDetails', $product->id) }}">
                                                 <div class="overlay"> <span>READ MORE</span> </div>
