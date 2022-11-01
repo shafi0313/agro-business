@@ -10,12 +10,6 @@ if (!function_exists('BdDate')) {
     }
 }
 
-if (!function_exists('bdDate')) {
-    function bdDate($date)
-    {
-        return Carbon::parse($date)->format('d/m/Y');
-    }
-}
 if (!function_exists('user')) {
     function user()
     {

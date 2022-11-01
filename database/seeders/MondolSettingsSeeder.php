@@ -18,6 +18,8 @@ class MondolSettingsSeeder extends Seeder
         Setting(['company_name'=> 'Mondol Traders'])->save();
         Setting(['app_name'=> 'Mondol Traders'])->save();
         Setting(['app_name_b'=> 'মন্ডল ট্রেডার্স'])->save();
+        Setting(['app_favicon'=> 'uploads/images/icon/mondol_favicon.png'])->save();
+        Setting(['app_logo'=> 'uploads/images/icon/mondol_logo.jpg'])->save();
         Setting(['app_url'=> 'https://mondolag.com'])->save();
         Setting(['app_description'=> ''])->save();
         Setting(['app_keyword'=> 'Mondol, Agro, Mondol Agro, Mondol Traders, Alamdanga, mondolag'])->save();
@@ -51,11 +53,5 @@ class MondolSettingsSeeder extends Seeder
         // Setting(['analytics_view_id' => '123456789'])->save();
         // Setting(['credential_file' => 'credential.json'])->save();
         // Setting(['google_map_code' => 'https://www.google.com/maps/embed/v1/place?q=place_id:ChIJZW3qh40Q_zkRz2Ey-U4DfWI&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8'])->save();
-
-
-
-
-
-
     }
 }

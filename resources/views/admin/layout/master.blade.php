@@ -1,6 +1,3 @@
-@php
-    $companyInfo = \App\Models\CompanyInfo::whereId(1)->first(['name','favicon']);
-@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +5,7 @@
 	<title>@yield('title') | {{ config('app.locale')=='en'?setting('app_name'):setting('app_name_b') }}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <meta content='{{csrf_token()}}' name='csrf-token' />
-	<link rel="icon" href="{{ asset('files/images/icon/'.$companyInfo->favicon) }}" type="image/x-icon"/>
+	<link rel="icon" href="{{ asset(setting('app_favicon')) }}" type="image/x-icon"/>
 
 	<!-- Fonts and icons -->
 	<script src="{{ asset('backend/assets/js/plugin/webfont/webfont.min.js') }}"></script>
