@@ -37,8 +37,6 @@ class AdnanSettingsSeeder extends Seeder
         Setting(['map'=> 'https://www.google.com/maps/place/Alamdanga+Upazila/@23.7636748,88.9389079,14.5z/data=!4m5!3m4!1s0x39fec84f2e2dc219:0x3d5527c829fc16e!8m2!3d23.7625846!4d88.9438166'])->save();
 
         // AppContact
-        // Setting(['app_phone'=> '+8801711-000000'])->save();
-        // Setting(['app_email'=> 'support@demo.sss.edu.bd'])->save();
         // Setting(['country'=> 'Bangladesh'])->save();
         // Setting(['division'=> 'Dhaka'])->save();
         // Setting(['sub_division'=> 'Dhaka'])->save();
@@ -46,13 +44,14 @@ class AdnanSettingsSeeder extends Seeder
         // Setting(['postal_code'=> '1200'])->save();
         // Setting(['street'=> 'Lorem Ipsum 1234'])->save();
         // Setting(['contact_description'=> ''])->save();
-        // Setting(['facebook'=> env('FACEBOOK_URL', 'tarikmanoar')])->save();
-        // Setting(['twitter'=> env('TWITTER_URL', 'tarikmanoar')])->save();
-        // Setting(['youtube'=> env('YOUTUBE_URL', 'tarikmanoar')])->save();
-        // Setting(['instagram'=> env('INSTAGRAM_URL', 'tarikmanoar')])->save();
-        // Setting(['linkedin'=> env('LINKEDIN_URL', 'tarikmanoar')])->save();
-        // Setting(['telegram'=> env('TELEGRAM_URL', 'tarikmanoar')])->save();
-        // Setting(['whatsapp'=> env('WHATSAPP', 'tarikmanoar')])->save();
+
+        Setting(['facebook'=> 'https://www.facebook.com/adnanagrovet'])->save();
+        // Setting(['twitter'=> 'tarikmanoar')])->save();
+        // Setting(['youtube'=> 'tarikmanoar')])->save();
+        // Setting(['instagram'=> 'tarikmanoar')])->save();
+        // Setting(['linkedin'=> 'tarikmanoar')])->save();
+        // Setting(['telegram'=> 'tarikmanoar')])->save();
+        // Setting(['whatsapp'=> 'tarikmanoar')])->save();
 
         //! App Config
         // Setting(['google_analytics_id' => 'UA-123456789-1'])->save();
