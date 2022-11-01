@@ -77,7 +77,12 @@
                 <div class="col">
                     <div class="site-logo-wrap">
                         <div class="site-logo">
+                            @if (setting('app_name') == "Mondol Traders")
                             <a href="{{ route('index') }}"><img src="{{ asset(setting('app_logo_png')) }}" alt="Logo" width="150px"></a>
+                            @else
+                            <a href="{{ route('index') }}"><img src="{{ asset(setting('app_logo_png')) }}" alt="Logo" width="80px"></a>
+                            @endif
+
                         </div>
                     </div>
                 </div>
