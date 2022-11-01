@@ -17,14 +17,8 @@ class BankListSeeder extends Seeder
     {
         $now = Carbon::now();
         $bankList = [
-            [
-                'name' => 'Pubali Bank Limited',
-                'created_at' => $now,
-            ],
-            [
-                'name' => 'Islami Bank Bangladesh Ltd.',
-                'created_at' => $now,
-            ]
+            ['name' => 'Pubali Bank Limited', 'created_at' => $now],
+            ['name' => 'Islami Bank Bangladesh Ltd.', 'created_at' => $now]
         ];
         BankList::insert($bankList);
     }
