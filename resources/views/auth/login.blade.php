@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Login</title>
+	<title>Login | {{ setting('app_name') }}</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="../assets/img/icon.ico" type="image/x-icon"/>
+	<link rel="icon" href="{{ asset(setting('app_favicon')) }}" type="image/x-icon"/>
 
 	<!-- Fonts and icons -->
 	<script src="{{ asset('backend/assets/js/plugin/webfont/webfont.min.js') }}"></script>
@@ -26,7 +26,7 @@
 	<div class="wrapper wrapper-login">
 		<div class="container container-login animated fadeIn">
             <div class="text-center mb-3">
-                <img src="{{asset('images/icons/company_logo_footer.png')}}" alt="" height="106px" width="130px">
+                <img src="{{ setting('app_logo') }}" alt="" height="106px" width="130px">
             </div>
 			<h3 class="text-center">Login</h3>
             @if ($errors->any())
