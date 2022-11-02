@@ -22,11 +22,11 @@
                 <div class="col-md-12">
                     <div class="card">
                         {{-- Page Content Start --}}
-                        {{-- <div class="card-header">
+                        <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Add Patient</h4>
+                                <h4 class="card-title">Add Pack Size</h4>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="card-body">
                             @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -131,7 +131,7 @@
         </div>
     </div>
 </div>
-
+@include('admin.pack_size.create')
 @push('custom_scripts')
 
 <script>
@@ -162,9 +162,7 @@
 
 <script src="{{ asset('backend/assets/ckeditor/ckeditor.js') }}"></script>
 <script>
-    // CKEDITOR.replace('editor')
     CKEDITOR.replace('indications')
-    // CKEDITOR.replace('origin')
 </script>
 @endpush
 @endsection

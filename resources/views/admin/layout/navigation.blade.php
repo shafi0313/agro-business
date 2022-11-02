@@ -106,6 +106,46 @@
                     </li>
                 @endcan
 
+                {{-- Product Start --}}
+                <li class="nav-item">
+                    <a data-toggle="collapse {{ openNav(['product-category.*',
+                                    'pack-size.*',
+                                    'product.*',
+                                    'raw-material.*']) }}" href="#product">
+                        <i class="fas fa-trash"></i>
+                        <p>@lang('nav.trash')</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{ openNav(['product-category.*',
+                                    'pack-size.*',
+                                    'product.*',
+                                    'raw-material.*']) }}" id="product">
+                        <ul class="nav nav-collapse ">
+                            <li class="{{ activeSubNav('product-category.*') }}">
+                                <a href="{{ route('product-category.index') }}">
+                                    <span class="sub-item">Product Category</span>
+                                </a>
+                            </li>
+                            <li class="{{ activeSubNav('pack-size.*') }}">
+                                <a href="{{ route('pack-size.index') }}">
+                                    <span class="sub-item">Pack Size</span>
+                                </a>
+                            </li>
+                            <li class="{{ activeSubNav('product.*') }}">
+                                <a href="{{ route('product.index') }}">
+                                    <span class="sub-item">Product</span>
+                                </a>
+                            </li>
+                            <li class="{{ activeSubNav('raw-material.*') }}">
+                                <a href="{{ route('raw-material.index') }}">
+                                    <span class="sub-item">Bulk Product</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                {{-- Product End --}}
+
                 {{-- Tools --}}
                 <li
                     class="nav-item {{ activeNav(['pack-size.*', 'bank-list.*', 'employee-main-cat.*', 'product-category.*', 'license-category.*', 'product-license.*', 'user-bank-ac.*', 'office-expense-cat.*', 'office-income-cat.*']) }}">

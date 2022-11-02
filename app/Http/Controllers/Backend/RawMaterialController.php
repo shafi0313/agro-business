@@ -15,7 +15,7 @@ class RawMaterialController extends Controller
 {
     public function index()
     {
-        if ($error = $this->authorize('balk-name-manage')) {
+        if ($error = $this->authorize('bulk-name-manage')) {
             return $error;
         }
         $porducts = Product::where('type', 2)->orderBy('generic','ASC')->get();
@@ -24,7 +24,7 @@ class RawMaterialController extends Controller
 
     public function create()
     {
-        if ($error = $this->authorize('balk-name-add')) {
+        if ($error = $this->authorize('bulk-name-add')) {
             return $error;
         }
         $packSizes = PackSize::where('type', 2)->get();
@@ -33,7 +33,7 @@ class RawMaterialController extends Controller
 
     public function store(Request $request)
     {
-        if ($error = $this->authorize('balk-name-add')) {
+        if ($error = $this->authorize('bulk-name-add')) {
             return $error;
         }
         $this->validate($request, [
@@ -98,7 +98,7 @@ class RawMaterialController extends Controller
 
     public function addSizePrice(Request $request)
     {
-        if ($error = $this->authorize('balk-name-add')) {
+        if ($error = $this->authorize('bulk-name-add')) {
             return $error;
         }
         $this->validate($request,[
@@ -145,7 +145,7 @@ class RawMaterialController extends Controller
 
     public function edit($id)
     {
-        if ($error = $this->authorize('balk-name-edit')) {
+        if ($error = $this->authorize('bulk-name-edit')) {
             return $error;
         }
         $packSizess = PackSize::where('type', 2)->get();
@@ -156,7 +156,7 @@ class RawMaterialController extends Controller
 
     public function update(Request $request, $id)
     {
-        if ($error = $this->authorize('balk-name-edit')) {
+        if ($error = $this->authorize('bulk-name-edit')) {
             return $error;
         }
         $data = [
@@ -197,7 +197,7 @@ class RawMaterialController extends Controller
 
     public function deletePackSize($packId)
     {
-        if ($error = $this->authorize('balk-name-delete')) {
+        if ($error = $this->authorize('bulk-name-delete')) {
             return $error;
         }
         ProductPackSize::findOrFail($packId)->delete();
@@ -207,7 +207,7 @@ class RawMaterialController extends Controller
 
     public function destroy($id)
     {
-        if ($error = $this->authorize('balk-name-delete')) {
+        if ($error = $this->authorize('bulk-name-delete')) {
             return $error;
         }
         try{

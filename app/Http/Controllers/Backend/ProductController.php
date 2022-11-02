@@ -63,8 +63,8 @@ class ProductController extends Controller
             'name' => $request->get('name'),
             'generic' => $request->get('generic'),
             'indications' => $request->get('indications'),
-            'dosage' => $request->get('dosage'),
-            'origin' => $request->get('origin'),
+            // 'dosage' => $request->get('dosage'),
+            // 'origin' => $request->get('origin'),
             'image' => $image_name,
             'type' => 1,
         ];
