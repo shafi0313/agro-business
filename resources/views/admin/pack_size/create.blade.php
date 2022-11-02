@@ -4,11 +4,11 @@
 aria-hidden="true">
 <div class="modal-dialog" role="document">
     <div class="modal-content">
-        <div class="card-header">
-            <div class="d-flex align-items-center">
-                {{-- <h4 class="card-title">All Size</h4> --}}
-                <a class="btn btn-primary btn-round ml-auto text-light" data-toggle="modal" data-target="#addPackSize"><i class="fa fa-plus"></i> Add New Pack</a>
-            </div>
+        <div class="modal-header">
+            <h5 class="modal-title" id="addPackSizeLabel">Add New Pack Size</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="modal-body">
             <form action="{{route('pack-size.store')}}" method="POST">

@@ -5,6 +5,7 @@ return [
     'admin'         => 'Admin',
     'frontend'      => 'Frontend',
     'tools'         => 'Tools',
+    'product'     => 'Product',
     'office'    => 'Office',
     'account'   => 'Account',
     'factory'   => 'Factory',

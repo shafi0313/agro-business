@@ -22,11 +22,12 @@
                 <div class="col-md-12">
                     <div class="card">
                         {{-- Page Content Start --}}
-                        {{-- <div class="card-header">
+                        <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Add Patient</h4>
+                                <h4 class="card-title">All Size</h4>
+                                <a class="btn btn-primary btn-round ml-auto text-light" data-toggle="modal" data-target="#addPackSize"><i class="fa fa-plus"></i> Add New Pack Size</a>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="card-body">
                             @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -93,7 +94,7 @@
         </div>
     </div>
 </div>
-
+@include('admin.pack_size.create')
 @push('custom_scripts')
 <script>
 	$(document).ready(function(){

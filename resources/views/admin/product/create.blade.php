@@ -24,7 +24,8 @@
                         {{-- Page Content Start --}}
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Add Pack Size</h4>
+                                <h4 class="card-title">All Size</h4>
+                                <a class="btn btn-primary btn-round ml-auto text-light" data-toggle="modal" data-target="#addPackSize"><i class="fa fa-plus"></i> Add New Pack Size</a>
                             </div>
                         </div>
                         <div class="card-body">

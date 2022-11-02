@@ -5,6 +5,7 @@ return [
     'admin'     => 'অ্যাডমিন',
     'frontend'  => 'ফ্রন্ট এন্ড',
     'tools'     => 'টুলস',
+    'product'     => 'প্রোডাক্ট',
     'office'    => 'অফিস',
     'account'   => 'একাউন্ট',
     'factory'   => 'ফ্যাক্টরি',

@@ -107,19 +107,19 @@
                 @endcan
 
                 {{-- Product Start --}}
-                <li class="nav-item">
-                    <a data-toggle="collapse {{ openNav(['product-category.*',
-                                    'pack-size.*',
-                                    'product.*',
-                                    'raw-material.*']) }}" href="#product">
-                        <i class="fas fa-trash"></i>
-                        <p>@lang('nav.trash')</p>
+                <li class="nav-item {{ openNav(['product-category.*',
+                'pack-size.*',
+                'product.*',
+                'raw-material.*']) }}">
+                    <a data-toggle="collapse" href="#onlyProduct">
+                        <i class="fa-brands fa-product-hunt"></i>
+                        <p>@lang('nav.product')</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse {{ openNav(['product-category.*',
                                     'pack-size.*',
                                     'product.*',
-                                    'raw-material.*']) }}" id="product">
+                                    'raw-material.*']) }}" id="onlyProduct">
                         <ul class="nav nav-collapse ">
                             <li class="{{ activeSubNav('product-category.*') }}">
                                 <a href="{{ route('product-category.index') }}">
