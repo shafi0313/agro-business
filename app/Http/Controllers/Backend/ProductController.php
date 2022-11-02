@@ -44,7 +44,7 @@ class ProductController extends Controller
             'indications' => 'required',
             // 'dosage' => 'required',
             // 'origin' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         DB::beginTransaction();
@@ -54,8 +54,7 @@ class ProductController extends Controller
             $image = $request->file('image');
             $image_name = "product_".rand(0, 1000000).'.'.$image->getClientOriginalExtension();
             $request->image->move('uploads/images/product/', $image_name);
-        } else {
-            $image_name = "company_logo.png";
+            $data['image'] = $image_name;
         }
 
         $data = [
@@ -63,9 +62,6 @@ class ProductController extends Controller
             'name' => $request->get('name'),
             'generic' => $request->get('generic'),
             'indications' => $request->get('indications'),
-            // 'dosage' => $request->get('dosage'),
-            // 'origin' => $request->get('origin'),
-            'image' => $image_name,
             'type' => 1,
         ];
         $porduct = Product::create($data);
