@@ -7,11 +7,10 @@
                     <div class="footer-widget footer-about-widget">
                         <div class="footer-logo">
                             <div class="site-logo">
-                                <img src="{{ asset(setting('app_favicon')) }}" alt="Company Logo">
+                                <img src="{{ asset(setting('app_favicon')) }}" alt="Company Logo" style="margin: auto">
                             </div>
                         </div>
-                        <p>Lorem Ipsum is simply dummy text of the and typesetting industry. Lorem Ipsum is dummy text of the printing.</p>
-
+                        <p style="text-align: justify">Lorem Ipsum is simply dummy text of the and typesetting industry. Lorem Ipsum is dummy text of the printing.</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-12">
@@ -19,9 +18,9 @@
                         <h4 class="footer-title">Company</h4>
                         <div class="footer-menu">
                             <ul>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="shop.html">All Products</a></li>
-                                <li><a href="contact.html">Contact us</a></li>
+                                <li><a href="{{ route('about') }}">About</a></li>
+                                <li><a href="{{ route('allProducts') }}">All Products</a></li>
+                                <li><a href="{{ route('contact') }}">Contact us</a></li>
                             </ul>
                         </div>
                     </div>
@@ -61,10 +60,10 @@
                         </div>
                         <div class="ltn__social-media mt-20">
                             <ul>
-                                <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="{{ URL::to(setting('facebook')) }}" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                {{-- <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
                                 <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
-                                <li><a href="#" title="Youtube"><i class="fab fa-youtube"></i></a></li>
+                                <li><a href="#" title="Youtube"><i class="fab fa-youtube"></i></a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -77,7 +76,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="ltn__copyright-design footer">
-                        <p class="copy">Copyright &copy; {{date('Y')}} {{ setting('app_name') }}. All rights reserved.</p>
+                        <p class="copy">Copyright &copy; {{date('Y')}} {{ setting('app_name') }} All rights reserved.</p>
                         <p class="developer"><a href="http://softgiantbd.com/" style="text-decoration:none;color:#fff">Developed By Soft Giant BD</a></p>
                     </div>
                 </div>

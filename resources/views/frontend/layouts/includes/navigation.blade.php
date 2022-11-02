@@ -49,10 +49,10 @@
                                     <!-- ltn__social-media -->
                                     <div class="ltn__social-media">
                                         <ul>
-                                            <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                            <li><a href="{{ URL::to(setting('facebook')) }}" title="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
                                             </li>
-                                            <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                                            </li>
+                                            {{-- <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                                            </li> --}}
 
                                             {{-- <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
                                             </li>

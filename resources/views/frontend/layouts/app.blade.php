@@ -4,45 +4,33 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    {{-- <title>Broccoli - Organic Food HTML Template</title> --}}
     <title>@yield('title') | {{setting('app_name')}}</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="keywords" content="{{ setting('app_keyword') }}">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Place favicon.png in the root directory -->
+    {{-- <!-- Place favicon.png in the root directory --> --}}
     <link rel="shortcut icon" href="{{ setting('app_favicon') }}" type="image/x-icon" />
-    <!-- Font Icons css -->
+    {{-- <!-- Font Icons css --> --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/font-icons.css') }}">
-    <!-- plugins css -->
+    {{-- <!-- plugins css --> --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/plugins.css') }}">
-    <!-- Main Stylesheet -->
+    {{-- <!-- Main Stylesheet --> --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
-    <!-- Responsive css -->
+    {{-- <!-- Responsive css --> --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
 </head>
 
 <body>
-    <!--[if lte IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-    <![endif]-->
-
-    <!-- Add your site or application content here -->
-
-<!-- Body main wrapper start -->
+{{-- <!-- Body main wrapper start --> --}}
 <div class="body-wrapper">
-
     @include('frontend.layouts.includes.navigation')
-
     <div class="ltn__utilize-overlay"></div>
-
     @yield('content')
-
     @include('frontend.layouts.includes.footer')
-
-    <!-- MODAL AREA START (Quick View Modal) -->
+    {{-- <!-- MODAL AREA START (Quick View Modal) -->
     <div class="ltn__modal-area ltn__quick-view-modal-area">
         <div class="modal fade" id="quick_view_modal" tabindex="-1">
             <div class="modal-dialog modal-lg" role="document">
@@ -144,9 +132,9 @@
             </div>
         </div>
     </div>
-    <!-- MODAL AREA END -->
+    <!-- MODAL AREA END --> --}}
 
-    <!-- MODAL AREA START (Add To Cart Modal) -->
+    {{-- <!-- MODAL AREA START (Add To Cart Modal) -->
     <div class="ltn__modal-area ltn__add-to-cart-modal-area">
         <div class="modal fade" id="add_to_cart_modal" tabindex="-1">
             <div class="modal-dialog modal-md" role="document">
@@ -188,9 +176,9 @@
             </div>
         </div>
     </div>
-    <!-- MODAL AREA END -->
+    <!-- MODAL AREA END --> --}}
 
-    <!-- MODAL AREA START (Wishlist Modal) -->
+    {{-- <!-- MODAL AREA START (Wishlist Modal) -->
     <div class="ltn__modal-area ltn__add-to-cart-modal-area">
         <div class="modal fade" id="liton_wishlist_modal" tabindex="-1">
             <div class="modal-dialog modal-md" role="document">
@@ -231,12 +219,11 @@
             </div>
         </div>
     </div>
-    <!-- MODAL AREA END -->
-
+    <!-- MODAL AREA END --> --}}
 </div>
-<!-- Body main wrapper end -->
+{{-- <!-- Body main wrapper end --> --}}
 
-    <!-- preloader area start -->
+    {{-- <!-- preloader area start --> --}}
     <div class="preloader d-none" id="preloader">
         <div class="preloader-inner">
             <div class="spinner">
@@ -245,11 +232,11 @@
             </div>
         </div>
     </div>
-    <!-- preloader area end -->
+    {{-- <!-- preloader area end --> --}}
 
-    <!-- All JS Plugins -->
+    {{-- <!-- All JS Plugins --> --}}
     <script src="{{ asset('frontend/js/plugins.js') }}"></script>
-    <!-- Main JS -->
+    {{-- <!-- Main JS --> --}}
     <script src="{{ asset('frontend/js/main.js') }}"></script>
 
 </body>
