@@ -36,17 +36,13 @@
             <div class="row">
                 <div class="col-md-5">
                     <div class="read_product_img">
-                        <img style="height: 400px; width:400px;" src="{{ asset('uploads/images/product/' . $product->image) }}"
+                        <img style="height: 400px; width:400px;" src="{{ imagePath('product', $product->image) }}"
                             alt="{{ $product->name }}"></td>
                     </div>
                 </div>
                 <div class="col-md-7">
                     <h3>Introduction:</h3>
                     <p class="product_text">{!! $product->indications !!}</p>
-                    <h4>Dosage:</h4>
-                    <p class="product_text">{!! $product->dosage !!}</p>
-                    <h4>Origin:</h4>
-                    <p class="product_text">{!! $product->origin !!}</p>
                     <br>
                     <div class="course_f_price d-flex">
                         <table class="table table-border table-sm col-6">

@@ -18,9 +18,14 @@ if (!function_exists('user')) {
 }
 
 if (!function_exists('imagePath')) {
-    function imagePath($folder,$image)
+    function imagePath($folder, $image)
     {
-        return asset('uploads/images/'.$folder.'/'.$image);
+        $path = 'uploads/images/'.$folder.'/'.$image;
+        if(@GetImageSize($path)){
+            return $path;
+        }else{
+            return setting('app_logo');
+        }
     }
 }
 

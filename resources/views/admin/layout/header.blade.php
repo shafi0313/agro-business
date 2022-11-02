@@ -205,17 +205,17 @@
             <li class="nav-item dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                     <div class="avatar-sm">
-                        <img src="{{ asset('uploads/images/product/'.auth()->user()->profile_photo_path) ?? setting('app_logo') }}" class="avatar-img rounded-circle">
+                        <img src="{{ imagePath('user', user()->profile_photo_path) }}" class="avatar-img rounded-circle">
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                     <li>
                         <div class="user-box">
                             <div class="avatar-lg">
-                                <img src="{{ asset('uploads/images/product/'.auth()->user()->profile_photo_path) }}" class="avatar-img rounded">
+                                <img src="{{ imagePath('user', user()->profile_photo_path) }}" class="avatar-img rounded">
                             </div>
                             <div class="u-text">
-                                <h4>{{ Auth::user()->name }}</h4>
+                                <h4>{{ Auth::user()->name }}</h4>{{ user()->profile_photo_path }}
                                 <p class="text-muted">{{ Auth::user()->email }}</p><a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
                             </div>
                         </div>
