@@ -268,10 +268,8 @@
                         @endforeach
                     </ul>
                 </li>
-                <li><a href="contact.html">Contact</a></li>
-
-
-
+                <li><a href="{{ route('contact') }}">Contact</a></li>
+                <li><a href="{{ route('about') }}">About</a></li>
             </ul>
         </div>
         <div class="ltn__utilize-buttons ltn__utilize-buttons-2">
