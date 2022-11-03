@@ -122,6 +122,7 @@
                                         <label for="">Officer Id <span class="t_r">*</span></label>
                                         <select class="form-control form-control-sm" name="user_id" required>
                                             <option selected value disabled>Select</option>
+                                            <option value="1">Select</option>
                                             @foreach ($userId as $id)
                                                 <option value="{{$id->user_id}}">{{$id->user_id}}{{ $id->userForSR->tmm_so_id }}=>{{ $id->userForSR->name }}</option>
                                             @endforeach

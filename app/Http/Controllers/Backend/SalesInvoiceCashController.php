@@ -177,7 +177,7 @@ class SalesInvoiceCashController extends Controller
                 'discount_amt' =>  $request->discount_amt,
                 'amt' => round($request->net_amt),
             ];
-            SalesReport::create($report);
+            // SalesReport::create($report);
 
             if ($request->note) {
                 $sampleNote = [
