@@ -49,14 +49,6 @@ class ProductController extends Controller
 
         DB::beginTransaction();
 
-        $image_name = '';
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_name = "product_".rand(0, 1000000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('uploads/images/product/', $image_name);
-            $data['image'] = $image_name;
-        }
-
         $data = [
             'cat_id' => $request->get('cat_id'),
             'name' => $request->get('name'),
@@ -64,6 +56,12 @@ class ProductController extends Controller
             'indications' => $request->get('indications'),
             'type' => 1,
         ];
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = "product_".rand(0, 1000000).'.'.$image->getClientOriginalExtension();
+            $request->image->move('uploads/images/product/', $image_name);
+            $data['image'] = $image_name;
+        }
         $porduct = Product::create($data);
         $porductId = $porduct->id;
 
@@ -103,9 +101,6 @@ class ProductController extends Controller
         }
 
         try {
-            $porduct == true;
-            $productPackSize == true;
-            $productStocks == true;
             DB::commit();
             toast('Product Successfully Inserted', 'success');
             return redirect()->route('product.index');
