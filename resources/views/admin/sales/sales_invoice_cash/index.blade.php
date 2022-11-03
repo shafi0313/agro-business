@@ -52,6 +52,7 @@
                                     </tfoot>
                                     <tbody>
                                         @php $x=1; @endphp
+                                        @if ($ceo)
                                         <tr>
                                             <td class="text-center">{{ $x++ }}</td>
                                             <td>{{ $ceo->business_name }}</td>
@@ -64,6 +65,7 @@
                                                 <a href="{{ route('sales-invoice-cash.show', $ceo->id)}}">Show</a>
                                             </td>
                                         </tr>
+                                        @endif
                                         @foreach($customers as $customer)
                                         <tr>
                                             <td class="text-center">{{ $x++ }}</td>
