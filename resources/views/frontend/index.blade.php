@@ -220,8 +220,8 @@
                                 <li class="review-total"> <a href="#"> (24)</a></li>
                             </ul>
                         </div> --}}
-                        <h2 class="product-title"><a href="product-details.html">{{ $product->name }}</a></h2>
-                        <p class=""><a href="product-details.html">{{ $product->generic }}</a></p>
+                        <h2 class="product-title"><a href="{{ route('productDetails', $product->id) }}">{{ $product->name }}</a></h2>
+                        <p class=""><a href="{{ route('productDetails', $product->id) }}">{{ $product->generic }}</a></p>
                         <div class="product-price">
                             {{-- <span>{{ $product->productPack->mrp }}</span> --}}
                             {{-- <del>$46.00</del> --}}
