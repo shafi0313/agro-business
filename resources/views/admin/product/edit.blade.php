@@ -127,8 +127,8 @@
 
                                     <div class="form-group col-sm-12">
                                         <label for="indications">Main Indications<span class="t_r">*</span></label>
-                                        <textarea class="form-control @error('indications') is-invalid @enderror" id="editor" name="indications"></textarea>
-                                        <script>document.getElementById("editor").value = "{!! $product->indications !!}";</script>
+                                        <textarea class="form-control @error('indications') is-invalid @enderror" id="editor" name="indications">{!! $product->indications !!}</textarea>
+                                        {{-- <script>document.getElementById("editor").value = "{!! $product->indications !!}";</script> --}}
                                         @error('indications')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
