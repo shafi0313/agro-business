@@ -133,15 +133,6 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-                                    {{-- <div class="form-group col-sm-12">
-                                        <label for="dosage">Dosage<span class="t_r">*</span></label>
-                                        <textarea class="form-control @error('dosage') is-invalid @enderror" id="editor2" name="dosage"></textarea>
-                                        <script>document.getElementById("editor2").value = "{!! $product->dosage !!}";</script>
-                                        @error('dosage')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div> --}}
                                     <div class="col-md-5">
                                         <img src="{{ asset('uploads/images/product/'.$product->image) }}" height="200" width="200" alt="">
                                     </div>
@@ -247,8 +238,6 @@
 <script src="{{ asset('backend/assets/ckeditor/ckeditor.js') }}"></script>
 <script>
     CKEDITOR.replace('editor')
-    CKEDITOR.replace('editor2')
-    CKEDITOR.replace('origin')
 </script>
 @endpush
 

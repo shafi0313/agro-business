@@ -35,7 +35,7 @@
             </div>
             <div class="row">
                 <div class="col-md-5">
-                    <div class="read_product_img productImage">
+                    <div class="read_product_img">
                         <img style="width:400px;" class="img-fluid" src="{{ imagePath('product', $product->image) }}"
                             alt="{{ $product->name }}"></td>
                     </div>
