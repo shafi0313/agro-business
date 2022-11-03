@@ -87,7 +87,7 @@ class ProductController extends Controller
                 'damage' => 0,
                 'type' => 1, // Product
             ];
-            $productStocks = ProductStock::create($productStock);
+            ProductStock::create($productStock);
 
             // Label Stock
             $productStock = [
@@ -97,7 +97,7 @@ class ProductController extends Controller
                 'damage' => 0,
                 'type' => 4, // Label
             ];
-            $productStocks = ProductStock::create($productStock);
+            ProductStock::create($productStock);
         }
 
         try {
@@ -157,7 +157,6 @@ class ProductController extends Controller
         }
 
         try {
-            // $productPackSize == true;
             DB::commit();
             toast('New Size Successfully Inserted', 'success');
             return redirect()->back();
@@ -185,24 +184,20 @@ class ProductController extends Controller
         if ($error = $this->authorize('store-product-edit')) {
             return $error;
         }
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_name = "product_".rand(0, 1000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('uploads/images/product/', $image_name);
-        } else {
-            $image_name = $request->get('old_image');
-        }
 
         $data = [
             'name' => $request->get('name'),
             'cat_id' => $request->get('cat_id'),
             'generic' => $request->get('generic'),
             'indications' => $request->get('indications'),
-            'dosage' => $request->get('dosage'),
-            'origin' => $request->get('origin'),
-            'image' => $image_name,
             'type' => 1,
         ];
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = "product_".rand(0, 1000).'.'.$image->getClientOriginalExtension();
+            $request->image->move('uploads/images/product/', $image_name);
+            $data['image'] = $image_name;
+        }
 
         DB::beginTransaction();
         try {
