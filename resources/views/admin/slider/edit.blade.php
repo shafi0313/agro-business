@@ -57,7 +57,7 @@
                                         <img src="{{ imagePath('slider', $slider->image) }}" height="150" width="400" alt="">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label for="image" class="placeholder">Image <span class="t_r">* Height:1200px Widht:450px</span></label>
+                                        <label for="image" class="placeholder">Image <span class="t_r">* Height:1200px Width:450px</span></label>
                                         <input type="hidden" name="old_image" value="{{$slider->image}}">
                                         <input id="image" name="image" type="file" class="form-control" value="{{$slider->image}}">
                                     </div>

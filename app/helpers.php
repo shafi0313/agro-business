@@ -22,7 +22,7 @@ if (!function_exists('imagePath')) {
     {
         $path = 'uploads/images/'.$folder.'/'.$image;
         if(@GetImageSize($path)){
-            return $path;
+            return asset($path);
         }else{
             return setting('app_logo');
         }

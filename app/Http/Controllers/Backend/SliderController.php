@@ -60,26 +60,24 @@ class SliderController extends Controller
 
     public function update(Request $request, $id)
     {
-        if($request->hasFile('image'))
-        {
-            $image = $request->file('image');
-            $image_name = "slider_".rand(0,1000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('uploads/images/slider/',$image_name);
-        }else{
-            $image_name = $request->get('old_image');
-        }
-;
+
         $data = [
             'title' => $request->get('title'),
             'sub_title' => $request->get('sub_title'),
             'link' => $request->get('link'),
             'link_name' => $request->get('link_name'),
-            'image' => $image_name,
         ];
 
+        if($request->hasFile('image'))
+        {
+            $image = $request->file('image');
+            $image_name = "slider_".rand(0,1000).'.'.$image->getClientOriginalExtension();
+            $request->image->move('uploads/images/slider/',$image_name);
+            $data['image'] = $image_name;
+        }
+
         try {
-            $update  = Slider::find($id);
-            $update->update($data);
+            Slider::find($id)->update($data);
             Alert::success('Slider Updated', 'Slider Successfully Updated');
             return redirect()->route('slider.index');
         } catch(\Exception $ex) {
