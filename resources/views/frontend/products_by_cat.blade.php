@@ -21,9 +21,9 @@
             @foreach ($products as $product)
                 <div class="col-md-3">
                     <div class="ltn__product-item ltn__product-item-3 text-center">
-                        <div class="product-img">
+                        <div class="product-img productImage">
                             <a href="{{ route('productDetails', $product->id) }}"><img
-                                    src="{{ imagePath('product', $product->image) }}" alt="#"></a>
+                                    src="{{ imagePath('product', $product->image) }}" alt="#" height="160px"></a>
                             {{-- <div class="product-badge">
                         <ul>
                             <li class="sale-badge">-19%</li>

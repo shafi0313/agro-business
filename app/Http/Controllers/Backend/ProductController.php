@@ -42,8 +42,6 @@ class ProductController extends Controller
             'name' => 'required',
             'generic' => 'required',
             'indications' => 'required',
-            // 'dosage' => 'required',
-            // 'origin' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -60,7 +58,9 @@ class ProductController extends Controller
             $image = $request->file('image');
             $image_name = "product_".rand(0, 1000000).'.'.$image->getClientOriginalExtension();
             $request->image->move('uploads/images/product/', $image_name);
-            $data['image'] = $image_name;
+        }
+        if($request->hasFile('image')){
+            $data['image'] = imageStore($request, 'image','product', 'uploads/images/product/');
         }
         $porduct = Product::create($data);
         $porductId = $porduct->id;
@@ -192,17 +192,14 @@ class ProductController extends Controller
             'indications' => $request->get('indications'),
             'type' => 1,
         ];
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_name = "product_".rand(0, 1000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('uploads/images/product/', $image_name);
-            $data['image'] = $image_name;
+        $image = Product::find($id)->image;
+        if($request->hasFile('image')){
+            $data['image'] = imageUpdate($request, 'image', 'product', 'uploads/images/product/', $image);
         }
 
         DB::beginTransaction();
         try {
-            $update  = Product::find($id);
-            $update->update($data);
+            Product::find($id)->update($data);
             if (count($request->id) > 0) {
                 foreach ($request->id as $key => $v) {
                     $packData=[

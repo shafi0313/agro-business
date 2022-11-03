@@ -1,7 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use App\Models\PurchaseInvoice;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 if (!function_exists('BdDate')) {
     function BdDate($date)
@@ -175,6 +176,59 @@ if (!function_exists('openNav')) {
             $rt .= request()->routeIs($route) || '';
         }
         return $rt ? ' show ' : '';
+    }
+}
+
+if (!function_exists('uniqueId')) {
+    function uniqueId($length = 8)
+    {
+        if (function_exists("random_bytes")) {
+            $bytes = random_bytes(ceil($length / 2));
+        } elseif (function_exists("openssl_random_pseudo_bytes")) {
+            $bytes = openssl_random_pseudo_bytes(ceil($length / 2));
+        } else {
+            throw new \Exception("no cryptographically secure random function available");
+        }
+        return substr(bin2hex($bytes), 0, $length);
+    }
+}
+
+if (!function_exists('imageStore')) {
+    function imageStore(Request $request, $requestName, string $name, string $path)
+    {
+        if($request->hasFile($requestName)){
+            $pathCreate = public_path().$path;
+            !file_exists($pathCreate) ?? File::makeDirectory($pathCreate, 0777, true, true);
+
+            $image = $request->file($requestName);
+            $image_name = $name . uniqueId(10).'.'.$image->getClientOriginalExtension();
+            if ($image->isValid()) {
+                $request->image->move($path,$image_name);
+                return $image_name;
+            }
+        }
+    }
+}
+
+if (!function_exists('imageUpdate')) {
+    function imageUpdate(Request $request, $request_name ,string $name, string $path, $image)
+    {
+        if($request->hasFile($request_name)){
+            $deletePath =  public_path($path.$image);
+            if(file_exists($deletePath) && $image != ''){
+                unlink($deletePath);
+            }
+            // file_exists($deletePath) ? unlink($deletePath) : false;
+            $createPath = public_path().$path;
+            !file_exists($createPath) ?? File::makeDirectory($createPath, 0777, true, true);
+
+            $image = $request->file($request_name);
+            $image_name = $name . uniqueId(20).'.'.$image->getClientOriginalExtension();
+            if ($image->isValid()) {
+                $request->image->move($path,$image_name);
+                return $image_name;
+            }
+        }
     }
 }
 

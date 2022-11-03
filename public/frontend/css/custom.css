@@ -52,6 +52,11 @@
     padding: 5px 0;
 }
 
+.productImage{
+    border-bottom: 2px solid green;
+    /* padding: 10px 0; */
+}
+
 
 
 .footer {

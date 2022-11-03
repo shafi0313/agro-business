@@ -181,10 +181,10 @@
     <div class="tab-pane fade show {{ $loop->first?'active':'' }}" id="tab_{{ $productCat->id }}" role="tabpanel" aria-labelledby="home-tab">
         <div class="row">
             @foreach ($productCat->products as $product)
-            <div class="col-md-3">
+            <div class="col-md-3 ">
                 <div class="ltn__product-item ltn__product-item-3 text-center">
-                    <div class="product-img">
-                        <a href="{{ route('productDetails', $product->id) }}"><img src="{{ imagePath('product', $product->image) }}" alt="#"></a>
+                    <div class="product-img productImage">
+                        <a href="{{ route('productDetails', $product->id) }}"><img src="{{ imagePath('product', $product->image) }}" alt="#" height="160px"></a>
                         {{-- <div class="product-badge">
                             <ul>
                                 <li class="sale-badge">-19%</li>
@@ -221,7 +221,7 @@
                             </ul>
                         </div> --}}
                         <h2 class="product-title"><a href="product-details.html">{{ $product->name }}</a></h2>
-                        <h2 class="product-title"><a href="product-details.html">{{ $product->generic }}</a></h2>
+                        <p class=""><a href="product-details.html">{{ $product->generic }}</a></p>
                         <div class="product-price">
                             {{-- <span>{{ $product->productPack->mrp }}</span> --}}
                             {{-- <del>$46.00</del> --}}

@@ -25,13 +25,6 @@ class SliderController extends Controller
         $this->validate($request, [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        if($request->hasFile('image'))
-        {
-            $image = $request->file('image');
-            $image_name = "slider_".rand(0,1000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('uploads/images/slider/',$image_name);
-        }
         $user = auth()->user()->id;
         $data = [
             'user_id' => $user,
@@ -39,8 +32,11 @@ class SliderController extends Controller
             'sub_title' => $request->get('sub_title'),
             'link' => $request->get('link'),
             'link_name' => $request->get('link_name'),
-            'image' => $image_name,
         ];
+        if($request->hasFile('image')){
+            $data['image'] = imageStore($request, 'image','slider', 'uploads/images/slider/');
+        }
+
 
         try{
             Slider::create($data);
@@ -68,12 +64,9 @@ class SliderController extends Controller
             'link_name' => $request->get('link_name'),
         ];
 
-        if($request->hasFile('image'))
-        {
-            $image = $request->file('image');
-            $image_name = "slider_".rand(0,1000).'.'.$image->getClientOriginalExtension();
-            $request->image->move('uploads/images/slider/',$image_name);
-            $data['image'] = $image_name;
+        $image = Slider::find($id)->image;
+        if($request->hasFile('image')){
+            $data['image'] = imageUpdate($request, 'image', 'slider', 'uploads/images/slider/', $image);
         }
 
         try {
