@@ -15,7 +15,7 @@ class CreateSalesLedgerBooksTable extends Migration
     {
         Schema::create('sales_ledger_books', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onUpdate('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade');
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('users')->onUpdate('cascade');
             $table->unsignedBigInteger('prepared_id');
@@ -23,7 +23,7 @@ class CreateSalesLedgerBooksTable extends Migration
             $table->unsignedBigInteger('account_id')->nullable();
             $table->foreign('account_id')->references('id')->on('accounts')->onUpdate('cascade');
             $table->tinyInteger('type');
-            $table->tinyInteger('inv_cancel')->comment('1=Cancel,2=Reinvoice');
+            $table->tinyInteger('inv_cancel')->default(0)->comment('1=Cancel,2=Reinvoice');
             $table->tinyInteger('r_type')->nullable()->comment('1=expired,2=unsold,3=damage');
             $table->string('invoice_no')->nullable();
             $table->string('challan_no')->nullable();

@@ -159,25 +159,27 @@ class SalesInvoiceCashController extends Controller
                 'delivery_date' => $request->get('delivery_date'),
             ];
 
-            $ledgerBook = SalesLedgerBook::create($ledgerBook);
-            $salesReport = SalesReport::where('user_id', $request->user_id)->first();
-            $productDiscount = array_sum($request->pro_dis) / count($invoiceArr);
-            $report = [
-                'tran_id' => $transaction_id,
-                'user_id' => $salesReport->user_id,
-                'type' => 1,
-                'inv_type' => $request->inv_type,
-                'sales_ledger_book_id' => $ledgerBook->id,
-                'zsm_id' => $salesReport->zsm_id,
-                'sso_id' => $salesReport->sso_id,
-                'so_id' => $salesReport->so_id,
-                'customer_id' => $customer_id,
-                'invoice_date' => $request->invoice_date,
-                'discount' => $request->discount + $productDiscount,
-                'discount_amt' =>  $request->discount_amt,
-                'amt' => round($request->net_amt),
-            ];
-            // SalesReport::create($report);
+            if(setting('inv_officer_id') == 1){
+                $ledgerBook = SalesLedgerBook::create($ledgerBook);
+                $salesReport = SalesReport::where('user_id', $request->user_id)->first();
+                $productDiscount = array_sum($request->pro_dis) / count($invoiceArr);
+                $report = [
+                    'tran_id' => $transaction_id,
+                    'user_id' => $salesReport->user_id,
+                    'type' => 1,
+                    'inv_type' => $request->inv_type,
+                    'sales_ledger_book_id' => $ledgerBook->id,
+                    'zsm_id' => $salesReport->zsm_id,
+                    'sso_id' => $salesReport->sso_id,
+                    'so_id' => $salesReport->so_id,
+                    'customer_id' => $customer_id,
+                    'invoice_date' => $request->invoice_date,
+                    'discount' => $request->discount + $productDiscount,
+                    'discount_amt' =>  $request->discount_amt,
+                    'amt' => round($request->net_amt),
+                ];
+                SalesReport::create($report);
+            }
 
             if ($request->note) {
                 $sampleNote = [
@@ -209,7 +211,7 @@ class SalesInvoiceCashController extends Controller
             }
 
             try {
-                if((CompanyInfo::whereId(1)->first('sms_service')->sms_service == 1) && (env('SMS_API') != "")){
+                if((setting('inv_sms_service') == 1) && (env('SMS_API') != "")){
                     $customerPhone = User::find($customer_id)->phone;
                     $am = round($request->net_amt);
                     $pD = bdDate($request->payment_date);

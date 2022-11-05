@@ -15,13 +15,13 @@ class CreateSalesInvoicesTable extends Migration
     {
         Schema::create('sales_invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onUpdate('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade');
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('invoice_no');
             $table->string('challan_no');
-            $table->tinyInteger('inv_cancel')->comment('1=Cancel,2=Reinvoice');
+            $table->tinyInteger('inv_cancel')->default(0)->comment('1=Cancel,2=Reinvoice');
             $table->tinyInteger('type')->comment('1=Cash,3=Credit,5=sample');
             $table->tinyInteger('r_type')->nullable()->comment('1=expired,2=unsold,3=damage');
             $table->unsignedBigInteger('size')->comment('Weight/id');;

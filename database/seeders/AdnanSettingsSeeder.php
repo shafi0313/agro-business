@@ -24,7 +24,6 @@ class AdnanSettingsSeeder extends Seeder
         Setting(['app_url'=> 'https://newadnanagrovet.com'])->save();
         Setting(['app_description'=> ''])->save();
         Setting(['app_keyword'=> 'adnan, Agro, adnan Agro, New Adnan Agrovet Ltd'])->save();
-        // Setting(['credit_footer'=> ''])->save();
 
         Setting(['inv_header_address'=> 'Uttara, Dhaka.'])->save();
         Setting(['inv_footer'=> '<p>Office: Uttara, Dhaka. <i class="fas fa-mobile-alt"> +8801771 341888. <i class="far fa-envelope"></i> contact@newadnanagrovet.com, <i class="fas fa-globe-asia"></i> www.newadnanagrovet.com</p>.'])->save();
@@ -36,14 +35,12 @@ class AdnanSettingsSeeder extends Seeder
         Setting(['email_2'=> ''])->save();
         Setting(['map'=> 'https://www.google.com/maps/place/Alamdanga+Upazila/@23.7636748,88.9389079,14.5z/data=!4m5!3m4!1s0x39fec84f2e2dc219:0x3d5527c829fc16e!8m2!3d23.7625846!4d88.9438166'])->save();
 
-        // AppContact
-        // Setting(['country'=> 'Bangladesh'])->save();
-        // Setting(['division'=> 'Dhaka'])->save();
-        // Setting(['sub_division'=> 'Dhaka'])->save();
-        // Setting(['city'=> 'Dhaka'])->save();
-        // Setting(['postal_code'=> '1200'])->save();
-        // Setting(['street'=> 'Lorem Ipsum 1234'])->save();
-        // Setting(['contact_description'=> ''])->save();
+
+
+        Setting(['inv_stock_check'=> '0'])->save();
+        Setting(['inv_officer_id'=> '0'])->save();
+        Setting(['inv_sms_service'=> '0'])->save();
+
 
         Setting(['facebook'=> 'https://www.facebook.com/adnanagrovet'])->save();
         // Setting(['twitter'=> 'tarikmanoar')])->save();

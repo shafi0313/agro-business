@@ -64,6 +64,7 @@
                         <form action="{{ route('sales-invoice-cash.store') }}" method="post">
                          @csrf
                             <input type="hidden" name="customer_id" id="customer_id" value="{{$customer->id}}">
+                            <input type="hidden" name="inv_stock_check" id="inv_stock_check" value="{{setting('inv_stock_check')}}">
     {{--__________________________________Invoice Info Start__________________________________--}}
                         <style>
                             .col {
@@ -117,18 +118,19 @@
                                     </div>
                                 </div>
 
+                                @if (setting('inv_officer_id') == 1)
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="">Officer Id <span class="t_r">*</span></label>
-                                        <select class="form-control form-control-sm" name="user_id" required>
+                                        <select class="form-control form-control-sm" name="user_id"  {{ setting('inv_officer_id')==1?'required':'' }}>
                                             <option selected value disabled>Select</option>
-                                            <option value="1">Select</option>
                                             @foreach ($userId as $id)
                                                 <option value="{{$id->user_id}}">{{$id->user_id}}{{ $id->userForSR->tmm_so_id }}=>{{ $id->userForSR->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
+                                @endif
 
                                 <div class="col">
                                     <div class="form-group">
@@ -165,8 +167,8 @@
                                         <input type="hidden" id="sub-total-temp">
                                         <input type="hidden" id="size_text">
                                         <input type="hidden"    id="product_id"  class="autocomplete_txt" />
-                                        <td><input type="text"  id="product_name" data-type="product" class="form-control form-control-sm autocomplete_txt" style="width:200px" placeholder="" /></td>
-                                        <td><input type="text"  id="group_name"  class="form-control form-control-sm autocomplete_txt" style="min-width:200px" /></td>
+                                        <td><input type="text"  id="product_name" data-type="product" class="form-control form-control-sm autocomplete_txt" style="width:200px" placeholder="Search" /></td>
+                                        <td><input type="text"  id="group_name"  class="form-control form-control-sm autocomplete_txt" style="min-width:200px" readonly></td>
                                         <td><select id="sizee"  class="form-control form-control-sm" style="width:100px" ></select></td>
                                         <td><span id="msg" style="color: red"></span><input type="number" id="qty" class="form-control form-control-sm qty" placeholder="Quantity" /></td>
                                         <td><input type="number" id="price"  data-type="price" class="form-control form-control-sm qty" placeholder="Rate" /></td>
@@ -220,7 +222,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="7">Discount: <span class="t_r">*</span></td>
-                                        <td colspan="2"><input required type="number" id="discountAmt" step="any" name="discount" class="form-control form-control-sm" style="width:50%; display:inline-block"><input style="width:50%;display:inline-block" type="number" name="discount_amt" id="discountTk" step="any" class="form-control form-control-sm"></td>
+                                        <td colspan="2"><input required type="number" id="discountAmt" step="any" name="discount" class="form-control form-control-sm" style="width:50%; display:inline-block" placeholder="%"><input placeholder="Amount" style="width:50%;display:inline-block" type="number" name="discount_amt" id="discountTk" step="any" class="form-control form-control-sm"></td>
                                     </tr>
                                     <tr>
                                         <td colspan="7">Net Payable:</td>
@@ -344,10 +346,11 @@
                 $('#qty').focus();
                 return false;
             }
-            if (checkStock != '') {
+            if ($('#inv_stock_check').val() == 1 && checkStock != '') {
                 toast('error', 'Out Of stock');
                 return false;
             }
+
             let proDiscount = Number((quantity*rate_per_qty)*pro_dis/100);
             let totalamount =  quantity*rate_per_qty - proDiscount;
             let html = '<tr>';
@@ -469,22 +472,25 @@
             $('#sub-total-temp').val(result);
 
             total_price();
-            $.ajax({
-                url:'{{ route("productStockCheck") }}',
-                type:"get",
-                data: {
-                    product_id: product_id,
-                    size_id: size_id
-                    },
-                success:function (res) {
-                    res = $.parseJSON(res);
-                    if(qty > res.quantity){
-                        $('#msg').html("In Stock " + (res.quantity));
-                    }else if(qty < res.quantity){
-                        $('#msg').html('');
+
+            if($('#inv_stock_check').val() == 1){
+                $.ajax({
+                    url:'{{ route("productStockCheck") }}',
+                    type:"get",
+                    data: {
+                        product_id: product_id,
+                        size_id: size_id
+                        },
+                    success:function (res) {
+                        res = $.parseJSON(res);
+                        if(qty > res.quantity){
+                            $('#msg').html("In Stock " + (res.quantity));
+                        }else if(qty < res.quantity){
+                            $('#msg').html('');
+                        }
                     }
-                }
-            })
+                })
+            }
         });
 
         // Total Price
