@@ -19,7 +19,7 @@
   <body>
     <div  class="page">
         <div class="print_page" id="print_page">
-            <div class="bg_img"><img src="{{asset('images/icons/company_bg.png')}}" alt=""></div>
+            <div class="bg_img"><img src="{{asset(setting('app_logo'))}}" alt=""></div>
             <div class="header" >
                 <div class="heater_text">
                     <ul style="margin: 0; padding:0">

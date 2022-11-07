@@ -13,39 +13,39 @@ class AddTranId extends Migration
      */
     public function up()
     {
-        Schema::table('accounts', function (Blueprint $table) {
-            $table->string('tran_id', 64)->after('id')->index()->nullable();
-        });
-        Schema::table('sales_invoices', function (Blueprint $table) {
-            $table->string('tran_id', 64)->after('id')->index()->nullable();
-        });
-        Schema::table('sales_ledger_books', function (Blueprint $table) {
-            $table->string('tran_id', 64)->after('id')->index()->nullable();
-        });
-        Schema::table('sales_reports', function (Blueprint $table) {
-            $table->string('tran_id', 64)->after('id')->index()->nullable();
-        });
+        // Schema::table('accounts', function (Blueprint $table) {
+        //     $table->string('tran_id', 64)->after('id')->index()->nullable();
+        // });
+        // Schema::table('sales_invoices', function (Blueprint $table) {
+        //     $table->string('tran_id', 64)->after('id')->index()->nullable();
+        // });
+        // Schema::table('sales_ledger_books', function (Blueprint $table) {
+        //     $table->string('tran_id', 64)->after('id')->index()->nullable();
+        // });
+        // Schema::table('sales_reports', function (Blueprint $table) {
+        //     $table->string('tran_id', 64)->after('id')->index()->nullable();
+        // });
         Schema::table('purchase_ledger_books', function (Blueprint $table) {
             $table->string('tran_id', 64)->after('id')->index()->nullable();
         });
         Schema::table('purchase_invoices', function (Blueprint $table) {
             $table->string('tran_id', 64)->after('id')->index()->nullable();
         });
-        Schema::table('invoice_dues', function (Blueprint $table) {
-            $table->string('tran_id', 64)->after('id')->index()->nullable();
-        });
-        Schema::table('sample_notes', function (Blueprint $table) {
-            $table->string('tran_id', 64)->after('id')->index()->nullable();
-        });
-        Schema::table('stocks', function (Blueprint $table) {
-            $table->string('tran_id', 64)->after('id')->index()->nullable();
-        });
-        Schema::table('is_returns', function (Blueprint $table) {
-            $table->string('tran_id', 64)->after('id')->index()->nullable();
-        });
-        Schema::table('production_cals', function (Blueprint $table) {
-            $table->string('tran_id', 64)->after('id')->index()->nullable();
-        });
+        // Schema::table('invoice_dues', function (Blueprint $table) {
+        //     $table->string('tran_id', 64)->after('id')->index()->nullable();
+        // });
+        // Schema::table('sample_notes', function (Blueprint $table) {
+        //     $table->string('tran_id', 64)->after('id')->index()->nullable();
+        // });
+        // Schema::table('stocks', function (Blueprint $table) {
+        //     $table->string('tran_id', 64)->after('id')->index()->nullable();
+        // });
+        // Schema::table('is_returns', function (Blueprint $table) {
+        //     $table->string('tran_id', 64)->after('id')->index()->nullable();
+        // });
+        // Schema::table('production_cals', function (Blueprint $table) {
+        //     $table->string('tran_id', 64)->after('id')->index()->nullable();
+        // });
     }
 
     /**

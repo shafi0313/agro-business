@@ -15,6 +15,7 @@ class CreatePurchaseLedgerBooksTable extends Migration
     {
         Schema::create('purchase_ledger_books', function (Blueprint $table) {
             $table->id();
+            $table->string('tran_id', 64)->after('id')->index()->nullable();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade');
             $table->unsignedBigInteger('supplier_id');
             $table->foreign('supplier_id')->references('id')->on('users')->onUpdate('cascade');
@@ -27,13 +28,14 @@ class CreatePurchaseLedgerBooksTable extends Migration
             $table->string('challan_no')->nullable();
             $table->decimal('purchase_amt',14,2)->default(0);
             $table->decimal('discount',6,2)->nullable();
+            $table->decimal('discount_amt',8,2)->default(0)->nullable();
             $table->decimal('net_amt',14,2)->nullable();
             $table->decimal('payment',14,2)->nullable();
             $table->string('user_type')->nullable();
             $table->date('invoice_date')->nullable();
             $table->date('payment_date')->nullable();
             $table->date('delivery_date')->nullable();
-            $table->unsignedBigInteger('production_id');
+            $table->unsignedBigInteger('production_id')->nullable();
             $table->boolean('inv_cancel')->default(0);
             $table->timestamps();
             $table->softDeletes();

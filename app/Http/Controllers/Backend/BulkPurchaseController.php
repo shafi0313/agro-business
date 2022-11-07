@@ -27,7 +27,7 @@ class BulkPurchaseController extends Controller
         if ($error = $this->authorize('bulk-purchase-purchase')) {
             return $error;
         }
-        $userId = User::select(['id','tmm_so_id','role','name'])->where('role', 1)->where('name', '!=', 'Developer')->orwhere('role', 5)->get();
+        $userId = User::select(['id','tmm_so_id','role','name'])->whereIn('role', [1,5])->where('name', '!=', 'Developer')->get();
         $supplier = User::select(['id','name','email','phone','address'])->find($id);
         return view('admin.bulk.purchase.create', compact('supplier', 'userId', ));
     }

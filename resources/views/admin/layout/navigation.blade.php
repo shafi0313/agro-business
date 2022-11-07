@@ -622,6 +622,43 @@
                 </li>
                 {{-- ________________________ Factory End ________________________ --}}
 
+                {{-- ________________________ Product Purchase Start ________________________ --}}
+                <li
+                    class="nav-item {{ activeNav(['product-purchase.*', 'purchaseProduct.*', 'salesLedgerBook.*', 'report.salesAndStock.*']) }}">
+                    <a data-toggle="collapse" href="#purchaseProduct">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <p>@lang('nav.purchase')</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{ openNav(['product-purchase.*', 'purchaseProduct.*', 'salesLedgerBook.*', 'report.salesAndStock.*']) }}"
+                        id="purchaseProduct">
+                        <ul class="nav nav-collapse">
+                            <li class="{{ activeSubNav(['product-purchase.*', 'purchaseProduct.*']) }}">
+                                <a href="{{ route('product-purchase.index') }}">
+                                    <span class="sub-item">Product</span>
+                                </a>
+                            </li>
+                            <li
+                                class="{{ activeSubNav(['sales-invoice-cash-return.*', 'salesInvoiceCashReturn.*']) }}">
+                                <a href="{{ route('sales-invoice-cash-return.index') }}">
+                                    <span class="sub-item">Sales Return</span>
+                                </a>
+                            </li>
+                            <li class="{{ activeSubNav('salesLedgerBook.*') }}">
+                                <a href="{{ route('salesLedgerBook.index') }}">
+                                    <span class="sub-item">Ledger Book</span>
+                                </a>
+                            </li>
+                            <li class="{{ activeSubNav('report.salesAndStock.*') }}">
+                                <a href="{{ route('report.salesAndStock.selectDate') }}">
+                                    <span class="sub-item">@lang('nav.report')</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                {{-- Product Purchase End --}}
+
 
                 {{-- ________________________ Sales Start ________________________ --}}
                 <li
@@ -665,6 +702,7 @@
                         </ul>
                     </div>
                 </li>
+                {{-- Sales End --}}
 
                 <li class="nav-item {{ $p == 'report' ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#report">

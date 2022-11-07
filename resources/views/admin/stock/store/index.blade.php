@@ -99,8 +99,8 @@
                                                     @foreach ($stockGroup->groupBy('product_pack_size_id') as $stockSubGroup)
                                                     @php $stockSub = $stockSubGroup->first() @endphp
                                                     <tr>
-                                                        {{-- Opening + Production --}}
-                                                        <td>{{ $stockSubGroup->where('stock_close',0)->whereIn('type', ['0','11'])->sum('quantity') }}</td>
+                                                        {{-- Total Product Opening + Production --}}
+                                                        <td>{{ $stockSubGroup->where('stock_close',0)->whereIn('type', ['0','11','30'])->sum('quantity') }}</td>
                                                     </tr>
                                                     @endforeach
                                                 </table>
@@ -147,7 +147,7 @@
                                                     @php $stockSub = $stockSubGroup->first() @endphp
                                                     <tr>
                                                         {{-- Closing --}}
-                                                        <td>{{ $stockSubGroup->where('stock_close',0)->whereIn('type', ['0','11','20','21'])->sum('quantity') - $stockSubGroup->where('stock_close',0)->whereIn('type', ['1','3','5'])->sum('quantity') }}</td>
+                                                        <td>{{ $stockSubGroup->where('stock_close',0)->whereIn('type', ['0','11','20','21','30'])->sum('quantity') - $stockSubGroup->where('stock_close',0)->whereIn('type', ['1','3','5'])->sum('quantity') }}</td>
                                                     </tr>
                                                     @endforeach
                                                 </table>
@@ -198,7 +198,7 @@
                                                     @foreach ($stockGroup->groupBy('product_pack_size_id') as $stockSubGroup)
                                                     @php $stockSub = $stockSubGroup->first() @endphp
                                                     <tr>
-                                                        <td>{{ ($stockSubGroup->where('stock_close',0)->whereIn('type', ['0','11'])->sum('quantity') - $stockSubGroup->where('stock_close',0)->whereIn('type', ['1','5'])->sum('quantity')) * $stockSub->packSize->cash }}</td>
+                                                        <td>{{ ($stockSubGroup->where('stock_close',0)->whereIn('type', ['0','11','30'])->sum('quantity') - $stockSubGroup->where('stock_close',0)->whereIn('type', ['1','5'])->sum('quantity')) * $stockSub->packSize->cash }}</td>
                                                         {{-- <td class="text-center no-print"><input type="text" id="totalr" name="totalr" class="form-control form-control-sm"></td> --}}
                                                     </tr>
                                                     @endforeach

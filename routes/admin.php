@@ -53,6 +53,7 @@ use App\Http\Controllers\Backend\ProductLicenseController;
 use App\Http\Controllers\Backend\SalesStatementController;
 use App\Http\Controllers\Backend\AccountReceivedController;
 use App\Http\Controllers\Backend\OfficeIncomeCatController;
+use App\Http\Controllers\Backend\PurchaseProductController;
 use App\Http\Controllers\Backend\SalesLedgerBookController;
 use App\Http\Controllers\Backend\SendToRepackingController;
 use App\Http\Controllers\Backend\WithdrawDepositController;
@@ -410,7 +411,7 @@ Route::post('/production-report', [SendToProductionController::class, 'report'])
 
 Route::get('/production-report/delete/{id}', [SendToProductionController::class, 'productionDelete'])->name('production.productionDelete');
 
-// Repack Check and accpted
+// Repack Check and accepted
 Route::resource('/repack-check', RepackUnitController::class);
 Route::get('/repack-unit/check/show', [RepackUnitController::class, 'showAccpet'])->name('repackingCheck.showAccpet');
 Route::get('/repack-unit/check/show/{challan_no}', [RepackUnitController::class, 'showInvoiceAccpet'])->name('repackingCheck.showInvoiceAccpet');
@@ -513,6 +514,31 @@ Route::prefix('sales-of-cash')->group(function () {
     Route::get('/select-date', [SalesInvoiceCashController::class, 'selectDate'])->name('salesInvoiceCash.selectDate');
     Route::post('/show/all/challan/by-date', [SalesInvoiceCashController::class, 'allInvoiceByDate'])->name('salesInvoiceCash.allInvoiceByDate');
     Route::get('/show/all/challan/by-date/{challan_no}', [SalesInvoiceCashController::class, 'allInvoiceShowByDate'])->name('salesInvoiceCash.allInvoiceShowByDate');
+});
+
+// Product Purchase
+Route::resource('/product-purchase', PurchaseProductController::class);
+Route::controller(PurchaseProductController::class)->prefix('/product-purchase')->group(function () {
+    Route::get('/invoice/create/{id}', 'createId')->name('purchaseProduct.Create');
+    Route::get('/invoice/eit/{user_id}/{challan_no}', 'edit')->name('purchaseProduct.edit');
+    Route::get('/invoice/delete/{id}/{challan_no}', 'delete')->name('purchaseProduct.delete');
+    Route::post('/invoice/update', 'update')->name('purchaseProduct.update');
+    Route::get('/invoice/cancelInv/{challan_no}', 'cancelInv')->name('purchaseProduct.cancelInv');
+    Route::post('/invoice/addUpdate', 'addUpdate')->name('purchaseProduct.addUpdate');
+    // Route::get('/invoice/show-invoive/{customer_id}/{invoice_no}', 'showInvoice')->name('purchaseProduct.show');
+    // Route::DELETE('/invoice/show-invoive/{invoice_no}', 'destroyInvoice')->name('purchaseProduct.destroy');
+
+    // Route::get('/invoice/print/challan/{customer_id}/{invoice_no}', 'printChallan')->name('purchaseProduct.printChallan');
+    // Route::get('/invoice/print/invoice/{customer_id}/{invoice_no}', 'printInvoice')->name('purchaseProduct.printInvoice');
+    // Route::get('/sales-invoice/due', 'dueInvoice')->name('salesInvoice.due');
+
+    // // All
+    // Route::get('/all/show', 'allInvoice')->name('purchaseProduct.allInvoice');
+    // Route::get('/all/show/{challan_no}', 'allInvoiceShow')->name('purchaseProduct.allInvoiceShow');
+    // // By Date
+    // Route::get('/select-date', 'selectDate')->name('purchaseProduct.selectDate');
+    // Route::post('/show/all/challan/by-date', 'allInvoiceByDate')->name('purchaseProduct.allInvoiceByDate');
+    // Route::get('/show/all/challan/by-date/{challan_no}', 'allInvoiceShowByDate')->name('purchaseProduct.allInvoiceShowByDate');
 });
 
 // Sales Stock Report

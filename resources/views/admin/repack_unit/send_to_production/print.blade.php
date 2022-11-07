@@ -19,7 +19,7 @@
     <div class="page">
         <div class="print_page" id="print_page">
             {{-- <div class="print_date">{{date('d/m/Y h:i:sa')}}</div> --}}
-            <div class="bg_img"><img src="{{asset('images/icons/company_bg.png')}}" alt=""></div>
+            <div class="bg_img"><img src="{{asset(setting('app_logo'))}}" alt=""></div>
             <div class="header" >
                 <div class="heater_text">
                     {{-- <div class="top_title">ফসলের মাঠে কৃষকের বিশ্বস্ত সহযোগী</div> --}}
