@@ -12,6 +12,7 @@ return [
     'bulk'     => 'বাল্ক',
     'repack-unit'=> 'রিপ্যাক ইউনিট',
     'store'     => 'স্টোর',
+    'purchase'     => 'ক্রয়',
     'sales'     => 'বিক্রয়',
     'report'     => 'রিপোর্ট',
     'trash'     => 'ট্র্যাশ',

@@ -12,6 +12,7 @@ return [
     'bulk'     => 'Bulk',
     'repack-unit' => 'Repack Unit',
     'store'     => 'Store',
+    'purchase'     => 'Purchase',
     'sales'     => 'Sales',
     'report'     => 'Report',
     'trash'     => 'Trash',
