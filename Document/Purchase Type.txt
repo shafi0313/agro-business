@@ -13,11 +13,12 @@
 18 = bulk sales credit
 19 = bulk return credit
 
- 
-
-
 15 = Label Send to Repack Unit
 25 = payment
+
+Product Purchase
+30 = Purchase
+31 = Purchase Return
 __________________________________
 1 = Product Stock
 2 = Bulk Stock
@@ -43,6 +44,9 @@ Tran_type Account
 1=Payment
 2=Receve
 3=previous
+
+
+PPU = Product Purchase
 
 
 
