@@ -155,7 +155,7 @@ class PurchaseProductController extends Controller
                 toast('Sales Invoice Successfully Inserted', 'success');
                 return redirect()->route('product-purchase.show', $supplier_id);
             } catch (\Exception $ex) {
-                return $ex->getMessage();
+                // return $ex->getMessage();
                 DB::rollBack();
                 toast('Sales Invoice Inserted Failed', 'error');
                 return back();

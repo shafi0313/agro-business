@@ -223,7 +223,7 @@ class SalesInvoiceCashController extends Controller
                 toast('Sales Invoice Successfully Inserted', 'success');
                 return redirect()->route('sales-invoice-cash.show', $customer_id);
             } catch (\Exception $ex) {
-                return $ex->getMessage();
+                // return $ex->getMessage();
                 DB::rollBack();
                 toast('Sales Invoice Inserted Failed', 'error');
                 return back();

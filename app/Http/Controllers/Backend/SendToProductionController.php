@@ -196,7 +196,7 @@ class SendToProductionController extends Controller
             return redirect()->route('bulkTracking.showInvoice');
         } catch (\Exception $ex) {
             DB::rollBack();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             toast('Failed','error');
             return back();
         }
