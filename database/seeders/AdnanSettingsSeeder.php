@@ -35,11 +35,11 @@ class AdnanSettingsSeeder extends Seeder
         Setting(['email_2'=> ''])->save();
         Setting(['map'=> 'https://www.google.com/maps/place/Alamdanga+Upazila/@23.7636748,88.9389079,14.5z/data=!4m5!3m4!1s0x39fec84f2e2dc219:0x3d5527c829fc16e!8m2!3d23.7625846!4d88.9438166'])->save();
 
-
-
-        Setting(['inv_stock_check'=> '0'])->save();
-        Setting(['inv_officer_id'=> '0'])->save();
-        Setting(['inv_sms_service'=> '0'])->save();
+        Setting(['inv_stock_check'=> 1])->save();
+        Setting(['inv_officer_id'=> 1])->save();
+        Setting(['inv_sms_service'=> 1])->save();
+        Setting(['dashboard_report'=> 1])->save();
+        Setting(['product_purchase'=> 1])->save();
 
 
         Setting(['facebook'=> 'https://www.facebook.com/adnanagrovet'])->save();

@@ -17,8 +17,10 @@
 25 = payment
 
 Product Purchase
-30 = Purchase
-31 = Purchase Return
+30 = Purchase Cash
+31 = Purchase Return Cash
+32 = Purchase Credit
+33 = Purchase Return Credit
 __________________________________
 1 = Product Stock
 2 = Bulk Stock
@@ -35,7 +37,7 @@ __________________________________
 ____________________________
 Stock
 1 = Product
-4 
+4
 2,3 = Bulk
 
 5 = store

@@ -36,17 +36,14 @@ class MondolSettingsSeeder extends Seeder
         Setting(['email_2'=> 'info@mondolag.com'])->save();
         Setting(['map'=> 'https://www.google.com/maps/place/Alamdanga+Upazila/@23.7636748,88.9389079,14.5z/data=!4m5!3m4!1s0x39fec84f2e2dc219:0x3d5527c829fc16e!8m2!3d23.7625846!4d88.9438166'])->save();
 
-        // AppContact
-        // Setting(['app_phone'=> '+8801711-000000'])->save();
-        // Setting(['app_email'=> 'support@demo.sss.edu.bd'])->save();
-        // Setting(['country'=> 'Bangladesh'])->save();
-        // Setting(['division'=> 'Dhaka'])->save();
-        // Setting(['sub_division'=> 'Dhaka'])->save();
-        // Setting(['city'=> 'Dhaka'])->save();
-        // Setting(['postal_code'=> '1200'])->save();
-        // Setting(['street'=> 'Lorem Ipsum 1234'])->save();
-        // Setting(['contact_description'=> ''])->save();
-        // Setting(['facebook'=> env('FACEBOOK_URL', 'tarikmanoar')])->save();
+        Setting(['inv_stock_check'=> 1])->save();
+        Setting(['inv_officer_id'=> 1])->save();
+        Setting(['inv_sms_service'=> 1])->save();
+        Setting(['dashboard_report'=> 0])->save();
+        Setting(['product_purchase'=> 0])->save();
+
+
+        // Setting(['facebook'=> 'https://www.facebook.com/adnanagrovet'])->save();
         // Setting(['twitter'=> env('TWITTER_URL', 'tarikmanoar')])->save();
         // Setting(['youtube'=> env('YOUTUBE_URL', 'tarikmanoar')])->save();
         // Setting(['instagram'=> env('INSTAGRAM_URL', 'tarikmanoar')])->save();

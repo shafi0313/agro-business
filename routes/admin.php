@@ -70,6 +70,7 @@ use App\Http\Controllers\Backend\PurchaseLedgerBookController;
 use App\Http\Controllers\Backend\OfficeExpenseReportController;
 use App\Http\Controllers\Backend\LabelSendToRepackingController;
 use App\Http\Controllers\Backend\Report\SalesAndStockController;
+use App\Http\Controllers\Backend\ProPurchaseLedgerBookController;
 use App\Http\Controllers\Backend\SalesInvoiceCashReturnController;
 
 
@@ -594,6 +595,16 @@ Route::get('/purchase-ledger-book/show-invoice-all/{supplier_id}', [PurchaseLedg
 
 Route::get('/purchase-ledger-book/all', [PurchaseLedgerBookController::class, 'allShowInvoice'])->name('purchaseLedgerBook.allShowInvoice');
 
+// Product Purchase Ledger Book
+Route::controller(ProPurchaseLedgerBookController::class)->prefix('/product-purchase-ledger-book')->group(function (){
+    Route::get('', 'index')->name('proPurchaseLedgerBook.index');
+    // Route::post('/show-invoice/{id}', 'ledgerUpdate')->name('proPurchaseLedgerBook.ledgerUpdate');
+    Route::get('/select-date/{supplier_id}', 'ledgerBookSelectDate')->name('proPurchaseLedgerBook.SelectDate');
+    Route::get('/show-invoice', 'showInvoice')->name('proPurchaseLedgerBook.showInvoice');
+    Route::get('/show-invoice-all/{supplier_id}', 'indAllLedgerBook')->name('proPurchaseLedgerBook.indAllLedgerBook');
+    Route::get('/all', 'allShowInvoice')->name('proPurchaseLedgerBook.allShowInvoice');
+
+});
 
 // Sales Ledger Book
 Route::controller(SalesLedgerBookController::class)->prefix('sales-ledger-book')->name('salesLedgerBook.')->group(function(){

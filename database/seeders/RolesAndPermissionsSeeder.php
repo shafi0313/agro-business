@@ -302,6 +302,23 @@ class RolesAndPermissionsSeeder extends Seeder
                 'sales-sample-challan',
                 'sales-sample-invoice',
             ],
+            'product-purchase'=>[
+                'product-purchase-manage',
+                'product-purchase-purchase',
+                'product-purchase-show',
+                'product-purchase-reinvoice',
+                'product-purchase-cancel-invoice',
+                'product-purchase-all-challan-and-invoice',
+                'product-purchase-all-challan-and-invoice-by-date',
+                'product-purchase-challan',
+                'product-purchase-invoice',
+            ],
+            'product-purchase-ledger-book'=>[
+                'product-purchase-ledger-book-manage',
+                'product-purchase-ledger-book-show-all',
+                'product-purchase-ledger-book-show-by-date',
+                'product-purchase-ledger-book-all-ledger-book',
+            ],
             'sales-sales'=>[
                 'sales-sales-manage',
                 'sales-sales-sales',

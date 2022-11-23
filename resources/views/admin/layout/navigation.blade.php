@@ -64,7 +64,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            <li class="{{ $sm == 'companyInfoAdmin' ? 'activeSub' : '' }}">
+                            {{-- <li class="{{ $sm == 'companyInfoAdmin' ? 'activeSub' : '' }}">
                                 <a href="{{ route('admin.companyInfo.adminIndex') }}">
                                     <span class="sub-item">Company Info Das.</span>
                                 </a>
@@ -73,7 +73,7 @@
                                 <a href="{{ route('admin.companyInfo.frontIndex') }}">
                                     <span class="sub-item">Company Info Front.</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
@@ -621,16 +621,16 @@
                     </div>
                 </li>
                 {{-- ________________________ Factory End ________________________ --}}
-
+@if (setting('product_purchase') == 1)
                 {{-- ________________________ Product Purchase Start ________________________ --}}
                 <li
-                    class="nav-item {{ activeNav(['product-purchase.*', 'purchaseProduct.*', 'salesLedgerBook.*', 'report.salesAndStock.*']) }}">
+                    class="nav-item {{ activeNav(['product-purchase.*', 'purchaseProduct.*', 'purchaseLedgerBook.*']) }}">
                     <a data-toggle="collapse" href="#purchaseProduct">
                         <i class="fas fa-file-invoice-dollar"></i>
                         <p>@lang('nav.purchase')</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ openNav(['product-purchase.*', 'purchaseProduct.*', 'salesLedgerBook.*', 'report.salesAndStock.*']) }}"
+                    <div class="collapse {{ openNav(['product-purchase.*', 'purchaseProduct.*', 'purchaseLedgerBook.*']) }}"
                         id="purchaseProduct">
                         <ul class="nav nav-collapse">
                             <li class="{{ activeSubNav(['product-purchase.*', 'purchaseProduct.*']) }}">
@@ -638,14 +638,14 @@
                                     <span class="sub-item">Product</span>
                                 </a>
                             </li>
-                            <li
+                            {{-- <li
                                 class="{{ activeSubNav(['sales-invoice-cash-return.*', 'salesInvoiceCashReturn.*']) }}">
                                 <a href="{{ route('sales-invoice-cash-return.index') }}">
                                     <span class="sub-item">Sales Return</span>
                                 </a>
-                            </li>
-                            <li class="{{ activeSubNav('salesLedgerBook.*') }}">
-                                <a href="{{ route('salesLedgerBook.index') }}">
+                            </li> --}}
+                            <li class="{{ activeSubNav('purchaseLedgerBook.*') }}">
+                                <a href="{{ route('purchaseLedgerBook.index') }}">
                                     <span class="sub-item">Ledger Book</span>
                                 </a>
                             </li>
@@ -658,6 +658,7 @@
                     </div>
                 </li>
                 {{-- Product Purchase End --}}
+                @endif
 
 
                 {{-- ________________________ Sales Start ________________________ --}}

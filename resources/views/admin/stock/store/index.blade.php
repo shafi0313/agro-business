@@ -100,7 +100,7 @@
                                                     @php $stockSub = $stockSubGroup->first() @endphp
                                                     <tr>
                                                         {{-- Total Product Opening + Production --}}
-                                                        <td>{{ $stockSubGroup->where('stock_close',0)->whereIn('type', ['0','11','30'])->sum('quantity') }}</td>
+                                                        <td>{{ $stockSubGroup->where('stock_close',0)->whereIn('type', ['0','11','30','32'])->sum('quantity') }}</td>
                                                     </tr>
                                                     @endforeach
                                                 </table>
@@ -147,7 +147,7 @@
                                                     @php $stockSub = $stockSubGroup->first() @endphp
                                                     <tr>
                                                         {{-- Closing --}}
-                                                        <td>{{ $stockSubGroup->where('stock_close',0)->whereIn('type', ['0','11','20','21','30'])->sum('quantity') - $stockSubGroup->where('stock_close',0)->whereIn('type', ['1','3','5'])->sum('quantity') }}</td>
+                                                        <td>{{ $stockSubGroup->where('stock_close',0)->whereIn('type', ['0','11','20','21','30','32'])->sum('quantity') - $stockSubGroup->where('stock_close',0)->whereIn('type', ['1','3','5'])->sum('quantity') }}</td>
                                                     </tr>
                                                     @endforeach
                                                 </table>

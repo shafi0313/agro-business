@@ -16,7 +16,7 @@ class CreateAccountsTable extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('tmm_so_id');
+            $table->unsignedBigInteger('tmm_so_id')->nullable();
             $table->foreign('tmm_so_id')->references('id')->on('users')->onUpdate('cascade');
             $table->unsignedBigInteger('user_bank_ac_id')->nullable();
             $table->boolean('exp_type')->nullable()->comment('1=Office,2=auhor,3=other,exp/income');

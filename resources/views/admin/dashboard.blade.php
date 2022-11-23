@@ -25,7 +25,7 @@
                     </div>
                 </div> --}}
                 </div>
-                @if (env('DASHBOARD_REPORTS') == 1)
+                @if (setting('dashboard_report') == 1)
                     @role('admin|account')
                         <div class="row">
                             <div class="col-md-12">
