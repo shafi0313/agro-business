@@ -60,7 +60,7 @@ class UserBankAcController extends Controller
             'credit' => $request->previous,
             'note' => 'Previous',
             'cheque_no' => $request->cheque_no,
-            'date' => $request->date,
+            'date' => now(),
         ];
 
         Account::create($account);
@@ -115,7 +115,7 @@ class UserBankAcController extends Controller
             'credit' => $request->previous,
             'note' => 'Previous',
             'cheque_no' => $request->cheque_no,
-            'date' => $request->date,
+            'date' => now(),
         ];
         Account::create($account);
 
