@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SalesLedgerBook extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $guarded = [];
+    protected $guarded = ['id'];
     protected $dates = ['deleted_at'];
 
     public function customer()

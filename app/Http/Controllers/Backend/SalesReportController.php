@@ -14,7 +14,7 @@ class SalesReportController extends Controller
         if ($error = $this->authorize('employee-report-manage')) {
             return $error;
         }
-        $users = EmployeeInfo::where('employee_main_cat_id',11)->orwhere('employee_main_cat_id', 12)->orwhere('employee_main_cat_id', 13)->orderby('employee_main_cat_id','ASC')->get();
+        $users = EmployeeInfo::whereIn('employee_main_cat_id',[11,12,13])->orderby('employee_main_cat_id','ASC')->get();
         return view('admin.sales_report.cash.index', compact('users'));
     }
 

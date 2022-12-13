@@ -28,7 +28,7 @@
                 Dhaka Office: House # 14, Road # 3, <br> Block # E, Extended Rupnagar (R/A) Sector # 12, Mirpur, Dhaka-1216.
                 <i class="far fa-envelope"></i> r.tuhin@icloud.com, <i class="fas fa-globe-asia"></i> www.mondolag.com
         </p> --}}
-        {{ setting('inv_footer') }}
+        {!! setting('inv_footer') !!}
     </div>
 </footer>
 </div>

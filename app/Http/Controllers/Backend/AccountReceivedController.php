@@ -31,11 +31,10 @@ class AccountReceivedController extends Controller
         if ($error = $this->authorize('collection-add')) {
             return $error;
         }
-        // $tmmSoIds = EmployeeInfo::with(['user' => fn ($q) => $q->select(['id','tmm_so_id','name'])])->whereIn('employee_main_cat_id',[12,13])->get(['user_id']);
-        $tmmSoIds = User::select(['id','tmm_so_id','name'])->whereIn('role',[1,5])->where('name', '!=', 'Developer')->get();
+        $tmmSoIds  = User::select(['id','tmm_so_id','name'])->whereIn('role',[1,5])->where('name', '!=', 'Developer')->get();
         $bankLists = BankList::all();
-        $user = User::select(['id','name','business_name','phone','address'])->find($id);
-        $invNos = SalesLedgerBook::where('customer_id', $id)->whereIn('type', [1,3,16,18,25])->where('c_status', 0)->where('inv_cancel', 0)->orderby('invoice_no', 'DESC')->get(['id','invoice_no']);
+        $user      = User::select(['id','name','business_name','phone','address'])->find($id);
+        $invNos    = SalesLedgerBook::where('customer_id', $id)->whereIn('type', [1,3,16,18,25])->where('c_status', 0)->where('inv_cancel', 0)->orderby('invoice_no', 'DESC')->get(['id','invoice_no']);
         return view('admin.account.received.create', compact('user', 'tmmSoIds', 'bankLists', 'invNos'));
     }
 
@@ -46,9 +45,9 @@ class AccountReceivedController extends Controller
             return $error;
         }
         $this->validate($request, [
-            'sales_amt' => 'nullable|numeric',
-            'credit' => 'numeric',
-            'discount' => 'nullable|numeric',
+            'sales_amt'    => 'nullable|numeric',
+            'credit'       => 'numeric',
+            'discount'     => 'nullable|numeric',
             'discount_amt' => 'nullable|numeric',
         ]);
         $customer_id = $request->get('customer_id');
@@ -57,21 +56,21 @@ class AccountReceivedController extends Controller
         $transaction_id = transaction_id('REC');
         DB::beginTransaction();
         $account = [
-            'tran_id' => $transaction_id,
-            'user_id' => $customer_id,
+            'tran_id'   => $transaction_id,
+            'user_id'   => $customer_id,
             'tmm_so_id' => $tmm_so_id,
-            'ac_type' => 2,
-            'trn_type' => 2, // Rec
+            'ac_type'   => 2,
+            'trn_type'  => 2,                 // Rec
             // 'pay_type' => $request->pay_type, // Rec
-            'pay_type' => empty($request->pay_type) ? 3 : $request->pay_type,
-            'payment_by' => $request->get('payment_by'),
+            'pay_type'        => empty($request->pay_type) ? 3 : $request->pay_type,
+            'payment_by'      => $request->get('payment_by'),
             'user_bank_ac_id' => $user_bank_ac_id,
-            'm_r_date' => $request->get('m_r_date'),
-            'm_r_no' => $request->get('m_r_no'),
-            'note' => $request->get('note'),
-            'credit' => round($request->get('credit')),
-            'date' => $request->get('date'),
-            'cheque_no' => $request->get('cheque_no'),
+            'm_r_date'        => $request->get('m_r_date'),
+            'm_r_no'          => $request->get('m_r_no'),
+            'note'            => $request->get('note'),
+            'credit'          => round($request->get('credit')),
+            'date'            => $request->get('date'),
+            'cheque_no'       => $request->get('cheque_no'),
         ];
         if (!$user_bank_ac_id) {
             $account['type'] = 1; // Cash
@@ -80,22 +79,22 @@ class AccountReceivedController extends Controller
         }
         $account = Account::create($account);
         $ledgerBook = [
-            'tran_id' => $transaction_id,
-            'user_id' => $tmm_so_id,
-            'customer_id' => $customer_id,
-            'invoice_no' => $request->invoice_no,
-            'prepared_id' => auth()->user()->id,
-            'account_id' => $account->id,
-            'type' => 25, // Received
-            'pay_type' => empty($request->pay_type) ? 3 : $request->pay_type,
+            'tran_id'      => $transaction_id,
+            'user_id'      => $tmm_so_id,
+            'customer_id'  => $customer_id,
+            'invoice_no'   => $request->invoice_no,
+            'prepared_id'  => auth()->user()->id,
+            'account_id'   => $account->id,
+            'type'         => 25,                                                   // Received
+            'pay_type'     => empty($request->pay_type) ? 3 : $request->pay_type,
             'invoice_date' => $request->get('date'),
-            'payment' => round($request->get('credit')),
+            'payment'      => round($request->get('credit')),
             'payment_date' => $request->get('date'),
-            'c_status' => 2,
-            'discount' => $request->discount,
+            'c_status'     => 2,
+            'discount'     => $request->discount,
             'discount_amt' => round($request->discount_amt),
         ];
-        SalesLedgerBook::create($ledgerBook);
+        $ledgerBookCreate = SalesLedgerBook::create($ledgerBook);
         // Complete Status
         $returnInvAmt = SalesLedgerBook::where('invoice_no', $request->invoice_no)->whereIn('type',[2,4])->whereInv_cancel(0)->sum('net_amt');
         if (($request->net_amt == null) && ($request->credit >= $request->due_amt) || ($request->credit >= $request->due_amt - abs($returnInvAmt))) {
@@ -114,20 +113,20 @@ class AccountReceivedController extends Controller
         $salesReport = SalesReport::where('user_id', $tmm_so_id)->first();
         if (!empty($salesReport->user_id)) {
             $report = [
-                'tran_id' => $transaction_id,
-                'user_id' => $salesReport->user_id,
-                'type' => 2,
-                // 'inv_type' => $request->type,
-                'pay_type' => empty($request->pay_type) ? 3 : $request->pay_type,
-                'inv_type' => empty($request->type) ? 3 : $request->type,
-                'zsm_id' => $salesReport->zsm_id,
-                'sso_id' => $salesReport->sso_id,
-                'so_id' => $salesReport->so_id,
-                'customer_id' => $customer_id,
-                'invoice_date' => $request->date,
-                'discount' => $request->discount,
-                'discount_amt' =>  $request->discount_amt,
-                'amt' => round($request->credit),
+                'tran_id'              => $transaction_id,
+                'user_id'              => $salesReport->user_id,
+                'type'                 => 2,
+                'pay_type'             => empty($request->pay_type) ? 3 : $request->pay_type,
+                'inv_type'             => empty($request->type) ? 3 : $request->type,
+                'zsm_id'               => $salesReport->zsm_id,
+                'sso_id'               => $salesReport->sso_id,
+                'so_id'                => $salesReport->so_id,
+                'customer_id'          => $customer_id,
+                'sales_ledger_book_id' => $$ledgerBookCreate->id,
+                'invoice_date'         => $request->date,
+                'discount'             => $request->discount,
+                'discount_amt'         => $request->discount_amt,
+                'amt'                  => round($request->credit),
             ];
             SalesReport::create($report);
         }
