@@ -122,7 +122,7 @@ class AccountReceivedController extends Controller
                 'sso_id'               => $salesReport->sso_id,
                 'so_id'                => $salesReport->so_id,
                 'customer_id'          => $customer_id,
-                'sales_ledger_book_id' => $$ledgerBookCreate->id,
+                'sales_ledger_book_id' => $ledgerBookCreate->id,
                 'invoice_date'         => $request->date,
                 'discount'             => $request->discount,
                 'discount_amt'         => $request->discount_amt,

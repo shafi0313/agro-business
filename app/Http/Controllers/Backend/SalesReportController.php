@@ -30,17 +30,20 @@ class SalesReportController extends Controller
             return $error;
         }
         $form_date = $request->get('form_date');
-        $to_date = $request->get('to_date');
-        $user_id = $request->get('user_id');
-        $emp_id = $request->get('emp_id');
+        $to_date   = $request->get('to_date');
+        $user_id   = $request->get('user_id');
+        $emp_id    = $request->get('emp_id');
 
         if($emp_id==11){
             $reports = SalesReport::whereBetween('invoice_date',[$form_date,$to_date])->where('zsm_id', $user_id)->get();
-            // $reports = $getReports->groupby('zsm_id');
             return view('admin.sales_report.cash.zsm', compact('reports'));
         }else if($emp_id==12){
+            // return$reports = SalesReport::join('sales_ledger_books','sales_reports.sales_ledger_book_id', '=', 'sales_ledger_books.id')
+            //                 ->select('sales_reports.*','sales_ledger_books.sales_amt','sales_ledger_books.discount_amt as l_discount','sales_ledger_books.net_amt','sales_ledger_books.payment')
+            //                 ->whereBetween('sales_reports.invoice_date',[$form_date,$to_date])
+            //                 ->where('sso_id', $user_id)
+            //                 ->get();
             $reports = SalesReport::whereBetween('invoice_date',[$form_date,$to_date])->where('sso_id', $user_id)->get();
-            // $reports = $getReports->groupby('sso_id');
             return view('admin.sales_report.cash.sso', compact('reports'));
         }else if($emp_id==13){
             $reports = SalesReport::whereBetween('invoice_date',[$form_date,$to_date])->where('user_id', $user_id)->get();
@@ -66,9 +69,9 @@ class SalesReportController extends Controller
     public function showReportCredit(Request $request)
     {
         $form_date = $request->get('form_date');
-        $to_date = $request->get('to_date');
-        $user_id = $request->get('user_id');
-        $emp_id = $request->get('emp_id');
+        $to_date   = $request->get('to_date');
+        $user_id   = $request->get('user_id');
+        $emp_id    = $request->get('emp_id');
 
         if($emp_id==11){
             $getReports = SalesReport::whereBetween('invoice_date',[$form_date,$to_date])->where('zsm_id', $user_id)->where('inv_type',3)->get();
