@@ -88,7 +88,7 @@ class SalesLedgerBookController extends Controller
                     }])
                     ->where('customer_id', $customer_id)
                     ->whereIn('type', [0,1,2,3,4,5,7,8,16,17,18,19,25])
-                    ->get(['id','account_id','payment_date','c_status','inv_cancel','invoice_date','invoice_no','type','sales_amt','discount','discount_amt','net_amt','payment_date','payment']);
+                    ->get(['id','account_id','payment_date','c_status','inv_cancel','invoice_date','invoice_no','type','sales_amt','discount','discount_amt','net_amt','payment_date','payment','created_at']);
 
         $payment = SalesLedgerBook::where('customer_id', $customer_id)->where('type', 25)->sum('payment');
 
