@@ -1,5 +1,5 @@
 @extends('admin.layout.master')
-@section('title', 'Sales of Cash')
+@section('title', 'Product Purchase')
 @section('content')
 <div class="main-panel">
     <div class="content">
@@ -8,9 +8,9 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item">Sales</li>
+                    <li class="nav-item">Purchase</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Sales</li>
+                    <li class="nav-item active">Purchase</li>
                 </ul>
             </div>
             <div class="divider1"></div>
@@ -19,7 +19,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Customer</h4>
+                                <h4 class="card-title">Suppliers</h4>
                                 <a class="btn btn-success btn-sm  ml-auto" href="{{ route('salesInvoiceCash.selectDate') }}">
                                     All Challan & Invoice By Date
                                 </a>
@@ -34,7 +34,7 @@
                                     <thead class="bg-secondary thw">
                                         <tr>
                                             <th style="width:40px">SN</th>
-                                            <th>Customer Name</th>
+                                            <th>Supplier Name</th>
                                             <th>Proprietor</th>
                                             <th>Phone</th>
                                             <th>Address</th>

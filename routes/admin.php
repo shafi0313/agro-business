@@ -102,23 +102,23 @@ Route::get('/visitor-info/delete-all', [VisitorInfoController::class, 'destroyAl
 Route::post('role/permission/{role}', [RoleController::class, 'assignPermission'])->name('admin.role.permission');
 Route::resource('role', RoleController::class, [
     'names'=>[
-        'index'=> 'admin.role.index',
-        'create'=> 'admin.role.create',
-        'store'=> 'admin.role.store',
-        'edit'=> 'admin.role.edit',
-        'update'=> 'admin.role.update',
-        'show'=> 'admin.role.show',
-        'destroy'=> 'admin.role.destroy',
+        'index'   => 'admin.role.index',
+        'create'  => 'admin.role.create',
+        'store'   => 'admin.role.store',
+        'edit'    => 'admin.role.edit',
+        'update'  => 'admin.role.update',
+        'show'    => 'admin.role.show',
+        'destroy' => 'admin.role.destroy',
     ]
 ]);
 Route::resource('permission', PermissionController::class, [
     'names'=>[
-        'index'=> 'admin.permission.index',
-        'create'=> 'admin.permission.create',
-        'store'=> 'admin.permission.store',
-        'edit'=> 'admin.permission.edit',
-        'update'=> 'admin.permission.update',
-        'destroy'=> 'admin.permission.destroy',
+        'index'   => 'admin.permission.index',
+        'create'  => 'admin.permission.create',
+        'store'   => 'admin.permission.store',
+        'edit'    => 'admin.permission.edit',
+        'update'  => 'admin.permission.update',
+        'destroy' => 'admin.permission.destroy',
     ]
 ]);
 
@@ -529,8 +529,8 @@ Route::controller(PurchaseProductController::class)->prefix('/product-purchase')
     // Route::get('/invoice/show-invoive/{customer_id}/{invoice_no}', 'showInvoice')->name('purchaseProduct.show');
     // Route::DELETE('/invoice/show-invoive/{invoice_no}', 'destroyInvoice')->name('purchaseProduct.destroy');
 
-    // Route::get('/invoice/print/challan/{customer_id}/{invoice_no}', 'printChallan')->name('purchaseProduct.printChallan');
-    // Route::get('/invoice/print/invoice/{customer_id}/{invoice_no}', 'printInvoice')->name('purchaseProduct.printInvoice');
+    Route::get('/invoice/print/challan/{customer_id}/{invoice_no}', 'printChallan')->name('purchaseProduct.printChallan');
+    Route::get('/invoice/print/invoice/{customer_id}/{invoice_no}', 'printInvoice')->name('purchaseProduct.printInvoice');
     // Route::get('/sales-invoice/due', 'dueInvoice')->name('salesInvoice.due');
 
     // // All

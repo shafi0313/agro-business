@@ -1,4 +1,4 @@
-@include('admin.print_layout.invoice_header')
+@include('admin.print_layout.purchase.invoice_header')
 <style>
     .table .table tr td {
         border: 0px solid white !important;
@@ -139,4 +139,4 @@
 </table>
 @endif
 {{-- /Invoice Due Table --}}
-@include('admin.print_layout.invoice_footer')
+@include('admin.print_layout.purchase.invoice_footer')

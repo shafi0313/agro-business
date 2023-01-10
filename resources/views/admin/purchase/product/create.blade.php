@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
-@section('title', 'Sales of Cash Invoice')
+@section('title', 'Product Purchase')
 @section('content')
-@php $p='sales'; $sm='salesCash' @endphp
 <style>
     .invv ul{
         list-style: none;

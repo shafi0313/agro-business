@@ -56,19 +56,19 @@ class PurchaseProductController extends Controller
             return $error;
         }
         $this->validate($request, [
-            'invoice_no' => 'required',
-            'size' => 'required',
-            'quantity' => 'required',
+            'invoice_no'   => 'required',
+            'size'         => 'required',
+            'quantity'     => 'required',
             'rate_per_qty' => 'required',
             'invoice_date' => 'required',
-            'amt' => 'required',
+            'amt'          => 'required',
         ]);
 
-        $supplier_id = $request->get('supplier_id');
-        $invoice_no = $request->get('invoice_no');
-        $challan_no = $request->get('challan_no');
-        $user_id = $request->get('user_id');
-        $transaction_id = transaction_id('PPU');
+        $supplier_id    = $request->get('supplier_id');
+        $invoice_no     = $request->get('invoice_no');
+        $challan_no     = $request->get('challan_no');
+        $user_id        = $request->get('user_id');
+        $transaction_id = transaction_id('PPU'); //Product Purchase
 
         DB::beginTransaction();
 
@@ -80,20 +80,20 @@ class PurchaseProductController extends Controller
             $invoiceArr = [];
             foreach ($request->product_id as $key => $v) {
                 $data=[
-                    'tran_id' => $transaction_id,
-                    'user_id' => $user_id,
-                    'supplier_id' => $supplier_id,
-                    'product_id' => $request->product_id[$key],
-                    'type' => 30, // Cash
-                    'status' => 1, // Not sure
-                    'invoice_no' => $invoice_no,
-                    'challan_no' => $challan_no,
-                    'size' => $request->size[$key],
-                    'quantity' => $request->quantity[$key],
-                    'bonus' => $request->bonus[$key],
-                    'pro_dis' => $request->pro_dis[$key],
+                    'tran_id'      => $transaction_id,
+                    'user_id'      => $user_id,
+                    'supplier_id'  => $supplier_id,
+                    'product_id'   => $request->product_id[$key],
+                    'type'         => 30,                             // Cash
+                    'status'       => 1,                              // Not sure
+                    'invoice_no'   => $invoice_no,
+                    'challan_no'   => $challan_no,
+                    'size'         => $request->size[$key],
+                    'quantity'     => $request->quantity[$key],
+                    'bonus'        => $request->bonus[$key],
+                    'pro_dis'      => $request->pro_dis[$key],
                     'rate_per_qty' => $request->rate_per_qty[$key],
-                    'amt' => round($request->amt[$key]),
+                    'amt'          => round($request->amt[$key]),
                     'invoice_date' => $request->invoice_date,
                 ];
                 $invoice = PurchaseInvoice::create($data);
@@ -103,40 +103,40 @@ class PurchaseProductController extends Controller
             // New Stock
             foreach ($request->quantity as $key => $v) {
                 $data=[
-                    'tran_id' => $transaction_id,
-                    'inv_id' => $invoiceArr[$key],
-                    'product_id' => $request->product_id[$key],
+                    'tran_id'              => $transaction_id,
+                    'inv_id'               => $invoiceArr[$key],
+                    'product_id'           => $request->product_id[$key],
                     'product_pack_size_id' => $request->size[$key],
-                    'type' => 30,
-                    'stock_type' => 1, //Store
-                    'challan_no' => $challan_no,
-                    'quantity' => $request->quantity[$key],
-                    'bonus' => $request->bonus[$key],
-                    'amt' => round($request->amt[$key]) - round($request->amt[$key])*$request->pro_dis[$key]/100,
-                    'dis' => $request->pro_dis[$key],
-                    'net_amt' => round($request->amt[$key]),
-                    'date' => $request->invoice_date,
+                    'type'                 => 30,
+                    'stock_type'           => 1,                                                                                     //Store
+                    'challan_no'           => $challan_no,
+                    'quantity'             => $request->quantity[$key],
+                    'bonus'                => $request->bonus[$key],
+                    'amt'                  => round($request->amt[$key]) - round($request->amt[$key])*$request->pro_dis[$key]/100,
+                    'dis'                  => $request->pro_dis[$key],
+                    'net_amt'              => round($request->amt[$key]),
+                    'date'                 => $request->invoice_date,
                 ];
                 Stock::create($data);
             };
             // Store Stock End
 
             $ledgerBook = [
-                'tran_id' => $transaction_id,
-                'user_id' => $user_id,
-                'supplier_id' => $supplier_id,
-                'prepared_id' => auth()->user()->id,
-                'type' => 30,
-                'invoice_no' => $invoice_no,
-                'challan_no' => $challan_no,
+                'tran_id'      => $transaction_id,
+                'user_id'      => $user_id,
+                'supplier_id'  => $supplier_id,
+                'prepared_id'  => auth()->user()->id,
+                'type'         => 30,
+                'invoice_no'   => $invoice_no,
+                'challan_no'   => $challan_no,
                 'purchase_amt' => $request->get('total_amt'),
-                'discount' => $request->get('discount'),
+                'discount'     => $request->get('discount'),
                 'discount_amt' => $request->get('discount_amt'),
-                'net_amt' => round($request->get('net_amt')),
-                'payment' => round($request->get('payment')),
-                'payment_date' =>  $request->payment_date,
+                'net_amt'      => round($request->get('net_amt')),
+                'payment'      => round($request->get('payment')),
+                'payment_date' => $request->payment_date,
                 // 'user_type' =>  $request->get('user_type'),
-                'invoice_date' => $request->invoice_date,
+                'invoice_date'  => $request->invoice_date,
                 'delivery_date' => $request->get('delivery_date'),
             ];
             $ledgerBook = PurchaseLedgerBook::create($ledgerBook);
@@ -144,8 +144,8 @@ class PurchaseProductController extends Controller
             if ($request->note) {
                 $sampleNote = [
                     'sales_ledger_book_id' => $ledgerBook->id,
-                    'note' => $request->note,
-                    'tran_id' => $transaction_id,
+                    'note'                 => $request->note,
+                    'tran_id'              => $transaction_id,
                 ];
                 SampleNote::create($sampleNote);
             }
@@ -212,12 +212,12 @@ class PurchaseProductController extends Controller
             return $error;
         }
         $this->validate($request, [
-            'invoice_no' => 'required',
-            'size' => 'required',
-            'quantity' => 'required',
+            'invoice_no'   => 'required',
+            'size'         => 'required',
+            'quantity'     => 'required',
             'rate_per_qty' => 'required',
             'invoice_date' => 'required',
-            'amt' => 'required',
+            'amt'          => 'required',
         ]);
 
         $invoice_id = $request->invoice_id;
@@ -241,9 +241,9 @@ class PurchaseProductController extends Controller
         }
 
         $supplier_id = $request->get('supplier_id');
-        $invoice_no = $request->get('invoice_no');
-        $challan_no = $request->get('challan_no');
-        $user_id = $request->get('user_id');
+        $invoice_no  = $request->get('invoice_no');
+        $challan_no  = $request->get('challan_no');
+        $user_id     = $request->get('user_id');
 
         $ledgerBookCheck = PurchaseLedgerBook::whereIn('type', [1,3])->where('invoice_no', $request->invoice_no)->get();
         if ($ledgerBookCheck->count() > 0) {
@@ -506,13 +506,11 @@ class PurchaseProductController extends Controller
         if ($error = $this->authorize('sales-sales-invoice')) {
             return $error;
         }
-        $getShowInvoices = PurchaseInvoice::where('supplier_id', $supplier_id)->where('invoice_no', $invoice_no)->whereIn('type', [1,3])->get();
+        
+        $getShowInvoices = PurchaseInvoice::with(['supplier'])->where('supplier_id', $supplier_id)->where('invoice_no', $invoice_no)->whereIn('type', [30])->get();
         $showInvoices = $getShowInvoices->groupBy('product_id');
-
-        $invoiceDue = InvoiceDue::where('invoice_no', $invoice_no)->get();
-        $invoiceDueFirst = InvoiceDue::where('invoice_no', $invoice_no)->first();
-        $ledger = PurchaseLedgerBook::where('invoice_no', $invoice_no)->whereIn('type', [1,3])->first();
-        return view('admin.purchase.product.print_invoice', compact('showInvoices', 'invoiceDue', 'ledger', 'invoiceDueFirst', 'getShowInvoices'));
+        $ledger = PurchaseLedgerBook::with(['supplier','preparedBy','account'])->where('invoice_no', $invoice_no)->whereIn('type', [30])->first();
+        return view('admin.purchase.product.print_invoice', compact('showInvoices', 'ledger', 'getShowInvoices'));
     }
 
     public function printChallan($supplier_id, $invoice_no)

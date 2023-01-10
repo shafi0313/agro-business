@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
-@section('title', 'Sales of Cash Invoice')
+@section('title', 'Product Purchase')
 @section('content')
-@php $p='sales'; $sm='salesCash' @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -9,9 +8,9 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item">Sales</li>
+                    <li class="nav-item">Product Purchase</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item"><a href="{{ route('sales-invoice-cash.index')}}">Sales</a></li>
+                    <li class="nav-item"><a href="{{ route('product-purchase.index')}}">Product Purchase</a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">All Invoice List</li>
                 </ul>
@@ -22,7 +21,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <h2><strong>Customer Name: </strong>{{$supplierInfo->supplier->business_name}}</h2>
+                                    <h2><strong>Supplier Name: </strong>{{$supplierInfo->supplier->business_name}}</h2>
                                     <h2><strong>Proprietor: </strong>{{$supplierInfo->supplier->name}}</h2>
                                 </div>
                             </div>
@@ -59,9 +58,9 @@
                                             <td>{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y') }}</td>
                                             <td class="text-right">{{ number_format($supplierChallan->sum('amt'),2) }}</td>
                                             <td>
-                                                <a href="{{ route('salesInvoiceCash.printInvoice', [$invoice->supplier_id, $invoice->invoice_no]) }}" target="_blank">Invoice</a>
+                                                <a href="{{ route('purchaseProduct.printInvoice', [$invoice->supplier_id, $invoice->invoice_no??'']) }}" target="_blank">Invoice</a>
                                                 <span>|</span>
-                                                <a href="{{ route('salesInvoiceCash.printChallan', [$invoice->supplier_id, $invoice->invoice_no]) }}" target="_blank">Challan</a>
+                                                <a href="{{ route('purchaseProduct.printChallan', [$invoice->supplier_id, $invoice->invoice_no??'']) }}" target="_blank">Challan</a>
                                             </td>
                                             {{-- <td>
                                                 <a href="{{ route('salesInvoiceCash.edit', [$invoice->supplier_id,$invoice->challan_no]) }}" onclick="return confirm('Are you sure?')">Reinvoice</a>
