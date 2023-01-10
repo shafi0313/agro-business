@@ -35,21 +35,6 @@ class PurchaseProductController extends Controller
         return view('admin.purchase.product.create', compact('supplier', 'ledgerPayment', 'invoice_no', 'challan_no','userId'));
     }
 
-    // public function dueInvoice(Request $request)
-    // {
-    //     $products = PurchaseLedgerBook::whereSupplier_id($request->supplier_id)->where('c_status','!=',1)->whereInv_cancel(0)->where('invoice_no', 'LIKE', '%'. $request->inv_no .'%');
-
-    //     $products = $products->get();
-    //     $subs = '';
-    //     $subs .='<ul>';
-    //     foreach ($products as $sub) {
-    //         $subs .= '<li value="'.$sub->id.'">'.$sub->invoice_no.'</li>';
-    //     }
-    //     $subs .='</ul>';
-    //     return $subs;
-    // }
-
-
     public function store(Request $request)
     {
         if ($error = $this->authorize('sales-sales-sales')) {
@@ -506,7 +491,7 @@ class PurchaseProductController extends Controller
         if ($error = $this->authorize('sales-sales-invoice')) {
             return $error;
         }
-        
+
         $getShowInvoices = PurchaseInvoice::with(['supplier'])->where('supplier_id', $supplier_id)->where('invoice_no', $invoice_no)->whereIn('type', [30])->get();
         $showInvoices = $getShowInvoices->groupBy('product_id');
         $ledger = PurchaseLedgerBook::with(['supplier','preparedBy','account'])->where('invoice_no', $invoice_no)->whereIn('type', [30])->first();
@@ -518,12 +503,9 @@ class PurchaseProductController extends Controller
         if ($error = $this->authorize('sales-sales-challan')) {
             return $error;
         }
-        $getShowInvoices = PurchaseInvoice::where('supplier_id', $supplier_id)->where('invoice_no', $invoice_no)->whereIn('type', [1,3])->get();
+        $getShowInvoices = PurchaseInvoice::where('supplier_id', $supplier_id)->where('invoice_no', $invoice_no)->whereIn('type', [30])->get();
         $showInvoices = $getShowInvoices->groupBy('product_id');
-
-        $invoiceDue = InvoiceDue::where('invoice_no', $invoice_no)->get();
-        $invoiceDueFirst = InvoiceDue::where('invoice_no', $invoice_no)->first();
-        $ledger = PurchaseLedgerBook::where('invoice_no', $invoice_no)->whereIn('type', [1,3])->first();
-        return view('admin.purchase.product.print_challan', compact('showInvoices', 'invoiceDue', 'ledger', 'invoiceDueFirst'));
+        $ledger = PurchaseLedgerBook::where('invoice_no', $invoice_no)->whereIn('type', [30])->first();
+        return view('admin.purchase.product.print_challan', compact('showInvoices', 'ledger'));
     }
 }

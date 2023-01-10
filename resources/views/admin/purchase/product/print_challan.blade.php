@@ -52,7 +52,7 @@
     @endforeach
 </table>
 <br><br><br>
-<div class="delivery_date">Delivery Date: {{ \Carbon\Carbon::parse($ledger->delivery_date)->format('d/m/Y') }}</div>
+<div class="delivery_date">Delivery Date: {{ \bdDate($ledger->delivery_date) }}</div>
 <br><br>
 @if($ledger->inv_cancel==1)
     <div class="note" style="color:red">Challan Cancel</div>
