@@ -59,77 +59,33 @@
                                         @foreach($reports->groupBy('sso_id') as $report)
                                         @php
                                             $sReport = $report->first();
-
-                                            if($report->where('type',1)->count() > 0 ){
-                                                $discount = $report->where('type',1)->sum('discount') / $report->where('type',1)->count();
-                                            }else {
-                                                $discount = 0;
-                                            }
-
-                                            if($report->where('type',1)->whereIn('inv_type',[1,2])->count() > 0 ){
-                                                $cashDiscount =  number_format($report->where('type',1)->whereIn('inv_type',[1,2])->sum('discount') / $report->where('type',1)->whereIn('inv_type',[1,2])->count(),2);
-                                            }else {
-                                                $cashDiscount = 0;
-                                            }
-                                            $calCashDiscount = ($report->where('type',1)->whereIn('inv_type',[1,2])->sum('amt') * $cashDiscount)/100;
-
-
-                                            if($report->where('type',1)->whereIn('inv_type',[3,4])->count() > 0 ){
-                                                $creditDiscount =  number_format($report->where('type',1)->whereIn('inv_type',[3,4])->sum('discount') / $report->where('type',1)->whereIn('inv_type',[3,4])->count());
-                                            }else {
-                                                $creditDiscount = 0;
-                                            }
-                                            $calCreditDiscount = ($report->where('type',1)->whereIn('inv_type',[3,4])->sum('amt') * $cashDiscount)/100;
-
-
-                                            // Payment Discount Calculation
-                                            if ($report->where('type',2)->count() > 0) {
-                                                $payDiscount = number_format($report->where('type',2)->sum('discount') / $report->where('type',2)->count());
-                                            }else{
-                                                $payDiscount = 0;
-                                            }
-
-                                            $totalPayDiscountAmt = ($report->where('type',2)->sum('amt')*$payDiscount)/100;
-
-                                            if ($report->where('type',2)->where('pay_type',1)->count() > 0) {
-                                                $payCashDiscount =  $report->where('type',2)->where('pay_type',1)->sum('discount') / $report->where('type',2)->where('pay_type',1)->count();
-                                            }else{
-                                                $payCashDiscount = 0;
-                                            }
-                                            $calPayCashDiscount = ($report->where('type',2)->where('pay_type',1)->sum('amt') * $payCashDiscount)/100;
-
-                                            if ($report->where('type',1)->where('pay_type',3)->count() > 0) {
-                                                $payCreditDiscount =  number_format($report->where('type',2)->where('pay_type',3)->sum('discount') / $report->where('type',1)->where('pay_type',3)->count());
-                                            }else{
-                                                $payCreditDiscount = 0;
-                                            }
-                                            $calPayCreditDiscount = ($report->where('type',2)->where('pay_type',3)->sum('amt') * $payCreditDiscount)/100;
-
                                         @endphp
                                         <tr>
                                             <td class="text-center">{{ $x++ }}</td>
                                             <td><span style="padding-left: 30px"></span>{{ $sReport->sso->name }}</td>
                                             <td>{{ $sReport->user->job_loc }}</td>
                                             @php
-                                                $cashSales = $report->where('type',1)->whereIn('inv_type',[1,2])->sum('amt');
-                                                $creditSales = $report->where('type',1)->whereIn('inv_type',[3,4])->sum('amt');
-                                                $cashPay = $report->where('type',2)->where('pay_type',1)->sum('amt');
-                                                $creditPay = $report->where('type',2)->where('pay_type',3)->sum('amt');
+                                                $cashSales = $report->where('type',1)->whereIn('inv_type',[1,2])->sum('sales_amt');
+                                                $cashSalesDis = $report->where('type',1)->whereIn('inv_type',[1,2])->sum('l_discount');
+
+                                                $creditSales = $report->where('type',1)->whereIn('inv_type',[3,4])->sum('sales_amt');
+                                                $creditSalesDis = $report->where('type',1)->whereIn('inv_type',[3,4])->sum('l_discount');
+
+                                                $cashPay = $report->where('type',2)->where('pay_type',1)->sum('payment');
+                                                $creditPay = $report->where('type',2)->where('pay_type',3)->sum('payment');
                                             @endphp
-                                            <td class="text-right">{{ number_format($cashSales + $calCashDiscount,2) }}</td>
-                                            <td class="text-right">{{ number_format($creditSales + $calCreditDiscount,2) }}</td>
-                                            <td class="text-right">{{ number_format($calCashDiscount + $calCreditDiscount + $totalPayDiscountAmt,2) }}</td>
-                                            <td class="text-right">{{ number_format($cashSales + $creditSales - $totalPayDiscountAmt,2) }}</td>
+                                            <td class="text-right">{{ number_format($cashSales,2) }}</td>
+                                            <td class="text-right">{{ number_format($creditSales,2) }}</td>
+                                            <td class="text-right">{{ number_format($cashSalesDis + $creditSalesDis,2) }}</td>
+                                            <td class="text-right">{{ number_format($report->where('type',1)->whereIn('inv_type',[1,2,3,4])->sum('net_amt'),2) }}</td>
                                             <td class="text-right">{{ number_format($cashPay,2) }}</td>
                                             <td class="text-right">{{ number_format($creditPay,2) }}</td>
-                                            {{-- <td class="text-right">{{ number_format($calPayCashDiscount + $calPayCreditDiscount,2) }}</td> --}}
-                                            {{-- <td class="text-right">{{ number_format($totalPayDiscountAmt/$report->where('type',2)->sum('amt')*100,2) }}</td> --}}
-                                            {{-- <td class="text-right">{{ number_format($report->where('type',2)->sum('amt') - $totalPayDiscountAmt,2) }}</td> --}}
-                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('amt'),2) }}</td>
+                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('payment'),2) }}</td>
                                             @php
                                                 $balance = 0;
-                                                // $b = ($report->where('type',1)->whereIn('inv_type',[1,2])->sum('amt') + $report->where('type',1)->whereIn('inv_type',[3,4])->sum('amt')) - ($report->where('type',2)->sum('amt') - $totalPayDiscountAmt);
-                                                $b = ($cashSales + $creditSales - $totalPayDiscountAmt) - ($cashPay + $creditPay);
+                                                // $b = ($cashSales + $creditSales) - ($cashPay + $creditPay);
+                                                $b = $report->where('type',1)->whereIn('inv_type',[1,2,3,4])->sum('net_amt') - ($cashPay + $creditPay);
+                                                // $b = $report->where('type',1)->whereIn('inv_type',[1,2,3,4])->sum('net_amt');
                                             @endphp
                                             <td class="text-right">{{ number_format($balance += $b,2) }}</td>
                                         </tr>
@@ -138,52 +94,6 @@
                                         @foreach($reports->groupby('so_id') as $report)
                                         @php
                                             $sReport = $report->first();
-
-                                            if($report->where('type',1)->count() > 0 ){
-                                                $discount = $report->where('type',1)->sum('discount') / $report->where('type',1)->count();
-                                            }else {
-                                                $discount = 0;
-                                            }
-
-                                            if($report->where('type',1)->whereIn('inv_type',[1,2])->count() > 0 ){
-                                                $cashDiscount =  number_format($report->where('type',1)->whereIn('inv_type',[1,2])->sum('discount') / $report->where('type',1)->whereIn('inv_type',[1,2])->count(),2);
-                                            }else {
-                                                $cashDiscount = 0;
-                                            }
-                                            $calCashDiscount = ($report->where('type',1)->whereIn('inv_type',[1,2])->sum('amt') * $cashDiscount)/100;
-
-
-                                            if($report->where('type',1)->whereIn('inv_type',[3,4])->count() > 0 ){
-                                                $creditDiscount =  number_format($report->where('type',1)->whereIn('inv_type',[3,4])->sum('discount') / $report->where('type',1)->whereIn('inv_type',[3,4])->count());
-                                            }else {
-                                                $creditDiscount = 0;
-                                            }
-                                            $calCreditDiscount = ($report->where('type',1)->whereIn('inv_type',[3,4])->sum('amt') * $cashDiscount)/100;
-
-
-                                            // Payment Discount Calculation
-                                            if ($report->where('type',2)->count() > 0) {
-                                                $payDiscount = number_format($report->where('type',2)->sum('discount') / $report->where('type',2)->count());
-                                            }else{
-                                                $payDiscount = 0;
-                                            }
-
-                                            $totalPayDiscountAmt = ($report->where('type',2)->sum('amt')*$payDiscount)/100;
-
-                                            if ($report->where('type',1)->where('pay_type',1)->count() > 0) {
-                                                $payCashDiscount =  number_format($report->where('type',2)->where('pay_type',1)->sum('discount') / $report->where('type',1)->where('pay_type',1)->count());
-                                            }else{
-                                                $payCashDiscount = 0;
-                                            }
-                                            $calPayCashDiscount = ($report->where('type',2)->where('pay_type',1)->sum('amt') * $payCashDiscount)/100;
-
-                                            if ($report->where('type',1)->where('pay_type',3)->count() > 0) {
-                                                $payCreditDiscount =  number_format($report->where('type',2)->where('pay_type',3)->sum('discount') / $report->where('type',1)->where('pay_type',3)->count());
-                                            }else{
-                                                $payCreditDiscount = 0;
-                                            }
-                                            $calPayCreditDiscount = ($report->where('type',2)->where('pay_type',3)->sum('amt') * $payCreditDiscount)/100;
-
                                         @endphp
                                         <tr>
                                             <td class="text-center">{{ $x++ }}</td>
@@ -195,25 +105,26 @@
 
                                             <td>{{ $sReport->user->job_loc }}</td>
                                             @php
-                                                $cashSales = $report->where('type',1)->whereIn('inv_type',[1,2])->sum('amt');
-                                                $creditSales = $report->where('type',1)->whereIn('inv_type',[3,4])->sum('amt');
-                                                $cashPay = $report->where('type',2)->where('pay_type',1)->sum('amt');
-                                                $creditPay = $report->where('type',2)->where('pay_type',3)->sum('amt');
+                                                $cashSales = $report->where('type',1)->whereIn('inv_type',[1,2])->sum('sales_amt');
+                                                $cashSalesDis = $report->where('type',1)->whereIn('inv_type',[1,2])->sum('l_discount');
+
+                                                $creditSales = $report->where('type',1)->whereIn('inv_type',[3,4])->sum('sales_amt');
+                                                $creditSalesDis = $report->where('type',1)->whereIn('inv_type',[3,4])->sum('l_discount');
+
+                                                $cashPay = $report->where('type',2)->where('pay_type',1)->sum('payment');
+                                                $creditPay = $report->where('type',2)->where('pay_type',3)->sum('payment');
                                             @endphp
-                                            <td class="text-right">{{ number_format($cashSales + $calCashDiscount,2) }}</td>
-                                            <td class="text-right">{{ number_format($creditSales + $calCreditDiscount,2) }}</td>
-                                            <td class="text-right">{{ number_format($calCashDiscount + $calCreditDiscount + $totalPayDiscountAmt,2) }}</td>
-                                            <td class="text-right">{{ number_format($cashSales + $creditSales - $totalPayDiscountAmt,2) }}</td>
+                                            <td class="text-right">{{ number_format($cashSales,2) }}</td>
+                                            <td class="text-right">{{ number_format($creditSales,2) }}</td>
+                                            <td class="text-right">{{ number_format($cashSalesDis + $creditSalesDis,2) }}</td>
+                                            <td class="text-right">{{ number_format($report->where('type',1)->whereIn('inv_type',[1,2,3,4])->sum('net_amt'),2) }}</td>
                                             <td class="text-right">{{ number_format($cashPay,2) }}</td>
                                             <td class="text-right">{{ number_format($creditPay,2) }}</td>
-                                            {{-- <td class="text-right">{{ number_format($calPayCashDiscount + $calPayCreditDiscount,2) }}</td> --}}
-                                            {{-- <td class="text-right">{{ number_format($totalPayDiscountAmt/$report->where('type',2)->sum('amt')*100,2) }}</td> --}}
-                                            {{-- <td class="text-right">{{ number_format($report->where('type',2)->sum('amt') - $totalPayDiscountAmt,2) }}</td> --}}
-                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('amt'),2) }}</td>
+                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('payment'),2) }}</td>
                                             @php
                                                 $balance = 0;
                                                 // $b = ($report->where('type',1)->whereIn('inv_type',[1,2])->sum('amt') + $report->where('type',1)->whereIn('inv_type',[3,4])->sum('amt')) - ($report->where('type',2)->sum('amt') - $totalPayDiscountAmt);
-                                                $b = ($cashSales + $creditSales - $totalPayDiscountAmt) - ($cashPay + $creditPay);
+                                                $b = $report->where('type',1)->whereIn('inv_type',[1,2,3,4])->sum('net_amt') - ($cashPay + $creditPay);
                                             @endphp
                                             <td class="text-right">{{ number_format($balance += $b,2) }}</td>
                                         </tr>
@@ -222,77 +133,32 @@
                                         @foreach($reports->groupBy('customer_id') as $report)
                                         @php
                                             $sReport = $report->first();
-
-                                            if($report->where('type',1)->count() > 0 ){
-                                                $discount = $report->where('type',1)->sum('discount') / $report->where('type',1)->count();
-                                            }else {
-                                                $discount = 0;
-                                            }
-
-                                            if($report->where('type',1)->whereIn('inv_type',[1,2])->count() > 0 ){
-                                                $cashDiscount =  number_format($report->where('type',1)->whereIn('inv_type',[1,2])->sum('discount') / $report->where('type',1)->whereIn('inv_type',[1,2])->count(),2);
-                                            }else {
-                                                $cashDiscount = 0;
-                                            }
-                                            $calCashDiscount = ($report->where('type',1)->whereIn('inv_type',[1,2])->sum('amt') * $cashDiscount)/100;
-
-
-                                            if($report->where('type',1)->whereIn('inv_type',[3,4])->count() > 0 ){
-                                                $creditDiscount =  number_format($report->where('type',1)->whereIn('inv_type',[3,4])->sum('discount') / $report->where('type',1)->whereIn('inv_type',[3,4])->count());
-                                            }else {
-                                                $creditDiscount = 0;
-                                            }
-                                            $calCreditDiscount = ($report->where('type',1)->whereIn('inv_type',[3,4])->sum('amt') * $cashDiscount)/100;
-
-
-                                            // Payment Discount Calculation
-                                            if ($report->where('type',2)->count() > 0) {
-                                                $payDiscount = number_format($report->where('type',2)->sum('discount') / $report->where('type',2)->count());
-                                            }else{
-                                                $payDiscount = 0;
-                                            }
-
-                                            $totalPayDiscountAmt = ($report->where('type',2)->sum('amt')*$payDiscount)/100;
-
-                                            if ($report->where('type',1)->where('pay_type',1)->count() > 0) {
-                                                $payCashDiscount =  number_format($report->where('type',2)->where('pay_type',1)->sum('discount') / $report->where('type',1)->where('pay_type',1)->count());
-                                            }else{
-                                                $payCashDiscount = 0;
-                                            }
-                                            $calPayCashDiscount = ($report->where('type',2)->where('pay_type',1)->sum('amt') * $payCashDiscount)/100;
-
-                                            if ($report->where('type',1)->where('pay_type',3)->count() > 0) {
-                                                $payCreditDiscount =  number_format($report->where('type',2)->where('pay_type',3)->sum('discount') / $report->where('type',1)->where('pay_type',3)->count());
-                                            }else{
-                                                $payCreditDiscount = 0;
-                                            }
-                                            $calPayCreditDiscount = ($report->where('type',2)->where('pay_type',3)->sum('amt') * $payCreditDiscount)/100;
-
                                         @endphp
                                         <tr>
                                             <td class="text-center">{{ $x++ }}</td>
                                             <td><span style="padding-left: 70px"></span>{{ $sReport->customer->business_name }}</td>
                                             <td>{{ $sReport->user->job_loc }}</td>
                                             @php
-                                                $cashSales = $report->where('type',1)->whereIn('inv_type',[1,2])->sum('amt');
-                                                $creditSales = $report->where('type',1)->whereIn('inv_type',[3,4])->sum('amt');
-                                                $cashPay = $report->where('type',2)->where('pay_type',1)->sum('amt');
-                                                $creditPay = $report->where('type',2)->where('pay_type',3)->sum('amt');
+                                                $cashSales = $report->where('type',1)->whereIn('inv_type',[1,2])->sum('sales_amt');
+                                                $cashSalesDis = $report->where('type',1)->whereIn('inv_type',[1,2])->sum('l_discount');
+
+                                                $creditSales = $report->where('type',1)->whereIn('inv_type',[3,4])->sum('sales_amt');
+                                                $creditSalesDis = $report->where('type',1)->whereIn('inv_type',[3,4])->sum('l_discount');
+
+                                                $cashPay = $report->where('type',2)->where('pay_type',1)->sum('payment');
+                                                $creditPay = $report->where('type',2)->where('pay_type',3)->sum('payment');
                                             @endphp
-                                            <td class="text-right">{{ number_format($cashSales + $calCashDiscount,2) }}</td>
-                                            <td class="text-right">{{ number_format($creditSales + $calCreditDiscount,2) }}</td>
-                                            <td class="text-right">{{ number_format($calCashDiscount + $calCreditDiscount + $totalPayDiscountAmt,2) }}</td>
-                                            <td class="text-right">{{ number_format($cashSales + $creditSales - $totalPayDiscountAmt,2) }}</td>
+                                            <td class="text-right">{{ number_format($cashSales,2) }}</td>
+                                            <td class="text-right">{{ number_format($creditSales,2) }}</td>
+                                            <td class="text-right">{{ number_format($cashSalesDis + $creditSalesDis,2) }}</td>
+                                            <td class="text-right">{{ number_format($report->where('type',1)->whereIn('inv_type',[1,2,3,4])->sum('net_amt'),2) }}</td>
                                             <td class="text-right">{{ number_format($cashPay,2) }}</td>
                                             <td class="text-right">{{ number_format($creditPay,2) }}</td>
-                                            {{-- <td class="text-right">{{ number_format($calPayCashDiscount + $calPayCreditDiscount,2) }}</td> --}}
-                                            {{-- <td class="text-right">{{ number_format($totalPayDiscountAmt/$report->where('type',2)->sum('amt')*100,2) }}</td> --}}
-                                            {{-- <td class="text-right">{{ number_format($report->where('type',2)->sum('amt') - $totalPayDiscountAmt,2) }}</td> --}}
-                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('amt'),2) }}</td>
+                                            <td class="text-right">{{ number_format($report->where('type',2)->sum('payment'),2) }}</td>
                                             @php
                                                 $balance = 0;
                                                 // $b = ($report->where('type',1)->whereIn('inv_type',[1,2])->sum('amt') + $report->where('type',1)->whereIn('inv_type',[3,4])->sum('amt')) - ($report->where('type',2)->sum('amt') - $totalPayDiscountAmt);
-                                                $b = ($cashSales + $creditSales - $totalPayDiscountAmt) - ($cashPay + $creditPay);
+                                                $b = $report->where('type',1)->whereIn('inv_type',[1,2,3,4])->sum('net_amt') - ($cashPay + $creditPay);
                                             @endphp
                                             <td class="text-right">{{ number_format($balance += $b,2) }}</td>
                                         </tr>
