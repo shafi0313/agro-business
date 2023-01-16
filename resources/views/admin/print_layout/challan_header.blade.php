@@ -36,21 +36,21 @@
                 <div class="customer_info">
                     <table>
                         <tr>
-                            <td>Supplier Id </td>
+                            <td>Customer Id </td>
                             <td>&nbsp;:</td>
-                            <td>{{$ledger->supplier->tmm_so_id}}</td>
+                            <td>{{$ledger->customer->tmm_so_id}}</td>
                         </tr>
                         <tr>
                             <td>Name</td>
                             <td>&nbsp;:</td>
-                            <td>{{$ledger->supplier->business_name}}</td>
+                            <td>{{$ledger->customer->business_name}}</td>
                         </tr>
                         <tr>
                             <td>Pro.</td>
                             <td>&nbsp;:</td>
-                            <td>{{$ledger->supplier->name}}</td>
+                            <td>{{$ledger->customer->name}}</td>
                         </tr>
-                        @php $dis = $ledger->supplier->address; @endphp
+                        @php $dis = $ledger->customer->address; @endphp
                         <tr>
                             <td>Address</td>
                             <td>&nbsp;:</td>
@@ -63,12 +63,12 @@
                         <tr>
                             <td>Contact</td>
                             <td>&nbsp;:</td>
-                            <td>{{ $ledger->supplier->phone }}</td>
+                            <td>{{ $ledger->customer->phone }}</td>
                         </tr>
                         <tr>
                             <td>Type</td>
                             <td>&nbsp;:</td>
-                            <td>{{ $ledger->supplier->type==1?'Retailer':'Dealer' }}</td>
+                            <td>{{ $ledger->customer->type==1?'Retailer':'Dealer' }}</td>
                         </tr>
                     </table>
                 </div>
