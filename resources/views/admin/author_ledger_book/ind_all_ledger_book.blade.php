@@ -51,7 +51,7 @@
                                         @foreach($reports as $report)
                                         <tr class="{{ ($report->invoice_status == "1")? 'bg-danger text-light' : '' }}">
                                             <td class="text-center">{{ $x++ }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($report->date)->format('d/m/Y') }}</td>
+                                            <td>{{ bdDate($report->date) }}</td>
                                             <td>{{ $report->payment_by }}</td>
                                             <td class="text-center">{{ $report->note }}</td>
                                             <td class="text-center">{{ $report->m_r_no }}</td>

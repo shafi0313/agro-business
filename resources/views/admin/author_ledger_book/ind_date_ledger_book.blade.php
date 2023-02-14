@@ -1,7 +1,6 @@
 @extends('admin.layout.master')
 @section('title', 'Author Ledger Book')
 @section('content')
-@php $p = 'account'; $sm='autherLedger' @endphp
 <div class="main-panel">
     <div class="content">
         <div class="page-inner">
@@ -46,7 +45,7 @@
                                         @foreach($reports as $report)
                                         <tr class="{{ ($report->invoice_status == "1")? 'bg-danger text-light' : '' }}">
                                             <td class="text-center">{{ $x++ }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($report->invoice_date)->format('d/m/Y') }}</td>
+                                            <td>{{ bdDate($report->date) }}</td>
                                             <td>{{ $report->payment_by }}</td>
                                             <td class="text-center">{{ $report->note }}</td>
                                             <td class="text-right">{{ number_format($report->debit,2) }}</td>

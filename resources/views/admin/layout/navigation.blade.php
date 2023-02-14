@@ -107,19 +107,15 @@
                 @endcan
 
                 {{-- Product Start --}}
-                <li class="nav-item {{ openNav(['product-category.*',
-                'pack-size.*',
-                'product.*',
-                'raw-material.*']) }}">
+                <li
+                    class="nav-item {{ openNav(['product-category.*', 'pack-size.*', 'product.*', 'raw-material.*']) }}">
                     <a data-toggle="collapse" href="#onlyProduct">
                         <i class="fa-brands fa-product-hunt"></i>
                         <p>@lang('nav.product')</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ openNav(['product-category.*',
-                                    'pack-size.*',
-                                    'product.*',
-                                    'raw-material.*']) }}" id="onlyProduct">
+                    <div class="collapse {{ openNav(['product-category.*', 'pack-size.*', 'product.*', 'raw-material.*']) }}"
+                        id="onlyProduct">
                         <ul class="nav nav-collapse ">
                             <li class="{{ activeSubNav('product-category.*') }}">
                                 <a href="{{ route('product-category.index') }}">
@@ -454,14 +450,44 @@
 
                 {{-- ________________________ Factory Start ________________________ --}}
                 <li
-                    class="nav-item {{ activeNav(['raw-material.*', 'purchase-bulk.*', 'sales-bulk.*', 'stock.bulk.*', 'send-to-repack-unit.*', 'purchaseLedgerBook.*', 'report.bulk.*', 'repackingCheck.*', 'bulkTracking.*', 'production.*', 'product.*', 'productionCheck.*', 'stock.store.*']) }}">
+                    class="nav-item {{ activeNav([
+                        'raw-material.*',
+                        'purchase-bulk.*',
+                        'purchaseBulk.*',
+                        'sales-bulk.*',
+                        'stock.bulk.*',
+                        'send-to-repack-unit.*',
+                        'purchaseLedgerBook.*',
+                        'report.bulk.*',
+                        'repackingCheck.*',
+                        'bulkTracking.*',
+                        'production.*',
+                        'product.*',
+                        'productionCheck.*',
+                        'stock.store.*',
+                    ]) }}">
                     <a data-toggle="collapse" href="#factory">
                         <i class="fas fa-industry"></i>
                         <p>@lang('nav.factory')</p>
                         <span class="caret"></span>
                     </a>
 
-                    <div class="collapse {{ openNav(['raw-material.*', 'purchase-bulk.*', 'sales-bulk.*', 'stock.bulk.*', 'send-to-repack-unit.*', 'purchaseLedgerBook.*', 'report.bulk.*', 'repackingCheck.*', 'bulkTracking.*', 'production.*', 'product.*', 'productionCheck.*', 'stock.store.*']) }}"
+                    <div class="collapse {{ openNav([
+                        'raw-material.*',
+                        'purchase-bulk.*',
+                        'purchaseBulk.*',
+                        'sales-bulk.*',
+                        'stock.bulk.*',
+                        'send-to-repack-unit.*',
+                        'purchaseLedgerBook.*',
+                        'report.bulk.*',
+                        'repackingCheck.*',
+                        'bulkTracking.*',
+                        'production.*',
+                        'product.*',
+                        'productionCheck.*',
+                        'stock.store.*',
+                    ]) }}"
                         id="factory">
                         <ul class="nav nav-collapse">
                             <li>
@@ -470,7 +496,7 @@
                                     <span>@lang('nav.bulk')</span>
                                     <span class="caret"></span>
                                 </a>
-                                <div class="collapse {{ openNav(['raw-material.*', 'purchase-bulk.*', 'sales-bulk.*', 'stock.bulk.*', 'send-to-repack-unit.*', 'purchaseLedgerBook.*', 'report.bulk.*']) }}"
+                                <div class="collapse {{ openNav(['raw-material.*', 'purchase-bulk.*', 'purchaseBulk.*', 'sales-bulk.*', 'stock.bulk.*', 'send-to-repack-unit.*', 'purchaseLedgerBook.*', 'report.bulk.*']) }}"
                                     id="subRaw">
                                     <ul class="nav nav-collapse subnav">
                                         <li class="{{ activeSubNav('raw-material.*') }}">
@@ -478,7 +504,7 @@
                                                 <span class="sub-item">Bulk Name</span>
                                             </a>
                                         </li>
-                                        <li class="{{ activeSubNav('purchase-bulk.*') }}">
+                                        <li class="{{ activeSubNav(['purchase-bulk.*', 'purchaseBulk.*']) }}">
                                             <a href="{{ route('purchase-bulk.index') }}">
                                                 <span class="sub-item">Purchase</span>
                                             </a>
@@ -621,43 +647,43 @@
                     </div>
                 </li>
                 {{-- ________________________ Factory End ________________________ --}}
-@if (setting('product_purchase') == 1)
-                {{-- ________________________ Product Purchase Start ________________________ --}}
-                <li
-                    class="nav-item {{ activeNav(['product-purchase.*', 'purchaseProduct.*', 'purchaseLedgerBook.*']) }}">
-                    <a data-toggle="collapse" href="#purchaseProduct">
-                        <i class="fas fa-file-invoice-dollar"></i>
-                        <p>@lang('nav.purchase')</p>
-                        <span class="caret"></span>
-                    </a>
-                    <div class="collapse {{ openNav(['product-purchase.*', 'purchaseProduct.*', 'purchaseLedgerBook.*']) }}"
-                        id="purchaseProduct">
-                        <ul class="nav nav-collapse">
-                            <li class="{{ activeSubNav(['product-purchase.*', 'purchaseProduct.*']) }}">
-                                <a href="{{ route('product-purchase.index') }}">
-                                    <span class="sub-item">Product</span>
-                                </a>
-                            </li>
-                            {{-- <li
+                @if (setting('product_purchase') == 1)
+                    {{-- ________________________ Product Purchase Start ________________________ --}}
+                    <li
+                        class="nav-item {{ activeNav(['product-purchase.*', 'purchaseProduct.*', 'purchaseLedgerBook.*']) }}">
+                        <a data-toggle="collapse" href="#purchaseProduct">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <p>@lang('nav.purchase')</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse {{ openNav(['product-purchase.*', 'purchaseProduct.*', 'purchaseLedgerBook.*']) }}"
+                            id="purchaseProduct">
+                            <ul class="nav nav-collapse">
+                                <li class="{{ activeSubNav(['product-purchase.*', 'purchaseProduct.*']) }}">
+                                    <a href="{{ route('product-purchase.index') }}">
+                                        <span class="sub-item">Product</span>
+                                    </a>
+                                </li>
+                                {{-- <li
                                 class="{{ activeSubNav(['sales-invoice-cash-return.*', 'salesInvoiceCashReturn.*']) }}">
                                 <a href="{{ route('sales-invoice-cash-return.index') }}">
                                     <span class="sub-item">Sales Return</span>
                                 </a>
                             </li> --}}
-                            <li class="{{ activeSubNav('purchaseLedgerBook.*') }}">
-                                <a href="{{ route('purchaseLedgerBook.index') }}">
-                                    <span class="sub-item">Ledger Book</span>
-                                </a>
-                            </li>
-                            <li class="{{ activeSubNav('report.salesAndStock.*') }}">
-                                <a href="{{ route('report.salesAndStock.selectDate') }}">
-                                    <span class="sub-item">@lang('nav.report')</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                {{-- Product Purchase End --}}
+                                <li class="{{ activeSubNav('purchaseLedgerBook.*') }}">
+                                    <a href="{{ route('purchaseLedgerBook.index') }}">
+                                        <span class="sub-item">Ledger Book</span>
+                                    </a>
+                                </li>
+                                <li class="{{ activeSubNav('report.salesAndStock.*') }}">
+                                    <a href="{{ route('report.salesAndStock.selectDate') }}">
+                                        <span class="sub-item">@lang('nav.report')</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    {{-- Product Purchase End --}}
                 @endif
 
 

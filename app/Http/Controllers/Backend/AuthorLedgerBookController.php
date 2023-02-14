@@ -15,7 +15,7 @@ class AuthorLedgerBookController extends Controller
         if ($error = $this->authorize('author-ledger-book-manage')) {
             return $error;
         }
-        $authors = User::where('role', 1)->where('name', '!=', 'Developer')->orwhere('role', 5)->get();
+        $authors = User::where('role', 1)->where('name', '!=', 'Developer')->orWhere('role', 5)->get();
         return view('admin.author_ledger_book.index', compact('authors'));
     }
 
