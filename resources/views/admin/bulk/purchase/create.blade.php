@@ -175,7 +175,6 @@
 <script>
     $(document).ready(function(){
         $('.add_porduct').on('click', function() {
-            // var product_name    = $('#product_name').val();
             var product_id      = $('#product_id').val();
             var group_name      = $('#group_name').val();
             var size_text       = $('#size_text').val();
@@ -203,12 +202,7 @@
                 return false;
             }
 
-            // if (checkStock != '') {
-            //     toast('error', 'Out Of stock');
-            //     return false;
-            // }
-
-            var totalamount =  quantity*rate_per_qty;
+            var totalamount =  net_weight*rate_per_qty;
             var html = '<tr>';
             html += '<tr class="trData"><td class="serial text-center"></td><td>' + group_name + '</td><td class="text-center">'+ size_text +'</td><td class="text-center">' + quantity + '</td><td class="text-right">' + parseFloat(rate_per_qty).toFixed(2) + '</td><td class="text-center">'+net_weight+'</td><td class="text-right">' + parseFloat(totalamount).toFixed(2) + '</td><td align="center">';
             html += '<input type="hidden" name="product_id[]" value="' + product_id + '" />';
@@ -230,7 +224,6 @@
             $('#price').val('');
             $('#net_weight').val('');
             $('#subtotal').val('');
-            // $('#discountAmt').val('');
 
             serialMaintain();
         });
@@ -257,7 +250,6 @@
 
             $('.sub-total').html(subtotal.toFixed(2));
             $('#total_amount').val(subtotal);
-            // $('#totalp').val(subtotal);
         };
 
 
@@ -308,7 +300,6 @@
             })
         });
 
-
         // Product Price
         $('#sizee').on('change',function(e) {
             var size_id = $('#sizee').val();
@@ -326,16 +317,11 @@
         });
 
         $('.qty').on('keyup',function(e) {
-
-            // var product_id = $('#product_id').val();
-            // var size_id = Number($('#sizee').val());
-            // var discount = $('#discount').val();
             var qty = Number($('#qty').val());
             var weight = $('#weight').val();
             var price = $('#price').val();
             var total = $('#totalamounval').val();
-            var result = Number(qty)*Number(price);
-            // var netWeight = Number(qty)*Number(weight);
+            var result = Number(weight)*Number(price);
 
             $('.qty').each(function() {
                 sum = Number(qty)*Number(weight);
@@ -344,24 +330,6 @@
             $('#net_weight').val(sum);
             $('#subtotal').val(result);
             total_price();
-
-            // $.ajax({
-            //     url:'{{ route("productStockCheck") }}',
-            //     type:"get",
-            //     data: {
-            //         product_id: product_id,
-            //         size_id: size_id
-            //         },
-            //     success:function (res) {
-            //         res = $.parseJSON(res);
-            //         // console.log(res.quantity)
-            //         if(qty > res.quantity){
-            //             $('#msg').html("In Stock " + (res.quantity));
-            //         }else if(qty < res.quantity){
-            //             $('#msg').html('');
-            //         }
-            //     }
-            // })
         });
 
         // Total Price
