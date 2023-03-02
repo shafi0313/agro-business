@@ -37,8 +37,7 @@ class GlobalController extends Controller
 
     public function bulkPackSize(Request $request)
     {
-        $p_id = $request->cat_id;
-        $productSize = ProductPackSize::where('product_id', $p_id)->where('type', 2)->get();
+        $productSize = ProductPackSize::where('product_id', $request->cat_id)->where('type', 2)->get();
         $size = '';
         $size .= '<option value="0">Select</option>';
         foreach ($productSize as $sub) {

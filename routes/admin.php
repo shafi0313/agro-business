@@ -44,6 +44,7 @@ use App\Http\Controllers\Backend\UserCustomerController;
 use App\Http\Controllers\Backend\UserEmployeeController;
 use App\Http\Controllers\Backend\UserSupplierController;
 use App\Http\Controllers\Backend\BankStatementController;
+use App\Http\Controllers\Sales\CreateInvoiceController;
 use App\Http\Controllers\Backend\LabelPurchaseController;
 use App\Http\Controllers\Backend\OfficeExpenseController;
 use App\Http\Controllers\Backend\ResetPasswordController;
@@ -493,6 +494,7 @@ Route::get('/sample/invoice/print/invoice/{customer_id}/{invoice_no}', [SalesSam
 
 
 // Sales Invoice Cash
+Route::resource('/create-invoice', CreateInvoiceController::class)->except(['index']);
 Route::resource('/sales-invoice-cash', SalesInvoiceCashController::class);
 Route::prefix('sales-of-cash')->group(function () {
     Route::get('/invoice/create/{id}', [SalesInvoiceCashController::class, 'createId'])->name('salesInvoiceCash.Create');

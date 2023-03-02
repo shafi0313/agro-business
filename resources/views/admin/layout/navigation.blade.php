@@ -689,13 +689,13 @@
 
                 {{-- ________________________ Sales Start ________________________ --}}
                 <li
-                    class="nav-item {{ activeNav(['sample-invoive.*', 'salesInvoiceCash.*', 'sales-invoice-cash.*', 'sales-invoice-cash-return.*', 'salesInvoiceCashReturn.*', 'salesLedgerBook.*', 'report.salesAndStock.*']) }}">
+                    class="nav-item {{ activeNav(['sample-invoive.*', 'salesInvoiceCash.*', 'sales-invoice-cash.*', 'sales-invoice-cash-return.*', 'salesInvoiceCashReturn.*', 'salesLedgerBook.*', 'report.salesAndStock.*','create-invoice.*']) }}">
                     <a data-toggle="collapse" href="#invoice">
                         <i class="fas fa-file-invoice-dollar"></i>
                         <p>@lang('nav.sales')</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ openNav(['sample-invoive.*', 'salesInvoiceCash.*', 'sales-invoice-cash.*', 'sales-invoice-cash-return.*', 'salesInvoiceCashReturn.*', 'salesLedgerBook.*', 'report.salesAndStock.*']) }}"
+                    <div class="collapse {{ openNav(['sample-invoive.*', 'salesInvoiceCash.*', 'sales-invoice-cash.*', 'sales-invoice-cash-return.*', 'salesInvoiceCashReturn.*', 'salesLedgerBook.*', 'report.salesAndStock.*','create-invoice.*']) }}"
                         id="invoice">
                         <ul class="nav nav-collapse">
                             @can('sales-sample-manage')
@@ -708,6 +708,11 @@
                             <li class="{{ activeSubNav(['sales-invoice-cash.*', 'salesInvoiceCash.*']) }}">
                                 <a href="{{ route('sales-invoice-cash.index') }}">
                                     <span class="sub-item">Sales</span>
+                                </a>
+                            </li>
+                            <li class="{{ activeSubNav(['create-invoice.*']) }}">
+                                <a href="{{ route('create-invoice.create') }}">
+                                    <span class="sub-item">Create Invoice</span>
                                 </a>
                             </li>
                             <li

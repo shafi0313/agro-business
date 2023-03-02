@@ -24,6 +24,7 @@ class MondolSettingsSeeder extends Seeder
         Setting(['app_url'=> 'https://mondolag.com'])->save();
         Setting(['app_description'=> ''])->save();
         Setting(['app_keyword'=> 'Mondol, Agro, Mondol Agro, Mondol Traders, Alamdanga, mondolag'])->save();
+        Setting(['is_company'=> 1])->save();
         // Setting(['credit_footer'=> ''])->save();
 
         Setting(['inv_header_address'=> 'Alamdanga, Chuadanga.'])->save();
