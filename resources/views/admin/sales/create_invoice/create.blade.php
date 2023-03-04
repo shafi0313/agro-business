@@ -24,9 +24,7 @@
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item">Sales</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item"><a href="{{ route('sales-invoice-cash.index')}}">Sales</a></li>
-                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item active">Create</li>
+                    <li class="nav-item active">Create Invoice</li>
                 </ul>
             </div>
             <div class="row">
@@ -62,7 +60,7 @@
                             <div class="row justify-content-between">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="" class="form-label form-label-sm">Customer <span class="t_r">*</span></label>
+                                        <label for="" class="form-label ">Customer <span class="t_r">*</span></label>
                                         <select name="customer_id" id="customer_id" class="form-control select2single" required>
                                             <option selected value disabled>Select</option>
                                             @foreach ($customers as $customer)
@@ -73,32 +71,32 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="" class="form-label form-label-sm">Invoice No:</label>
+                                        <label for="" class="form-label ">Invoice No:</label>
                                         <input type="number" readonly name="invoice_no" value="{{ $invoice_no }}" class="form-control " required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="" class="form-label form-label-sm">Challan No:</label>
+                                        <label for="" class="form-label ">Challan No:</label>
                                         <input type="number" readonly name="challan_no" value="{{ $challan_no }}" class="form-control " required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group ">
-                                        <label for="invoice_date" class="form-label form-label-sm">Invoice Date <span class="t_r">*</span></label>
-                                        <input type="date" name="invoice_date" class="form-control " required>
+                                        <label for="invoice_date" class="form-label ">Invoice Date <span class="t_r">*</span></label>
+                                        <input type="date" name="invoice_date" class="form-control get_invoice_date" required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group ">
-                                        <label for="" class="form-label form-label-sm">Delivery Date <span class="t_r">*</span></label>
-                                        <input type="date" name="delivery_date" class="form-control " required>
+                                        <label for="" class="form-label ">Delivery Date <span class="t_r">*</span></label>
+                                        <input type="date" name="delivery_date" class="form-control invoice_date" required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="" class="form-label form-label-sm text-danger">Payment Date <span class="t_r">*</span></label>
-                                        <input type="date" name="payment_date" class="form-control " required>
+                                        <label for="" class="form-label  text-danger ">Payment Date <span class="t_r">*</span></label>
+                                        <input type="date" name="payment_date" class="form-control invoice_date" required>
                                     </div>
                                 </div>
 
@@ -199,7 +197,7 @@
                                         <th><input type="hidden" name="total_amt" id="total_amount"></th>
                                     </tr>
                                     <tr>
-                                        <td colspan="7">Discount: <span class="t_r">*</span></td>
+                                        <td colspan="7">Discount:</td>
                                         <td colspan="2"><input type="number" id="discountAmt" step="any" name="discount" class="form-control " style="width:50%; display:inline-block" placeholder="%"><input placeholder="Amount" style="width:50%;display:inline-block" type="number" name="discount_amt" id="discountTk" step="any" class="form-control "></td>
                                     </tr>
                                     <tr>
@@ -264,7 +262,6 @@
                             <hr class="bg-warning">
     {{--__________________________________ Product Input Start__________________________________--}}
 
-
                             </div>
                             <div class="text-center">
                                 <input type="submit" value="Submit" class="btn btn-success" id="btn_submit" onclick='return btnClick();'>
@@ -285,6 +282,11 @@
 
 <script>
     $(document).ready(function(){
+        $('.get_invoice_date').on('change', function(){
+            let invoice_date = $(this).val();
+            $('.invoice_date').val(invoice_date);
+        })
+        
         $('.add_porduct').on('click', function() {
             let product_id      = $("#product_id :selected").val();
             let product_name      = $("#product_id :selected").text();

@@ -59,7 +59,7 @@ class CreateInvoiceController extends Controller
         $customer_id = $request->get('customer_id');
         $invoice_no = $request->get('invoice_no');
         $challan_no = $request->get('challan_no');
-        $user_id = $request->get('user_id');
+        // $user_id = $request->get('user_id');
         $transaction_id = transaction_id('INV');
 
         DB::beginTransaction();
@@ -72,19 +72,19 @@ class CreateInvoiceController extends Controller
             $invoiceArr = [];
             foreach ($request->product_id as $key => $v) {
                 $data=[
-                    'tran_id' => $transaction_id,
-                    // 'user_id' => $user_id,
-                    'customer_id' => $customer_id,
-                    'product_id' => $request->product_id[$key],
-                    'type' => $request->filled('payment_by') ? 1 : 3, // Cash
-                    'invoice_no' => $invoice_no,
-                    'challan_no' => $challan_no,
-                    'size' => $request->size_id[$key],
-                    'quantity' => $request->quantity[$key],
-                    'bonus' => $request->bonus[$key],
-                    'pro_dis' => $request->pro_dis[$key],
+                    'tran_id'      => $transaction_id,
+                    'user_id'      => user()->id,
+                    'customer_id'  => $customer_id,
+                    'product_id'   => $request->product_id[$key],
+                    'type'         => $request->filled('payment_by') ? 1 : 3,   // Cash
+                    'invoice_no'   => $invoice_no,
+                    'challan_no'   => $challan_no,
+                    'size'         => $request->size_id[$key],
+                    'quantity'     => $request->quantity[$key],
+                    'bonus'        => $request->bonus[$key],
+                    'pro_dis'      => $request->pro_dis[$key],
                     'rate_per_qty' => $request->rate_per_qty[$key],
-                    'amt' => round($request->amt[$key]),
+                    'amt'          => round($request->amt[$key]),
                     'invoice_date' => $request->invoice_date,
                 ];
                 $invoice = SalesInvoice::create($data);
@@ -114,7 +114,7 @@ class CreateInvoiceController extends Controller
 
             $ledgerBook = [
                 'tran_id'      => $transaction_id,
-                // 'user_id'      => $user_id,
+                'user_id'      => user()->id,
                 'customer_id'  => $customer_id,
                 'prepared_id'  => auth()->user()->id,
                 'type'         => $request->filled('payment_by') ? 1 : 3,
@@ -137,7 +137,7 @@ class CreateInvoiceController extends Controller
                 $productDiscount = array_sum($request->pro_dis) / count($invoiceArr);
                 $report = [
                     'tran_id'              => $transaction_id,
-                    // 'user_id'              => $salesReport->user_id,
+                    'user_id'              => $salesReport->user_id,
                     'type'                 => 1,
                     'inv_type'             => $request->filled('payment_by') ? 1 : 3,
                     'sales_ledger_book_id' => $ledgerBook->id,
@@ -163,13 +163,13 @@ class CreateInvoiceController extends Controller
             }
 
             if($request->filled('payment_by')){
-                $tmm_so_id = $request->get('tmm_so_id');
+                // $tmm_so_id = $request->get('tmm_so_id');
                 $user_bank_ac_id = $request->get('user_bank_ac_id');
                 $transaction_idRec = transaction_id('REC');
                 $account = [
                     'tran_id'   => $transaction_idRec,
                     'user_id'   => $customer_id,
-                    // 'tmm_so_id' => $tmm_so_id,
+                    'tmm_so_id' => user()->id,
                     'ac_type'   => 2,
                     'trn_type'  => 2,                 // Rec
                     // 'pay_type' => $request->pay_type, // Rec
@@ -196,7 +196,7 @@ class CreateInvoiceController extends Controller
                 }
                 $ledgerBook = [
                     'tran_id'      => $transaction_idRec,
-                    // 'user_id'      => $tmm_so_id,
+                    'user_id'      => user()->id,
                     'customer_id'  => $customer_id,
                     'invoice_no'   => $invoice_no,
                     'prepared_id'  => auth()->user()->id,

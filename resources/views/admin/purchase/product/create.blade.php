@@ -218,8 +218,8 @@
                                         <th><input type="hidden" name="total_amt" id="total_amount"></th>
                                     </tr>
                                     <tr>
-                                        <td colspan="7">Discount: <span class="t_r">*</span></td>
-                                        <td colspan="2"><input required type="number" id="discountAmt" step="any" name="discount" class="form-control form-control-sm" style="width:50%; display:inline-block" placeholder="%"><input placeholder="Amount" style="width:50%;display:inline-block" type="number" name="discount_amt" id="discountTk" step="any" class="form-control form-control-sm"></td>
+                                        <td colspan="7">Discount:</td>
+                                        <td colspan="2"><input type="number" id="discountAmt" step="any" name="discount" class="form-control form-control-sm" style="width:50%; display:inline-block" placeholder="%"><input placeholder="Amount" style="width:50%;display:inline-block" type="number" name="discount_amt" id="discountTk" step="any" class="form-control form-control-sm"></td>
                                     </tr>
                                     <tr>
                                         <td colspan="7">Net Payable:</td>

@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Backend;
 use App\Models\User;
 use App\Models\Stock;
 use App\Models\SampleNote;
+use App\Models\SalesReport;
 use Illuminate\Http\Request;
 use App\Models\PurchaseInvoice;
 use App\Models\PurchaseLedgerBook;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PurchaseProductController extends Controller
 {
