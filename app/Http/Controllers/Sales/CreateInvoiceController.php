@@ -26,7 +26,7 @@ class CreateInvoiceController extends Controller
         }
         $customers = User::with(['customerInfo' => function ($q) {
             return $q->select('user_id', 'type', 'credit_limit');
-        }])->select('id', 'role', 'name', 'business_name', 'address')->orderBy('name')->whereRole(2)->get();
+        }])->select('id', 'role', 'name', 'business_name', 'address')->orderBy('business_name')->whereRole(2)->get();
         $products = Product::whereType(1)->orderBy('name')->get(['id', 'name']);
 
         // $userId = SalesReport::with(['userForSR' => function ($q) {

@@ -710,11 +710,13 @@
                                     <span class="sub-item">Sales</span>
                                 </a>
                             </li>
+                            @if (setting('is_company') == 0)
                             <li class="{{ activeSubNav(['create-invoice.*']) }}">
                                 <a href="{{ route('create-invoice.create') }}">
                                     <span class="sub-item">Create Invoice</span>
                                 </a>
                             </li>
+                            @endif
                             <li
                                 class="{{ activeSubNav(['sales-invoice-cash-return.*', 'salesInvoiceCashReturn.*']) }}">
                                 <a href="{{ route('sales-invoice-cash-return.index') }}">

@@ -66,7 +66,7 @@
                                         <select name="customer_id" id="customer_id" class="form-control select2single" required>
                                             <option selected value disabled>Select</option>
                                             @foreach ($customers as $customer)
-                                                <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                                <option value="{{ $customer->id }}">{{ $customer->business_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
