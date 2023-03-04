@@ -738,14 +738,19 @@
                 </li>
                 {{-- Sales End --}}
 
-                <li class="nav-item {{ $p == 'report' ? 'active' : '' }}">
+                <li class="nav-item {{ activeNav(['report.*']) }}">
                     <a data-toggle="collapse" href="#report">
                         <i class="fas fa-file"></i>
                         <p>@lang('nav.report')</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ $p == 'report' ? 'show' : '' }}" id="report">
+                    <div class="collapse {{ openNav(['report.*']) }}" id="report">
                         <ul class="nav nav-collapse">
+                            <li class="{{ activeSubNav('report.profitLoss.*') }}">
+                                <a href="{{ route('report.profitLoss.selectDate') }}">
+                                    <span class="sub-item">Profit & Loss</span>
+                                </a>
+                            </li>
                             <li class="{{ $sm == 'cashBook' ? 'activeSub' : '' }}">
                                 <a href="{{ route('cashBook.selectDate') }}">
                                     <span class="sub-item">Cash Book</span>

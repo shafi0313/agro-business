@@ -36,6 +36,7 @@ use App\Http\Controllers\Backend\SalesSampleController;
 use App\Http\Controllers\Backend\StockReportController;
 use App\Http\Controllers\Backend\UserFactoryController;
 use App\Http\Controllers\Backend\VisitorInfoController;
+use App\Http\Controllers\Sales\CreateInvoiceController;
 use App\Http\Controllers\Backend\BulkPurchaseController;
 use App\Http\Controllers\Backend\EmployeeMainController;
 use App\Http\Controllers\Backend\OfficeIncomeController;
@@ -44,7 +45,6 @@ use App\Http\Controllers\Backend\UserCustomerController;
 use App\Http\Controllers\Backend\UserEmployeeController;
 use App\Http\Controllers\Backend\UserSupplierController;
 use App\Http\Controllers\Backend\BankStatementController;
-use App\Http\Controllers\Sales\CreateInvoiceController;
 use App\Http\Controllers\Backend\LabelPurchaseController;
 use App\Http\Controllers\Backend\OfficeExpenseController;
 use App\Http\Controllers\Backend\ResetPasswordController;
@@ -64,6 +64,7 @@ use App\Http\Controllers\Backend\OfficeExpenseCatController;
 use App\Http\Controllers\Backend\SalesInvoiceCashController;
 use App\Http\Controllers\Backend\SendToProductionController;
 use App\Http\Controllers\Backend\PurchaseStatementController;
+use App\Http\Controllers\Backend\Report\ProfitLossController;
 use App\Http\Controllers\Backend\SalesSampleReportController;
 use App\Http\Controllers\Auth\Permission\PermissionController;
 use App\Http\Controllers\Backend\OfficeIncomeReportController;
@@ -136,8 +137,15 @@ Route::prefix('/company-info')->controller(CompanyInfoController::class)->group(
 
 });
 
-// User Start________________________________________________________________________________________________________________
+Route::prefix('/report')->name('report.')->group(function(){
+    Route::controller(ProfitLossController::class, 'profit-Loss')->group(function(){
+        Route::get('/select-date', 'selectDate')->name('profitLoss.selectDate');
+        Route::get('/', 'show')->name('profitLoss.show');
+    });
 
+});
+
+// User Start________________________________________________________________________________________________________________
 Route::resource('/admin-user', AdminUserController::class)->except(['show']);
 Route::post('/admin-user/user-file-store', [AdminUserController::class, 'userFileStore'])->name('admin.userFileStore');
 Route::get('/admin-user/file/destroy/{id}', [AdminUserController::class, 'userFileDestroy'])->name('admin.userFileDestroy');
