@@ -41,6 +41,7 @@ use App\Http\Controllers\Backend\BulkPurchaseController;
 use App\Http\Controllers\Backend\EmployeeMainController;
 use App\Http\Controllers\Backend\OfficeIncomeController;
 use App\Http\Controllers\Backend\ProductStockController;
+use App\Http\Controllers\Backend\Report\TodayController;
 use App\Http\Controllers\Backend\UserCustomerController;
 use App\Http\Controllers\Backend\UserEmployeeController;
 use App\Http\Controllers\Backend\UserSupplierController;
@@ -138,9 +139,12 @@ Route::prefix('/company-info')->controller(CompanyInfoController::class)->group(
 });
 
 Route::prefix('/report')->name('report.')->group(function(){
-    Route::controller(ProfitLossController::class, 'profit-Loss')->group(function(){
+    Route::controller(ProfitLossController::class)->prefix('profit-Loss')->group(function(){
         Route::get('/select-date', 'selectDate')->name('profitLoss.selectDate');
         Route::get('/', 'show')->name('profitLoss.show');
+    });
+    Route::controller(TodayController::class)->group(function(){
+        Route::get('/today-report', 'show')->name('todayReport.show');
     });
 
 });

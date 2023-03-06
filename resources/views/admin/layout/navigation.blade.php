@@ -751,6 +751,11 @@
                                     <span class="sub-item">Profit & Loss</span>
                                 </a>
                             </li>
+                            <li class="{{ activeSubNav('report.todayReport.*') }}">
+                                <a href="{{ route('report.todayReport.show') }}">
+                                    <span class="sub-item">Today Report</span>
+                                </a>
+                            </li>
                             <li class="{{ $sm == 'cashBook' ? 'activeSub' : '' }}">
                                 <a href="{{ route('cashBook.selectDate') }}">
                                     <span class="sub-item">Cash Book</span>
