@@ -208,8 +208,8 @@
                                     </div>
 
                                     <div class="form-group col-sm-4">
-                                        <label for="bank_list_id">Bank Name <span class="t_r">*</span></label>
-                                        <select name="bank_list_id" class="form-control" required>
+                                        <label for="bank_list_id">Bank Name</label>
+                                        <select name="bank_list_id" class="form-control">
                                             <option value selected disabled>Select Bank</option>
                                             @foreach ($bankLists as $bankList)
                                             <option value="{{$bankList->id}}">{{$bankList->name}}</option>
@@ -221,7 +221,7 @@
                                     </div>
 
                                     <div class="form-group col-sm-4">
-                                        <label for="ac_name">Bank Account Name  <span class="t_r">*</span></label>
+                                        <label for="ac_name">Bank Account Name </label>
                                         <input type="text" name="ac_name" class="form-control @error('ac_name') is-invalid @enderror" value="{{old('ac_name')}}" placeholder="Enter Bank Account Name.">
                                         @error('ac_name')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -229,7 +229,7 @@
                                     </div>
 
                                     <div class="form-group col-sm-4">
-                                        <label for="ac_no">Bank Account No. <span class="t_r">*</span></label>
+                                        <label for="ac_no">Bank Account No.</label>
                                         <input type="text" name="ac_no" class="form-control @error('ac_no') is-invalid @enderror" value="{{old('ac_no')}}" placeholder="Enter Bank Account No.">
                                         @error('ac_no')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -237,7 +237,7 @@
                                     </div>
 
                                     <div class="form-group col-sm-4">
-                                        <label for="branch">Branch Name <span class="t_r">*</span></label>
+                                        <label for="branch">Branch Name</label>
                                         <input type="text" name="branch" class="form-control @error('branch') is-invalid @enderror" value="{{old('branch')}}" placeholder="Enter Branch Name">
                                         @error('branch')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -245,8 +245,8 @@
                                     </div>
 
                                     <div class="form-group col-sm-3">
-                                        <label for="cheque_no">Bank Chequeco No. <span class="t_r">*</span></label>
-                                        <input type="text" name="cheque_no" class="form-control @error('cheque_no') is-invalid @enderror" value="{{old('cheque_no')}}" placeholder="Enter Bank Chequeco No.">
+                                        <label for="cheque_no">Bank Cheque No.</label>
+                                        <input type="text" name="cheque_no" class="form-control @error('cheque_no') is-invalid @enderror" value="{{old('cheque_no')}}" placeholder="Enter Bank Cheque No.">
                                         @error('cheque_no')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -269,7 +269,7 @@
                                     </div>
 
                                     <div class="form-group col-sm-5">
-                                        <label>Confrim Password <span class="t_r">*</span></label>
+                                        <label>Confirm Password <span class="t_r">*</span></label>
                                         <input name="password_confirmation" type="password" class="form-control @error('email') is-invalid @enderror" required>
                                         @error('email')
                                             <div class="alert alert-danger">{{ $message }}</div>

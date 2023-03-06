@@ -25,7 +25,7 @@ class CreateEmployeeInfosTable extends Migration
             $table->bigInteger('nid');
             $table->string('blood',8)->nullable();
             $table->enum('m_status',['1','2'])->comment('1=marid,2=unmarid');
-            $table->bigInteger('c_phone')->nullable();
+            $table->string('c_phone',30)->nullable();
 
             $table->foreignId('bank_list_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('ac_name',80);

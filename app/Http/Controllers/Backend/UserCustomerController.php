@@ -37,11 +37,11 @@ class UserCustomerController extends Controller
             return $error;
         }
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'email|unique:users,email',
-            'phone' => 'required|numeric',
-            'address' => 'required',
-            'credit_limit' => 'required',
+            'name'         => 'required',
+            'email'        => 'nullable|email|unique:users,email',
+            'phone'        => 'required|string|max:30',
+            'address'      => 'required',
+            'credit_limit' => 'nullable',
         ]);
 
         DB::beginTransaction();
@@ -58,7 +58,7 @@ class UserCustomerController extends Controller
 
         $image_name = '';
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
+            $image      = $request->file('image');
             $image_name = "user_photo".rand(0, 10000).'.'.$image->getClientOriginalExtension();
             $request->image->move('uploads/images/product/', $image_name);
         } else {
@@ -66,31 +66,31 @@ class UserCustomerController extends Controller
         }
 
         $data = [
-            'tmm_so_id' => $request->get('tmm_so_id') .$tmmId,
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'role' =>  2,
-            'is_' => 0,
-            'phone' => $request->get('phone'),
+            'tmm_so_id'     => $request->get('tmm_so_id') .$tmmId,
+            'name'          => $request->get('name'),
+            'email'         => $request->get('email'),
+            'role'          => 2,
+            'is_'           => 0,
+            'phone'         => $request->get('phone'),
             'business_name' => $request->get('business_name'),
             // 'password' =>bcrypt($request->get('password')),
-            'password' =>bcrypt(4321),
-            'address' => $request->get('address'),
+            'password'           => bcrypt(4321),
+            'address'            => $request->get('address'),
             'profile_photo_path' => $image_name,
         ];
         // return $data;
         $user = User::create($data);
 
         $customerInfo = [
-            'user_id' => $user->id,
-            'type' => $request->type,
-            'credit_limit' => $request->get('credit_limit'),
-            'nominee_name' => $request->get('nominee_name'),
+            'user_id'       => $user->id,
+            'type'          => $request->type,
+            'credit_limit'  => $request->get('credit_limit'),
+            'nominee_name'  => $request->get('nominee_name'),
             'nominee_phone' => $request->get('nominee_phone'),
-            'relation' => $request->get('relation'),
-            'shop_address' => $request->get('shop_address'),
-            'opening_bl' => $request->get('total'),
-            'note' => $request->get('opening_bl_note'),
+            'relation'      => $request->get('relation'),
+            'shop_address'  => $request->get('shop_address'),
+            'opening_bl'    => $request->get('total'),
+            'note'          => $request->get('opening_bl_note'),
         ];
         CustomerInfo::create($customerInfo);
 
@@ -103,9 +103,9 @@ class UserCustomerController extends Controller
                 $file->move($destinationPath, $fileName);
                 $userFile = [
                     'user_id' => $user->id,
-                    'is_' =>  2,
-                    'name' => $fileName,
-                    'note' => $request->note[$key],
+                    'is_'     => 2,
+                    'name'    => $fileName,
+                    'note'    => $request->note[$key],
                 ];
                 UserFile::create($userFile);
             }
@@ -113,12 +113,12 @@ class UserCustomerController extends Controller
 
         if ($request->preCal==1) {
             // Ledger Book
-            $open = $request->get('total');
-            $ledgerBook['user_id'] = $user->id;
+            $open                      = $request->get('total');
+            $ledgerBook['user_id']     = $user->id;
             $ledgerBook['customer_id'] = $user->id;
             $ledgerBook['prepared_id'] = auth()->user()->id;
-            $ledgerBook['type'] = 0;
-            $ledgerBook['invoice_no'] = 0;
+            $ledgerBook['type']        = 0;
+            $ledgerBook['invoice_no']  = 0;
             if ($request->preCal==1) {
                 if ($open > 0) {
                     // $ledgerBook['sales_amt'] = $open;
@@ -158,7 +158,6 @@ class UserCustomerController extends Controller
         }
 
         try {
-            $user == true;
             DB::commit();
             toast('Successfully Inserted', 'success');
             return redirect()->route('customer.index');

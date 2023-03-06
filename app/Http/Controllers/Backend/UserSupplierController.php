@@ -35,9 +35,9 @@ class UserSupplierController extends Controller
             return $error;
         }
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'email|unique:users,email',
-            'phone' => 'required|numeric',
+            'name'    => 'required',
+            'email'   => 'nullable|email|unique:users,email',
+            'phone'   => 'required|string|max:30',
             'address' => 'required',
         ]);
 
@@ -64,16 +64,16 @@ class UserSupplierController extends Controller
         DB::beginTransaction();
 
         $data = [
-            'tmm_so_id' => $request->get('tmm_so_id') .$tmmId,
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'role' =>  3,
-            'is_' => 0,
-            'phone' => $request->get('phone'),
+            'tmm_so_id'     => $request->get('tmm_so_id') .$tmmId,
+            'name'          => $request->get('name'),
+            'email'         => $request->get('email'),
+            'role'          => 3,
+            'is_'           => 0,
+            'phone'         => $request->get('phone'),
             'business_name' => $request->get('business_name'),
             // 'password' =>bcrypt($request->get('password')),
-            'password' =>bcrypt(4321),
-            'address' => $request->get('address'),
+            'password'           => bcrypt(4321),
+            'address'            => $request->get('address'),
             'profile_photo_path' => $image_name,
         ];
 
@@ -94,9 +94,9 @@ class UserSupplierController extends Controller
                     $file->move($destinationPath, $fileName);
                     $userFile = [
                         'user_id' => $user->id,
-                        'is_' =>  3,
-                        'name' => $fileName,
-                        'note' => $request->note[$key],
+                        'is_'     => 3,
+                        'name'    => $fileName,
+                        'note'    => $request->note[$key],
                     ];
                     UserFile::create($userFile);
                 }

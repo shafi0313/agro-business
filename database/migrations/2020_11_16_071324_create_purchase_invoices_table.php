@@ -15,10 +15,10 @@ class CreatePurchaseInvoicesTable extends Migration
     {
         Schema::create('purchase_invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('tran_id', 64)->after('id')->index()->nullable();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade');
             $table->unsignedBigInteger('supplier_id');
             $table->foreign('supplier_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('tran_id', 64)->index()->nullable();
             $table->foreignId('product_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('size')->comment('Weight/id');
             $table->foreign('size')->references('id')->on('product_pack_sizes')->onUpdate('cascade')->onDelete('cascade');

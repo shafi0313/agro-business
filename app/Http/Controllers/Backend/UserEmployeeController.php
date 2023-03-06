@@ -47,18 +47,22 @@ class UserEmployeeController extends Controller
         }
         // return $request;
         $this->validate($request, [
-            'name' => 'required',
+            'name'   => 'required',
             'f_name' => 'required',
             'm_name' => 'required',
             // 'designation' => 'required',
-            'nid' => 'required',
+            'nid'      => 'required|numeric',
             'm_status' => 'required',
-            'j_date' => 'required',
+            'j_date'   => 'required',
             // 'salary' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'required|numeric',
-            'address' => 'required',
+            'email'    => 'required|email|unique:users,email',
+            'phone'    => 'required|string|max:30',
+            'address'  => 'required',
             'password' => 'required|confirmed|min:6',
+
+
+            'blood' => 'nullable|string|max:8',
+            'c_phone' => 'nullable|string|max:30',
         ]);
 
         $image_name = '';

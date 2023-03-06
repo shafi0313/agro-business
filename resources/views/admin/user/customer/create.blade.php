@@ -38,7 +38,7 @@
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        <label for="business_name">Customer Name <span class="t_r">*</span></label>
+                                        <label for="business_name">Business Name <span class="t_r">*</span></label>
                                         <input type="text" name="business_name" class="form-control @error('business_name') is-invalid @enderror" value="{{old('business_name')}}" placeholder="Customer Name" required>
                                         @error('business_name')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -79,16 +79,16 @@
                                     </div>
 
                                     <div class="form-group col-sm-6">
-                                        <label for="email">Email <span class="t_r">*</span></label>
-                                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email')}}" placeholder="Enter Email" required>
+                                        <label for="email">Email </label>
+                                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email')}}" placeholder="Enter Email">
                                         @error('email')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
 
                                     <div class="form-group col-sm-6">
-                                        <label for="credit_limit">Credit Limit <span class="t_r">*</span></label>
-                                        <input type="number" name="credit_limit" class="form-control @error('credit_limit') is-invalid @enderror" value="{{old('credit_limit')}}" placeholder="Enter Credit Limit" required>
+                                        <label for="credit_limit">Credit Limit </label>
+                                        <input type="number" name="credit_limit" class="form-control @error('credit_limit') is-invalid @enderror" value="{{old('credit_limit')}}" placeholder="Enter Credit Limit">
                                         @error('credit_limit')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -133,8 +133,8 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label for="address">Mailing Address <span class="t_r">*</span></label>
-                                        <textarea name="address" id="" cols="15" rows="6" class="form-control @error('address') is-invalid @enderror" value="{{old('address')}}" placeholder="Enter Mailing Address" required></textarea>
+                                        <label for="address">Mailing Address </label>
+                                        <textarea name="address" id="" cols="15" rows="6" class="form-control @error('address') is-invalid @enderror" value="{{old('address')}}" placeholder="Enter Mailing Address"></textarea>
                                         {{-- <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" value="{{old('address')}}" placeholder="Enter Address" required> --}}
                                         @error('address')
                                             <div class="alert alert-danger">{{ $message }}</div>

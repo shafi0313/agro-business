@@ -17,11 +17,11 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('tmm_so_id',80)->nullable();
             $table->string('name',100)->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->tinyInteger('role')->default(0)->comment('1=Admin,2=Customer,3=Supplier	');
             $table->tinyInteger('is_')->default(0)->comment('1=Admin');
             $table->tinyInteger('age')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('phone',30)->nullable();
             $table->string('business_name')->nullable();
             $table->text('address')->nullable();
             $table->text('shop_address')->nullable();

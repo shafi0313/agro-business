@@ -39,7 +39,7 @@
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        <label for="business_name">Supplier Name <span class="t_r">*</span></label>
+                                        <label for="business_name">Business Name <span class="t_r">*</span></label>
                                         <input type="text" name="business_name" class="form-control @error('business_name') is-invalid @enderror" value="{{old('business_name')}}" placeholder="Supplier Name" required>
                                         @error('business_name')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -70,8 +70,8 @@
                                     </div>
 
                                     <div class="form-group col-sm-6">
-                                        <label for="email">Email <span class="t_r">*</span></label>
-                                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email')}}" placeholder="Enter Email" required>
+                                        <label for="email">Email </label>
+                                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email')}}" placeholder="Enter Email">
                                         @error('email')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror

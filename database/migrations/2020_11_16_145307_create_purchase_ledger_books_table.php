@@ -15,7 +15,6 @@ class CreatePurchaseLedgerBooksTable extends Migration
     {
         Schema::create('purchase_ledger_books', function (Blueprint $table) {
             $table->id();
-            $table->string('tran_id', 64)->after('id')->index()->nullable();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade');
             $table->unsignedBigInteger('supplier_id');
             $table->foreign('supplier_id')->references('id')->on('users')->onUpdate('cascade');
@@ -23,6 +22,7 @@ class CreatePurchaseLedgerBooksTable extends Migration
             $table->foreign('prepared_id')->references('id')->on('users')->onUpdate('cascade');
             $table->unsignedBigInteger('account_id')->nullable();
             $table->foreign('account_id')->references('id')->on('accounts')->onUpdate('cascade');
+            $table->string('tran_id', 64)->index()->nullable();
             $table->tinyInteger('type')->comment('1=Cash,3=Credit,5=Pmt');
             $table->string('invoice_no')->nullable();
             $table->string('challan_no')->nullable();

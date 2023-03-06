@@ -364,6 +364,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'customer-report'=>[
                 'customer-report-manage',
             ],
+            'profit-and-loss-report'=>[
+                'profit-and-loss-report-manage',
+            ],
+            'today-report'=>[
+                'today-report-manage',
+            ],
             'trash-collection'=>[
                 'trash-collection',
             ],
