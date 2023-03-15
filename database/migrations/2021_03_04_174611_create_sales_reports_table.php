@@ -15,6 +15,7 @@ class CreateSalesReportsTable extends Migration
     {
         Schema::create('sales_reports', function (Blueprint $table) {
             $table->id();
+            $table->string('tran_id', 64)->index()->nullable();
             $table->enum('type',['1','2'])->nullable();
             $table->foreignId('sales_ledger_book_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->tinyInteger('inv_type')->nullable()->comment('1=Cash,3=Credit');

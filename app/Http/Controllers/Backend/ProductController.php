@@ -39,20 +39,20 @@ class ProductController extends Controller
             return $error;
         }
         $this->validate($request, [
-            'name' => 'required',
-            'generic' => 'required',
+            'name'        => 'required',
+            'generic'     => 'required',
             'indications' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image'       => 'nullable|image|mimes:png,jpeg,jpg,JPG,PNG,JPEG,svg|max:2048',
         ]);
 
         DB::beginTransaction();
 
         $data = [
-            'cat_id' => $request->get('cat_id'),
-            'name' => $request->get('name'),
-            'generic' => $request->get('generic'),
+            'cat_id'      => $request->get('cat_id'),
+            'name'        => $request->get('name'),
+            'generic'     => $request->get('generic'),
             'indications' => $request->get('indications'),
-            'type' => 1,
+            'type'        => 1,
         ];
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -67,35 +67,35 @@ class ProductController extends Controller
 
         foreach ($request->size as $key => $v) {
             $data=[
-                'product_id' => $porductId,
-                'size' => $request->size[$key],
-                'purchase' => $request->purchase[$key],
-                'cash' => $request->cash[$key],
-                'credit' => $request->credit[$key],
+                'product_id'  => $porductId,
+                'size'        => $request->size[$key],
+                'purchase'    => $request->purchase[$key],
+                'cash'        => $request->cash[$key],
+                'credit'      => $request->credit[$key],
                 'trade_price' => $request->trade_price[$key],
-                'mrp' => $request->mrp[$key],
-                'type' => 1,
+                'mrp'         => $request->mrp[$key],
+                'type'        => 1,
             ];
             $productPackSize = ProductPackSize::create($data);
             $productPackSizeId = $productPackSize->id;
 
             // Product Stock
             $productStock = [
-                'product_id' => $porductId,
+                'product_id'           => $porductId,
                 'product_pack_size_id' => $productPackSizeId,
-                'quantity' => 0,
-                'damage' => 0,
-                'type' => 1, // Product
+                'quantity'             => 0,
+                'damage'               => 0,
+                'type'                 => 1,                    // Product
             ];
             ProductStock::create($productStock);
 
             // Label Stock
             $productStock = [
-                'product_id' => $porductId,
+                'product_id'           => $porductId,
                 'product_pack_size_id' => $productPackSizeId,
-                'quantity' => 0,
-                'damage' => 0,
-                'type' => 4, // Label
+                'quantity'             => 0,
+                'damage'               => 0,
+                'type'                 => 4,                    // Label
             ];
             ProductStock::create($productStock);
         }
@@ -117,41 +117,41 @@ class ProductController extends Controller
             return $error;
         }
         $this->validate($request, [
-            'size' => 'required',
+            'size'     => 'required',
             'purchase' => 'required',
-            'cash' => 'required',
-            'credit' => 'required',
-            'mrp' => 'required',
+            'cash'     => 'required',
+            'credit'   => 'required',
+            'mrp'      => 'required',
         ]);
         DB::beginTransaction();
         $product_id = $request->get('product_id');
         foreach ($request->size as $key => $v) {
             $data=[
-                'product_id' => $product_id,
-                'size' => $request->size[$key],
-                'purchase' => $request->purchase[$key],
-                'cash' => $request->cash[$key],
-                'credit' => $request->credit[$key],
+                'product_id'  => $product_id,
+                'size'        => $request->size[$key],
+                'purchase'    => $request->purchase[$key],
+                'cash'        => $request->cash[$key],
+                'credit'      => $request->credit[$key],
                 'trade_price' => $request->trade_price[$key],
-                'mrp' => $request->mrp[$key],
-                'type' => 1,
+                'mrp'         => $request->mrp[$key],
+                'type'        => 1,
             ];
             $productPackSize = ProductPackSize::create($data);
 
             $productPackSizeId = $productPackSize->id;
             $productStock = [
-                'product_id' => $product_id,
+                'product_id'           => $product_id,
                 'product_pack_size_id' => $productPackSizeId,
-                'quantity' => 0,
-                'type' => 1, // Product
+                'quantity'             => 0,
+                'type'                 => 1,                    // Product
             ];
             ProductStock::create($productStock);
 
             $productStock = [
-                'product_id' => $product_id,
+                'product_id'           => $product_id,
                 'product_pack_size_id' => $productPackSizeId,
-                'quantity' => 0,
-                'type' => 4, // Label
+                'quantity'             => 0,
+                'type'                 => 4,                    // Label
             ];
             ProductStock::create($productStock);
         }
@@ -186,11 +186,11 @@ class ProductController extends Controller
         }
 
         $data = [
-            'name' => $request->get('name'),
-            'cat_id' => $request->get('cat_id'),
-            'generic' => $request->get('generic'),
+            'name'        => $request->get('name'),
+            'cat_id'      => $request->get('cat_id'),
+            'generic'     => $request->get('generic'),
             'indications' => $request->get('indications'),
-            'type' => 1,
+            'type'        => 1,
         ];
         $image = Product::find($id)->image;
         if($request->hasFile('image')){
@@ -203,12 +203,12 @@ class ProductController extends Controller
             if (count($request->id) > 0) {
                 foreach ($request->id as $key => $v) {
                     $packData=[
-                        'size' => $request->size[$key],
-                        'purchase' => $request->purchase[$key],
-                        'cash' => $request->cash[$key],
-                        'credit' => $request->credit[$key],
+                        'size'        => $request->size[$key],
+                        'purchase'    => $request->purchase[$key],
+                        'cash'        => $request->cash[$key],
+                        'credit'      => $request->credit[$key],
                         'trade_price' => $request->trade_price[$key],
-                        'mrp' => $request->mrp[$key],
+                        'mrp'         => $request->mrp[$key],
                     ];
                     $pack = ProductPackSize::where('id', $request->id[$key])->first();
                     $pack->update($packData);

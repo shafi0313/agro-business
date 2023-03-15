@@ -15,6 +15,7 @@ class CreateProductionCalsTable extends Migration
     {
         Schema::create('production_cals', function (Blueprint $table) {
             $table->id();
+            $table->string('tran_id', 64)->index()->nullable();
             $table->foreignId('product_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('size');
             $table->foreign('size')->references('id')->on('product_pack_sizes')->onUpdate('cascade')->onDelete('cascade');

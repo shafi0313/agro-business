@@ -15,6 +15,7 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->string('tran_id', 64)->index()->nullable();
             $table->bigInteger('inv_id')->nullable();
             $table->tinyInteger('stock_type')->comment('1=store,2=bulk');
             $table->tinyInteger('type')->comment('1=cash,3=credit,4=sample,11=production');

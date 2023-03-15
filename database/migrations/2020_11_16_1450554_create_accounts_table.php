@@ -18,6 +18,7 @@ class CreateAccountsTable extends Migration
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('tmm_so_id')->nullable();
             $table->foreign('tmm_so_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->string('tran_id', 64)->index()->nullable();
             $table->unsignedBigInteger('user_bank_ac_id')->nullable();
             $table->boolean('exp_type')->nullable()->comment('1=Office,2=auhor,3=other,exp/income');
             $table->foreignId('office_expense_cat_id')->comment('exp/income')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');

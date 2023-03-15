@@ -15,6 +15,7 @@ class CreateInvoiceDuesTable extends Migration
     {
         Schema::create('invoice_dues', function (Blueprint $table) {
             $table->id();
+            $table->string('tran_id', 64)->index()->nullable();
             $table->string('invoice_no');
             $table->date('inv_date');
             $table->decimal('inv_amt',14,2);

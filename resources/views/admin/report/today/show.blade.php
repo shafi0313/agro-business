@@ -108,18 +108,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($accounts->whereIn('trn_type',[2,3]) as $account)
+                                            @foreach ($accounts->where('exp_type','')->whereIn('trn_type',[1]) as $account)
                                                 <tr>
                                                     <td>{{ @$x2 += 1 }}</td>
                                                     <td>{{ $account->users->business_name }}</td>
                                                     <td>{{ $account->pay_type==1?'Cash':'bank' }}</td>
-                                                    <td class="text-right">{{ number_format($account->credit, 2) }}</td>
+                                                    <td class="text-right">{{ number_format($account->debit, 2) }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                         <tr>
                                             <th class="text-right" colspan="3">Total</th>
-                                            <td class="text-right">{{ number_format($accounts->whereIn('trn_type',[2,3])->sum('credit'),2) }}</td>
+                                            <td class="text-right">{{ number_format($accounts->where('exp_type','')->whereIn('trn_type',[1])->sum('debit'),2) }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -145,18 +145,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($accounts->whereIn('trn_type',[1]) as $account)
+                                            @foreach ($accounts->where('exp_type','')->whereIn('trn_type',[2,3]) as $account)
                                                 <tr>
                                                     <td>{{ @$x3 += 1 }}</td>
                                                     <td>{{ $account->users->business_name }}</td>
                                                     <td>{{ $account->pay_type==1?'Cash':'bank' }}</td>
-                                                    <td class="text-right">{{ number_format($account->debit, 2) }}</td>
+                                                    <td class="text-right">{{ number_format($account->credit, 2) }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                         <tr>
                                             <th class="text-right" colspan="3">Total</th>
-                                            <td class="text-right">{{ number_format($accounts->whereIn('trn_type',[2,3])->sum('credit'),2) }}</td>
+                                            <td class="text-right">{{ number_format($accounts->where('exp_type','')->whereIn('trn_type',[2,3])->sum('credit'),2) }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -176,16 +176,53 @@
                                         <thead class="bg-secondary thw">
                                             <tr>
                                                 <th>SL</th>
-                                                <th>Customer</th>
-                                                <th>Payment Type</th>
+                                                <th>Income Name</th>
+                                                <th>Type</th>
                                                 <th>Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($accounts->whereIn('trn_type',[1]) as $account)
+                                            @foreach ($accounts->whereNotNull('exp_type')->where('credit','!=', 0) as $account)
                                                 <tr>
-                                                    <td>{{ @$x3 += 1 }}</td>
-                                                    <td>{{ $account->users->business_name }}</td>
+                                                    <td>{{ @$x4 += 1 }}</td>
+                                                    <td>{{ $account->officeExp->name }}</td>
+                                                    <td>{{ $account->pay_type==1?'Cash':'bank' }}</td>
+                                                    <td class="text-right">{{ number_format($account->credit, 2) }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        <tr>
+                                            <th class="text-right" colspan="3">Total</th>
+                                            <td class="text-right">{{ number_format($accounts->whereNotNull('exp_type')->sum('credit'),2) }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center">
+                                    <h4 class="card-title">Expense</h4>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="other_income_table" class="display table table-striped table-hover">
+                                        <thead class="bg-secondary thw">
+                                            <tr>
+                                                <th>SL</th>
+                                                <th>Expense Name</th>
+                                                <th>Type</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($accounts->whereNotNull('exp_type')->where('debit','!=', 0) as $account)
+                                                <tr>
+                                                    <td>{{ @$x5 += 1 }}</td>
+                                                    <td>{{ $account->officeExp->name }}</td>
                                                     <td>{{ $account->pay_type==1?'Cash':'bank' }}</td>
                                                     <td class="text-right">{{ number_format($account->debit, 2) }}</td>
                                                 </tr>
@@ -193,7 +230,7 @@
                                         </tbody>
                                         <tr>
                                             <th class="text-right" colspan="3">Total</th>
-                                            <td class="text-right">{{ number_format($accounts->whereIn('trn_type',[2,3])->sum('credit'),2) }}</td>
+                                            <td class="text-right">{{ number_format($accounts->whereNotNull('exp_type')->sum('debit'),2) }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -211,7 +248,7 @@
             $(document).ready(function() {
                 $('#basic-datatables').DataTable({});
 
-                $('#purchase_table').DataTable({
+                $('#purchase_table, #other_income_table').DataTable({
                     // "pageLength": 50,
                     "lengthMenu": [
                         [50, 100, -1],

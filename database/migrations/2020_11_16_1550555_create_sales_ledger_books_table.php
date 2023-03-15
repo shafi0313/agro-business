@@ -20,6 +20,7 @@ class CreateSalesLedgerBooksTable extends Migration
             $table->foreign('customer_id')->references('id')->on('users')->onUpdate('cascade');
             $table->unsignedBigInteger('prepared_id');
             $table->foreign('prepared_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->string('tran_id', 64)->index()->nullable();
             $table->unsignedBigInteger('account_id')->nullable();
             $table->foreign('account_id')->references('id')->on('accounts')->onUpdate('cascade');
             $table->tinyInteger('type');

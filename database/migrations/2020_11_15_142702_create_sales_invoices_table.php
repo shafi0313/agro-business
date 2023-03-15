@@ -18,6 +18,7 @@ class CreateSalesInvoicesTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade');
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('tran_id', 64)->index()->nullable();
             $table->foreignId('product_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('invoice_no');
             $table->string('challan_no');

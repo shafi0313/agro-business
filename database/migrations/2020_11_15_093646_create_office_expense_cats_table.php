@@ -18,6 +18,7 @@ class CreateOfficeExpenseCatsTable extends Migration
             $table->boolean('type')->comment('1=Expense,2=Income');
             $table->boolean('exp_or_in_type')->comment('1=Office,2=Author,3=Other');
             $table->string('name');
+            $table->string('parent_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

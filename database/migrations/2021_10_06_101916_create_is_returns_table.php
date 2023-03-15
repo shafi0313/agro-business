@@ -15,6 +15,7 @@ class CreateIsReturnsTable extends Migration
     {
         Schema::create('is_returns', function (Blueprint $table) {
             $table->id();
+            $table->string('tran_id', 64)->index()->nullable();
             $table->foreignId('sales_invoice_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('invoice_no')->nullable();
             $table->softDeletes();
