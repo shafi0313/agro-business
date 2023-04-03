@@ -24,7 +24,7 @@
                         {{-- Page Content Start --}}
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">All Size</h4>
+                                <h4 class="card-title">Add New Product</h4>
                                 <a class="btn btn-primary btn-round ml-auto text-light" data-toggle="modal" data-target="#addPackSize"><i class="fa fa-plus"></i> Add New Pack Size</a>
                             </div>
                         </div>
@@ -61,8 +61,8 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-sm-4">
-                                        <label for="generic">Group Name<span class="t_r">*</span></label>
-                                        <input type="text" name="generic" class="form-control @error('generic') is-invalid @enderror" value="{{old('materials')}}" placeholder="Enter Group Name" required>
+                                        <label for="generic">Group Name</label>
+                                        <input type="text" name="generic" class="form-control @error('generic') is-invalid @enderror" value="{{old('materials')}}" placeholder="Enter Group Name">
                                         @error('generic')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -72,7 +72,6 @@
                                             <tr>
                                                 <th style="width: 150px">Size</th>
                                                 <th>Purchase</th>
-                                                {{-- price name change --}}
                                                 <th>Dealer Price</th>
                                                 <th>Credit Price</th>
                                                 <th>Cash Price</th>
@@ -83,37 +82,23 @@
                                             </tr>
                                             <tr>
                                                 <td><select type="text" name="size[]" class="form-control form-control-sm"><option value="">Select</option>@foreach ($packSizes as $packSize)<option value="{{$packSize->size}}">{{$packSize->size}}</option>@endforeach</select></td>
-                                                <td><input type="number" name="purchase[]" step="any" id="purchase" class="form-control form-control-sm" /></td>
-                                                <td><input type="number" name="cash[]" step="any" id="cash" class="form-control form-control-sm"/></td>
-                                                <td><input type="number" name="credit[]" step="any" id="credit" class="form-control form-control-sm"/></td>
-                                                <td><input type="number" name="trade_price[]" step="any" id="trade_price" class="form-control form-control-sm"/></td>
-                                                <td><input type="number" name="mrp[]" id="mrp" step="any" class="form-control form-control-sm"/></td>
+                                                <td><input type="number" name="purchase[]" value="0" step="any" id="purchase" class="form-control form-control-sm" /></td>
+                                                <td><input type="number" name="cash[]" value="0" step="any" id="cash" class="form-control form-control-sm"/></td>
+                                                <td><input type="number" name="credit[]" value="0" step="any" id="credit" class="form-control form-control-sm"/></td>
+                                                <td><input type="number" name="trade_price[]" value="0" step="any" id="trade_price" class="form-control form-control-sm"/></td>
+                                                <td><input type="number" name="mrp[]" value="0" id="mrp" step="any" class="form-control form-control-sm"/></td>
                                                 <td style="width: 20px"><span class="btn btn-sm btn-success addrow"><i class="fa fa-plus" aria-hidden="true"></i></span></td>
                                             </tr>
                                             <tbody id="showItem" class=""></tbody>
                                         </table>
                                     </div>
-                                    {{-- <div class="form-group col-sm-12">
-                                        <label for="origin">Origin<span class="t_r">*</span></label>
-                                        <textarea class="form-control @error('origin') is-invalid @enderror" id="origin" name="origin" {{old('origin')}}></textarea>
-                                        @error('origin')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div> --}}
                                     <div class="form-group col-sm-12">
-                                        <label for="indications">Main Indications<span class="t_r">*</span></label>
+                                        <label for="indications">Main Indications</label>
                                         <textarea class="form-control @error('indications') is-invalid @enderror" id="indications" name="indications" {{old('indications')}}></textarea>
                                         @error('indications')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    {{-- <div class="form-group col-sm-12">
-                                        <label for="dosage">Dosage<span class="t_r">*</span></label>
-                                        <textarea class="form-control @error('dosage') is-invalid @enderror" id="editor2" name="dosage" {{old('dosage')}}></textarea>
-                                        @error('dosage')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div> --}}
                                     <div class="form-group col-md-3">
                                         <label for="image" class="placeholder">Image<span class="t_r">*</span></label>
                                         <input id="image" name="image" type="file" class="form-control">

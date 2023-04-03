@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $guarded = ['id'];
     // protected $table = 'product_pack_sizes';
 
     public function productPack()
@@ -19,6 +19,11 @@ class Product extends Model
     public function productPackSize()
     {
         return $this->hasOne(ProductPackSize::class,'product_id');
+    }
+
+    public function productPackSizes()
+    {
+        return $this->hasMany(ProductPackSize::class,'product_id');
     }
 
     public function productCat()

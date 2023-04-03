@@ -17,7 +17,6 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('cat_id')->nullable();
             $table->foreign('cat_id')->references('id')->on('product_cats')->onUpdate('cascade')->onDelete('cascade');
-            // $table->foreignId('product_cat_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->tinyInteger('type')->comment('1=product,2=raw');
             $table->string('name',100)->nullable();
             $table->string('generic',100)->nullable();

@@ -31,7 +31,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="multi-filter-select" class="display table table-striped table-hover">
+                                <table id="multi-filter-select" class="display table-bordered table table-striped table-hover">
                                     <thead class="bg-secondary thw">
                                         <tr>
                                             <th style="width:35px">SN</th>
@@ -57,6 +57,7 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -67,12 +68,46 @@
                                             <td>{{ $porduct->name }}</td>
                                             <td>{{ $porduct->generic }}</td>
                                             <td>{{ $porduct->productCat->name }}</td>
-                                            <td>{{ $porduct->productPackSize->size }}</td>
-                                            <td>{{ $porduct->productPackSize->purchase }}</td>
-                                            <td>{{ $porduct->productPackSize->trade_price }}</td>
-                                            <td>{{ $porduct->productPackSize->cash }}</td>
-                                            <td>{{ $porduct->productPackSize->mrp }}</td>
-                                            <td width="70"><img src="{{ asset('uploads/images/product/' .$porduct->image) }}" height="100" width="100" alt=""> </td>
+                                            <td>
+                                                <ul>
+                                                    @foreach ($porduct->productPackSizes as $size)
+                                                        <li>{{ $size->size }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                {{-- {{ $porduct->productPackSize->purchase }} --}}
+                                                <ul>
+                                                    @foreach ($porduct->productPackSizes as $size)
+                                                        <li>{{ $size->purchase }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                {{-- {{ $porduct->productPackSize->trade_price }} --}}
+                                                <ul>
+                                                    @foreach ($porduct->productPackSizes as $size)
+                                                        <li>{{ $size->trade_price }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                {{-- {{ $porduct->productPackSize->cash }} --}}
+                                                <ul>
+                                                    @foreach ($porduct->productPackSizes as $size)
+                                                        <li>{{ $size->cash }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                {{-- {{ $porduct->productPackSize->mrp }} --}}
+                                                <ul>
+                                                    @foreach ($porduct->productPackSizes as $size)
+                                                        <li>{{ $size->mrp }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                            <td width="70"><img src="{{ asset('uploads/images/product/' .$porduct->image) }}" height="80" width="80" alt=""> </td>
                                             <td>
                                                 <div class="form-button-action">
                                                     <a href="{{ route('product.edit', $porduct->id)}}" title="Edit" class="btn btn-link btn-primary">

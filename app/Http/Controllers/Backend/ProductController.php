@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Product;
 use App\Models\PackSize;
 use App\Models\ProductCat;
-use App\Models\ProductStock;
 use Illuminate\Http\Request;
 use App\Models\ProductPackSize;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +18,7 @@ class ProductController extends Controller
         if ($error = $this->authorize('store-product-manage')) {
             return $error;
         }
-        $porducts = Product::where('type', 1)->orderBy('name', 'ASC')->get();
+        $porducts = Product::with('productPackSizes')->where('type', 1)->orderBy('name', 'ASC')->get();
         return view('admin.product.index', compact('porducts'));
     }
 
@@ -39,10 +38,11 @@ class ProductController extends Controller
             return $error;
         }
         $this->validate($request, [
-            'name'        => 'required',
-            'generic'     => 'required',
-            'indications' => 'required',
-            'image'       => 'nullable|image|mimes:png,jpeg,jpg,JPG,PNG,JPEG,svg|max:2048',
+            'cat_id'      => 'required|numeric',
+            'name'        => 'required|string',
+            'generic'     => 'nullable|string',
+            'indications' => 'nullable|string',
+            'image'       => 'nullable|image|mimes:png,jpeg,jpg,JPG,PNG,JPEG,svg|max:1024',
         ]);
 
         DB::beginTransaction();
@@ -77,27 +77,27 @@ class ProductController extends Controller
                 'type'        => 1,
             ];
             $productPackSize = ProductPackSize::create($data);
-            $productPackSizeId = $productPackSize->id;
+            // $productPackSizeId = $productPackSize->id;
 
             // Product Stock
-            $productStock = [
-                'product_id'           => $porductId,
-                'product_pack_size_id' => $productPackSizeId,
-                'quantity'             => 0,
-                'damage'               => 0,
-                'type'                 => 1,                    // Product
-            ];
-            ProductStock::create($productStock);
+            // $productStock = [
+            //     'product_id'           => $porductId,
+            //     'product_pack_size_id' => $productPackSizeId,
+            //     'quantity'             => 0,
+            //     'damage'               => 0,
+            //     'type'                 => 1,                    // Product
+            // ];
+            // ProductStock::create($productStock);
 
-            // Label Stock
-            $productStock = [
-                'product_id'           => $porductId,
-                'product_pack_size_id' => $productPackSizeId,
-                'quantity'             => 0,
-                'damage'               => 0,
-                'type'                 => 4,                    // Label
-            ];
-            ProductStock::create($productStock);
+            // // Label Stock
+            // $productStock = [
+            //     'product_id'           => $porductId,
+            //     'product_pack_size_id' => $productPackSizeId,
+            //     'quantity'             => 0,
+            //     'damage'               => 0,
+            //     'type'                 => 4,                    // Label
+            // ];
+            // ProductStock::create($productStock);
         }
 
         try {
@@ -138,22 +138,22 @@ class ProductController extends Controller
             ];
             $productPackSize = ProductPackSize::create($data);
 
-            $productPackSizeId = $productPackSize->id;
-            $productStock = [
-                'product_id'           => $product_id,
-                'product_pack_size_id' => $productPackSizeId,
-                'quantity'             => 0,
-                'type'                 => 1,                    // Product
-            ];
-            ProductStock::create($productStock);
+        //     $productPackSizeId = $productPackSize->id;
+        //     $productStock = [
+        //         'product_id'           => $product_id,
+        //         'product_pack_size_id' => $productPackSizeId,
+        //         'quantity'             => 0,
+        //         'type'                 => 1,                    // Product
+        //     ];
+        //     ProductStock::create($productStock);
 
-            $productStock = [
-                'product_id'           => $product_id,
-                'product_pack_size_id' => $productPackSizeId,
-                'quantity'             => 0,
-                'type'                 => 4,                    // Label
-            ];
-            ProductStock::create($productStock);
+        //     $productStock = [
+        //         'product_id'           => $product_id,
+        //         'product_pack_size_id' => $productPackSizeId,
+        //         'quantity'             => 0,
+        //         'type'                 => 4,                    // Label
+        //     ];
+        //     ProductStock::create($productStock);
         }
 
         try {
