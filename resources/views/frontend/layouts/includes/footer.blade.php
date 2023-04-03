@@ -10,7 +10,7 @@
                                 <img src="{{ asset(setting('app_favicon')) }}" alt="Company Logo" style="margin: auto">
                             </div>
                         </div>
-                        <p style="text-align: justify">Lorem Ipsum is simply dummy text of the and typesetting industry. Lorem Ipsum is dummy text of the printing.</p>
+                        <p style="text-align: center; ">{{ setting('front_footer') }}</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-12">
