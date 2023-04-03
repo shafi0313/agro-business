@@ -113,6 +113,10 @@
             $(this).find('button[type="submit"]').attr('disabled', 'disabled');
             $(this).find('input[type="submit"]').attr('disabled', 'disabled');
         });
+
+        $('.digitOnly').on('input', function() {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
     </script>
     @stack('custom_scripts')
 

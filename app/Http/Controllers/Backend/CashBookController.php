@@ -58,17 +58,17 @@ class CashBookController extends Controller
         }
         $this->validate($request, [
             'credit' => 'required|numeric',
-            'date' => 'required'
+            'date'   => 'required|date'
         ]);
         $account = [
-            'user_id' => null,
+            'user_id'   => null,
             'tmm_so_id' => null,
-            'type' => 1,
-            'ac_type' => 2,
-            'trn_type' => 3,
-            'note' => 'Previous',
-            'credit' => $request->get('credit'),
-            'date' => $request->get('date'),
+            'type'      => 1,
+            'ac_type'   => 2,
+            'trn_type'  => 3,
+            'note'      => 'Previous',
+            'credit'    => $request->get('credit'),
+            'date'      => $request->get('date'),
         ];
         DB::beginTransaction();
 
@@ -79,7 +79,7 @@ class CashBookController extends Controller
             return redirect()->route('cashBook.selectDate');
         } catch (\Exception $ex) {
             DB::rollBack();
-            toast($ex->getMessage().'Inserted Failed', 'error');
+            toast($ex->getMessage().' Inserted Failed', 'error');
             return redirect()->back();
         }
     }

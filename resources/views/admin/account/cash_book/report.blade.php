@@ -184,7 +184,7 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="credit">Credit <span class="t_r">*</span></label>
-                        <input type="text" name="credit" class="form-control @error('credit') is-invalid @enderror" required>
+                        <input type="text" name="credit" class="form-control digitOnly @error('credit') is-invalid @enderror" required>
                         @error('credit')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -208,6 +208,9 @@
   </div>
 @push('custom_scripts')
 @include('admin.include.printJS');
+<script>
+    onInput="this.value = this.value.replace(/[^\d]/g,'');" 
+</script>
 @endpush
 @endsection
 
