@@ -25,6 +25,7 @@ class AdnanSettingsSeeder extends Seeder
         Setting(['app_description'=> ''])->save();
         Setting(['app_keyword'=> 'adnan, Agro, adnan Agro, New Adnan Agrovet Ltd'])->save();
         Setting(['is_company'=> 1])->save();
+        Setting(['front_footer'=> 'ফসলের মাঠে কৃষকের বিশ্বস্ত সহযোগী'])->save();
 
         Setting(['inv_header_address'=> 'Uttara, Dhaka.'])->save();
         Setting(['inv_footer'=> '<p>Office: Uttara, Dhaka. <i class="fas fa-mobile-alt"> +8801771 341888. <i class="far fa-envelope"></i> contact@newadnanagrovet.com, <i class="fas fa-globe-asia"></i> www.newadnanagrovet.com</p>.'])->save();

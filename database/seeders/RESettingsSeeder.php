@@ -25,6 +25,7 @@ class RESettingsSeeder extends Seeder
         Setting(['app_description'=> ''])->save();
         Setting(['app_keyword'=> 'Rajkonna, Rajkonna Enterprise'])->save();
         Setting(['is_company'=> 0])->save();
+        Setting(['front_footer'=> 'ফসলের মাঠে কৃষকের বিশ্বস্ত সহযোগী'])->save();
 
         Setting(['inv_header_address'=> 'Uttara, Dhaka.'])->save();
         Setting(['inv_footer'=> '<p>Office: Uttara, Dhaka. <i class="fas fa-mobile-alt"> +880 1716-906578. <i class="far fa-envelope"></i> contact@re.softgiantbd.com, <i class="fas fa-globe-asia"></i> re.softgiantbd.com/</p>.'])->save();
