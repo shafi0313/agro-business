@@ -69,18 +69,18 @@ class SalesInvoiceCashController extends Controller
             return $error;
         }
         $this->validate($request, [
-            'invoice_no' => 'required',
-            'size' => 'required',
-            'quantity' => 'required',
+            'invoice_no'   => 'required',
+            'size'         => 'required',
+            'quantity'     => 'required',
             'rate_per_qty' => 'required',
             'invoice_date' => 'required',
-            'amt' => 'required',
+            'amt'          => 'required',
         ]);
 
-        $customer_id = $request->get('customer_id');
-        $invoice_no = $request->get('invoice_no');
-        $challan_no = $request->get('challan_no');
-        $user_id = $request->get('user_id');
+        $customer_id    = $request->get('customer_id');
+        $invoice_no     = $request->get('invoice_no');
+        $challan_no     = $request->get('challan_no');
+        $user_id        = $request->get('user_id');
         $transaction_id = transaction_id('SER');
 
         DB::beginTransaction();
@@ -93,19 +93,19 @@ class SalesInvoiceCashController extends Controller
             $invoiceArr = [];
             foreach ($request->product_id as $key => $v) {
                 $data=[
-                    'tran_id' => $transaction_id,
-                    'user_id' => $user_id,
-                    'customer_id' => $customer_id,
-                    'product_id' => $request->product_id[$key],
-                    'type' => $request->inv_type, // Cash
-                    'invoice_no' => $invoice_no,
-                    'challan_no' => $challan_no,
-                    'size' => $request->size[$key],
-                    'quantity' => $request->quantity[$key],
-                    'bonus' => $request->bonus[$key],
-                    'pro_dis' => $request->pro_dis[$key],
+                    'tran_id'      => $transaction_id,
+                    'user_id'      => $user_id,
+                    'customer_id'  => $customer_id,
+                    'product_id'   => $request->product_id[$key],
+                    'type'         => $request->inv_type,             // Cash
+                    'invoice_no'   => $invoice_no,
+                    'challan_no'   => $challan_no,
+                    'size'         => $request->size[$key],
+                    'quantity'     => $request->quantity[$key],
+                    'bonus'        => $request->bonus[$key],
+                    'pro_dis'      => $request->pro_dis[$key],
                     'rate_per_qty' => $request->rate_per_qty[$key],
-                    'amt' => round($request->amt[$key]),
+                    'amt'          => round($request->amt[$key]),
                     'invoice_date' => $request->invoice_date,
                 ];
                 $invoice = SalesInvoice::create($data);
@@ -213,10 +213,10 @@ class SalesInvoiceCashController extends Controller
             try {
                 if((setting('inv_sms_service') == 1) && (env('SMS_API') != "")){
                     $customerPhone = User::find($customer_id)->phone;
-                    $am = round($request->net_amt);
-                    $pD = bdDate($request->payment_date);
-                    $cNa = setting('app_name');
-                    $msg = "New invoice: Dear customer an Invoice has been created under your Account. Invoice no: ".$invoice_no.", Amount: ".$am."BDT. Last payment date: ".$pD. $cNa.".";
+                    $am            = round($request->net_amt);
+                    $pD            = bdDate($request->payment_date);
+                    $cNa           = setting('app_name');
+                    $msg           = "New invoice: Dear customer an Invoice has been created under your Account. Invoice no: ".$invoice_no.", Amount: ".$am."BDT. Last payment date: ".$pD. $cNa.".";
                     sms($customerPhone, $msg);
                 }
                 DB::commit();

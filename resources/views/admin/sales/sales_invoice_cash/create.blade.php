@@ -325,16 +325,16 @@
 <script>
     $(document).ready(function(){
         $('.add_porduct').on('click', function() {
-            let product_name    = $('#product_name').val();
-            let product_id      = $('#product_id').val();
-            let group_name      = $('#group_name').val();
-            let size_text       = $('#size_text').val();
-            let size_id         = $('#sizee').val();
-            let quantity        = $('#qty').val();
-            let rate_per_qty    = $('#price').val();
-            let bonus           = $('#bonus').val();
-            let pro_dis           = $('#pro_dis').val();
-            let checkStock = $('#msg').text()
+            let product_name = $('#product_name').val();
+            let product_id   = $('#product_id').val();
+            let group_name   = $('#group_name').val();
+            let size_text    = $('#size_text').val();
+            let size_id      = $('#sizee').val();
+            let quantity     = $('#qty').val();
+            let rate_per_qty = $('#price').val();
+            let bonus        = $('#bonus').val();
+            let pro_dis      = $('#pro_dis').val();
+            let checkStock   = $('#msg').text()
             // Validation
             if (product_name == '') {
                 toast('warning', 'Please select brand name');
@@ -661,11 +661,11 @@
         });
 
         $('.add_due').on('click', function() {
-            let inv_no  = $('#inv_no').val();
-            let inv_date  = $('#inv_date').val();
-            let inv_amt  = $('#inv_amt').val();
+            let inv_no      = $('#inv_no').val();
+            let inv_date    = $('#inv_date').val();
+            let inv_amt     = $('#inv_amt').val();
             let inv_payment = $('#inv_payment').val();
-            let inv_total = $('#inv_total').val();
+            let inv_total   = $('#inv_total').val();
 
             if (inv_payment == '') {
                 toast('warning', 'Please enter payment');

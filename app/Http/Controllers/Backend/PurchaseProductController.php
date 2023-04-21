@@ -94,7 +94,7 @@ class PurchaseProductController extends Controller
                     'inv_id'               => $invoiceArr[$key],
                     'product_id'           => $request->product_id[$key],
                     'product_pack_size_id' => $request->size[$key],
-                    'type'                 => 30,
+                    'type'                 => 30, // Purchase Cash
                     'stock_type'           => 1,                                                                                     //Store
                     'challan_no'           => $challan_no,
                     'quantity'             => $request->quantity[$key],

@@ -123,10 +123,12 @@ class GlobalController extends Controller
     // Stock Check
     public function productStockCheck(Request $request)
     {
-        $product_id = $request->product_id;
-        $size_id = $request->size_id;
-        $inStock = Stock::where('stock_close', 0)->where('inv_cancel', 0)->where('product_id', $product_id)->where('product_pack_size_id', $size_id)->whereIn('type', [0,11,20,21])->sum('quantity');
-        $outStock = Stock::where('stock_close', 0)->where('inv_cancel', 0)->where('product_id', $product_id)->where('product_pack_size_id', $size_id)->whereIn('type', [1,3,5])->sum('quantity');
+        $stock    = Stock::where('stock_close', 0)
+                        ->where('inv_cancel', 0)
+                        ->where('product_id', $request->product_id)
+                        ->where('product_pack_size_id', $request->size_id);        
+        $inStock  = $stock->whereIn('type', [0,11,20,21,30,32])->sum('quantity');
+        $outStock = $stock->whereIn('type', [1,3,5,31,33])->sum('quantity');
         $quantity = $inStock -  $outStock;
 
         return json_encode(['quantity'=>$quantity]);
