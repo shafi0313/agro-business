@@ -8,9 +8,7 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item">Factory</li>
-                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item">Store</li>
+                    <li class="nav-item">Product</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item"><a href="{{ route('product.index')}}">Product</a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
@@ -42,7 +40,7 @@
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-sm-4">
-                                        <label for="name">Category<span class="t_r">*</span></label>
+                                        <label for="name">Category <span class="t_r">*</span></label>
                                         <select name="cat_id" class="form-control @error('name') is-invalid @enderror">
                                             <option selected disabled value>Select</option>
                                             @foreach ($productCats as $productCat)
@@ -54,7 +52,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-sm-4">
-                                        <label for="name">Brand Name<span class="t_r">*</span></label>
+                                        <label for="name" title="Brand/Product Name">Brand Name {!! $quesBeat !!} <span class="t_r">*</span></label>
                                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" placeholder="Enter Brand Name" required>
                                         @error('name')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -93,7 +91,7 @@
                                         </table>
                                     </div>
                                     <div class="form-group col-sm-12">
-                                        <label for="indications">Main Indications</label>
+                                        <label for="indications">Product Description</label>
                                         <textarea class="form-control @error('indications') is-invalid @enderror" id="indications" name="indications" {{old('indications')}}></textarea>
                                         @error('indications')
                                             <div class="alert alert-danger">{{ $message }}</div>

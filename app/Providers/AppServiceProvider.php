@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Font Awesome Icons
+        view()->share('quesBeat', '<i class="fa-solid fa-circle-question fa-beat"></i>');
     }
 }

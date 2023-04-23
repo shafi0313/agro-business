@@ -22,7 +22,8 @@ if (!function_exists('imagePath')) {
     function imagePath($folder, $image)
     {
         $path = 'uploads/images/'.$folder.'/'.$image;
-        if(@GetImageSize($path)){
+        // if(@GetImageSize($path)){
+        if($image && file_exists($path)){
             return asset($path);
         }else{
             return setting('app_logo');

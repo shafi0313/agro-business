@@ -8,9 +8,7 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item">Factory</li>
-                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item">Store</li>
+                    <li class="nav-item">Product</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item"><a href="{{ route('product.index')}}">Product</a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
@@ -48,7 +46,7 @@
                                 @csrf @method('PUT')
                                 <div class="row">
                                     <div class="form-group col-sm-4">
-                                        <label for="name">Category<span class="t_r">*</span></label>
+                                        <label for="name">Category <span class="t_r">*</span></label>
                                         <select name="cat_id" class="form-control @error('name') is-invalid @enderror">
                                             @if (isset($product->productCat->name))
                                             <option select value="{{ $product->productCat->id}}">{{ $product->productCat->name}}</option>
@@ -63,7 +61,7 @@
                                     </div>
 
                                     <div class="form-group col-sm-4">
-                                        <label for="name">Brand Name<span class="t_r">*</span></label>
+                                        <label for="name" title="Brand/Product Name">Brand Name {!! $quesBeat !!}<span class="t_r">*</span></label>
                                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $product->name}}" placeholder="Enter Product Name" >
                                         @error('name')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -126,7 +124,7 @@
                                     </div> --}}
 
                                     <div class="form-group col-sm-12">
-                                        <label for="indications">Main Indications<span class="t_r">*</span></label>
+                                        <label for="indications">Product Description<span class="t_r">*</span></label>
                                         <textarea class="form-control @error('indications') is-invalid @enderror" id="editor" name="indications">{!! $product->indications !!}</textarea>
                                         {{-- <script>document.getElementById("editor").value = "{!! $product->indications !!}";</script> --}}
                                         @error('indications')
@@ -138,7 +136,7 @@
                                     </div>
 
                                     <div class="form-group col-md-3">
-                                        <label for="image" class="placeholder">Image<span class="t_r">*</span></label>
+                                        <label for="image" class="placeholder">Image</label>
                                         <input type="hidden" name="old_image" value="{{$product->image}}">
                                         <input id="image" name="image" type="file" class="form-control" >
                                     </div>

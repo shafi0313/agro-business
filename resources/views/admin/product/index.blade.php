@@ -9,9 +9,7 @@
                 <ul class="breadcrumbs">
                     <li class="nav-home"><a href="{{ route('admin.dashboard')}}" title="Dashboard"><i class="flaticon-home"></i></a></li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item">Factory</li>
-                    <li class="separator"><i class="flaticon-right-arrow"></i></li>
-                    <li class="nav-item">Store</li>
+                    <li class="nav-item">Product</li>
                     <li class="separator"><i class="flaticon-right-arrow"></i></li>
                     <li class="nav-item active">Products</li>
                 </ul>
@@ -107,7 +105,7 @@
                                                     @endforeach
                                                 </ul>
                                             </td>
-                                            <td width="70"><img src="{{ asset('uploads/images/product/' .$porduct->image) }}" height="80" width="80" alt=""> </td>
+                                            <td width="70"><img src="{{ imagePath('product', $porduct->image) }}" height="80" width="80" alt=""> </td>
                                             <td>
                                                 <div class="form-button-action">
                                                     <a href="{{ route('product.edit', $porduct->id)}}" title="Edit" class="btn btn-link btn-primary">
