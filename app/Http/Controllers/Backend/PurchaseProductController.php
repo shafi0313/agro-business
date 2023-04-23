@@ -29,10 +29,10 @@ class PurchaseProductController extends Controller
         if ($error = $this->authorize('sales-sales-sales')) {
             return $error;
         }
-        $supplier = User::select('id', 'name', 'address')->find($id);
-        $userId = User::select(['id','tmm_so_id','role','name'])->whereIn('role', [1,5])->whereNot('name','Developer')->get();
-        $invoice_no = PurchaseLedgerBook::select(['invoice_no','type'])->whereIn('type', [30, 31])->count() + 1;
-        $challan_no = PurchaseLedgerBook::select(['challan_no','type'])->whereIn('type', [30, 31])->count() + 1;
+        $supplier      = User::select('id', 'name', 'address')->find($id);
+        $userId        = User::select(['id','tmm_so_id','role','name'])->whereIn('role', [1,5])->whereNot('name','Developer')->get();
+        $invoice_no    = PurchaseLedgerBook::select(['invoice_no','type'])->whereIn('type', [30, 31])->count() + 1;
+        $challan_no    = PurchaseLedgerBook::select(['challan_no','type'])->whereIn('type', [30, 31])->count() + 1;
         $ledgerPayment = PurchaseLedgerBook::where('supplier_id', $id)->get(['net_amt','payment']);
         return view('admin.purchase.product.create', compact('supplier', 'ledgerPayment', 'invoice_no', 'challan_no','userId'));
     }
@@ -172,11 +172,11 @@ class PurchaseProductController extends Controller
             return $error;
         }
         $customer = User::where('id', $user_id)->first();
-        $userId = SalesReport::with(['userForSR' => function ($q) {
+        $userId   = SalesReport::with(['userForSR' => function ($q) {
             return $q->select('id', 'tmm_so_id', 'name', 'role')->whereIn('role', ['1','5']);
         }])->distinct('user_id')->get(['user_id']);
 
-        $ledger = PurchaseLedgerBook::where('supplier_id', $user_id)->orderBy('id', 'DESC')->get();
+        $ledger        = PurchaseLedgerBook::where('supplier_id', $user_id)->orderBy('id', 'DESC')->get();
         $ledgerPayment = PurchaseLedgerBook::where('supplier_id', $user_id)->get();
 
         // for update
@@ -207,14 +207,14 @@ class PurchaseProductController extends Controller
             'amt'          => 'required',
         ]);
 
-        $invoice_id = $request->invoice_id;
-        $cancel_led_id = $request->cancel_led_id;
+        $invoice_id        = $request->invoice_id;
+        $cancel_led_id     = $request->cancel_led_id;
         $cancel_challan_no = $request->cancel_challan_no;
-        $transaction_id = transaction_id('RIN');
+        $transaction_id    = transaction_id('RIN');
         DB::beginTransaction();
 
         $cancelInvoice = PurchaseInvoice::where('challan_no', $cancel_challan_no)->whereIn('type', [1,3])->update(['inv_cancel' => 2]);
-        $cancelLedger = PurchaseLedgerBook::where('challan_no', $cancel_challan_no)->whereIn('type', [1,3])->update(['inv_cancel' => 2, 'sales_amt'=>0, 'discount'=>0, 'discount_amt'=>0, 'net_amt'=>0]);
+        $cancelLedger  = PurchaseLedgerBook::where('challan_no', $cancel_challan_no)->whereIn('type', [1,3])->update(['inv_cancel' => 2, 'sales_amt'=>0, 'discount'=>0, 'discount_amt'=>0, 'net_amt'=>0]);
         SalesReport::where('sales_ledger_book_id', $cancel_led_id)->delete() || '';
 
         $stock = Stock::whereIn('inv_id', $invoice_id)->whereIn('type', [1,3])->update(['inv_cancel' => 1]) || false;
@@ -241,20 +241,20 @@ class PurchaseProductController extends Controller
             $invoiceArr = [];
             foreach ($request->product_id as $key => $v) {
                 $data=[
-                    'tran_id' => $transaction_id,
-                    'user_id' => $user_id,
-                    'supplier_id' => $supplier_id,
-                    'product_id' => $request->product_id[$key],
-                    'type' => $request->inv_type, // Cash
-                    'invoice_no' => $invoice_no,
-                    'challan_no' => $challan_no,
-                    'size' => $request->size[$key],
-                    'quantity' => $request->quantity[$key],
-                    'bonus' => $request->bonus[$key],
-                    'pro_dis' => $request->pro_dis[$key],
+                    'tran_id'      => $transaction_id,
+                    'user_id'      => $user_id,
+                    'supplier_id'  => $supplier_id,
+                    'product_id'   => $request->product_id[$key],
+                    'type'         => $request->inv_type,             // Cash
+                    'invoice_no'   => $invoice_no,
+                    'challan_no'   => $challan_no,
+                    'size'         => $request->size[$key],
+                    'quantity'     => $request->quantity[$key],
+                    'bonus'        => $request->bonus[$key],
+                    'pro_dis'      => $request->pro_dis[$key],
                     'rate_per_qty' => $request->rate_per_qty[$key],
-                    // 'amt' => round($request->amt[$key]),
-                    'amt' =>round(($request->quantity[$key] * $request->rate_per_qty[$key]) - (($request->quantity[$key] * $request->rate_per_qty[$key])*$request->pro_dis[$key]/100)),
+                      // 'amt' => round($request->amt[$key]),
+                    'amt'          => round(($request->quantity[$key] * $request->rate_per_qty[$key]) - (($request->quantity[$key] * $request->rate_per_qty[$key])*$request->pro_dis[$key]/100)),
                     'invoice_date' => $request->invoice_date,
                 ];
                 $invoice = PurchaseInvoice::create($data);
@@ -271,20 +271,20 @@ class PurchaseProductController extends Controller
             // New Stock
             foreach ($request->quantity as $key => $v) {
                 $data=[
-                    'tran_id' => $transaction_id,
-                    'inv_id' => $invoiceArr[$key],
-                    'product_id' => $request->product_id[$key],
+                    'tran_id'              => $transaction_id,
+                    'inv_id'               => $invoiceArr[$key],
+                    'product_id'           => $request->product_id[$key],
                     'product_pack_size_id' => $request->size[$key],
-                    'type' => $request->inv_type, // Cash
-                    'stock_type' => 1, //Store
+                    'type'                 => $request->inv_type,           // Cash
+                    'stock_type'           => 1,                            //Store
                     // 'inv_type' => $request->inv_type,
                     'challan_no' => $challan_no,
-                    'quantity' => $request->quantity[$key],
-                    'bonus' => $request->bonus[$key],
-                    'amt' => round(($request->amt[$key]) - ($request->amt[$key] * $request->pro_dis[$key]/100)),
-                    'dis' => $request->pro_dis[$key],
-                    'net_amt' => round($request->amt[$key]),
-                    'date' => $request->invoice_date,
+                    'quantity'   => $request->quantity[$key],
+                    'bonus'      => $request->bonus[$key],
+                    'amt'        => round(($request->amt[$key]) - ($request->amt[$key] * $request->pro_dis[$key]/100)),
+                    'dis'        => $request->pro_dis[$key],
+                    'net_amt'    => round($request->amt[$key]),
+                    'date'       => $request->invoice_date,
                 ];
                 Stock::create($data);
             };
@@ -293,46 +293,46 @@ class PurchaseProductController extends Controller
             $discount = array_sum($request->get('amt')) * $request->get('discount')/100;
 
             $ledgerBook = [
-                'tran_id' => $transaction_id,
-                'user_id' => $user_id,
-                'supplier_id' => $supplier_id,
-                'prepared_id' => auth()->user()->id,
-                'type' => $request->inv_type, // Cash
-                'invoice_no' => $invoice_no,
-                'challan_no' => $challan_no,
-                'sales_amt' => array_sum($request->get('amt')),
-                'discount' => $request->get('discount'),
-                'net_amt' => round(array_sum($request->get('amt')) - $discount),
-                'payment' => round($request->get('payment')),
-                'payment_date' =>  $request->get('payment_date'),
+                'tran_id'      => $transaction_id,
+                'user_id'      => $user_id,
+                'supplier_id'  => $supplier_id,
+                'prepared_id'  => auth()->user()->id,
+                'type'         => $request->inv_type,                                   // Cash
+                'invoice_no'   => $invoice_no,
+                'challan_no'   => $challan_no,
+                'sales_amt'    => array_sum($request->get('amt')),
+                'discount'     => $request->get('discount'),
+                'net_amt'      => round(array_sum($request->get('amt')) - $discount),
+                'payment'      => round($request->get('payment')),
+                'payment_date' => $request->get('payment_date'),
                 // 'user_type' =>  $request->get('user_type'),
-                'invoice_date' => $request->invoice_date,
+                'invoice_date'  => $request->invoice_date,
                 'delivery_date' => $request->get('delivery_date'),
             ];
             $ledgerBook = PurchaseLedgerBook::create($ledgerBook);
 
             $salesReport = SalesReport::where('user_id', $request->user_id)->first();
             $report = [
-                'tran_id' => $transaction_id,
-                'user_id' => $salesReport->user_id,
-                'type' => 1,
-                'inv_type' => $request->inv_type,
+                'tran_id'              => $transaction_id,
+                'user_id'              => $salesReport->user_id,
+                'type'                 => 1,
+                'inv_type'             => $request->inv_type,
                 'sales_ledger_book_id' => $ledgerBook->id,
-                'zsm_id' => $salesReport->zsm_id,
-                'sso_id' => $salesReport->sso_id,
-                'so_id' => $salesReport->so_id,
-                'supplier_id' => $supplier_id,
-                'invoice_date' => $request->invoice_date,
-                'discount_amt' =>  $request->discount_amt,
-                'amt' => round(array_sum($request->get('amt')) - $discount),
+                'zsm_id'               => $salesReport->zsm_id,
+                'sso_id'               => $salesReport->sso_id,
+                'so_id'                => $salesReport->so_id,
+                'supplier_id'          => $supplier_id,
+                'invoice_date'         => $request->invoice_date,
+                'discount_amt'         => $request->discount_amt,
+                'amt'                  => round(array_sum($request->get('amt')) - $discount),
             ];
             SalesReport::create($report);
 
             if ($request->note) {
                 $sampleNote = [
-                    'tran_id' => $transaction_id,
+                    'tran_id'              => $transaction_id,
                     'sales_ledger_book_id' => $ledgerBook->id,
-                    'note' => $request->note
+                    'note'                 => $request->note
                 ];
                 SampleNote::create($sampleNote);
             }
@@ -340,19 +340,19 @@ class PurchaseProductController extends Controller
 
             if ($request->due == 1) {
                 $this->validate($request, [
-                    'inv_date' => 'required',
-                    'inv_amt' => 'required',
+                    'inv_date'    => 'required',
+                    'inv_amt'     => 'required',
                     'inv_payment' => 'required',
-                    'inv_total' => 'required',
+                    'inv_total'   => 'required',
                 ]);
                 foreach ($request->inv_date as $key => $v) {
                     $invoiceDue=[
-                        'tran_id' => $transaction_id,
-                        'invoice_no' => $invoice_no,
-                        'inv_date' => $request->inv_date[$key],
-                        'inv_amt' => $request->inv_amt[$key],
+                        'tran_id'     => $transaction_id,
+                        'invoice_no'  => $invoice_no,
+                        'inv_date'    => $request->inv_date[$key],
+                        'inv_amt'     => $request->inv_amt[$key],
                         'inv_payment' => $request->inv_payment[$key],
-                        'inv_total' => $request->inv_total[$key],
+                        'inv_total'   => $request->inv_total[$key],
                     ];
                     InvoiceDue::create($invoiceDue);
                 };
@@ -376,14 +376,14 @@ class PurchaseProductController extends Controller
             return $error;
         }
         DB::transaction(function () use($challan_no){
-            $invoice_id = PurchaseInvoice::where('challan_no', $challan_no)->whereIn('type', [1,3])->get()->pluck('id');
+            $invoice_id    = PurchaseInvoice::where('challan_no', $challan_no)->whereIn('type', [1,3])->get()->pluck('id');
             $cancelInvoice = PurchaseInvoice::where('challan_no', $challan_no)->whereIn('type', [1,3]);
             if ($cancelInvoice->first()->inv_cancel != 0) {
                 Alert::info('The Invoice has already been canceled');
                 return redirect()->back();
             }
             PurchaseInvoice::whereIn('id', $invoice_id)->update(['inv_cancel' => 1]);
-            $cancelLedger = PurchaseLedgerBook::where('challan_no', $challan_no)->whereIn('type', [1,3]);
+            $cancelLedger  = PurchaseLedgerBook::where('challan_no', $challan_no)->whereIn('type', [1,3]);
             $cancel_led_id = $cancelLedger->first()->id;
             $cancelLedger->update(['inv_cancel' => 1, 'sales_amt'=>0, 'discount'=>0, 'discount_amt'=>0, 'net_amt'=>0]);
             SalesReport::where('sales_ledger_book_id', $cancel_led_id)->delete() || false;
@@ -437,7 +437,7 @@ class PurchaseProductController extends Controller
         }
         $showInvoices = PurchaseInvoice::where('supplier_id', $supplier_id)->where('invoice_no', $invoice_no)->whereIn('type', [1,3])->get();
         $customerInfo = PurchaseInvoice::where('invoice_no', $invoice_no)->where('supplier_id', $supplier_id)->whereIn('type', [1,3])->first();
-        $total_amt = PurchaseLedgerBook::where('invoice_no', $invoice_no)->whereIn('type', [1,3])->first();
+        $total_amt    = PurchaseLedgerBook::where('invoice_no', $invoice_no)->whereIn('type', [1,3])->first();
         return view('admin.purchase.product.show_invoice', compact('showInvoices', 'customerInfo', 'total_amt'));
     }
 
@@ -447,7 +447,7 @@ class PurchaseProductController extends Controller
         if ($error = $this->authorize('sales-sales-all-challan-and-invoice')) {
             return $error;
         }
-        $getChallan = PurchaseInvoice::whereIn('type', [1,3])->latest()->get();
+        $getChallan       = PurchaseInvoice::whereIn('type', [1,3])->latest()->get();
         $supplierChallans = $getChallan->groupBy('invoice_no');
         return view('admin.purchase.product.all_invoice', compact('supplierChallans'));
     }
@@ -474,9 +474,9 @@ class PurchaseProductController extends Controller
             return $error;
         }
         $form_date = $request->get('form_date');
-        $to_date = $request->get('to_date');
+        $to_date   = $request->get('to_date');
 
-        $getChallan = PurchaseInvoice::whereBetween('invoice_date', [$form_date,$to_date])->whereIn('type', [1,3])->latest()->get();
+        $getChallan       = PurchaseInvoice::whereBetween('invoice_date', [$form_date,$to_date])->whereIn('type', [1,3])->latest()->get();
         $supplierChallans = $getChallan->groupBy('invoice_no');
         return view('admin.purchase.product.all_invoice_by_date', compact('supplierChallans'));
     }
@@ -495,8 +495,8 @@ class PurchaseProductController extends Controller
         }
 
         $getShowInvoices = PurchaseInvoice::with(['supplier'])->where('supplier_id', $supplier_id)->where('invoice_no', $invoice_no)->whereIn('type', [30])->get();
-        $showInvoices = $getShowInvoices->groupBy('product_id');
-        $ledger = PurchaseLedgerBook::with(['supplier','preparedBy','account'])->where('invoice_no', $invoice_no)->whereIn('type', [30])->first();
+        $showInvoices    = $getShowInvoices->groupBy('product_id');
+        $ledger          = PurchaseLedgerBook::with(['supplier','preparedBy','account'])->where('invoice_no', $invoice_no)->whereIn('type', [30])->first();
         return view('admin.purchase.product.print_invoice', compact('showInvoices', 'ledger', 'getShowInvoices'));
     }
 
@@ -506,8 +506,8 @@ class PurchaseProductController extends Controller
             return $error;
         }
         $getShowInvoices = PurchaseInvoice::where('supplier_id', $supplier_id)->where('invoice_no', $invoice_no)->whereIn('type', [30])->get();
-        $showInvoices = $getShowInvoices->groupBy('product_id');
-        $ledger = PurchaseLedgerBook::where('invoice_no', $invoice_no)->whereIn('type', [30])->first();
+        $showInvoices    = $getShowInvoices->groupBy('product_id');
+        $ledger          = PurchaseLedgerBook::where('invoice_no', $invoice_no)->whereIn('type', [30])->first();
         return view('admin.purchase.product.print_challan', compact('showInvoices', 'ledger'));
     }
 }
