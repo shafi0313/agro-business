@@ -140,9 +140,6 @@
                                         <th width="8%">Size: </th>
                                         <th width="8%">Batch No.: </th>
                                         <th width="7%">Quantity: </th>
-                                        {{-- <th width="11%">Rate Per Qty:</th>
-                                        <th width="10%">Bonus</th>
-                                        <th width="12%">Amount</th> --}}
                                         <th width="3%"></th>
                                     </tr>
                                 </thead>
@@ -167,12 +164,10 @@
                         {{--__________________________________Product Show End__________________________________--}}
                             {{-- </div> --}}
                             <div class="text-center">
-                                <input type="submit" value="Submit" class="btn btn-success" onclick='return btnClick();'>
+                                <input type="submit" value="Submit" class="btn btn-success">
                             </div>
                         </form>
                     </div>
-
-
                     {{-- Page Content End --}}
                     </div>
                 </div>
@@ -199,7 +194,6 @@
 
      // Product Size
      $('#group_name_production').on('change',function(e) {
-            // var size = $('#sizee').val();
             var cat_id = $('#group_name_production').val();
             $.ajax({
                 url:'{{ route("bulkPackSize") }}',
@@ -230,18 +224,11 @@
                 return false;
             }
 
-            // if (size_id == '') {
-            //     toast('warning', 'Please select size');
-            //     $('#sizee').focus();
-            //     return false;
-            // }
-
             if (quantity == '') {
                 toast('warning', 'Please enter quantity');
                 $('#qty').focus();
                 return false;
             }
-
 
             var html = '<tr>';
             html += '<tr class="trData"><td class="serial text-center"></td><td>' + product_name + '</td><td>' + group_name + '</td><td class="text-center">'+ size_text +'</td><td class="text-center">' + batch_no + '</td><td class="text-center">' + quantity + '</td><td align="center">';
@@ -289,7 +276,6 @@
             $('#totalp').val(subtotal);
         };
 
-
         $('#sizee').on('change',function(e) {
             var size_text = $('#sizee').val();
             $.ajax({
@@ -301,10 +287,7 @@
                 success:function (res) {
                     res = $.parseJSON(res);
                     console.log(res.size_text)
-                    // alert(res.size_text)
                     $('#size_text').val(res.size_text);
-                    // alert($('#size_text').val())
-
                 }
             })
         });
@@ -341,35 +324,6 @@
                 }
             })
         });
-
-        // $('#qty').on('keyup',function(e) {
-        //     var product_id = $('#product_id').val();
-        //     var size_id = Number($('#sizee').val());
-        //     var qty = Number($('#qty').val());
-        //     var price = $('#price').val();
-        //     var discount = $('#discount').val();
-        //     var total = $('#totalamounval').val();
-        //     var result = Number(qty)*Number(price);
-        //     $('#subtotal').val(result);
-        //     total_price();
-        //     $.ajax({
-        //         url:'{{ route("productStockCheck") }}',
-        //         type:"get",
-        //         data: {
-        //             product_id: product_id,
-        //             size_id: size_id
-        //             },
-        //         success:function (res) {
-        //             res = $.parseJSON(res);
-        //             if(qty > res.quantity){
-        //                 $('#msg').html("In Stock " + (res.quantity));
-        //             }else if(qty < res.quantity){
-        //                 $('#msg').html('');
-        //             }
-        //         }
-        //     })
-        // });
-
         // Total Price
         function total_price(){
             var total = 0;
@@ -379,40 +333,10 @@
             $('#totalamounval').val(total);
         }
 
-        // $('#discountAmt').keyup(function() {
-        //     var sum = 0;
-        //     var sumTk = 0;
-        //     var amt = $("#total_amount").val()
-        //     var discount = $("#discountAmt").val()
-        //     var percent = Number(amt)*Number(discount)/100;
-
-        //     $('#totalp').each(function() {
-        //         sum = Number(amt) - Number(percent);
-        //     });
-        //     $('#discountTk').each(function() {
-        //         sumTk = Number(percent);
-        //     });
-
-        //     // credit_limit
-        //     var credit_limit = Number($('#credit_limit').val())
-        //     var due_amt = $('#due_amt').val()
-        //     var totalp = $('#totalp').val()
-        //     var total = Number(sum) + Number(due_amt);
-        //     if(total>credit_limit){
-        //         $('#credit_limit_m').html(credit_limit - total + ' Credit limit over');
-        //     }else{
-        //         $('#credit_limit_m').html('')
-        //     }
-
-        //     $('#totalp').val(sum);
-        //     $('#discountTk').val(sumTk);
-        // });
-
         //autocomplete script
         $(document).on('focus', '.autocomplete_txt', function () {
             type = $(this).data('type');
             if (type == 'product') autoType = 'name';
-            // if (type == 'medicinesId') autoType = 'id';
             $(this).autocomplete({
                 minLength: 0,
                 source: function (request, response) {
@@ -448,32 +372,6 @@
         });
 })
 </script>
-
-{{-- <script>
-    $('#use_weight').keyup(function(){
-        var net_weight = Number($('#net_weight').val())
-        var use_weight = Number($('#use_weight').val())
-        var db_use_weight = Number($('#db_use_weight').val())
-        // alert(use_weight + db_use_weight)
-        if((use_weight + db_use_weight) > (net_weight )){
-            $('#use_alert_msg').html('Use Weight Over')
-        }else{
-            $('#use_alert_msg').html('')
-        }
-    })
-
-
-    function btnClick() {
-        var net_weight = Number($('#net_weight').val())
-        var use_weight = Number($('#use_weight').val())
-        var db_use_weight = Number($('#db_use_weight').val())
-        if((use_weight + db_use_weight) > (net_weight )){
-            alert('Use Weight Over')
-            return false;
-        }
-    }
-</script> --}}
-
 
 <script>
     function toast(status,header,msg) {
