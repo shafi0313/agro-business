@@ -8,7 +8,6 @@ use App\Models\BankList;
 use App\Models\UserBankAc;
 use App\Models\CompanyInfo;
 use App\Models\SalesReport;
-use App\Models\EmployeeInfo;
 use Illuminate\Http\Request;
 use App\Models\SalesLedgerBook;
 use Illuminate\Support\Facades\DB;
