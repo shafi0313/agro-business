@@ -39,6 +39,7 @@ use App\Http\Controllers\Backend\VisitorInfoController;
 use App\Http\Controllers\Sales\CreateInvoiceController;
 use App\Http\Controllers\Backend\BulkPurchaseController;
 use App\Http\Controllers\Backend\EmployeeMainController;
+use App\Http\Controllers\Backend\InvManuallyPayComplete;
 use App\Http\Controllers\Backend\OfficeIncomeController;
 use App\Http\Controllers\Backend\ProductStockController;
 use App\Http\Controllers\Backend\Report\TodayController;
@@ -669,4 +670,9 @@ Route::prefix('report')->group(function () {
         Route::post('/purchase', [BulkController::class, 'purchase'])->name('report.bulk.purchase');
         Route::post('/send-to-repack-unit', [BulkController::class, 'sendToRepackUnit'])->name('report.bulk.sendToRepackUnit');
     });
+});
+
+Route::controller(InvManuallyPayComplete::class)->group(function(){
+    Route::get('/invoice-manually-pay-complete', 'index')->name('invoiceManuallyPayComplete.index');
+    Route::post('/invoice-manually-pay-complete', 'update')->name('invoiceManuallyPayComplete.update');
 });

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 if (!function_exists('BdDate')) {
     function BdDate($date)
     {
-        return Carbon::parse($date)->format('d/m/Y');
+        return $date ? Carbon::parse($date)->format('d/m/Y') : null;       
     }
 }
 

@@ -144,13 +144,13 @@
 
                 {{-- Tools --}}
                 <li
-                    class="nav-item {{ activeNav(['pack-size.*', 'bank-list.*', 'employee-main-cat.*', 'product-category.*', 'license-category.*', 'product-license.*', 'user-bank-ac.*', 'office-expense-cat.*', 'office-income-cat.*']) }}">
+                    class="nav-item {{ activeNav(['pack-size.*', 'bank-list.*', 'employee-main-cat.*', 'product-category.*', 'license-category.*', 'product-license.*', 'user-bank-ac.*', 'office-expense-cat.*', 'office-income-cat.*','invoiceManuallyPayComplete.*']) }}">
                     <a data-toggle="collapse" href="#tools">
                         <i class="fas fa-tools"></i>
                         <p>@lang('nav.tools')</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ openNav(['pack-size.*', 'bank-list.*', 'employee-main-cat.*', 'product-category.*', 'license-category.*', 'product-license.*', 'user-bank-ac.*', 'office-expense-cat.*', 'office-income-cat.*']) }}"
+                    <div class="collapse {{ openNav(['pack-size.*', 'bank-list.*', 'employee-main-cat.*', 'product-category.*', 'license-category.*', 'product-license.*', 'user-bank-ac.*', 'office-expense-cat.*', 'office-income-cat.*','invoiceManuallyPayComplete.*']) }}"
                         id="tools">
                         <ul class="nav nav-collapse">
                             {{-- <li class="{{$sm=='balkPurchase'?'activeSub':''}}">
@@ -224,6 +224,11 @@
                                     </a>
                                 </li>
                             @endcan
+                            <li class="{{ activeSubNav('invoiceManuallyPayComplete.*') }}">
+                                <a href="{{ route('invoiceManuallyPayComplete.index') }}">
+                                    <span class="sub-item">Inv Payment Complete</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
