@@ -17,9 +17,10 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             UserSeeder::class,
             // RESettingsSeeder::class,
-            AdnanSettingsSeeder::class,
+            // AdnanSettingsSeeder::class,
+            SeontageSettingsSeeder::class,
             PackSizeSeeder::class,
-            BankListSeeder::class,
+            // BankListSeeder::class,
             EmployeeMainCatSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();

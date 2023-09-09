@@ -839,13 +839,13 @@
                     <h6>Products</h6>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 align-self-center">
+            {{-- <div class="col-md-3 col-sm-6 align-self-center">
                 <div class="ltn__counterup-item-3 text-color-white text-center">
                     <div class="counter-icon"> <img src="{{ asset('frontend/img/icons/icon-img/4.png') }}" alt="#"> </div>
                     <h1><span class="counter animated fadeInDownBig">64</span><span class="counterUp-icon"></span> </h1>
                     <h6>Districts</h6>
                 </div>
-            </div>
+            </div> --}}
             {{-- <div class="col-md-3 col-sm-6 align-self-center">
                 <div class="ltn__counterup-item-3 text-color-white text-center">
                     <div class="counter-icon"> <img src="{{ asset('frontend/img/icons/icon-img/5.png') }}" alt="#"> </div>
