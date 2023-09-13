@@ -43,7 +43,11 @@ class SeontageSettingsSeeder extends Seeder
         Setting(['dashboard_report'=> 1])->save();
         Setting(['product_purchase'=> 1])->save();
 
-
+        Setting(['enable_developed_by'=> 0])->save();
+        Setting(['enable_client_count'=> 1])->save();
+        Setting(['enable_product_count'=> 1])->save();
+        Setting(['enable_district_count'=> 0])->save();
+        Setting(['enable_multi_lang'=> 0])->save();
         // Setting(['facebook'=> 'https://www.facebook.com/adnanagrovet'])->save();
         
     }
