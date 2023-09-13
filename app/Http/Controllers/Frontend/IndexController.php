@@ -10,17 +10,21 @@ use App\Models\ProductCat;
 use Illuminate\Http\Request;
 use App\Models\ProductPackSize;
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class IndexController extends Controller
 {
     public function index()
     {
-        $about = About::where('id',1)->first();
-        $sliders = Slider::all();
-        $productCats = ProductCat::with(['products.productPack','products' => fn($q) => $q->select('id','cat_id','name','generic','image')->whereType(1)])->select(['id','name'])->get();
-        $products = Product::where('type', 1)->count();
-        $users = User::whereRole(2)->count();
-        return view('frontend.index', compact('sliders','about','users','products','productCats'));
+        $data['about']       = About::where('id', 1)->first();
+        $data['sliders']     = Slider::all();
+        $data['productCats'] = ProductCat::with(['products.productPack', 'products' => fn ($q) => $q->select('id', 'cat_id', 'name', 'generic', 'image')->whereType(1)])->select(['id', 'name'])->get();
+        $data['products']    = Product::where('type', 1)->count();
+        $data['users']       = User::whereRole(2)->count();
+
+        SEOTools::setTitle('Home');
+
+        return view('frontend.index', $data);
     }
 
     public function productsByCat($id)
@@ -39,12 +43,12 @@ class IndexController extends Controller
     {
         $product = Product::find($id);
         $prices = ProductPackSize::where('product_id', $id)->where('type', 1)->get();
-        return view('frontend.product_details', compact('product','prices'));
+        return view('frontend.product_details', compact('product', 'prices'));
     }
 
     public function about()
     {
-        $about = About::where('id',1)->first();
+        $about = About::where('id', 1)->first();
         return view('frontend.about', compact('about'));
     }
 
@@ -53,5 +57,4 @@ class IndexController extends Controller
         // $about = About::where('id',1)->first();
         return view('frontend.contact');
     }
-
 }

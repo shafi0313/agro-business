@@ -27,10 +27,10 @@ class SliderController extends Controller
         ]);
         $user = auth()->user()->id;
         $data = [
-            'user_id' => $user,
-            'title' => $request->get('title'),
+            'user_id'   => $user,
+            'title'     => $request->get('title'),
             'sub_title' => $request->get('sub_title'),
-            'link' => $request->get('link'),
+            'link'      => $request->get('link'),
             'link_name' => $request->get('link_name'),
         ];
         if($request->hasFile('image')){
@@ -58,9 +58,9 @@ class SliderController extends Controller
     {
 
         $data = [
-            'title' => $request->get('title'),
+            'title'     => $request->get('title'),
             'sub_title' => $request->get('sub_title'),
-            'link' => $request->get('link'),
+            'link'      => $request->get('link'),
             'link_name' => $request->get('link_name'),
         ];
 
@@ -81,9 +81,9 @@ class SliderController extends Controller
 
     public function destroy($id)
     {
-        if ($error = $this->sendPermissionError('delete')) {
-            return $error;
-        }
+        // if ($error = $this->sendPermissionError('delete')) {
+        //     return $error;
+        // }
         $slider = Slider::find($id);
         $path =  public_path('uploads/images/slider/'.$slider->image);
         if(file_exists($path)){
