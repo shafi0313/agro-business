@@ -48,6 +48,8 @@ class MondolSettingsSeeder extends Seeder
         Setting(['enable_product_count'=> 1])->save();
         Setting(['enable_district_count'=> 1])->save();
         Setting(['enable_multi_lang'=> 1])->save();
+        Setting(['enable_product_price'=> 1])->save();
+        Setting(['enable_product_date_time'=> 1])->save();
 
 
 

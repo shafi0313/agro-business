@@ -1,5 +1,4 @@
 @extends('frontend.layouts.app')
-@section('title', 'About')
 @section('content')
     <!-- Header -->
     <section class="page_header">

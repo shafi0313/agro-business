@@ -1,5 +1,4 @@
 @extends('frontend.layouts.app')
-@section('title', 'Product')
 @section('content')
     <!-- Header -->
     <section class="page_header">
@@ -24,12 +23,14 @@
                 <div class="col-md-12 mt-4">
                     <h1 class="product_tilte">{{ $product->name }}</h1>
                     <h5 class="display-5">{{ $product->generic }} </h5>
-                    <p>
-                        <span><i class="fas fa-calendar-alt"></i>
-                            {{ date('d M, Y', strtotime($product->updated_at)) }}</span>
-                        <span>&nbsp;<i class="fas fa-clock"> </i>
-                            {{ date('h:i A', strtotime($product->updated_at)) }}</span>
-                    </p>
+                    @if (setting('enable_product_date_time') == 1)
+                        <p>
+                            <span><i class="fas fa-calendar-alt"></i>
+                                {{ date('d M, Y', strtotime($product->updated_at)) }}</span>
+                            <span>&nbsp;<i class="fas fa-clock"> </i>
+                                {{ date('h:i A', strtotime($product->updated_at)) }}</span>
+                        </p>
+                    @endif
                     <hr>
                 </div>
             </div>
@@ -48,14 +49,22 @@
                         <table class="table table-border table-sm col-6">
                             <tr>
                                 <th>Size</th>
-                                <th>Price</th>
+                                @if (setting('enable_product_price') == 1)
+                                    <th>Price</th>
+                                @endif
+
                             </tr>
                             @foreach ($prices as $price)
                                 <tr>
                                     <td>{{ $price->size }}</td>
-                                    <td><small class="text-muted">MRP:
-                                            <span style="font-size: 18px">&#2547;</span>
-                                            {{ number_format($price->mrp, 2) }}</small></td>
+                                    @if (setting('enable_price') == 1)
+                                        <td>
+                                            <small class="text-muted">MRP:
+                                                <span style="font-size: 18px">&#2547;</span>
+                                                {{ number_format($price->mrp, 2) }}
+                                            </small>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </table>

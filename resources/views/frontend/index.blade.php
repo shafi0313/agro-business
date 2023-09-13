@@ -1,5 +1,4 @@
 @extends('frontend.layouts.app')
-{{-- @section('title', 'Index') --}}
 @section('content')
 <!-- SLIDER AREA START (slider-3) -->
 <div class="ltn__slider-area ltn__slider-3  section-bg-1">

@@ -23,7 +23,7 @@
                     <div class="ltn__product-item ltn__product-item-3 text-center">
                         <div class="product-img">
                             <a href="{{ route('productDetails', $product->id) }}"><img
-                                    src="{{ imagePath('product', $product->image) }}" alt="#"></a>
+                                    src="{{ imagePath('product', $product->image) }}" alt="{{ $product->name }}"></a>
                             {{-- <div class="product-badge">
                         <ul>
                             <li class="sale-badge">-19%</li>

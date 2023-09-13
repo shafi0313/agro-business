@@ -1,5 +1,4 @@
 @extends('frontend.layouts.app')
-@section('title', 'Products')
 @section('content')
 
     <!-- Header -->
@@ -23,7 +22,7 @@
                     <div class="ltn__product-item ltn__product-item-3 text-center">
                         <div class="product-img productImage">
                             <a href="{{ route('productDetails', $product->id) }}"><img
-                                    src="{{ imagePath('product', $product->image) }}" alt="#" height="160px"></a>
+                                    src="{{ imagePath('product', $product->image) }}" alt="{{ $product->name }}" height="160px"></a>
                             {{-- <div class="product-badge">
                         <ul>
                             <li class="sale-badge">-19%</li>
