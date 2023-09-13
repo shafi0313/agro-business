@@ -60,7 +60,14 @@
                         </div>
                         <div class="ltn__social-media mt-20">
                             <ul>
-                                <li><a href="{{ URL::to(setting('facebook')) }}" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                @if (!empty(setting('facebook')))
+                                    <li>
+                                        <a href="{{ URL::to(setting('facebook')) }}" target="_blank" title="Facebook">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                    </li>
+                                @endif
+
                                 {{-- <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
                                 <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
                                 <li><a href="#" title="Youtube"><i class="fab fa-youtube"></i></a></li> --}}
@@ -76,8 +83,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="ltn__copyright-design footer">
-                        <p class="copy">Copyright &copy; {{date('Y')}} {{ setting('app_name') }} All rights reserved.</p>
-                        <p class="developer"><a href="http://softgiantbd.com/" style="text-decoration:none;color:#fff">Developed By Soft Giant BD</a></p>
+                        <p class="copy">Copyright &copy; {{ date('Y') }} {{ setting('app_name') }} All rights
+                            reserved.</p>
+                        @if (setting('enable_developed_by') == 1)
+                            <p class="developer"><a href="http://softgiantbd.com/"
+                                    style="text-decoration:none;color:#fff">Developed By Soft Giant BD</a></p>
+                        @endif
                     </div>
                 </div>
             </div>

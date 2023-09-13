@@ -825,6 +825,7 @@
 <div class="ltn__counterup-area bg-image bg-overlay-theme-black-80 pt-115 pb-70" data-bg="img/bg/5.jpg" style="background-image: url(&quot;img/bg/5.jpg&quot;);">
     <div class="container">
         <div class="row justify-content-center">
+            @if (setting('enable_client_count') == 1)
             <div class="col-md-3 col-sm-6 align-self-center">
                 <div class="ltn__counterup-item-3 text-color-white text-center">
                     <div class="counter-icon"> <img src="{{ asset('frontend/img/icons/icon-img/2.png') }}" alt="#"> </div>
@@ -832,6 +833,9 @@
                     <h6>Active Clients</h6>
                 </div>
             </div>
+            @endif
+
+            @if (setting('enable_product_count') == 1)
             <div class="col-md-3 col-sm-6 align-self-center">
                 <div class="ltn__counterup-item-3 text-color-white text-center">
                     <div class="counter-icon"> <img src="{{ asset('frontend/img/icons/icon-img/3.png') }}" alt="#"> </div>
@@ -839,6 +843,9 @@
                     <h6>Products</h6>
                 </div>
             </div>
+            @endif
+
+            @if (setting('enable_district_count') == 1)
             <div class="col-md-3 col-sm-6 align-self-center">
                 <div class="ltn__counterup-item-3 text-color-white text-center">
                     <div class="counter-icon"> <img src="{{ asset('frontend/img/icons/icon-img/4.png') }}" alt="#"> </div>
@@ -846,6 +853,7 @@
                     <h6>Districts</h6>
                 </div>
             </div>
+            @endif
             {{-- <div class="col-md-3 col-sm-6 align-self-center">
                 <div class="ltn__counterup-item-3 text-color-white text-center">
                     <div class="counter-icon"> <img src="{{ asset('frontend/img/icons/icon-img/5.png') }}" alt="#"> </div>

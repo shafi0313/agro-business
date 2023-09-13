@@ -43,6 +43,13 @@ class MondolSettingsSeeder extends Seeder
         Setting(['dashboard_report'=> 0])->save();
         Setting(['product_purchase'=> 0])->save();
 
+        Setting(['enable_developed_by'=> 1])->save();
+        Setting(['enable_client_count'=> 1])->save();
+        Setting(['enable_product_count'=> 1])->save();
+        Setting(['enable_district_count'=> 1])->save();
+        Setting(['enable_multi_lang'=> 1])->save();
+
+
 
         // Setting(['facebook'=> 'https://www.facebook.com/adnanagrovet'])->save();
         // Setting(['twitter'=> env('TWITTER_URL', 'tarikmanoar')])->save();

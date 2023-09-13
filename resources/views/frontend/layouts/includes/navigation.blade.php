@@ -31,6 +31,7 @@
                     <div class="top-bar-right text-right">
                         <div class="ltn__top-bar-menu">
                             <ul>
+                                @if (setting('enable_multi_lang') == 1)
                                 <li>
                                     <!-- ltn__language-menu -->
                                     <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
@@ -45,12 +46,18 @@
                                         </ul>
                                     </div>
                                 </li>
+                                @endif
+                                
                                 <li>
                                     <!-- ltn__social-media -->
                                     <div class="ltn__social-media">
                                         <ul>
-                                            <li><a href="{{ URL::to(setting('facebook')) }}" title="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                                            </li>
+                                            @if (!empty(setting('facebook')))
+                                            <li>
+                                                <a href="{{ URL::to(setting('facebook')) }}" title="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                            </li>                                                
+                                            @endif
+                                            
                                             {{-- <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
                                             </li> --}}
 
@@ -99,7 +106,7 @@
                                             @endphp
                                             @foreach ($productCats as $productCat)
                                                 <li><a
-                                                        href="{{ route('allPproductsByCatroducts', $productCat->id) }}">{{ $productCat->name }}</a>
+                                                        href="{{ route('allProductByCategory', $productCat->id) }}">{{ $productCat->name }}</a>
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -263,7 +270,7 @@
                         @endphp
                         @foreach ($productCats as $productCat)
                             <li><a
-                                    href="{{ route('allPproductsByCatroducts', $productCat->id) }}">{{ $productCat->name }}</a>
+                                    href="{{ route('allProductByCategory', $productCat->id) }}">{{ $productCat->name }}</a>
                             </li>
                         @endforeach
                     </ul>

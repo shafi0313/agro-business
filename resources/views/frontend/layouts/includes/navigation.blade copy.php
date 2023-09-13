@@ -78,7 +78,7 @@
                     $productCats = App\Models\ProductCat::select(['id','name'])->get();
                     @endphp
                     @foreach ($productCats as $productCat)
-                    <li><a href="{{ route('allPproductsByCatroducts', $productCat->id )}}">{{$productCat->name}}</a></li>
+                    <li><a href="{{ route('allProductByCategory', $productCat->id )}}">{{$productCat->name}}</a></li>
                     @endforeach
                                             {{-- <li><a href="about.html">About</a></li>
                                             <li><a href="service.html">Services</a></li>
