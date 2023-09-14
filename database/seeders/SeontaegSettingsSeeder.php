@@ -2,21 +2,18 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class SeontageSettingsSeeder extends Seeder
+class SeontaegSettingsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        // Application Variables
-        // AppInfo
-        Setting(['company_name'=> 'SEONTAGE'])->save();
-        Setting(['app_name'=> 'SEONTAGE'])->save();
+        Setting(['company_name'=> 'SEONTAEG'])->save();
+        Setting(['app_name'=> 'SEONTAEG'])->save();
         Setting(['app_name_b'=> ''])->save();
         Setting(['app_favicon'=> 'uploads/images/icon/seontage_favicon.png'])->save();
         Setting(['app_logo'=> 'uploads/images/icon/seontage_logo.jpg'])->save();
@@ -49,6 +46,5 @@ class SeontageSettingsSeeder extends Seeder
         Setting(['enable_district_count'=> 0])->save();
         Setting(['enable_multi_lang'=> 0])->save();
         // Setting(['facebook'=> 'https://www.facebook.com/adnanagrovet'])->save();
-        
     }
 }
