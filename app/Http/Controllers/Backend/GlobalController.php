@@ -19,19 +19,19 @@ class GlobalController extends Controller
     {
         $query = $request->get('term', '');
         $products = DB::table('products');
-        if ($request->type=='product') {
-            $products->where('generic', 'LIKE', '%'.$query.'%');
+        if ($request->type == 'product') {
+            $products->where('generic', 'LIKE', '%' . $query . '%');
         }
 
-        $products=$products->where('type', 2)->get();
-        $data=array();
+        $products = $products->where('type', 2)->get();
+        $data = array();
         foreach ($products as $product) {
-            $data[]=array('id'=>$product->id, 'name'=>$product->generic);
+            $data[] = array('id' => $product->id, 'name' => $product->generic);
         }
         if (count($data)) {
             return $data;
         } else {
-            return ['id'=>'', 'name'=>''];
+            return ['id' => '', 'name' => ''];
         }
     }
 
@@ -41,9 +41,9 @@ class GlobalController extends Controller
         $size = '';
         $size .= '<option value="0">Select</option>';
         foreach ($productSize as $sub) {
-            $size .= '<option value="'.$sub->id.'">'.$sub->size.'</option>';
+            $size .= '<option value="' . $sub->id . '">' . $sub->size . '</option>';
         }
-        return json_encode(['productSize' => $productSize, 'size'=>$size]);
+        return json_encode(['productSize' => $productSize, 'size' => $size]);
     }
 
     public function bulkSize(Request $request)
@@ -52,7 +52,7 @@ class GlobalController extends Controller
         $productPrice = ProductPackSize::where('id', $p_id)->first();
         $getTradeWeight =  $productPrice->size;
         $tradeWeight = intval(preg_replace("/[^0-9]/", '', $getTradeWeight));
-        return json_encode(['productPrice' => $productPrice, 'tradeWeight'=>$tradeWeight]);
+        return json_encode(['productPrice' => $productPrice, 'tradeWeight' => $tradeWeight]);
     }
 
     public function bulkPrice(Request $request)
@@ -67,19 +67,19 @@ class GlobalController extends Controller
     public function productSearch(Request $request)
     {
         $query = $request->get('term', '');
-        $products=DB::table('products');
-        if ($request->type=='product') {
-            $products->where('name', 'LIKE', '%'.$query.'%');
+        $products = DB::table('products');
+        if ($request->type == 'product') {
+            $products->where('name', 'LIKE', '%' . $query . '%');
         }
-        $products=$products->get();
-        $data=array();
+        $products = $products->get();
+        $data = array();
         foreach ($products as $product) {
-            $data[]=array('id'=>$product->id, 'name'=>$product->name, 'generic'=>$product->generic);
+            $data[] = array('id' => $product->id, 'name' => $product->name, 'generic' => $product->generic);
         }
         if (count($data)) {
             return $data;
         } else {
-            return ['id'=>'', 'name'=>''];
+            return ['id' => '', 'name' => ''];
         }
     }
 
@@ -90,9 +90,9 @@ class GlobalController extends Controller
         $size = '';
         $size .= '<option selected value disable>Select</option>';
         foreach ($productSize as $sub) {
-            $size .= '<option value="'.$sub->id.'">'.$sub->size.'</option>';
+            $size .= '<option value="' . $sub->id . '">' . $sub->size . '</option>';
         }
-        return json_encode(['size'=>$size]);
+        return json_encode(['size' => $size]);
     }
 
     public function productSizeId(Request $request)
@@ -100,7 +100,7 @@ class GlobalController extends Controller
         $p_id = $request->size_text;
         $productSize = ProductPackSize::where('id', $p_id)->first();
         $size_text = $productSize->size;
-        return json_encode(['size_text'=>$size_text]);
+        return json_encode(['size_text' => $size_text]);
     }
 
     public function dueAmt(Request $request)
@@ -109,7 +109,7 @@ class GlobalController extends Controller
         $productPrice = SalesLedgerBook::where('invoice_no', $p_id)->first();
         $sales_amt =  $productPrice->sales_amt;
         $invoice_date =  $productPrice->invoice_date;
-        return json_encode(['productPrice' => $productPrice, 'sales_amt'=>$sales_amt , 'invoice_date'=>$invoice_date]);
+        return json_encode(['productPrice' => $productPrice, 'sales_amt' => $sales_amt, 'invoice_date' => $invoice_date]);
     }
 
     public function productPriceCash(Request $request)
@@ -123,15 +123,17 @@ class GlobalController extends Controller
     // Stock Check
     public function productStockCheck(Request $request)
     {
-        $stock    = Stock::where('stock_close', 0)
-                        ->where('inv_cancel', 0)
-                        ->where('product_id', $request->product_id)
-                        ->where('product_pack_size_id', $request->size_id);        
-        $inStock  = $stock->whereIn('type', [0,11,20,21,30,32])->sum('quantity');
-        $outStock = $stock->whereIn('type', [1,3,5,31,33])->sum('quantity');
-        $quantity = $inStock -  $outStock;
+        $stockQuery = Stock::where('stock_close', 0)
+            ->where('inv_cancel', 0)
+            ->where('product_id', $request->product_id)
+            ->where('product_pack_size_id', $request->size_id);
 
-        return json_encode(['quantity'=>$quantity]);
+        $quantity = $stockQuery
+            ->selectRaw('SUM(CASE WHEN type IN (0,11,20,21,30,32) THEN quantity ELSE 0 END) AS inStock')
+            ->selectRaw('SUM(CASE WHEN type IN (1,3,5,31,33) THEN quantity ELSE 0 END) AS outStock')
+            ->first();
+        $quantity = $quantity->inStock - $quantity->outStock;
+        return json_encode(['quantity' => $quantity]);
     }
 
     public function productSizeCredit(Request $request)
@@ -141,9 +143,9 @@ class GlobalController extends Controller
         $subCat = '';
         $subCat .= '<option value="0">Select</option>';
         foreach ($productSize as $sub) {
-            $subCat .= '<option value="'.$sub->id.'">'.$sub->size.'</option>';
+            $subCat .= '<option value="' . $sub->id . '">' . $sub->size . '</option>';
         }
-        return json_encode(['productSize' => $productSize,'subCat'=>$subCat]);
+        return json_encode(['productSize' => $productSize, 'subCat' => $subCat]);
     }
 
     public function bankAc(Request $request)
@@ -153,9 +155,9 @@ class GlobalController extends Controller
         $acNo = '';
         $acNo .= '<option value="0">Select</option>';
         foreach ($bankAcNos as $bankAcNo) {
-            $acNo .= '<option value="'.$bankAcNo->id.'">'.$bankAcNo->ac_no.'</option>';
+            $acNo .= '<option value="' . $bankAcNo->id . '">' . $bankAcNo->ac_no . '</option>';
         }
-        return json_encode(['acNo'=>$acNo]);
+        return json_encode(['acNo' => $acNo]);
     }
 
     // For sales return
@@ -166,21 +168,21 @@ class GlobalController extends Controller
         // $isReturn = IsReturn::all()->pluck('sales_invoice_id');
         // $invoices = SalesInvoice::whereNotIn('id', $isReturn)
         $invoices = SalesInvoice::whereInv_cancel(0)
-                    ->whereR_type(0)
-                    ->whereIn('type', [1,3])
-                    ->where('customer_id', $customer_id);
+            ->whereR_type(0)
+            ->whereIn('type', [1, 3])
+            ->where('customer_id', $customer_id);
         if ($request->type == 'invoice_no') {
-            $invoices->where('invoice_no', 'LIKE', '%'.$query.'%');
+            $invoices->where('invoice_no', 'LIKE', '%' . $query . '%');
         }
         $invoices = $invoices->get();
-        $data=array();
+        $data = array();
         foreach ($invoices as $invoice) {
-            $data[]=array(
+            $data[] = array(
                 'inv_id' => $invoice->id,
-                'invoice_no' => $invoice->invoice_no.' ->'.$invoice->product->name,
-                'product_id'=> $invoice->product->id,
-                'product_name'=> $invoice->product->name,
-                'size'=> $invoice->packSize->size,
+                'invoice_no' => $invoice->invoice_no . ' ->' . $invoice->product->name,
+                'product_id' => $invoice->product->id,
+                'product_name' => $invoice->product->name,
+                'size' => $invoice->packSize->size,
                 'size_id' => $invoice->packSize->id,
                 'quantity' => $invoice->quantity,
                 'bonus' => $invoice->bonus,
@@ -192,7 +194,7 @@ class GlobalController extends Controller
         if (count($data)) {
             return $data;
         } else {
-            return ['invoice_no'=>'', 'product_name'=>''];
+            return ['invoice_no' => '', 'product_name' => ''];
         }
     }
 }
