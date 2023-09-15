@@ -28,7 +28,8 @@ class IndexController extends Controller
             ->get();
         $data['products']    = Product::where('type', 1)->count();
         $data['users']       = User::whereRole(2)->count();
-        SEOTools::setTitle(env('HOME_PAGE_TITLE'));
+        
+        SEOTools::setTitle(setting('index_title'));
 
         return view('frontend.index', $data);
     }
