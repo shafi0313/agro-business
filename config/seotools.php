@@ -5,11 +5,13 @@
  */
 
 $name = $description = $keyword = '';
-if (request()->getHttpHost() == 'seontaeg.com' || request()->getHttpHost() == 'www.seontaeg.com') {
+if (env('APP_NAME') == 'SEONTAEG') {
+// if (request()->getHttpHost() == 'seontaeg.com' || request()->getHttpHost() == 'www.seontaeg.com') {
     $name        = 'SEONTAEG';
     $description = 'SEONTAEG is manufacturer and distributor of veterinary medicines for cattle, swine, poultry, sheep, fish and companion animals. The company SEONTAEG was founded and production facility was established in Seoul, Korea on July 1998. All products are manufactured according to the GMP regulations and the company is equipped with a professional laboratory, staffed by highly qualified personnel to ensure quality control raw materials to finished products. Research and development is important role in the companies strategic growth. SEONTAEG has developed a complete range of veterinary products including high quality injectable preparations, premix, water soluble powders and extensive range of oral liquids. SEONTAEG now exports its high quality products to 10 countries overseas. We offer you a wide range of veterinary pharmaceuticals: injectable, oral liquids, powders, tablets and boluses and liquids and ointments for local treatments. Please feel free to contact us if you have any questions or interest in our products.';
     $keyword     = 'veterinary medicines, SEONTAEG, manufacturer, distributor, GMP, Seoul, Korea, injectable preparations, premixes, water-soluble powders, oral liquids, research and development, cattle medicine, swine medicine, poultry medicine, sheep medicine, fish medicine, companion animals, international export, local treatment solutions, quality control';
-}elseif(request()->getHttpHost() == 'mondolag.com' || request()->getHttpHost() == 'www.mondolag.com'){
+}elseif(env('APP_NAME') == 'Mondol Traders'){
+// }elseif(request()->getHttpHost() == 'mondolag.com' || request()->getHttpHost() == 'www.mondolag.com'){
     $name        = 'Mondol Treaders';
     $description = 'Mondol Treaders is an agriculture company offering a wide range of agricultural products including Insecticides, Fungicides, Herbicides, Yield Boosters, and Fertilizers. We specialize in crop protection and nutrition solutions to help farmers enhance yields and crop health. Explore our quality agricultural products for your farming needs.';
     $keyword     = 'Mondol Treaders, agriculture company, Insecticide, Fungicide, Herbicide, Yield Booster, Fertilizer, agricultural products, crop protection, crop nutrition, farming supplies';
