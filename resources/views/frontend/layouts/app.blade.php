@@ -1,15 +1,13 @@
 <!doctype html>
-<html class="no-js">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    {{-- <title>@yield('title') | {{setting('app_name')}}</title> --}}
-    {{-- <meta name="robots" content="noindex, follow" /> --}}
-    {{-- <meta name="keywords" content="{{ setting('app_keyword') }}">
-    <meta name="description" content=""> --}}
-    {!! SEO::generate() !!}
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    {!! SEO::generate() !!}
+    
     {{-- <!-- Place favicon.png in the root directory --> --}}
     <link rel="shortcut icon" href="{{ setting('app_favicon') }}" type="image/x-icon" />
     {{-- <!-- Font Icons css --> --}}

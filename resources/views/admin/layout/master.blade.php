@@ -3,6 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="robots" content="noindex, follow" />
     <title>@yield('title') | {{ config('app.locale') == 'en' ? setting('app_name') : setting('app_name_b') }}</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <meta content='{{ csrf_token() }}' name='csrf-token' />

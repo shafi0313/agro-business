@@ -22,7 +22,8 @@ class SeontaegSettingsSeeder extends Seeder
         Setting(['app_description'=> ''])->save();
         Setting(['app_keyword'=> ''])->save();
         Setting(['is_company'=> 1])->save();
-        Setting(['front_footer'=> ''])->save();
+        Setting(['front_footer'=> 'SEONTAEG is a trusted manufacturer and distributor of veterinary medicines for cattle, swine, poultry, sheep, fish, and companion animals. Learn about our GMP-compliant production facility established in Seoul, Korea in July 1998. Discover our range of high-quality injectable preparations, premixes, water-soluble powders, and oral liquids. With a commitment to research and development, SEONTAEG exports its top-tier products to 10 countries. Explore our comprehensive line of veterinary pharmaceuticals, including injectables, oral liquids, powders, tablets, boluses, and local treatment solutions. Contact us for inquiries or product information.'])->save();
+        Setting(['index_title'=> 'SEONTAEG - Manufacturer and Distributor of Veterinary Medicines'])->save();
 
         Setting(['inv_header_address'=> 'Uttara, Dhaka.'])->save();
         Setting(['inv_footer'=> '<p>Office: Uttara, Dhaka. <i class="fas fa-mobile-alt"> +8801771 341888. <i class="far fa-envelope"></i> contact@seontage.com, <i class="fas fa-globe-asia"></i> www.seontage.com</p>.'])->save();
@@ -45,6 +46,7 @@ class SeontaegSettingsSeeder extends Seeder
         Setting(['enable_product_count'=> 1])->save();
         Setting(['enable_district_count'=> 0])->save();
         Setting(['enable_multi_lang'=> 0])->save();
+        Setting(['enable_home_about'=> 1])->save();
         // Setting(['facebook'=> 'https://www.facebook.com/adnanagrovet'])->save();
     }
 }

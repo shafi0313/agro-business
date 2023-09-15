@@ -26,6 +26,7 @@ class MondolSettingsSeeder extends Seeder
         Setting(['app_keyword'=> 'Mondol, Agro, Mondol Agro, Mondol Traders, Alamdanga, mondolag'])->save();
         Setting(['is_company'=> 1])->save();
         Setting(['front_footer'=> 'ফসলের মাঠে কৃষকের বিশ্বস্ত সহযোগী'])->save();
+        Setting(['index_title'=> 'Mondol Treaders | Agriculture Company | Insecticides, Fungicides, Herbicides, Fertilizers'])->save();
 
         Setting(['inv_header_address'=> 'Alamdanga, Chuadanga.'])->save();
         Setting(['inv_footer'=> '<p>Head office: High Road, Alamdanga, Chuadanga. <i class="fas fa-tty"></i> 07622-56385, <i class="fas fa-mobile-alt"></i>+8801318-302500, Dhaka Office: House # 14, Road # 3, <br> Block # E, Extended Rupnagar (R/A) Sector # 12, Mirpur, Dhaka-1216. <i class="far fa-envelope"></i> r.tuhin@icloud.com, <i class="fas fa-globe-asia"></i> www.mondolag.com</p>.'])->save();
@@ -50,6 +51,7 @@ class MondolSettingsSeeder extends Seeder
         Setting(['enable_multi_lang'=> 1])->save();
         Setting(['enable_product_price'=> 1])->save();
         Setting(['enable_product_date_time'=> 1])->save();
+        Setting(['enable_home_about'=> 0])->save();
 
 
 
