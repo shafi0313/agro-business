@@ -7,10 +7,10 @@
                     <div class="footer-widget footer-about-widget">
                         <div class="footer-logo">
                             <div class="site-logo">
-                                <img src="{{ asset(setting('app_favicon')) }}" alt="Company Logo" style="margin: auto">
+                                <img src="{{ asset(setting('app_logo_png')) }}" alt="@setting('app_name')" style="margin: auto" width="100px">
                             </div>
                         </div>
-                        <p style="text-align: center; ">{{ setting('front_footer') }}</p>
+                        <p style="text-align: justify; ">{{ Str::limit(setting('front_footer'), 200) }} <a href="{{ route('about') }}">More</a></p>
                     </div>
                 </div>
                 <div class="col-md-3 col-12">
@@ -30,14 +30,17 @@
                         <h4 class="footer-title">Address</h4>
                         <div class="footer-address">
                             <ul>
+                                @if(setting('front_address'))
                                 <li>
                                     <div class="footer-address-icon">
                                         <i class="icon-placeholder"></i>
-                                    </div>
+                                    </div>                                    
                                     <div class="footer-address-info">
                                         {!! setting('front_address') !!}
-                                    </div>
+                                    </div>                                                                       
                                 </li>
+                                @endisset
+                                @if(setting('phone_1') || setting('phone_2'))
                                 <li>
                                     <div class="footer-address-icon">
                                         <i class="icon-call"></i>
@@ -47,6 +50,8 @@
                                         <p><a href="tel:{{ setting('phone_2') }}">{{ setting('phone_2') }}</a></p>
                                     </div>
                                 </li>
+                                @endisset
+                                @if(setting('email_1') || setting('email_2'))
                                 <li>
                                     <div class="footer-address-icon">
                                         <i class="icon-mail"></i>
@@ -56,6 +61,7 @@
                                         <p><a href="mailto:{{ setting('email_2') }}">{{ setting('email_2') }}</a></p>
                                     </div>
                                 </li>
+                                @endisset
                             </ul>
                         </div>
                         <div class="ltn__social-media mt-20">

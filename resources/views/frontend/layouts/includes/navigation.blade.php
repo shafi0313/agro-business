@@ -8,6 +8,7 @@
                     <div class="ltn__top-bar-menu">
                         <ul>
                             {{-- <li><a href="locations.html"><i class="icon-placeholder"></i> 15/A, Nest Tower, NYC</a></li> --}}
+                            @if (setting('email_1') || setting('email_2'))
                             <li>
                                 <a href="mailto:{{ setting('email_1') }}">
                                     <i class="icon-mail"></i> {{ setting('email_1') }}
@@ -16,6 +17,8 @@
                             <li>
                                 <a href="mailto:{{ setting('email_2') }}">{{ setting('email_2') }}</a>
                             </li>
+                            @endif
+                            @if (setting('phone_1') || setting('phone_2'))
                             <li>
                                 <a href="mailto:{{ setting('phone_1') }}">
                                     <i class="icon-call"></i> {{ setting('phone_1') }}
@@ -24,6 +27,7 @@
                             <li>
                                 <a href="mailto:{{ setting('phone_2') }}">{{ setting('phone_2') }}</a>
                             </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
