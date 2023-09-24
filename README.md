@@ -30,7 +30,9 @@ Before diving into the setup, ensure that your system meets the following prereq
 
 - PHP 8
 - Laravel 10
-- MySQL 10
+- Web server (e.g., Apache, Nginx)
+- MySQL database
+- Composer (for PHP dependency management)
 
 ## Installation
 
@@ -120,7 +122,7 @@ The Business Management System caters to business owners and managers, enabling 
 
 ## Contributing
 
-We welcome contributions to enhance this platform. Please follow these steps to contribute:
+I welcome contributions to enhance this platform. Please follow these steps to contribute:
 
 1. **Fork the Repository.**
 2. Create a new branch for your feature or bug fix: `git checkout -b feature/your-feature-name`.
