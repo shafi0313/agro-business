@@ -51,7 +51,7 @@
                                     </div>
                                 </li>
                                 @endif
-                                
+
                                 <li>
                                     <!-- ltn__social-media -->
                                     <div class="ltn__social-media">
@@ -59,9 +59,9 @@
                                             @if (!empty(setting('facebook')))
                                             <li>
                                                 <a href="{{ URL::to(setting('facebook')) }}" title="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                                            </li>                                                
+                                            </li>
                                             @endif
-                                            
+
                                             {{-- <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
                                             </li> --}}
 
@@ -85,7 +85,7 @@
     <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-white sticky-active-into-mobile plr--9---">
         <div class="container">
             <div class="row">
-                <div class="col">
+                <div class="col-md-4">
                     <div class="site-logo-wrap">
                         <div class="site-logo">
                             @if (setting('app_name') == "Mondol Traders")

@@ -1,9 +1,9 @@
 @extends('frontend.layouts.app')
 @section('content')
-<!-- SLIDER AREA START (slider-3) -->
+{{-- <!-- SLIDER AREA START (slider-3) --> --}}
 <div class="ltn__slider-area ltn__slider-3  section-bg-1">
     <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1 arrow-white">
-        <!-- ltn__slide-item -->
+        {{-- <!-- ltn__slide-item --> --}}
         @foreach ($sliders as $slider)
         <div class="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3 text-color-white bg-image" data-bg="{{ imagePath('slider', $slider->image) }}">
             <div class="ltn__slide-item-inner">
@@ -21,7 +21,7 @@
                                     <div class="btn-wrapper animated">
                                         <a href="{{ URL::to($slider->link) }}" class="theme-btn-1 btn btn-effect-1 text-uppercase">{{ $slider->link_name }}</a>
                                     </div>
-                                    @endif                                    
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -29,10 +29,10 @@
                 </div>
             </div>
         </div>
-        @endforeach       
+        @endforeach
     </div>
 </div>
-<!-- SLIDER AREA END -->
+{{-- <!-- SLIDER AREA END --> --}}
 
 <!-- BANNER AREA START -->
 {{-- <div class="ltn__banner-area mt-120">
@@ -129,6 +129,43 @@
 <!-- BANNER AREA END -->
 
 
+@if (setting('enable_home_about') == '1')
+<section id="about-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {!! $about !!}
+            </div>
+            <div class="col-md-6">
+                <img src="{{ asset('uploads/images/lab.png') }}" alt="">
+            </div>
+            <div class="col-md-6">
+                <ul>
+                    <li class="d-flex about-li">
+                        <div class="img">
+                            <img src="{{ asset('uploads/images/icon/factory.webp') }}" alt="factory">
+                        </div>
+                        <div class="text">
+                            <h3>Manufacture</h3>
+                            <p>Veterinary medicines for cattle, swine, poultry, sheep, fish and companion animals.</p>
+                        </div>
+                    </li>
+                    <li class="d-flex about-li">
+                        <div class="img">
+                            <img src="{{ asset('uploads/images/icon/delivery.webp') }}" alt="delivery">
+                        </div>
+                        <div class="text">
+                            <h3>Distribute</h3>
+                            <p>Indonesia, Myanmar, Malaysia, Bangladesh, Pakistan, Viet Nam.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<hr class="divider">
+@endif
 
 <div class="ltn__product-tab-area ltn__product-gutter pt-85">
     <div class="container">

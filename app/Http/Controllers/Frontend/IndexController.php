@@ -16,7 +16,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $data['about']       = About::where('id', 1)->first();
+        $data['about']       = About::where('id', 1)->first()->texts;
         $data['sliders']     = Slider::all();
         $data['productCats'] = ProductCat::with([
             'products.productPack',
@@ -28,7 +28,7 @@ class IndexController extends Controller
             ->get();
         $data['products']    = Product::where('type', 1)->count();
         $data['users']       = User::whereRole(2)->count();
-        
+
         SEOTools::setTitle(setting('index_title'));
 
         return view('frontend.index', $data);
