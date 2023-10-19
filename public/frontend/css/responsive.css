@@ -32,7 +32,7 @@
 
 }
 
- 
+
 /* Tablet device :768px. */
 @media (min-width: 768px) and (max-width: 991px) {
     /* Global */
@@ -63,7 +63,7 @@
 
 }
 
- 
+
 /* small mobile :320px. */
 @media (max-width: 767px) {
     /* Global */
@@ -92,4 +92,16 @@
         font-size: 14px;
     }
 
+    /* Custom */
+    .site-logo-wrap {
+        display: none;
+    }
 }
+
+@media (max-width: 479px){
+    .ltn__utilize.ltn__utilize-mobile-menu {
+        padding: 10px 10px;
+    }
+}
+
+

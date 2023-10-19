@@ -7,75 +7,84 @@
                 <div class="col-md-7">
                     <div class="ltn__top-bar-menu">
                         <ul>
-                            {{-- <li><a href="locations.html"><i class="icon-placeholder"></i> 15/A, Nest Tower, NYC</a></li> --}}
                             @if (setting('email_1') || setting('email_2'))
-                            <li>
-                                <a href="mailto:{{ setting('email_1') }}">
-                                    <i class="icon-mail"></i> {{ setting('email_1') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="mailto:{{ setting('email_2') }}">{{ setting('email_2') }}</a>
-                            </li>
+                                @if (setting('email_1'))
+                                    <li>
+                                        <a href="mailto:{{ setting('email_1') }}">
+                                            <i class="icon-mail"></i> {{ setting('email_1') }}
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (setting('email_2'))
+                                    <li>
+                                        <a href="mailto:{{ setting('email_2') }}">{{ setting('email_2') }}</a>
+                                    </li>
+                                @endif
+
                             @endif
                             @if (setting('phone_1') || setting('phone_2'))
-                            <li>
-                                <a href="mailto:{{ setting('phone_1') }}">
-                                    <i class="icon-call"></i> {{ setting('phone_1') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="mailto:{{ setting('phone_2') }}">{{ setting('phone_2') }}</a>
-                            </li>
+                                @if (setting('phone_1'))
+                                    <li>
+                                        <a href="mailto:{{ setting('phone_1') }}">
+                                            <i class="icon-call"></i> {{ setting('phone_1') }}
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (setting('phone_2'))
+                                    <li>
+                                        <a href="mailto:{{ setting('phone_2') }}">{{ setting('phone_2') }}</a>
+                                    </li>
+                                @endif
                             @endif
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-5">
-                    <div class="top-bar-right text-right">
-                        <div class="ltn__top-bar-menu">
-                            <ul>
-                                @if (setting('enable_multi_lang') == 1)
-                                <li>
-                                    <!-- ltn__language-menu -->
-                                    <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
-                                        <ul>
-                                            <li><a href="#" class="dropdown-toggle"><span
-                                                        class="active-currency">Language</span></a>
+                @if (setting('enable_multi_lang') == 1 || setting('facebook'))
+                    <div class="col-md-5">
+                        <div class="top-bar-right text-right">
+                            <div class="ltn__top-bar-menu">
+                                <ul>
+                                    @if (setting('enable_multi_lang') == 1)
+                                        <li>
+                                            <!-- ltn__language-menu -->
+                                            <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
                                                 <ul>
-                                                    <li><a href="#">Bengali</a></li>
-                                                    <li><a href="#">English</a></li>
+                                                    <li><a href="#" class="dropdown-toggle"><span
+                                                                class="active-currency">Language</span></a>
+                                                        <ul>
+                                                            <li><a href="#">Bengali</a></li>
+                                                            <li><a href="#">English</a></li>
+                                                        </ul>
+                                                    </li>
                                                 </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                @endif
-
-                                <li>
-                                    <!-- ltn__social-media -->
-                                    <div class="ltn__social-media">
-                                        <ul>
-                                            @if (!empty(setting('facebook')))
-                                            <li>
-                                                <a href="{{ URL::to(setting('facebook')) }}" title="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                                            </li>
-                                            @endif
-
-                                            {{-- <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                                            </div>
+                                        </li>
+                                    @endif
+                                    <li>
+                                        <!-- ltn__social-media -->
+                                        <div class="ltn__social-media">
+                                            <ul>
+                                                @if (!empty(setting('facebook')))
+                                                    <li>
+                                                        <a href="{{ URL::to(setting('facebook')) }}" title="Facebook"
+                                                            target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                                    </li>
+                                                @endif
+                                                {{-- <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
                                             </li> --}}
 
-                                            {{-- <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                                                {{-- <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
                                             </li>
                                             <li><a href="#" title="Dribbble"><i class="fab fa-dribbble"></i></a>
                                             </li> --}}
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -88,12 +97,13 @@
                 <div class="col-md-4">
                     <div class="site-logo-wrap">
                         <div class="site-logo">
-                            @if (setting('app_name') == "Mondol Traders")
-                            <a href="{{ route('index') }}"><img src="{{ asset(setting('app_logo_png')) }}" alt="Logo" width="150px"></a>
+                            @if (setting('app_name') == 'Mondol Traders')
+                                <a href="{{ route('index') }}"><img src="{{ asset(setting('app_logo_png')) }}"
+                                        alt="Logo" width="150px"></a>
                             @else
-                            <a href="{{ route('index') }}"><img src="{{ asset(setting('app_logo_png')) }}" alt="Logo" width="80px"></a>
+                                <a href="{{ route('index') }}"><img src="{{ asset(setting('app_logo_png')) }}"
+                                        alt="Logo" width="80px"></a>
                             @endif
-
                         </div>
                     </div>
                 </div>
@@ -122,7 +132,19 @@
                         </nav>
                     </div>
                 </div>
-                <div class="ltn__header-options ltn__header-options-2 mb-sm-20">
+                <div class="ltn__header-options ltn__header-options-2">
+                    <div class="site-logo">
+                        @if (setting('app_name') == 'Mondol Traders')
+                            <a href="{{ route('index') }}">
+                                <img src="{{ asset(setting('app_logo_png')) }}" alt="Logo" width="60px">
+                            </a>
+                        @else
+                            <a href="{{ route('index') }}">
+                                <img src="{{ asset(setting('app_logo_png')) }}" alt="Logo" width="50px">
+                            </a>
+                        @endif
+                    </div>
+
                     <!-- header-search-1 -->
                     <div class="header-search-wrap">
                         <div class="header-search-1">
@@ -254,7 +276,8 @@
     <div class="ltn__utilize-menu-inner ltn__scrollbar">
         <div class="ltn__utilize-menu-head">
             <div class="site-logo">
-                <a href="index.html"><img src="{{ asset(setting('app_logo_png')) }}" alt="Logo"></a>
+                <a href="{{ route('index') }}"><img src="{{ asset(setting('app_logo_png')) }}" alt="Logo"
+                        width="60px"></a>
             </div>
             <button class="ltn__utilize-close">×</button>
         </div>

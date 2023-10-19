@@ -89,3 +89,23 @@
     display: flex;
     justify-content: space-between;
 }
+
+/* Mobile menu */
+input[type="text"], input[type="email"], input[type="password"], input[type="submit"], textarea {
+    height: 35px;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.ltn__utilize-menu-head {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+ul li, ol li {
+    margin-top: 5px;
+}
+
+.ltn__utilize-menu-search-form {
+    margin-bottom: 10px;
+}
