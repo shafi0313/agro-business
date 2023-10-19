@@ -6,6 +6,9 @@
     .container {
         max-width: 1200px;
     }
+    .ltn__slide-item-2 {
+        max-height: 500px;
+    }
 }
 
 /* Normal desktop :992px. (Laptop 14") */
@@ -95,6 +98,17 @@
     /* Custom */
     .site-logo-wrap {
         display: none;
+    }
+
+    .ltn__slide-item-2 {
+        padding-top: 0px;
+    }
+    #about-section {
+        padding: 20px 0 0px 0;
+    }
+    .ltn__slide-item-2 .slide-title {
+        font-size: 25px;
+        padding-top: 40px;
     }
 }
 

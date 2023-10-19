@@ -136,11 +136,11 @@
                     <div class="site-logo">
                         @if (setting('app_name') == 'Mondol Traders')
                             <a href="{{ route('index') }}">
-                                <img src="{{ asset(setting('app_logo_png')) }}" alt="Logo" width="60px">
+                                <img style="padding-left:5px" src="{{ asset(setting('app_logo_png')) }}" alt="Logo" width="60px">
                             </a>
                         @else
                             <a href="{{ route('index') }}">
-                                <img src="{{ asset(setting('app_logo_png')) }}" alt="Logo" width="50px">
+                                <img style="padding-left:5px" src="{{ asset(setting('app_logo_png')) }}" alt="Logo" width="50px">
                             </a>
                         @endif
                     </div>
