@@ -353,7 +353,7 @@
         $('.ltn__slide-one-active').slick({
             autoplay: true,
             loop: true,
-            autoplaySpeed: 2000,
+            autoplaySpeed: 5000,
             arrows: true,
             dots: true,
             fade: true,
