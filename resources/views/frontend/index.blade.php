@@ -1,18 +1,17 @@
 @extends('frontend.layouts.app')
 @section('content')
 {{-- <!-- SLIDER AREA START (slider-3) --> --}}
-<div class="ltn__slider-area ltn__slider-3  section-bg-1">
+<div class="ltn__slider-area ltn__slider-3 section-bg-1">
     <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1 arrow-white">
         {{-- <!-- ltn__slide-item --> --}}
         @foreach ($sliders as $slider)
-        <div class="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3 text-color-white bg-image" data-bg="{{ imagePath('slider', $slider->image) }}">
+        <div class="ltn__slide-item text-color-white bg-image" data-bg="{{ imagePath('slider', $slider->image) }}">
             <div class="ltn__slide-item-inner">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 align-self-center">
                             <div class="slide-item-info">
                                 <div class="slide-item-info-inner ltn__slide-animation">
-                                    {{-- <h6 class="slide-sub-title animated"><img src="{{ asset('frontend/img/icons/icon-img/1.png') }}" alt="#"> 100% genuine Products</h6> --}}
                                     <h1 class="slide-title animated ">{{ $slider->title }}</h1>
                                     <div class="slide-brief animated">
                                         <p>{{ $slider->sub_title }}</p>

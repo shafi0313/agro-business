@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     {!! SEO::generate() !!}
-    
+
     {{-- <!-- Place favicon.png in the root directory --> --}}
     <link rel="shortcut icon" href="{{ setting('app_favicon') }}" type="image/x-icon" />
     {{-- <!-- Font Icons css --> --}}
@@ -22,13 +22,32 @@
 </head>
 
 <body>
-{{-- <!-- Body main wrapper start --> --}}
-<div class="body-wrapper">
-    @include('frontend.layouts.includes.navigation')
-    <div class="ltn__utilize-overlay"></div>
-    @yield('content')
-    @include('frontend.layouts.includes.footer')
-    {{-- <!-- MODAL AREA START (Quick View Modal) -->
+    {{-- <!-- Body main wrapper start --> --}}
+    <div class="body-wrapper">
+
+        <!-- HEADER AREA START (header-5) -->
+        <header class="ltn__header-area ltn__header-5 ltn__header-transparent-- gradient-color-4---">
+            <!-- ltn__header-top-area start -->
+            @include('frontend.layouts.includes.top-header')
+            <!-- ltn__header-top-area end -->
+
+            <!-- ltn__header-middle-area start -->
+            @include('frontend.layouts.includes.navigation')
+            <!-- ltn__header-middle-area end -->
+        </header>
+        <!-- HEADER AREA END -->
+
+        <!-- Utilize Mobile Menu Start -->
+        @include('frontend.layouts.includes.mobile-navigation')
+        <!-- Utilize Mobile Menu End -->
+
+        {{-- <div class="ltn__utilize-overlay"></div> --}}
+
+
+        <div class="ltn__utilize-overlay"></div>
+        @yield('content')
+        @include('frontend.layouts.includes.footer')
+        {{-- <!-- MODAL AREA START (Quick View Modal) -->
     <div class="ltn__modal-area ltn__quick-view-modal-area">
         <div class="modal fade" id="quick_view_modal" tabindex="-1">
             <div class="modal-dialog modal-lg" role="document">
@@ -132,7 +151,7 @@
     </div>
     <!-- MODAL AREA END --> --}}
 
-    {{-- <!-- MODAL AREA START (Add To Cart Modal) -->
+        {{-- <!-- MODAL AREA START (Add To Cart Modal) -->
     <div class="ltn__modal-area ltn__add-to-cart-modal-area">
         <div class="modal fade" id="add_to_cart_modal" tabindex="-1">
             <div class="modal-dialog modal-md" role="document">
@@ -176,7 +195,7 @@
     </div>
     <!-- MODAL AREA END --> --}}
 
-    {{-- <!-- MODAL AREA START (Wishlist Modal) -->
+        {{-- <!-- MODAL AREA START (Wishlist Modal) -->
     <div class="ltn__modal-area ltn__add-to-cart-modal-area">
         <div class="modal fade" id="liton_wishlist_modal" tabindex="-1">
             <div class="modal-dialog modal-md" role="document">
@@ -218,8 +237,8 @@
         </div>
     </div>
     <!-- MODAL AREA END --> --}}
-</div>
-{{-- <!-- Body main wrapper end --> --}}
+    </div>
+    {{-- <!-- Body main wrapper end --> --}}
 
     {{-- <!-- preloader area start --> --}}
     <div class="preloader d-none" id="preloader">
@@ -238,5 +257,5 @@
     <script src="{{ asset('frontend/js/main.js') }}"></script>
 
 </body>
-</html>
 
+</html>

@@ -60,6 +60,11 @@
 .ltn__slide-item {
     padding-top: 0px;
     padding-bottom: 0px;
+    height: 400px;
+}
+
+.slick-slide-dots-1 .slick-dots {
+    bottom: 20px;
 }
 /* Slider End */
 
